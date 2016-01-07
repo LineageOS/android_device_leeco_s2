@@ -806,6 +806,12 @@
          In other words, the applications won't be able to use the codec
          or query the capabilities of the codec at all if it is disabled
     -->
+     <VideoEncoderCap name="hevc" enabled="true"
+        minBitRate="64000" maxBitRate="100000000"
+        minFrameWidth="176" maxFrameWidth="3840"
+        minFrameHeight="144" maxFrameHeight="2160"
+        minFrameRate="15" maxFrameRate="30" />
+
     <VideoEncoderCap name="h264" enabled="true"
         minBitRate="64000" maxBitRate="100000000"
         minFrameWidth="176" maxFrameWidth="3840"
