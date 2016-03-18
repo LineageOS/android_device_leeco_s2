@@ -2091,7 +2091,9 @@ void QCamera2HardwareInterface::metadata_stream_cb_routine(mm_camera_super_buf_t
         pme->mExifParams.cam_3a_params = *ae_params;
         pme->mExifParams.cam_3a_params_valid = TRUE;
         pme->mFlashNeeded = ae_params->flash_needed;
+        pthread_mutex_lock(&pme->m_parm_lock);
         pme->mExifParams.cam_3a_params.brightness = (float) pme->mParameters.getBrightness();
+        pthread_mutex_unlock(&pme->m_parm_lock);
         qcamera_sm_internal_evt_payload_t *payload =
                 (qcamera_sm_internal_evt_payload_t *)
                 malloc(sizeof(qcamera_sm_internal_evt_payload_t));
