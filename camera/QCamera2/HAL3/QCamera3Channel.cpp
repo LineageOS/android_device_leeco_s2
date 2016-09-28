@@ -2662,8 +2662,8 @@ QCamera3Exif *QCamera3PicChannel::getExifData(metadata_buffer_t *metadata,
     uint32_t count = 0;
 
     // add exif entries
-    String8 dateTime;
-    String8 subsecTime;
+    String8 dateTime("");
+    String8 subsecTime("");
     rc = getExifDateTime(dateTime, subsecTime);
     if (rc == NO_ERROR) {
         exif->addEntry(EXIFTAGID_DATE_TIME, EXIF_ASCII,
