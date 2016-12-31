@@ -1,0 +1,370 @@
+import init.s2.usb.rc
+
+#used for add oem info
+
+#< LAFITE-33 yuyang 20151221 begin
+on boot
+    #start getpersistlog
+# < LAFITE-67 chaofubang 20151228 begin
+    chown media media /dev/i2c_smartpa
+    chmod 0660 /dev/i2c_smartpa
+# LAFITE-67 chaofubang 20151228 end >
+# < LAFITE-270 chaofubang 20160108 begin
+    chown system system /system/bin/AudioRoutingTest
+    chmod 0755 /system/bin/AudioRoutingTest
+    chown system system /system/bin/AudioLoopback.sh
+    chmod 0755 /system/bin/AudioLoopback.sh
+    # < LAFITE-5695 yanwenlong 2016-3-23 begin
+    chown system system /system/bin/product_model.sh
+    chmod 0755 /system/bin/product_model.sh
+    # LAFITE-5695 yanwenlong 2016-3-23 end
+	#LAFITE-471:yuquan added begin:add sensor hardware info
+	chown input system /sys/devices/platform/hardware_info/als_ps
+	chown input system /sys/devices/platform/hardware_info/gsensor
+	chown input system /sys/devices/platform/hardware_info/gyro
+	chown input system /sys/devices/platform/hardware_info/msensor
+	chmod 0664 /sys/devices/platform/hardware_info/als_ps
+	chmod 0664 /sys/devices/platform/hardware_info/gsensor
+	chmod 0664 /sys/devices/platform/hardware_info/gyro
+	chmod 0664 /sys/devices/platform/hardware_info/msensor
+	#LAFITE-471:yuquan added begin:add sensor hardware info
+	#LAFITE-957:yuquan added type-c orientation node begin
+	chown system system /sys/class/type-c/info/orientation
+	chmod 0644 /sys/class/type-c/info/orientation
+	#LAFITE-957:yuquan added type-c orientation node end
+	#LAFITE-1101:yuquan added type-c info notify ready node,begin:
+	chown system system /sys/class/type-c/info/ready
+	chmod 0664 /sys/class/type-c/info/ready
+	write /sys/class/type-c/info/ready 1
+	#LAFITE-1101:yuquan added type-c info notify ready node,end:
+	#LAFITE-395:yuquan added type-c connecting through CC cable begin
+	chown system system /sys/class/type-c/info/mode
+	chmod 0664 /sys/class/type-c/info/mode
+	chown system system /sys/class/type-c/info/result
+	chmod 0644 /sys/class/type-c/info/result
+	#LAFITE-395:yuquan added type-c connecting through CC cable end
+# LAFITE-270 chaofubang 20160108 end >
+# < LAFITE-475 chaofubang 20160112 begin
+    chown system system /system/bin/ext_spk_loopback
+    chmod 0755 /system/bin/ext_spk_loopback
+# LAFITE-475 chaofubang 20160112 end >
+# < LAFITE-388 chaofubang 20160214 begin
+# < LAFITE-2269 chaofubang 201600304 begin
+    chmod 0644 /sys/devices/soc.0/c051000.sound/usb_audio
+    chmod 0644 /sys/devices/soc.0/c051000.sound/usb_audio_pid
+    chmod 0644 /sys/module/snd_soc_msm8x16/parameters/headset_swap
+    chmod 0644 /sys/module/snd_soc_msm8x16/parameters/usb_audio_mode
+    chown media media /sys/devices/soc.0/c051000.sound/usb_audio
+    chown media media /sys/devices/soc.0/c051000.sound/usb_audio_pid
+    chown media media /sys/module/snd_soc_msm8x16/parameters/headset_swap
+    chown media media /sys/module/snd_soc_msm8x16/parameters/usb_audio_mode
+# LAFITE-2269 chaofubang 20160304 end >
+# LAFITE-388 chaofubang 20160214 end >
+# <LAFITE-417 wangqi 2016-01-07 begin
+    chmod 0751 system/bin/deviceinfo
+    chmod 0755 system/bin/deviceinfoserv
+# <LAFITE-417 wangqi 2016-01-07 end
+
+# < LAFITE-599 liuyongkang 20160115 begin
+	chmod 0755 system/bin/netcfg
+# LAFITE-599 liuyongkang 20160115 end >
+
+# < LAFITE-369 jiangjie 2016-01-11 begin
+    chown system system  /dev/goodix_fp
+    chmod 0644 /dev/goodix_fp
+    chown system system  /system/bin/gx_fpd
+    chmod 0755 /system/bin/gx_fpd
+# LAFITE-369 jiangjie 2016-01-11 end >
+#< LAFITE-347 guohongtao 2016-01-14 begin>
+    chmod 660 /persist/serialno
+    chown system system /persist/serialno
+#< LAFITE-347 guohongtao 2016-01-14 end>
+#< LAFITE-15942 guohongtao 20160701 begin>
+    chmod 660 /sys/class/type-c/info/vbus_status
+    chown system system /sys/class/type-c/info/vbus_status
+#< LAFITE-15942 guohongtao 20160701 end>
+#< LAFITE-95 guohongtao 2016-02-04 begin>
+#< LAFITE-2992 guohongtao 2016-02-29 begin>
+#< LAFITE-2992 guohongtao 2016-03-26 begin>
+    chmod 666 /sys/remote/enable
+    chown system system /sys/remote/enable
+    chmod 666 /dev/ttyHSL1
+    chmod 666 /dev/ttyHS1
+    chown system system /dev/ttyHSL1
+    chown system system /dev/ttyHS1
+#< LAFITE-2992 guohongtao 2016-03-26 end>
+#< LAFITE-2992 guohongtao 2016-02-29 end>
+#< LAFITE-95 guohongtao 2016-02-04 end>
+
+#< LAFITE-3826 denglei 2016-03-09 begin>
+    chown system system /sys/module/leds_aw2013/parameters/aw2013_sleep_led
+    chmod 0666 /sys/module/leds_aw2013/parameters/aw2013_sleep_led
+#< LAFITE-3826 denglei 2016-03-09 end>
+
+# add by letv for reduced power rate when normal charge be selected begin
+    chown system system /sys/class/power_supply/battery/le_quick_charge_mode
+    chmod 666 /sys/class/power_supply/battery/le_quick_charge_mode
+# add by letv end
+
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/blue/blink
+
+    # Added by yangyongfeng for torch led-flash control, LAFITE-8164(QL1530) 20160414, begin
+    chown system camera /sys/class/leds/led:torch_0/brightness
+    chmod 0664 /sys/class/leds/led:torch_0/brightness
+    chown system camera /sys/class/leds/led:torch_1/brightness
+    chmod 0664 /sys/class/leds/led:torch_1/brightness
+    chown system camera /sys/class/leds/led:switch/brightness
+    chmod 0664 /sys/class/leds/led:switch/brightness
+    # Added by yangyongfeng for torch led-flash control, LAFITE-8164(QL1530) 20160414, end
+
+/* < LAFITE-707 xiongzu'an 20160119 begin */
+on property:sys.settings.powerlimit=1
+   write /sys/class/power_supply/battery/charging_enabled 0
+
+on property:sys.settings.powerlimit=0
+   write /sys/class/power_supply/battery/charging_enabled 1
+/* LAFITE-707 xiongzu'an 20160119 end > */
+
+#< LAFITE-3210 xiongzu'an 20160307 begin
+on property:sys.usb.config.powerlimit=1
+    write /sys/class/power_supply/battery/system_temp_level 3
+
+on property:sys.usb.config.powerlimit=0
+    write /sys/class/power_supply/battery/system_temp_level 0
+# LAFITE-3210 xiongzu'an 20160307 end >
+
+#LAFITE-395:yuquan added type-c connecting through CC cable begin
+on property:sys.typec.set.mode=master
+   write /sys/class/type-c/info/mode 0
+
+on property:sys.typec.set.mode=client
+   write /sys/class/type-c/info/mode 3
+#LAFITE-395:yuquan added type-c connecting through CC cable end
+
+#< LAFITE-15942 guohongtao 20160701 begin>
+on property:persist.sys.usb.gps.notify=1
+    write /sys/class/type-c/info/vbus_status 1
+on property:persist.sys.usb.gps.notify=2
+    write /sys/class/type-c/info/vbus_status 0
+#< LAFITE-15942 guohongtao 20160701 end>
+
+# add by letv for reduced power rate when normal charge be selected begin
+on property:persist.sys.le_fast_chrg_enable=1
+    write /sys/class/power_supply/battery/le_quick_charge_mode 0
+on property:persist.sys.le_fast_chrg_enable=0
+    write /sys/class/power_supply/battery/le_quick_charge_mode 1
+# add by letv for reduced power rate when normal charge be selected end
+
+/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, begin*/
+on charger_svc
+    trigger early-fs
+    trigger fs
+    trigger post-fs
+    trigger post-fs-data
+    trigger firmware_mounts_complete
+    trigger early-boot
+    trigger boot
+/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, end*/
+
+on charger
+    setprop debug.charger.on 1
+
+#< LAFITE-347 guohongtao 2016-01-14 begin>
+service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
+    class main
+    user root
+    oneshot
+    disabled
+
+service opendiagcharge /system/bin/sh /init.s2.switch.diag.sh
+    class main
+    user root
+    oneshot
+    disabled
+
+service openusbdiag /system/bin/sh /init.s2.open.usbdiag.sh
+    disabled
+    user root
+    oneshot
+
+on property:persist.sys.usb.open_diag=true
+    setprop persist.sys.usb.open_diag false
+    start openusbdiag
+
+#huanghaining 2016-03-25 add for ntfs begin
+    #load ufsd modules
+on fs
+    insmod /system/lib/modules/jnl.ko
+    insmod /system/lib/modules/ufsd.ko
+#huanghaining 2016-03-25 add for ntfs end
+#< LAFITE-260 xingle 20151226 begin
+service currenttimeout /system/bin/sh /system/etc/init.currenttest.timeout.sh
+#< LAFITE-1155 zhaodonghong 20160307 begin
+   #class main
+# LAFITE-1155 zhaodonghong 20160307 end>
+    user root
+    oneshot
+    seclabel u:r:shell:s0
+on property:sys.screentimeout=1
+    start currenttimeout
+#LAFITE-260 xingle 20151226 end >
+
+#/*< LAFITE-39 rentianzhi 2016-01-06 begin*/
+service yep_qmi_server /system/bin/yep_qmi_server
+    class core
+    user root
+    seclabel u:r:yep_qmi_server:s0
+#/* LAFITE-39 rentianzhi 2016-01-06 end >*/
+
+# <LAFITE-269 yanwenlong 2015-12-25 begin
+service yepdiag /system/bin/yepdiag
+    class core
+    user root
+    seclabel u:r:yepdiag:s0
+# LAFITE-269 yanwenlong 2015-12-25 end
+# <LAFITE-380 wangqi 2016-01-06 begin
+#excute the mmi service
+service  openfactory /system/bin/sh /system/etc/openfactory.sh
+    class main
+    user root
+    oneshot
+#excute the mmi function
+on property:sys.config.factorystart=1
+   start openfactory
+# <LAFITE-380 wangqi 2016-01-06 end
+
+# < LAFITE-183 sunyaxi 20151225 begin
+on post-fs-data
+    mkdir /data/system/bootrecorder 0740 root system
+    start br-init
+    # < LAFITE-593 sunyaxi 20160115 begin
+    symlink /sdcard /storage/sdcard0
+    # LAFITE-593 sunyaxi 20160115 end >
+
+    # add data/fastplay for bootvideo
+    mkdir /data/fastplay 0777 system system
+
+    # to create a link for /data/fastplay
+    symlink /data/fastplay /fastplay
+
+# create folder and files
+service br-init /system/bin/bootrecorder -init
+    user root
+    group system
+    seclabel u:r:recorder:s0
+    disabled
+    oneshot
+
+# servicemanager
+service br-sm /system/bin/bootrecorder -servicemanager
+    user root
+    group system
+    seclabel u:r:recorder:s0
+    disabled
+    oneshot
+
+# zygote
+service br-z /system/bin/bootrecorder -zygote
+    user root
+    group system
+    seclabel u:r:recorder:s0
+    disabled
+    oneshot
+# systemserver
+service br-ss /system/bin/bootrecorder -systemserver
+    user root
+    group system
+    seclabel u:r:recorder:s0
+    disabled
+    oneshot
+# surfaceflinger
+service br-sf /system/bin/bootrecorder -surfaceflinger
+    user root
+    group system
+    seclabel u:r:recorder:s0
+    disabled
+    oneshot
+
+# LAFITE-183 sunyaxi 20151225 end >
+# < LAFITE-270 chaofubang 20160108 begin
+service audio_test /system/bin/sh /system/bin/AudioLoopback.sh
+    class main
+    user root
+    oneshot
+    disabled
+
+on property:debug.audiotest.start=1
+    start audio_test
+# LAFITE-270 chaofubang 20160108 end >
+
+# < LAFITE-11163 zhuyan 20160513 begin (1/2)
+# < LAFITE-14356 chaofubang 20160616 begin
+service low_up_sar /system/bin/sh /system/bin/low_up_sar.sh
+    user root
+    oneshot
+    disabled
+    seclabel u:r:shell:s0
+
+on property:sys.audio.earpiece=1
+    start low_up_sar
+
+on property:sys.audio.earpiece=2
+    start low_up_sar
+# < LAFITE-14356 chaofubang 20160616 end
+
+
+# < LAFITE-369 jiangjie 2016-01-11 begin
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+
+#< LAFITE-786 jiangjie 20160121 begin
+service gx_fpd /system/bin/gx_fpd
+    class late_start
+    user root
+    group root system
+    seclabel u:r:goodix:s0
+# LAFITE-786 jiangjie 20160121 end >
+
+#boot start fidoca daemon
+service fidoca /system/vendor/bin/fidoca
+    class late_start
+    user system
+    group system
+
+
+on property:sys.product_model.get=1
+    setprop ro.product.model ${persist.sys.product.model}
+    setprop ro.product.letv_model ${persist.sys.product.model}
+# LAFITE-5695 yanwenlong 2016-3-23 end >
+
+# < LAFITE-62 tianfangzhou 2016-01-21 begin
+chmod 0644 /system/etc/firmware/widevine.b00
+chmod 0644 /system/etc/firmware/widevine.b01
+chmod 0644 /system/etc/firmware/widevine.b02
+chmod 0644 /system/etc/firmware/widevine.b03
+chmod 0644 /system/etc/firmware/widevine.mdt
+# LAFITE-62 tianfangzhou 2016-01-21 end >
+
+on post-fs-data
+    mkdir /data/tinyproxy 0777
+
+service tinyproxy /system/bin/tinyproxy
+    class main
+    user root
+    socket letvbackup stream 0666 system system
+    group system system
+    disabled
+    oneshot
+
+on property:service.tinyproxy.enable=0
+    stop tinyproxy
+
+on property:service.tinyproxy.enable=1
+    start tinyproxy
+
+# Used to set USB configuration at boot and to switch the configuration
+#on property:sys.boot_completed=1 && property:persist.sys.usb.debug_functions=*
+#    setprop sys.usb.config ${persist.sys.usb.debug_functions}

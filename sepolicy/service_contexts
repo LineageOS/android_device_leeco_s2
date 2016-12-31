@@ -1,0 +1,2 @@
+android.vendor.fido.IFidoDaemon           u:object_r:fidoca_service:s0
+goodix.fp                                 u:object_r:goodix_service:s0

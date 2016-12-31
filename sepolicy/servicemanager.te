@@ -1,0 +1,7 @@
+allow servicemanager fidoca:dir { r_dir_perms };
+allow servicemanager fidoca:file { r_file_perms };
+allow servicemanager fidoca:process { getattr };
+
+allow servicemanager goodix:dir { r_dir_perms };
+allow servicemanager goodix:file { r_file_perms };
+allow servicemanager goodix:process { getattr };

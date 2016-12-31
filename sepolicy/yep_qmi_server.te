@@ -1,0 +1,7 @@
+type yep_qmi_server, domain;
+type yep_qmi_server_exec, exec_type, file_type;
+
+init_daemon_domain(yep_qmi_server)
+
+allow yep_qmi_server self:socket { create read ioctl bind };
+allow yep_qmi_server self:capability { net_raw };

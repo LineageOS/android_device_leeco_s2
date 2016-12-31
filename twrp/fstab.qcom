@@ -1,0 +1,29 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+#mount point    fstype      device                                         device2               flags
+/boot           emmc        /dev/block/bootdevice/by-name/boot                                   flags=display="Boot";backup=1;wipeingui             
+/cache          ext4        /dev/block/bootdevice/by-name/cache                                  flags=display="Cache";backup=0;wipeingui             
+/data           ext4        /dev/block/bootdevice/by-name/userdata                               flags=encryptable=footer;length=-16384 
+/recovery       emmc        /dev/block/bootdevice/by-name/recovery                               flags=display="Recovery";backup=1
+/system_image   emmc        /dev/block/bootdevice/by-name/system                                 flags=backup=1;
+/system         ext4        /dev/block/bootdevice/by-name/system                                 flags=display="System";backup=1;wipeingui
+/persist        ext4        /dev/block/bootdevice/by-name/persist         				         flags=display="Persist";backup=1
+/adspso         emmc        /dev/block/bootdevice/by-name/dsp             				         flags=backup=1;display="firmware"
+/cmnlib         emmc        /dev/block/bootdevice/by-name/cmnlib          				         flags=backup=1;subpartitionof=/adspso
+/ddr            emmc        /dev/block/bootdevice/by-name/DDR             				         flags=backup=1;subpartitionof=/adspso  
+/devinfo        emmc        /dev/block/bootdevice/by-name/devinfo         				         flags=backup=1;subpartitionof=/adspso
+/emmc_appsboot  emmc        /dev/block/bootdevice/by-name/aboot           				         flags=backup=1;subpartitionof=/adspso
+/hyp            emmc        /dev/block/bootdevice/by-name/hyp             				         flags=backup=1;subpartitionof=/adspso
+/keymaster      emmc        /dev/block/bootdevice/by-name/keymaster       				         flags=backup=1;subpartitionof=/adspso
+/misc           emmc        /dev/block/bootdevice/by-name/misc            				         flags=backup=1;subpartitionof=/adspso
+/NON-HLOS       emmc        /dev/block/bootdevice/by-name/modem           				         flags=backup=1;subpartitionof=/adspso
+/oemconfig      emmc        /dev/block/bootdevice/by-name/OEMCONFIG       				         flags=backup=1;subpartitionof=/adspso
+/rpm            emmc        /dev/block/bootdevice/by-name/rpm             				         flags=backup=1;subpartitionof=/adspso
+/sbl1           emmc        /dev/block/bootdevice/by-name/sbl1            				         flags=backup=1;subpartitionof=/adspso
+/st1            emmc        /dev/block/bootdevice/by-name/modemst1        				         flags=backup=1;subpartitionof=/adspso
+/st2            emmc        /dev/block/bootdevice/by-name/modemst2        				         flags=backup=1;subpartitionof=/adspso
+/tz             emmc        /dev/block/bootdevice/by-name/tz              				         flags=backup=1;subpartitionof=/adspso
+/usbstorage     vfat        /dev/block/sda1         			          /dev/block/sda    	 flags=display="USB";storage;wipeingui;removable
+

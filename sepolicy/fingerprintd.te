@@ -1,0 +1,1 @@
+allow fingerprintd goodix_service:service_manager { find };

@@ -1,0 +1,10 @@
+[
+  {
+    "repository": "android_device_qcom_common",
+    "target_path": "device/qcom/common"
+  },
+  {
+    "repository": "android_kernel_leeco_msm8952",
+    "target_path": "kernel/leeco/msm8952"
+  }  
+]
