@@ -1,0 +1,29 @@
+on charger
+    # low power governing
+    write /sys/devices/system/cpu/cpu1/online 0
+    write /sys/devices/system/cpu/cpu2/online 0
+    write /sys/devices/system/cpu/cpu3/online 0
+    write /sys/devices/system/cpu/cpu4/online 0
+    write /sys/devices/system/cpu/cpu5/online 0
+    write /sys/devices/system/cpu/cpu6/online 0
+    write /sys/devices/system/cpu/cpu7/online 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+
+    # Disable CPU retention
+    write /sys/module/lpm_levels/system/a53/cpu0/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a53/cpu1/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a53/cpu2/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a53/cpu3/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a72/cpu4/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a72/cpu5/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a72/cpu6/retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a72/cpu7/retention/idle_enabled 0
+
+    # Disable L2 retention
+    write /sys/module/lpm_levels/system/a53/a53-l2-retention/idle_enabled 0
+    write /sys/module/lpm_levels/system/a72/a72-l2-retention/idle_enabled 0
+
+service charger /sbin/healthd -c
+    class charger
+    critical
+    seclabel u:r:healthd:s0

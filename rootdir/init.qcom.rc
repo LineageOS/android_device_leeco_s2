@@ -28,6 +28,7 @@
 import init.s2.rc
 import init.target.rc
 
+import init.qcom.power.rc
 import init.qcom.factory.rc
 
 on early-init

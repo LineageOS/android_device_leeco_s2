@@ -138,6 +138,10 @@ PRODUCT_PACKAGES += \
     Snap
 #camera.msm8952
 
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
+
 # CMActions
 PRODUCT_PACKAGES += \
     CMActions
@@ -164,6 +168,10 @@ PRODUCT_PACKAGES += \
 # Fingerprint
 PRODUCT_PACKAGES += \
     fingerprintd
+
+# Healthd
+PRODUCT_PACKAGES += \
+    libhealthd.msm8952
 
 # IR
 PRODUCT_PACKAGES += \

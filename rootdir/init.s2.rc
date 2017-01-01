@@ -157,20 +157,6 @@ on property:persist.sys.le_fast_chrg_enable=0
     write /sys/class/power_supply/battery/le_quick_charge_mode 1
 # add by letv for reduced power rate when normal charge be selected end
 
-/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, begin*/
-on charger_svc
-    trigger early-fs
-    trigger fs
-    trigger post-fs
-    trigger post-fs-data
-    trigger firmware_mounts_complete
-    trigger early-boot
-    trigger boot
-/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, end*/
-
-on charger
-    setprop debug.charger.on 1
-
 #< LAFITE-347 guohongtao 2016-01-14 begin>
 service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
     class main
