@@ -167,10 +167,10 @@ PRODUCT_PACKAGES += \
 
 # IR
 PRODUCT_PACKAGES += \
-	consumerir.msm8952
+    consumerir.msm8952
 
 PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml
+    frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml
 
 # IRQ
 PRODUCT_COPY_FILES += \
@@ -289,8 +289,8 @@ PRODUCT_PACKAGES += \
     wcnss_service
 
 PRODUCT_COPY_FILES += \
-    kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
-    kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
+    kernel/leeco/msm8976/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
+    kernel/leeco/msm8976/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.disableWifiApFirmwareReload=true
