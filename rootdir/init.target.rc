@@ -92,22 +92,12 @@ on property:ro.config.zram=true
     swapon_all fstab.qcom
     write /proc/sys/vm/swappiness 100
 
-service qfp-daemon /system/bin/qfp-daemon
-   class late_start
-   user system
-   group system drmrpc
-
 # Allow usb charging to be disabled peristently
 on property:persist.usb.chgdisabled=1
     write /sys/class/power_supply/battery/charging_enabled 0
 
 on property:persist.usb.chgdisabled=0
     write /sys/class/power_supply/battery/charging_enabled 1
-
-service qrngd /system/bin/qrngd -f
-   class main
-   user root
-   group root
 
 service qseecomd /system/bin/qseecomd
    class core
@@ -118,13 +108,6 @@ service perfd /system/vendor/bin/perfd
    class main
    user root
    disabled
-
-service seempd /system/bin/seempd
-   class late_start
-   user system
-   group system
-   socket seempdw dgram 0666 system system
-   oneshot
 
 service thermal-engine /system/vendor/bin/thermal-engine
    class main
@@ -225,18 +208,6 @@ on property:init.svc.zygote=restarting
 
 #LAFITE-8049  color service issue wangtianyu 2016-04-20 end >
 
-service dts_configurator /system/bin/dts_configurator
-    class late_start
-    user system
-    group media audio
-    oneshot
-
-service dtseagleservice /system/bin/dts_eagle_service
-    class late_start
-    user system
-    group audio media
-    disabled
-
 service adsprpcd /system/bin/adsprpcd
     class main
     user media
@@ -246,9 +217,6 @@ service hvdcp_opti /system/bin/hvdcp_opti
     class main
     user root
     group root
-
-on property:init.svc.dts_configurator=stopped
-    start dtseagleservice
 
 service per_mgr /system/bin/pm-service
     class core
