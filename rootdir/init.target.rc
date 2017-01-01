@@ -225,20 +225,6 @@ on property:init.svc.zygote=restarting
 
 #LAFITE-8049  color service issue wangtianyu 2016-04-20 end >
 
-#< LAFITE-1560 wanghao 2016-02-17 begin
-#/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, begin*/
-on charger
-    wait /dev/block/bootdevice/by-name/system
-    mount ext4 /dev/block/bootdevice/by-name/system /system ro barrier=1
-    load_system_props
-    start qcom-post-boot
-    start hvdcp_opti
-    start qcom-c_main-sh
-    start irsc_util
-    start qcomsysd
-#/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, end*/
-# LAFITE-1560 wanghao 2016-02-17 end >
-
 service dts_configurator /system/bin/dts_configurator
     class late_start
     user system
