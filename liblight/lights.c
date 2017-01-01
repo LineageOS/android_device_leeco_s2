@@ -35,18 +35,11 @@
 
 /******************************************************************************/
 
-struct backlight_config {
-    int cur_brightness, max_brightness;
-};
-
 static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 static struct light_state_t g_attention;
 static struct light_state_t g_notification;
 static struct light_state_t g_battery;
-static struct backlight_config g_backlight; // For panel backlight
-
-#define MAX_INPUT_BRIGHTNESS 255
 
 char const*const RED_LED_FILE
         = "/sys/class/leds/red/brightness";
@@ -78,39 +71,6 @@ char const*const BLUE_BLINK_FILE
 /**
  * device methods
  */
-
-static int 
-read_int(char const *path)
-{
-    int fd, len;
-    int num_bytes = 10;
-    char buf[11];
-    int retval;
-
-    fd = open(path, O_RDONLY);
-    if (fd < 0) {
-        ALOGE("%s: failed to open %s\n", __func__, path);
-        goto fail;
-    }
-
-    len = read(fd, buf, num_bytes - 1);
-    if (len < 0) {
-        ALOGE("%s: failed to read from %s\n", __func__, path);
-        goto fail;
-    }
-
-    buf[len] = '\0';
-    close(fd);
-
-    // no endptr, decimal base
-    retval = strtol(buf, NULL, 10);
-    return retval == 0 ? -1 : retval;
-
-fail:
-    if (fd >= 0)
-        close(fd);
-    return -1;
-}
 
 static int
 write_int(char const* path, int value)
@@ -182,23 +142,8 @@ set_light_backlight(struct light_device_t* dev,
 {
     int err = 0;
     int brightness = rgb_to_brightness(state);
-    int max_brightness = g_backlight.max_brightness;
-
-    /*
-     * If our max panel brightness is > 255, apply linear scaling across the
-     * accepted range.
-     */
-    if (max_brightness > MAX_INPUT_BRIGHTNESS) {
-        int old_brightness = brightness;
-        brightness = brightness * max_brightness / MAX_INPUT_BRIGHTNESS;
-        ALOGD("%s: scaling brightness %d => %d\n", __func__,
-            old_brightness, brightness);
-    }
-
     pthread_mutex_lock(&g_lock);
     err = write_int(LCD_FILE, brightness);
-    if (err == 0)
-        g_backlight.cur_brightness = brightness;
     pthread_mutex_unlock(&g_lock);
     return err;
 }
@@ -353,15 +298,6 @@ static int open_lights(const struct hw_module_t* module, char const* name,
     else
         return -EINVAL;
 
-    int max_brightness = read_int(LCD_MAX_BRIGHTNESS_FILE);
-
-    if (max_brightness <= 0) {
-        ALOGE("%s: failed to read max lcd brightness, fallback to 255!",
-            __func__);
-        max_brightness = 255;
-    }
-    g_backlight.max_brightness = max_brightness;
-
     pthread_once(&g_init, init_globals);
 
     struct light_device_t *dev = malloc(sizeof(struct light_device_t));
@@ -393,7 +329,7 @@ struct hw_module_t HAL_MODULE_INFO_SYM = {
     .version_major = 1,
     .version_minor = 0,
     .id = LIGHTS_HARDWARE_MODULE_ID,
-    .name = "Lights Module",
+    .name = "S2 Lights Module",
     .author = "The LineageOS Project",
     .methods = &lights_module_methods,
 };
