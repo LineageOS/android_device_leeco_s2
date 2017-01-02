@@ -340,9 +340,11 @@ on property:persist.sys.ssr.enable_ramdumps=0
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
     write /sys/block/dm-0/queue/read_ahead_kb 128
-
     # CPE fw_name used by sound trigger HAL
     chown media audio /sys/kernel/wcd_cpe0/fw_name
+    start qcom-post-boot
+    start cs-post-boot
+    setprop sys.io.scheduler "bfq"
 
 on property:persist.radio.atfwd.start=false
     stop atfwd
@@ -767,13 +769,6 @@ service qcom-post-boot /system/bin/sh /init.qcom.post_boot.sh
     disabled
     oneshot
 
-service qti-testscripts /system/bin/sh /system/etc/init.qcom.testscripts.sh
-    class late_start
-    user root
-    disabled
-    oneshot
-    seclabel u:r:qti-testscripts:s0
-
 service wifi-sdio-on /system/bin/sh /system/etc/init.qcom.sdio.sh
     class late_start
     group wifi inet
@@ -791,13 +786,6 @@ service config-zram /system/bin/sh /system/etc/init.qcom.zram.sh
    user root
    disabled
    oneshot
-
-on property:sys.boot_completed=1
-    start qcom-post-boot
-    start qti-testscripts
-# < LAFITE-17285 yanwenlong 2016-8-5 begin
-#   start config-zram
-# LAFITE-17285 yanwenlong 2016-8-5 end >
 
 service atfwd /system/bin/ATFWD-daemon
     class late_start
@@ -989,9 +977,6 @@ service cs-post-boot /system/bin/sh /persist/coresight/qdss.agent.sh
     user root
     disabled
     oneshot
-
-on property:sys.boot_completed=1
-    start cs-post-boot
 
 on property:sys.dbg.coresight.enable=1
     write /persist/coresight/enable 1
