@@ -271,7 +271,7 @@ void healthd_board_mode_charger_set_backlight(bool enable)
     int value;
 
     if (enable)
-        value = 1000;
+        value = 255;
     else
         value = 0;
 
