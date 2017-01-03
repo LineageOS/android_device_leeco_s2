@@ -16,15 +16,30 @@ qcom.hw.aac.encoder=true
 rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0
 ril.subscription.types=NV,RUIM
+DEVICE_PROVISIONED=1
 ro.telephony.default_network=9
 telephony.lteOnCdmaDevice=0
 telephony.lteOnGsmDevice=1
 persist.radio.multisim.config=dsds
-persist.radio.calls.on.ims=0
-persist.radio.jbims=0
 persist.radio.csvt.enabled=false
 persist.radio.rat_on=combine
 persist.radio.mt_sms_ack=20
+
+# IMS
+# Enable IMS service by default
+persist.radio.calls.on.ims=0
+# qmi property to send unsolicited call state for PS call only to ims pipe & not to ril
+persist.radio.jbims=0
+# Property to enable VT function in IMS library
+#persist.radio.VT_ENABLE = 1
+# Property to enable HYBRID mode at android side, IMS daemon will use qmi to communicate with modem
+#persist.radio.VT_HYBRID_ENABLE = 1
+# Property to enable VT ROTATION in ims library
+#persist.radio.ROTATION_ENABLE = 1
+# Property to enable PLI for VT call video quality
+#persist.radio.RATE_ADAPT_ENABLE = 1
+# Property to disable IMS_DEBUG log
+#persist.ims.disableDebugLogs = 1
 
 # NITZ
 persist.rild.nitz_plmn="" \
