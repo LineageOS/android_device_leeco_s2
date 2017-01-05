@@ -114,7 +114,13 @@ BOARD_QTI_CAMERA_32BIT_ONLY := true
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BACKLIGHT_PATH := "/sys/class/leds/lcd-backlight/brightness"
 BLINK_PATH := "/sys/class/leds/red/blink"
+#WITH_CM_CHARGER := false
+
+#BOARD_HAL_STATIC_LIBRARIES := \
+#    libhealthd.msm8952
 
 # CNE
 BOARD_USES_QCNE := true
