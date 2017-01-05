@@ -25,18 +25,14 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
 
-import init.carrier.rc
+import init.s2.usb.rc
 
 on early-init
     mkdir /firmware 0771 system system
     mkdir /system 0777 root root
     symlink /data/tombstones /tombstones
     mkdir /dsp 0771 media media
-
-#on post-fs
-#    export LD_PRELOAD libNimsWrap.so
 
 on fs
     wait /dev/block/bootdevice
@@ -45,7 +41,6 @@ on fs
     # Keeping following partitions outside fstab file. As user may not have
     # these partition flashed on the device. Failure to mount any partition in fstab file
     # results in failure to launch late-start class.
-
     wait /dev/block/bootdevice/by-name/cache
     mount ext4 /dev/block/bootdevice/by-name/cache /cache nosuid nodev barrier=1
 
@@ -61,12 +56,7 @@ on fs
     wait /dev/block/bootdevice/by-name/modem
     mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     #write /sys/kernel/boot_adsp/boot 1
-#< LAFITE-27 guohongtao 2016-01-14 begin>
-    start qcom-serialno-sh
-#< LAFITE-348 shenxinyu 2016-01-18 begin>
-    start opendiagcharge
-#< LAFITE-348 shenxinyu 2016-01-18 end>
-#< LAFITE-27 guohongtao 2016-01-14 end>
+
 on post-fs-data
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
@@ -78,7 +68,79 @@ on post-fs-data
     mkdir /data/misc/dts 0770 media audio
     mkdir /data/misc/audio_pp 0771 media audio
 
-#start camera server as daemon
+    chown media media /dev/i2c_smartpa
+    chmod 0660 /dev/i2c_smartpa
+
+    # sensors
+    chown input system /sys/devices/platform/hardware_info/als_ps
+    chown input system /sys/devices/platform/hardware_info/gsensor
+    chown input system /sys/devices/platform/hardware_info/gyro
+    chown input system /sys/devices/platform/hardware_info/msensor
+    chmod 0664 /sys/devices/platform/hardware_info/als_ps
+    chmod 0664 /sys/devices/platform/hardware_info/gsensor
+    chmod 0664 /sys/devices/platform/hardware_info/gyro
+    chmod 0664 /sys/devices/platform/hardware_info/msensor
+
+    # type-c
+    chown system system /sys/class/type-c/info/orientation
+    chmod 0644 /sys/class/type-c/info/orientation
+    chown system system /sys/class/type-c/info/ready
+    chmod 0664 /sys/class/type-c/info/ready
+    write /sys/class/type-c/info/ready 1
+    chown system system /sys/class/type-c/info/mode
+    chmod 0664 /sys/class/type-c/info/mode
+    chown system system /sys/class/type-c/info/result
+    chmod 0644 /sys/class/type-c/info/result
+    chmod 660 /sys/class/type-c/info/vbus_status
+    chown system system /sys/class/type-c/info/vbus_status
+
+    # audio
+    chown system system /system/bin/ext_spk_loopback
+    chmod 0755 /system/bin/ext_spk_loopback
+    chmod 0644 /sys/devices/soc.0/c051000.sound/usb_audio
+    chmod 0644 /sys/devices/soc.0/c051000.sound/usb_audio_pid
+    chmod 0644 /sys/module/snd_soc_msm8x16/parameters/headset_swap
+    chmod 0644 /sys/module/snd_soc_msm8x16/parameters/usb_audio_mode
+    chown media media /sys/devices/soc.0/c051000.sound/usb_audio
+    chown media media /sys/devices/soc.0/c051000.sound/usb_audio_pid
+    chown media media /sys/module/snd_soc_msm8x16/parameters/headset_swap
+    chown media media /sys/module/snd_soc_msm8x16/parameters/usb_audio_mode
+
+    # fingerprint
+    chown system system  /dev/goodix_fp
+    chmod 0644 /dev/goodix_fp
+    chown system system  /system/bin/gx_fpd
+    chmod 0755 /system/bin/gx_fpd
+
+    chmod 660 /persist/serialno
+    chown system system /persist/serialno
+
+    # ir
+    chmod 666 /sys/remote/enable
+    chown system system /sys/remote/enable
+    chmod 666 /dev/ttyHSL1
+    chmod 666 /dev/ttyHS1
+    chown system system /dev/ttyHSL1
+    chown system system /dev/ttyHS1
+
+    # leds
+    chown system system /sys/module/leds_aw2013/parameters/aw2013_sleep_led
+    chmod 0666 /sys/module/leds_aw2013/parameters/aw2013_sleep_led
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/blue/blink
+    chown system camera /sys/class/leds/led:torch_0/brightness
+    chmod 0664 /sys/class/leds/led:torch_0/brightness
+    chown system camera /sys/class/leds/led:torch_1/brightness
+    chmod 0664 /sys/class/leds/led:torch_1/brightness
+    chown system camera /sys/class/leds/led:switch/brightness
+    chmod 0664 /sys/class/leds/led:switch/brightness
+
+    # reduced power rate when normal charge
+    chown system system /sys/class/power_supply/battery/le_quick_charge_mode
+    chmod 666 /sys/class/power_supply/battery/le_quick_charge_mode
+
+# start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
     user camera
@@ -87,7 +149,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
 on init
    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
-#enable zram
+# enable zram
 on property:ro.config.zram=true
     swapon_all fstab.qcom
     write /proc/sys/vm/swappiness 100
@@ -129,8 +191,8 @@ service audiod /system/bin/audiod
 
 on boot
     start rmt_storage
-    insmod /system/lib/modules/adsprpc.ko
-# access permission for secure touch
+
+    # access permission for secure touch
     chmod 0660 /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch_enable
     chmod 0440 /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch
     chmod 0660 /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch_enable
@@ -141,44 +203,14 @@ on boot
     chown system drmrpc /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch
     write /proc/sys/kernel/sched_boost 1
 
+    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/fw_name PR1702898-s3528t_00260005_00380008.img
+    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/update_fw 1
+
 service wcnss-service /system/bin/wcnss_service
     class main
     user system
     group system wifi radio
     oneshot
-
-service imsqmidaemon /system/bin/imsqmidaemon
-    class main
-    user system
-    socket ims_qmid stream 0660 system radio
-    group radio net_raw log diag
-
-service imsdatadaemon /system/bin/imsdatadaemon
-    class main
-    user system
-    socket ims_datad stream 0660 system radio
-    group system wifi radio inet net_raw log diag net_admin
-    disabled
-
-on property:sys.ims.QMI_DAEMON_STATUS=1
-    start imsdatadaemon
-
-service ims_rtp_daemon /system/bin/ims_rtp_daemon
-   class main
-   user system
-   socket ims_rtpd stream 0660 system radio
-   group radio net_raw diag diag inet log
-   disabled
-
-service imscmservice /system/bin/imscmservice
-   class main
-   user system
-   group radio net_raw diag diag log
-   disabled
-
-on property:sys.ims.DATA_DAEMON_STATUS=1
-    start ims_rtp_daemon
-    start imscmservice
 
 service ppd /system/vendor/bin/mm-pp-daemon
     class late_start
@@ -193,7 +225,7 @@ on property:init.svc.surfaceflinger=stopped
 on property:init.svc.surfaceflinger=running
     start ppd
 
-#<LAFITE-8049  color service issue wangtianyu 2016-04-20 begin
+# workaround for color service issue
 on property:init.svc.surfaceflinger=restarting
     stop ppd
 
@@ -205,8 +237,6 @@ on property:init.svc.zygote=running
 
 on property:init.svc.zygote=restarting
     stop ppd
-
-#LAFITE-8049  color service issue wangtianyu 2016-04-20 end >
 
 service adsprpcd /system/bin/adsprpcd
     class main
@@ -230,6 +260,63 @@ service energy-awareness /system/bin/energy-awareness
     oneshot
     disabled
 
-on boot
-    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/fw_name PR1702898-s3528t_00260005_00380008.img
-    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/update_fw 1
+service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
+    class main
+    user root
+    oneshot
+    disabled
+
+service yep_qmi_server /system/bin/yep_qmi_server
+    class core
+    user root
+    seclabel u:r:yep_qmi_server:s0
+
+service yepdiag /system/bin/yepdiag
+    class core
+    user root
+    seclabel u:r:yepdiag:s0
+
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+
+service gx_fpd /system/bin/gx_fpd
+    class late_start
+    user root
+    group root system
+    seclabel u:r:goodix:s0
+
+service fidoca /system/vendor/bin/fidoca
+    class late_start
+    user system
+    group system
+
+on property:persist.sys.le_fast_chrg_enable=1
+    write /sys/class/power_supply/battery/le_quick_charge_mode 0
+
+on property:persist.sys.le_fast_chrg_enable=0
+    write /sys/class/power_supply/battery/le_quick_charge_mode 1
+
+on property:sys.settings.powerlimit=1
+   write /sys/class/power_supply/battery/charging_enabled 0
+
+on property:sys.settings.powerlimit=0
+   write /sys/class/power_supply/battery/charging_enabled 1
+
+on property:sys.usb.config.powerlimit=1
+    write /sys/class/power_supply/battery/system_temp_level 3
+
+on property:sys.usb.config.powerlimit=0
+    write /sys/class/power_supply/battery/system_temp_level 0
+
+on property:sys.typec.set.mode=master
+   write /sys/class/type-c/info/mode 0
+
+on property:sys.typec.set.mode=client
+   write /sys/class/type-c/info/mode 3
+
+on property:persist.sys.usb.gps.notify=1
+    write /sys/class/type-c/info/vbus_status 1
+
+on property:persist.sys.usb.gps.notify=2
+    write /sys/class/type-c/info/vbus_status 0
