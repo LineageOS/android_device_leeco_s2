@@ -1,4 +1,7 @@
 on charger
+
+    mkdir /system
+
     wait /dev/block/bootdevice/by-name/system
     mount ext4 /dev/block/bootdevice/by-name/system /system ro barrier=1
 
@@ -31,9 +34,6 @@ on charger
 
     # Enable thermal
     write /sys/module/msm_thermal/core_control/enabled 1
-
-    # for debugging
-    #setprop persist.sys.usb.config mtp,adb
 
 service charger /sbin/healthd -c
     class charger
