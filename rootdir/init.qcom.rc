@@ -25,11 +25,10 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import init.s2.rc
-import init.target.rc
-
+import init.qcom.ims.rc
 import init.qcom.power.rc
-import init.qcom.factory.rc
+
+import init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -75,6 +74,8 @@ on boot
     chmod 0660 /sys/module/bluetooth_power/parameters/power
     chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
     chmod 0660 /sys/module/radio_iris_transport/parameters/fmsmd_set
+
+    # bluetooth
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
     chown bluetooth net_bt /dev/ttyHS0
@@ -83,14 +84,12 @@ on boot
     chmod 0660 /dev/ttyHS0
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
-
     chmod 0660 /dev/ttyHS2
     chown bluetooth bluetooth /dev/ttyHS2
-
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
-    #Create QMUX deamon socket area
+    # Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
     chmod 2770 /dev/socket/qmux_radio
     mkdir /dev/socket/qmux_audio 0770 media audio
@@ -102,7 +101,7 @@ on boot
 
     mkdir /persist/drm 0770 system system
 
-    #Create NETMGR daemon socket area
+    # Create NETMGR daemon socket area
     mkdir /dev/socket/netmgr 0750 radio radio
 
     setprop wifi.interface wlan0
@@ -339,7 +338,7 @@ on property:persist.sys.ssr.enable_ramdumps=0
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
-    write /sys/block/dm-0/queue/read_ahead_kb 128
+
     # CPE fw_name used by sound trigger HAL
     chown media audio /sys/kernel/wcd_cpe0/fw_name
     start qcom-post-boot
