@@ -170,7 +170,7 @@ PRODUCT_PACKAGES += \
     fingerprintd
 
 # Healthd
-PRODUCT_PACKAGES += \
+BOARD_HAL_STATIC_LIBRARIES := \
     libhealthd.msm8952
 
 # IR
