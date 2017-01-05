@@ -28,19 +28,31 @@ ro.telephony.call_ring.multiple=false
 
 # IMS
 # Enable IMS service by default
-persist.radio.calls.on.ims=0
+persist.radio.calls.on.ims=1
+
+# Force enable VoLTE by platform
+# This should normally be set via CarrierConfig
+#   KEY_CARRIER_VOLTE_AVAILABLE_BOOL
+#   Flag specifying whether VoLTE should be available for carrier, independent of carrier provisioning. 
+persist.dbg.volte_avail_ovr=1
+
 # qmi property to send unsolicited call state for PS call only to ims pipe & not to ril
-persist.radio.jbims=0
+persist.radio.jbims=1
+
 # Property to enable VT function in IMS library
-#persist.radio.VT_ENABLE = 1
+persist.radio.VT_ENABLE=1
+
 # Property to enable HYBRID mode at android side, IMS daemon will use qmi to communicate with modem
-#persist.radio.VT_HYBRID_ENABLE = 1
+persist.radio.VT_HYBRID_ENABLE=1
+
 # Property to enable VT ROTATION in ims library
-#persist.radio.ROTATION_ENABLE = 1
+persist.radio.ROTATION_ENABLE=1
+
 # Property to enable PLI for VT call video quality
-#persist.radio.RATE_ADAPT_ENABLE = 1
+#persist.radio.RATE_ADAPT_ENABLE=1
+
 # Property to disable IMS_DEBUG log
-#persist.ims.disableDebugLogs = 1
+#persist.ims.disableDebugLogs=1
 
 # NITZ
 persist.rild.nitz_plmn="" \
