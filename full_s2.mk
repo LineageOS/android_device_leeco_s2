@@ -18,7 +18,7 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit from h815 device
+# Inherit from s2 device
 $(call inherit-product, device/leeco/s2/device.mk)
 
 # Device identifier. This must come after all inclusions
