@@ -36,7 +36,7 @@
 #include <sys/timerfd.h>
 #include <linux/rtc.h>
 
-#include <healthd.h>
+#include <healthd/healthd.h>
 
 #define LOGE(x...) do { KLOG_ERROR("charger", x); } while (0)
 #define LOGI(x...) do { KLOG_INFO("charger", x); } while (0)
