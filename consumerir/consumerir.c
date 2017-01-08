@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
- * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +18,6 @@
 #include <errno.h>
 #include <malloc.h>
 #include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <cutils/log.h>
 #include <hardware/hardware.h>
 #include <hardware/consumerir.h>
@@ -36,39 +33,28 @@ static const consumerir_freq_range_t consumerir_freqs[] = {
     {.min = 56000, .max = 56000},
 };
 
-int fd = 0;
-static int consumerir_transmit(struct consumerir_device *dev,
-   int carrier_freq, int pattern[], int pattern_len)
+static int consumerir_transmit(struct consumerir_device *dev __unused,
+   int carrier_freq, const int pattern[], int pattern_len)
 {
-    int strlen;
-    int i;
-    char buffer[1024];
+    int total_time = 0;
+    long i;
 
-    memset(buffer, 0, 1024);
-
-    /* write the header */
-    strlen = sprintf(buffer, "%d,", carrier_freq);
-
-    /* write out the timing pattern */
     for (i = 0; i < pattern_len; i++)
-    {
-        strlen += sprintf(buffer + strlen, "%d,", pattern[i]);
-    }
+        total_time += pattern[i];
 
-    buffer[strlen - 1] = 0;
-
-    ALOGE("%s", __func__);
-    //write(fd, buffer, strlen - 1);
+    /* simulate the time spent transmitting by sleeping */
+    ALOGD("transmit for %d uS at %d Hz", total_time, carrier_freq);
+    usleep(total_time);
 
     return 0;
 }
 
-static int consumerir_get_num_carrier_freqs(struct consumerir_device *dev)
+static int consumerir_get_num_carrier_freqs(struct consumerir_device *dev __unused)
 {
     return ARRAY_SIZE(consumerir_freqs);
 }
 
-static int consumerir_get_carrier_freqs(struct consumerir_device *dev,
+static int consumerir_get_carrier_freqs(struct consumerir_device *dev __unused,
     size_t len, consumerir_freq_range_t *ranges)
 {
     size_t to_copy = ARRAY_SIZE(consumerir_freqs);
@@ -81,7 +67,6 @@ static int consumerir_get_carrier_freqs(struct consumerir_device *dev,
 static int consumerir_close(hw_device_t *dev)
 {
     free(dev);
-    close(fd);
     return 0;
 }
 
@@ -94,9 +79,8 @@ static int consumerir_open(const hw_module_t* module, const char* name,
     if (strcmp(name, CONSUMERIR_TRANSMITTER) != 0) {
         return -EINVAL;
     }
-
     if (device == NULL) {
-        ALOGE("%s: NULL device on open", __func__);
+        ALOGE("NULL device on open");
         return -EINVAL;
     }
 
@@ -113,14 +97,6 @@ static int consumerir_open(const hw_module_t* module, const char* name,
     dev->get_carrier_freqs = consumerir_get_carrier_freqs;
 
     *device = (hw_device_t*) dev;
-
-    fd = open("/dev/ttyHSL1", O_RDWR);
-
-    if (!fd) {
-        ALOGE("%s: Failed to open /dev/ttyHSL1", __func__);
-        return -EINVAL;
-    }
-
     return 0;
 }
 
@@ -134,8 +110,8 @@ consumerir_module_t HAL_MODULE_INFO_SYM = {
         .module_api_version = CONSUMERIR_MODULE_API_VERSION_1_0,
         .hal_api_version    = HARDWARE_HAL_API_VERSION,
         .id                 = CONSUMERIR_HARDWARE_MODULE_ID,
-        .name               = "Consumer IR Module",
-        .author             = "The LineageOS Project",
+        .name               = "Demo IR HAL",
+        .author             = "The Android Open Source Project",
         .methods            = &consumerir_module_methods,
     },
 };

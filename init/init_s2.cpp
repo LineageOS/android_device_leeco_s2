@@ -37,12 +37,11 @@
 
 void vendor_load_properties()
 {
-    char platform[PROP_VALUE_MAX];
-    int rc;
+    std::string platform;
 
-    rc = property_get("ro.board.platform", platform);
-    if (!rc || strncmp(platform, ANDROID_TARGET, PROP_VALUE_MAX))
-    return;
+    platform = property_get("ro.board.platform");
+    if (platform != ANDROID_TARGET)
+        return;
 
     property_set("ro.build.description", "s2-user 6.0.1 IEXCNFN5801809291S 63 release-keys");
     property_set("ro.build.fingerprint", "LeEco/Le2_CN/le_s2:6.0.1/IEXCNFN5801809291S/63:user/release-keys");
