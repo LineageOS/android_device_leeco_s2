@@ -1,0 +1,1 @@
+add_lunch_combo lineage_s2-userdebug
