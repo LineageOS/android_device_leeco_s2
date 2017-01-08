@@ -33,7 +33,6 @@ case "$target" in
 
         #Enable adaptive LMK and set vmpressure_file_min
         ProductName=`getprop ro.product.name`
-
         echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
         echo 81250 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
         MemTotalStr=`cat /proc/meminfo | grep MemTotal`
