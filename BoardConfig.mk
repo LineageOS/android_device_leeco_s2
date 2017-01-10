@@ -212,7 +212,7 @@ BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 include device/qcom/sepolicy/sepolicy.mk
 
 # OTA Assert
-TARGET_OTA_ASSERT_DEVICE := s2,le_s2,le_s2_ww
+TARGET_OTA_ASSERT_DEVICE := s2,s2ww,le_s2,le_s2_ww
 
 # inherit from the proprietary version
 -include vendor/leeco/s2/BoardConfigVendor.mk
