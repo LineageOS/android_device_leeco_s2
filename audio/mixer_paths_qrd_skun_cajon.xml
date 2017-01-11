@@ -303,13 +303,13 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia1" value="1" />
     </path>
 
-	<path name="deep-buffer-playback smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+    <path name="deep-buffer-playback smartpa">
+        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
     </path>
 
     <!-- for use with leeco audio hal -->
-	<path name="deep-buffer-playback-speaker smartpa">
-		<path name="deep-buffer-playback smartpa" />
+    <path name="deep-buffer-playback-speaker smartpa">
+        <path name="deep-buffer-playback smartpa" />
     </path>
 
     <path name="deep-buffer-playback bt-sco">
@@ -342,14 +342,14 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia5" value="1" />
     </path>
 
-	<path name="low-latency-playback smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
-	</path>
+    <path name="low-latency-playback smartpa">
+        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
+    </path>
 
     <!-- for use with leeco audio hal -->
-	<path name="low-latency-playback-speaker smartpa">
-		<path name="low-latency-playback smartpa" />
-	</path>
+    <path name="low-latency-playback-speaker smartpa">
+        <path name="low-latency-playback smartpa" />
+    </path>
 
     <path name="low-latency-playback speaker-protected">
         <path name="low-latency-playback" />
@@ -385,13 +385,13 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia3" value="1" />
     </path>
 
-	<path name="audio-ull-playback smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia3" value="1" />
+    <path name="audio-ull-playback smartpa">
+        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia3" value="1" />
     </path>
 
     <!-- for use with leeco audio hal -->
-	<path name="audio-ull-playback-speaker smartpa">
-		<path name="audio-ull-playback smartpa" />
+    <path name="audio-ull-playback-speaker smartpa">
+        <path name="audio-ull-playback smartpa" />
     </path>
 
     <path name="audio-ull-playback headphones">
@@ -428,13 +428,13 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia4" value="1" />
     </path>
 
-	<path name="compress-offload-playback smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia4" value="1" />
+    <path name="compress-offload-playback smartpa">
+        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia4" value="1" />
     </path>
 
     <!-- for use with leeco audio hal -->
-	<path name="compress-offload-playback-speaker smartpa">
-		<path name="compress-offload-playback smartpa" />
+    <path name="compress-offload-playback-speaker smartpa">
+        <path name="compress-offload-playback smartpa" />
     </path>
 
     <path name="compress-offload-playback speaker-protected">
@@ -466,13 +466,13 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia7" value="1" />
     </path>
 
-	<path name="compress-offload-playback2 smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia7" value="1" />
+    <path name="compress-offload-playback2 smartpa">
+        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia7" value="1" />
     </path>
 
     <!-- for use with leeco audio hal -->
-	<path name="compress-offload-playback2-speaker smartpa">
-		<path name="compress-offload-playback2 smartpa" />
+    <path name="compress-offload-playback2-speaker smartpa">
+        <path name="compress-offload-playback2 smartpa" />
     </path>
 
     <path name="compress-offload-playback2 bt-sco">
@@ -1041,6 +1041,12 @@
     </path>
 
     <path name="afe-proxy-playback afe-proxy">
+        <ctl name="AFE_PCM_RX Audio Mixer MultiMedia5" value="1" />
+    </path>
+
+    <path name="afe-proxy-playback smartpa">
+        <path name="afe-proxy-playback afe-proxy" />
+        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
     </path>
 
     <path name="afe-proxy-record afe-proxy">
@@ -1243,7 +1249,7 @@
         <ctl name="RX1 MIX2 INP1" value="IIR1" />
     </path>
 
-    <path name="sidetone-headphone">
+    <path name="sidetone-headphones">
         <path name="sidetone-iir" />
         <ctl name="RX1 MIX2 INP1" value="IIR1" />
         <ctl name="RX2 MIX2 INP1" value="IIR1" />
