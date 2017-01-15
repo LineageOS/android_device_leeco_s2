@@ -46,7 +46,7 @@ on init
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
-    write /sys/block/dm-0/queue/read_ahead_kb 2048
+
     # Allow subsystem (modem etc) debugging
     write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
     write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
@@ -397,6 +397,7 @@ on property:persist.env.fastdorm.enabled=true
 service cnd /system/bin/cnd
     class late_start
     socket cnd stream 660 root inet
+    group root wakelock
 
 service dpmd /system/bin/dpmd
     class late_start
@@ -410,6 +411,7 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
+    group system wakelock
 
 service tftp_server /system/bin/tftp_server
    class main
@@ -515,12 +517,12 @@ service qmiproxy /system/bin/qmiproxy
 service qmuxd /system/bin/qmuxd
     class main
     user root
-    group radio audio bluetooth gps nfc qcom_diag
+    group radio audio bluetooth wakelock gps nfc qcom_diag
 
 service netmgrd /system/bin/netmgrd
     class main
     user root
-    group radio
+    group radio wakelock
 
 service ipacm-diag /system/bin/ipacm-diag
     class main
@@ -921,8 +923,8 @@ on property:sys.dbg.coresight.enable=0
     write /persist/coresight/enable 0
 
 # bugreport is triggered by developer options
-service bugreport /system/bin/dumpstate -d -p -B \
-        -o /data/data/com.android.shell/files/bugreports/bugreport
+service bugreport /system/bin/dumpstate -d -p -B -z \
+        -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
     class main
     disabled
     oneshot
