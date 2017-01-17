@@ -921,10 +921,3 @@ on property:sys.dbg.coresight.enable=1
 
 on property:sys.dbg.coresight.enable=0
     write /persist/coresight/enable 0
-
-# bugreport is triggered by developer options
-service bugreport /system/bin/dumpstate -d -p -B -z \
-        -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
