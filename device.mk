@@ -174,6 +174,7 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
+    fingerprint.msm8952 \
     fingerprintd
 
 # IR

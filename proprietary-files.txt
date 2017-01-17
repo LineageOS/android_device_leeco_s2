@@ -9,7 +9,7 @@ sbin/qfintverify
 -app/TimeService/TimeService.apk
 lib64/libqdMetaData.so
 lib64/libloc_eng.so
-lib64/hw/fingerprint.default.so
+lib64/hw/fingerprint.vendor.msm8952.so
 lib64/hw/sensors.msm8952.so
 lib64/hw/gxfingerprint.default.so
 lib64/hw/gps.default.so
