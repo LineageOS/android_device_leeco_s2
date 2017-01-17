@@ -156,9 +156,6 @@ TARGET_PROVIDES_KEYMASTER := true
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
-# Malloc
-MALLOC_SVELTE := true
-
 # Media
 TARGET_HAVE_SIGNED_VENUS_FW := true
 
