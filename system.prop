@@ -216,6 +216,10 @@ ro.cutoff_voltage_mv=3200
 # set the debug configuration for 8956/76
 persist.debug.8976.config=true
 
+# Camera
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
+
 # force HAL1 for below packages
 camera.hal1.packagelist=com.skype.raider,com.google.android.talk
 
