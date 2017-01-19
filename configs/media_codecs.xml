@@ -167,8 +167,6 @@ _________________________________________________________________
         <!-- Audio Hardware  -->
         <!-- Audio Software  -->
         <MediaCodec name="OMX.qti.audio.decoder.flac" type="audio/flac" />
-        <!-- add by liulijun to add DTS M8 decoder support for LAFITE-70 20151228 -->
-        <MediaCodec name="OMX.DTS.audio_decoder.dts" type="audio/dts" />
         <!-- Video Hardware  -->
         <MediaCodec name="OMX.qcom.video.decoder.avc" type="video/avc" >
             <Quirk name="requires-allocate-on-input-ports" />
@@ -339,26 +337,6 @@ _________________________________________________________________
             <Feature name="adaptive-playback" />
             <Limit name="concurrent-instances" max="8" />
         </MediaCodec>
-        <!-- DOLBY_UDC -->
-        <MediaCodec name="OMX.dolby.ac3.decoder" >
-            <Type name="audio/ac3" />
-            <Quirk name="needs-flush-before-disable" />
-            <Quirk name="requires-flush-complete-emulation" />
-            <Feature name="adaptive-playback" />
-        </MediaCodec>
-        <MediaCodec name="OMX.dolby.eac3.decoder" >
-            <Type name="audio/eac3" />
-            <Quirk name="needs-flush-before-disable" />
-            <Quirk name="requires-flush-complete-emulation" />
-            <Feature name="adaptive-playback" />
-        </MediaCodec>
-        <MediaCodec name="OMX.dolby.eac3_joc.decoder" >
-            <Type name="audio/eac3-joc" />
-            <Quirk name="needs-flush-before-disable" />
-            <Quirk name="requires-flush-complete-emulation" />
-            <Feature name="adaptive-playback" />
-        </MediaCodec>
-        <!-- DOLBY_UDC END -->
     </Decoders>
     <Include href="media_codecs_google_video.xml" />
     <Include href="media_codecs_ffmpeg.xml" />
