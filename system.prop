@@ -111,8 +111,10 @@ ro.qualcomm.cabl=0
 
 #
 # System props for bluetooh
-# System prop to turn on hfp client
+#
 bluetooth.hfp.client=1
+ro.qualcomm.bt.hci_transport=smd
+qcom.bluetooth.soc=smd
 
 # Simulate sdcard on /data/media
 persist.fuse_sdcard=true
