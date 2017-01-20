@@ -26,6 +26,9 @@ persist.radio.rat_on=combine
 persist.radio.mt_sms_ack=20
 ro.telephony.call_ring.multiple=false
 
+# ATFWD
+persist.radio.atfwd.start=false
+
 # IMS
 # Enable IMS service by default
 persist.radio.calls.on.ims=0
