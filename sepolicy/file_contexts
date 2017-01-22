@@ -1,11 +1,18 @@
-/system/bin/yep_qmi_server          u:object_r:yep_qmi_server_exec:s0
-/system/bin/yepdiag                 u:object_r:yepdiag_exec:s0
+# block devices
+/dev/block/bootdevice/by-name/boot      u:object_r:boot_block_device:s0
+/dev/block/bootdevice/by-name/recovery  u:object_r:recovery_block_device:s0
+/dev/block/bootdevice/by-name/system    u:object_r:system_block_device:s0
+/dev/block/bootdevice/by-name/userdata  u:object_r:userdata_block_device:s0
+/dev/block/bootdevice/by-name/cache     u:object_r:cache_block_device:s0
+/dev/block/bootdevice/by-name/config    u:object_r:frp_block_device:s0
 
-/system/vendor/bin/fidoca           u:object_r:fidoca_exec:s0
+# executables
+/system/bin/yep_qmi_server              u:object_r:yep_qmi_server_exec:s0
+/system/bin/yepdiag                     u:object_r:yepdiag_exec:s0
+/system/vendor/bin/fidoca               u:object_r:fidoca_exec:s0
+/system/bin/gx_fpd                      u:object_r:goodix_exec:s0
 
-/system/bin/gx_fpd                  u:object_r:goodix_exec:s0
-/dev/goodix_fp                      u:object_r:fingerprint_device:s0
-
-/dev/i2c_smartpa                    u:object_r:smartpa_device:s0
-
-/dev/ttyHSL1                        u:object_r:consumer_ir_device:s0
+# devices
+/dev/goodix_fp                          u:object_r:fingerprint_device:s0
+/dev/i2c_smartpa                        u:object_r:smartpa_device:s0
+/dev/ttyHSL1                            u:object_r:consumer_ir_device:s0
