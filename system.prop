@@ -86,8 +86,14 @@ persist.media.rtsp.dropaudio=1
 
 av.debug.disable.pers.cache=1
 
-# Additional buffers shared between Camera and Video
+# Camera
+persist.camera.HAL3.enabled=1
 vidc.enc.dcvs.extra-buff-count=2
+camera.hal1.packagelist=com.skype.raider,com.google.android.talk
+camera.display.umax=1920x1080
+camera.display.lmax=1280x720
+camera.lowpower.record.enable=1
+persist.camera.stats.test=5
 
 # Audio voice concurrency related flags
 voice.playback.conc.disabled=true
@@ -221,16 +227,6 @@ ro.cutoff_voltage_mv=3200
 # set the debug configuration for 8956/76
 persist.debug.8976.config=true
 
-# force HAL1 for below packages
-camera.hal1.packagelist=com.skype.raider,com.google.android.talk
-
-# properties for limiting preview size in camera
-camera.display.umax=1920x1080
-camera.display.lmax=1280x720
-
-# low power mode for camera
-camera.lowpower.record.enable=1
-
 # enable game colocation feature
 sched.colocate.enable=1
 
@@ -238,7 +234,6 @@ sched.colocate.enable=1
 ro.internal.model=Le X520
 
 persist.radio.flexmap_type=none
-persist.camera.stats.test=5
 persist.radio.ignore_dom_time=5
 
 ro.qcom.ad=1
