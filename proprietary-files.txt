@@ -13,7 +13,6 @@ lib64/hw/fingerprint.vendor.msm8952.so
 lib64/hw/sensors.msm8952.so
 lib64/hw/gxfingerprint.default.so
 lib64/hw/gps.default.so
-lib64/libcameraservice.so
 -lib64/libloc_api_v02.so
 lib64/libfpnav.so
 lib64/libfpservice.so
@@ -34,7 +33,6 @@ lib/libloc_eng.so
 lib/hw/sensors.msm8952.so
 lib/hw/camera.msm8952.so
 lib/hw/gps.default.so
-lib/libcameraservice.so
 -lib/libloc_api_v02.so
 lib/libarcsoft_night_shot.so
 lib/libmm-qcamera.so
