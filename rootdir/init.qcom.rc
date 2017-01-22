@@ -37,7 +37,7 @@ on early-init
 
 on init
 
-    export LD_SHIM_LIBS "/system/lib/hw/camera.msm8952.so|libcamera_shim.so:/system/lib/libcameraservice.so|libcameraservice_shim.so"
+    export LD_SHIM_LIBS "/system/lib/hw/camera.msm8952.so|libcamera_shim.so:/system/lib/libcameraservice.so|libcameraservice_shim.so:/system/vendor/bin/slim_daemon:libcamera_shim.so"
 
     start qfintverify
 
