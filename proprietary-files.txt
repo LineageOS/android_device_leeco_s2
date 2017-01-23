@@ -811,6 +811,7 @@ vendor/lib64/libgsl.so
 vendor/lib64/libqmiservices.so
 vendor/lib64/libulp2.so
 vendor/lib64/libscale.so
+vendor/lib64/libuiblur.so
 vendor/lib64/libtzplayready.so
 vendor/lib64/libaudioparsers.so
 vendor/lib64/libadiertac.so
