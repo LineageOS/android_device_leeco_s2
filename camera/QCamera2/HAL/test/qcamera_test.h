@@ -132,6 +132,9 @@ public:
             int32_t msgType,
             const sp<IMemory>& dataPtr);
 
+    void recordingFrameHandleCallbackTimestamp(nsecs_t timestamp, native_handle_t* handle) {/* do nothing}*/}
+    void postRecordingFrameHandleTimestamp(nsecs_t timestamp, native_handle_t* handle) { /*do nothing*/}
+
 private:
 
     status_t createPreviewSurface(int width, int height, int32_t pixFormat);

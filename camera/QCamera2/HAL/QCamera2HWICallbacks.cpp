@@ -749,9 +749,16 @@ void QCamera2HardwareInterface::synchronous_stream_cb_routine(
             mPreviewTimestamp = frameTime;
         }
     }
+    // Convert Boottime from camera to Monotime for display if needed.
+    // Otherwise, mBootToMonoTimestampOffset value will be 0.
+    mPreviewTimestamp = mPreviewTimestamp - pme->mBootToMonoTimestampOffset;
     stream->mStreamTimestamp = frameTime;
 #endif
     memory = (QCameraGrallocMemory *)super_frame->bufs[0]->mem_info;
+
+#ifdef TARGET_TS_MAKEUP
+    pme->TsMakeupProcess_Preview(frame,stream);
+#endif
 
     // Enqueue  buffer to gralloc.
     uint32_t idx = frame->buf_idx;
@@ -818,9 +825,6 @@ void QCamera2HardwareInterface::preview_stream_cb_routine(mm_camera_super_buf_t 
         free(super_frame);
         return;
     }
-#ifdef TARGET_TS_MAKEUP
-    pme->TsMakeupProcess_Preview(frame,stream);
-#endif
 
     // For instant capture and for instant AEC, keep track of the frame counter.
     // This count will be used to check against the corresponding bound values.
@@ -966,7 +970,8 @@ int32_t QCamera2HardwareInterface::sendPreviewCallback(QCameraStream *stream,
         (previewFmt == CAM_FORMAT_YUV_420_NV12) ||
         (previewFmt == CAM_FORMAT_YUV_420_YV12) ||
         (previewFmt == CAM_FORMAT_YUV_420_NV12_VENUS) ||
-        (previewFmt == CAM_FORMAT_YUV_420_NV21_VENUS)) {
+        (previewFmt == CAM_FORMAT_YUV_420_NV21_VENUS) ||
+        ((isMonoCamera()) && (previewFmt == CAM_FORMAT_Y_ONLY))) {
         if(previewFmt == CAM_FORMAT_YUV_420_YV12) {
             yStride = streamInfo->buf_planes.plane_info.mp[0].stride;
             yScanline = streamInfo->buf_planes.plane_info.mp[0].scanline;
@@ -1389,6 +1394,15 @@ void QCamera2HardwareInterface::video_stream_cb_routine(mm_camera_super_buf_t *s
         nsecs_t timeStamp;
         timeStamp = nsecs_t(frame->ts.tv_sec) * 1000000000LL + frame->ts.tv_nsec;
 #ifdef USE_MEDIA_EXTENSIONS
+        // For VT usecase, ISP uses AVtimer not CLOCK_BOOTTIME as time source.
+        // So do not change video timestamp.
+        if (!pme->mParameters.isAVTimerEnabled()) {
+            // Convert Boottime from camera to Monotime for video if needed.
+            // Otherwise, mBootToMonoTimestampOffset value will be 0.
+            timeStamp = timeStamp - pme->mBootToMonoTimestampOffset;
+        }
+        CDBG("Send Video frame to services/encoder TimeStamp : %lld",
+            timeStamp);
         videoMemObj = (QCameraVideoMemory *)frame->mem_info;
 #else
         videoMemObj = (QCameraMemory *)frame->mem_info;
@@ -1480,6 +1494,15 @@ void QCamera2HardwareInterface::video_stream_cb_routine(mm_camera_super_buf_t *s
                 cbArg.cb_type = QCAMERA_DATA_TIMESTAMP_CALLBACK;
                 cbArg.msg_type = CAMERA_MSG_VIDEO_FRAME;
                 cbArg.data = video_mem;
+
+                // For VT usecase, ISP uses AVtimer not CLOCK_BOOTTIME as time source.
+                // So do not change video timestamp.
+                if (!pme->mParameters.isAVTimerEnabled()) {
+                    // Convert Boottime from camera to Monotime for video if needed.
+                    // Otherwise, mBootToMonoTimestampOffset value will be 0.
+                    timeStamp = timeStamp - pme->mBootToMonoTimestampOffset;
+                }
+                CDBG("Final video buffer TimeStamp : %lld ", timeStamp);
                 cbArg.timestamp = timeStamp;
                 int32_t rc = pme->m_cbNotifier.notifyCallback(cbArg);
                 if (rc != NO_ERROR) {
@@ -2091,7 +2114,9 @@ void QCamera2HardwareInterface::metadata_stream_cb_routine(mm_camera_super_buf_t
         pme->mExifParams.cam_3a_params = *ae_params;
         pme->mExifParams.cam_3a_params_valid = TRUE;
         pme->mFlashNeeded = ae_params->flash_needed;
+        pthread_mutex_lock(&pme->m_parm_lock);
         pme->mExifParams.cam_3a_params.brightness = (float) pme->mParameters.getBrightness();
+        pthread_mutex_unlock(&pme->m_parm_lock);
         qcamera_sm_internal_evt_payload_t *payload =
                 (qcamera_sm_internal_evt_payload_t *)
                 malloc(sizeof(qcamera_sm_internal_evt_payload_t));

@@ -32,6 +32,7 @@
 #include <linux/msm_ion.h>
 #include <linux/videodev2.h>
 #include <media/msmb_camera.h>
+#include <utils/Timers.h>
 #include "cam_intf.h"
 #include "cam_queue.h"
 
@@ -927,4 +928,5 @@ struct camera_info *get_cam_info(uint32_t camera_id, cam_sync_type_t *pCamType);
 
 uint8_t is_yuv_sensor(uint32_t camera_id);
 
+nsecs_t getBootToMonoTimeOffset();
 #endif /*__MM_CAMERA_INTERFACE_H__*/

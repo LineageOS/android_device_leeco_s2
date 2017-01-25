@@ -518,12 +518,18 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
         // (0,0) means no thumbnail
         m_bThumbnailNeeded = FALSE;
     }
-    encode_parm.encode_thumbnail = m_bThumbnailNeeded;
 
     // get color format
     cam_format_t img_fmt = CAM_FORMAT_YUV_420_NV12;
     main_stream->getFormat(img_fmt);
     encode_parm.color_format = getColorfmtFromImgFmt(img_fmt);
+
+    // For Mono camera, thumbnail is not needed.
+    // as hybrid jpeg encoding not supported.for Y ONLY format.
+    if (img_fmt == CAM_FORMAT_Y_ONLY) {
+        m_bThumbnailNeeded = FALSE;
+    }
+    encode_parm.encode_thumbnail = m_bThumbnailNeeded;
 
     // get jpeg quality
     uint32_t val = m_parent->getJpegQuality();
@@ -1653,6 +1659,8 @@ mm_jpeg_color_format QCameraPostProcessor::getColorfmtFromImgFmt(cam_format_t im
         return MM_JPEG_COLOR_FORMAT_YCRCBLP_H2V1;
     case CAM_FORMAT_YUV_422_NV16:
         return MM_JPEG_COLOR_FORMAT_YCBCRLP_H2V1;
+    case CAM_FORMAT_Y_ONLY:
+        return MM_JPEG_COLOR_FORMAT_MONOCHROME;
     default:
         return MM_JPEG_COLOR_FORMAT_YCRCBLP_H2V2;
     }

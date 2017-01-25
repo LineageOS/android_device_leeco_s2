@@ -2251,6 +2251,9 @@ uint32_t mm_stream_get_v4l2_fmt(cam_format_t fmt)
     case CAM_FORMAT_YUV_422_NV16:
         val= V4L2_PIX_FMT_NV16;
         break;
+    case CAM_FORMAT_Y_ONLY:
+        val = V4L2_PIX_FMT_GREY;
+        break;
     default:
         val = 0;
         CDBG_ERROR("%s: Unknown fmt=%d", __func__, fmt);
@@ -2741,7 +2744,34 @@ int32_t mm_stream_calc_offset_preview(cam_stream_info_t *stream_info,
         rc = -1;
 #endif
         break;
+    case CAM_FORMAT_Y_ONLY:
+        /* 1 plane: Y*/
+        buf_planes->plane_info.num_planes = 1;
 
+        if (stream_info->stream_type != CAM_STREAM_TYPE_OFFLINE_PROC) {
+            width_padding =  padding->width_padding;
+            height_padding = CAM_PAD_TO_2;
+        } else {
+            width_padding =  padding->width_padding;
+            height_padding = padding->height_padding;
+        }
+
+        stride = PAD_TO_SIZE(dim->width, width_padding);
+        scanline = PAD_TO_SIZE(dim->height, height_padding);
+
+        buf_planes->plane_info.mp[0].offset = 0;
+        buf_planes->plane_info.mp[0].len = (uint32_t)(stride * scanline);
+        buf_planes->plane_info.mp[0].offset_x = 0;
+        buf_planes->plane_info.mp[0].offset_y = 0;
+        buf_planes->plane_info.mp[0].stride = stride;
+        buf_planes->plane_info.mp[0].scanline = scanline;
+        buf_planes->plane_info.mp[0].width = dim->width;
+        buf_planes->plane_info.mp[0].height = dim->height;
+        buf_planes->plane_info.frame_len =
+                PAD_TO_SIZE(buf_planes->plane_info.mp[0].len,
+                        CAM_PAD_TO_4K);
+
+        break;
     default:
         CDBG_ERROR("%s: Invalid cam_format for preview %d",
                    __func__, stream_info->fmt);
@@ -2996,6 +3026,26 @@ int32_t mm_stream_calc_offset_post_view(cam_format_t fmt,
         CDBG_ERROR("%s: UBWC hardware not avail, cannot use this format", __func__);
         rc = -1;
 #endif
+        break;
+    case CAM_FORMAT_Y_ONLY:
+        /* 1 plane: Y*/
+        buf_planes->plane_info.num_planes = 1;
+
+        stride = PAD_TO_SIZE(dim->width, CAM_PAD_TO_64);
+        scanline = PAD_TO_SIZE(dim->height, CAM_PAD_TO_64);
+        buf_planes->plane_info.mp[0].offset = 0;
+        buf_planes->plane_info.mp[0].len = (uint32_t)(stride * scanline);
+        buf_planes->plane_info.mp[0].offset_x = 0;
+        buf_planes->plane_info.mp[0].offset_y = 0;
+        buf_planes->plane_info.mp[0].stride = stride;
+        buf_planes->plane_info.mp[0].scanline = scanline;
+        buf_planes->plane_info.mp[0].width = dim->width;
+        buf_planes->plane_info.mp[0].height = dim->height;
+
+        buf_planes->plane_info.frame_len =
+                PAD_TO_SIZE(buf_planes->plane_info.mp[0].len,
+                        CAM_PAD_TO_4K);
+
         break;
     default:
         CDBG_ERROR("%s: Invalid cam_format for preview %d",
@@ -3254,7 +3304,27 @@ int32_t mm_stream_calc_offset_snapshot(cam_format_t fmt,
                 __func__, fmt);
 #endif
         break;
+    case CAM_FORMAT_Y_ONLY:
+        /* 1 plane: Y*/
+        buf_planes->plane_info.num_planes = 1;
 
+        buf_planes->plane_info.mp[0].len =
+                PAD_TO_SIZE((uint32_t)(stride * scanline),
+                padding->plane_padding);
+        buf_planes->plane_info.mp[0].offset =
+                PAD_TO_SIZE((uint32_t)(offset_x + stride * offset_y),
+                padding->plane_padding);
+        buf_planes->plane_info.mp[0].offset_x = offset_x;
+        buf_planes->plane_info.mp[0].offset_y = offset_y;
+        buf_planes->plane_info.mp[0].stride = stride;
+        buf_planes->plane_info.mp[0].scanline = scanline;
+        buf_planes->plane_info.mp[0].width = dim->width;
+        buf_planes->plane_info.mp[0].height = dim->height;
+        buf_planes->plane_info.frame_len =
+                PAD_TO_SIZE(buf_planes->plane_info.mp[0].len,
+                        CAM_PAD_TO_4K);
+
+        break;
     default:
         CDBG_ERROR("%s: Invalid cam_format for snapshot %d",
                    __func__, fmt);

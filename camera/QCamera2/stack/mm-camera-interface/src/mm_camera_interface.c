@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -55,6 +55,27 @@ volatile uint32_t gMmCameraIntfLogLevel = 1;
 
 #define CAM_SENSOR_TYPE_MASK (1U<<24) // 24th (starting from 0) bit tells its a MAIN or AUX camera
 #define CAM_SENSOR_FORMAT_MASK (1U<<25) // 25th(starting from 0) bit tells its YUV sensor or not
+
+nsecs_t getBootToMonoTimeOffset()
+{
+    // try three times to get the clock offset, choose the one
+    // with the minimum gap in measurements.
+    const int tries = 3;
+    int i;
+    nsecs_t bestGap, measured;
+    nsecs_t tmono, tbase, tmono2, gap;
+    for (i = 0; i < tries; ++i) {
+        tmono = systemTime(SYSTEM_TIME_MONOTONIC);
+        tbase = systemTime(SYSTEM_TIME_BOOTTIME);
+        tmono2 = systemTime(SYSTEM_TIME_MONOTONIC);
+        gap = tmono2 - tmono;
+        if (i == 0 || gap < bestGap) {
+            bestGap = gap;
+            measured = tbase - ((tmono + tmono2) >> 1);
+        }
+    }
+    return measured;
+}
 
 /*===========================================================================
  * FUNCTION   : mm_camera_util_generate_handler
@@ -435,7 +456,6 @@ static int32_t mm_camera_intf_close(uint32_t camera_handle)
 static int32_t mm_camera_intf_error_close(uint32_t camera_handle)
 {
     int32_t rc = -1;
-    uint8_t cam_idx = camera_handle & 0x00ff;
     mm_camera_obj_t * my_obj = NULL;
 
     CDBG("%s E: camera_handler = %d ", __func__, camera_handle);

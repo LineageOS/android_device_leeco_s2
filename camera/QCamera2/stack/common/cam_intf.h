@@ -230,8 +230,6 @@ typedef struct{
     uint8_t optical_stab_modes_count;
 
     cam_dimension_t lens_shading_map_size;
-    float lens_shading_map[3 * CAM_MAX_MAP_WIDTH *
-              CAM_MAX_MAP_HEIGHT];
 
     cam_dimension_t geo_correction_map_size;
     float geo_correction_map[2 * 3 * CAM_MAX_MAP_WIDTH *
@@ -904,6 +902,7 @@ typedef struct {
     INCLUDE(CAM_INTF_PARM_FLIP,                         int32_t,                     1);
     INCLUDE(CAM_INTF_AF_STATE_TRANSITION,               uint8_t,                     1);
     INCLUDE(CAM_INTF_PARM_INSTANT_AEC,                  uint8_t,                     1);
+    INCLUDE(CAM_INTF_PARM_INITIAL_EXPOSURE_INDEX,       uint32_t,                    1);
 } metadata_data_t;
 
 /* Update clear_metadata_buffer() function when a new is_xxx_valid is added to

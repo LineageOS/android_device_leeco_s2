@@ -42,6 +42,7 @@
 #include <cutils/properties.h>
 #include "QCamera3Channel.h"
 #include "QCamera3HWI.h"
+#include "QCameraFormat.h"
 
 using namespace android;
 
@@ -588,10 +589,14 @@ cam_format_t QCamera3Channel::getStreamDefaultFormat(cam_stream_type_t type)
             if (pFormat == 1) {
                 streamFormat = CAM_FORMAT_YUV_420_NV12_UBWC;
             } else {
-                streamFormat = CAM_FORMAT_YUV_420_NV21;
+                /* Changed to macro to ensure format sent to gralloc for preview
+                is also changed if the preview format is changed at camera HAL */
+                streamFormat = PREVIEW_STREAM_FORMAT;
             }
         } else {
-            streamFormat = CAM_FORMAT_YUV_420_NV21;
+            /* Changed to macro to ensure format sent to gralloc for preview
+            is also changed if the preview format is changed at camera HAL */
+            streamFormat = PREVIEW_STREAM_FORMAT;
         }
         break;
     case CAM_STREAM_TYPE_VIDEO:
@@ -618,7 +623,9 @@ cam_format_t QCamera3Channel::getStreamDefaultFormat(cam_stream_type_t type)
         streamFormat = CAM_FORMAT_YUV_420_NV21;
         break;
     case CAM_STREAM_TYPE_CALLBACK:
-        streamFormat = CAM_FORMAT_YUV_420_NV21;
+        /* Changed to macro to ensure format sent to gralloc for callback
+        is also changed if the preview format is changed at camera HAL */
+        streamFormat = CALLBACK_STREAM_FORMAT;
         break;
     case CAM_STREAM_TYPE_RAW:
         streamFormat = CAM_FORMAT_BAYER_MIPI_RAW_10BPP_GBRG;
@@ -2662,8 +2669,8 @@ QCamera3Exif *QCamera3PicChannel::getExifData(metadata_buffer_t *metadata,
     uint32_t count = 0;
 
     // add exif entries
-    String8 dateTime;
-    String8 subsecTime;
+    String8 dateTime("");
+    String8 subsecTime("");
     rc = getExifDateTime(dateTime, subsecTime);
     if (rc == NO_ERROR) {
         exif->addEntry(EXIFTAGID_DATE_TIME, EXIF_ASCII,
