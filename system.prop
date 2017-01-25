@@ -87,7 +87,7 @@ persist.media.rtsp.dropaudio=1
 av.debug.disable.pers.cache=1
 
 # Camera
-persist.camera.HAL3.enabled=1
+persist.camera.HAL3.enabled=0
 vidc.enc.dcvs.extra-buff-count=2
 camera.hal1.packagelist=com.skype.raider,com.google.android.talk
 camera.display.umax=1920x1080
