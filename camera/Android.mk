@@ -1,37 +1,23 @@
-# Copyright (C) 2016 The CyanogenMod Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+MM_V4L2_DRIVER_LIST += msm8960
+MM_V4L2_DRIVER_LIST += msm8974
+MM_V4L2_DRIVER_LIST += msm8916
+MM_V4L2_DRIVER_LIST += msm8226
+MM_V4L2_DRIVER_LIST += msm8610
+MM_V4L2_DRIVER_LIST += apq8084
+MM_V4L2_DRIVER_LIST += mpq8092
+MM_V4L2_DRIVER_LIST += msm_bronze
+MM_V4L2_DRIVER_LIST += msm8916
+MM_V4L2_DRIVER_LIST += msm8994
+MM_V4L2_DRIVER_LIST += msm8084
+MM_V4L2_DRIVER_LIST += msm8909
+MM_V4L2_DRIVER_LIST += msm8952
+MM_V4L2_DRIVER_LIST += msm8996
+MM_V4L2_DRIVER_LIST += msm8992
 
-LOCAL_PATH := $(call my-dir)
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := camera_shim.cpp
-LOCAL_MODULE := libcamera_shim
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_32_BIT_ONLY := true
-LOCAL_SHARED_LIBRARIES := libgui libui
-
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := cameraservice_shim.cpp
-LOCAL_MODULE := libcameraservice_shim
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_32_BIT_ONLY := true
-LOCAL_SHARED_LIBRARIES := libgui libui libcamera_client
-
-include $(BUILD_SHARED_LIBRARY)
+ifneq (,$(filter $(MM_V4L2_DRIVER_LIST),$(TARGET_BOARD_PLATFORM)))
+  ifneq ($(strip $(USE_CAMERA_STUB)),true)
+    ifneq ($(BUILD_TINY_ANDROID),true)
+      include $(call all-subdir-makefiles)
+    endif
+  endif
+endif
