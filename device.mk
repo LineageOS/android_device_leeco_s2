@@ -143,8 +143,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Snap \
-    libcamera_shim \
-    libcameraservice_shim
+    camera.msm8952
 
 # Charger
 PRODUCT_PACKAGES += \

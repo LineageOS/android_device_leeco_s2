@@ -36,9 +36,6 @@ on early-init
     insmod /sbin/qdrbg_module.ko
 
 on init
-
-    export LD_SHIM_LIBS "/system/lib/hw/camera.msm8952.so|libcamera_shim.so:/system/lib/libcameraservice.so|libcameraservice_shim.so"
-
     start qfintverify
 
     # Set permissions for persist partition
