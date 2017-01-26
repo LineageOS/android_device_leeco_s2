@@ -168,6 +168,7 @@ _________________________________________________________________
         <!-- Audio Software  -->
         <MediaCodec name="OMX.qti.audio.decoder.flac" type="audio/flac" />
         <!-- Video Hardware  -->
+        <!--
         <MediaCodec name="OMX.qcom.video.decoder.avc" type="video/avc" >
             <Quirk name="requires-allocate-on-input-ports" />
             <Quirk name="requires-allocate-on-output-ports" />
@@ -191,6 +192,7 @@ _________________________________________________________________
             <Feature name="secure-playback" required="true" />
             <Limit name="concurrent-instances" max="4" />
         </MediaCodec>
+        -->
         <MediaCodec name="OMX.qcom.video.decoder.mpeg2" type="video/mpeg2" >
             <Quirk name="requires-allocate-on-input-ports" />
             <Quirk name="requires-allocate-on-output-ports" />
