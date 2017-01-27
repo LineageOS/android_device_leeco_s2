@@ -237,9 +237,9 @@ PRODUCT_PACKAGES += \
     libstagefright_soft_flacdec
 
 # IPA Manager
-#PRODUCT_PACKAGES += \
-#    ipacm \
-#    IPACM_cfg.xml
+PRODUCT_PACKAGES += \
+    ipacm \
+    IPACM_cfg.xml
 
 # Power
 PRODUCT_PACKAGES += \
