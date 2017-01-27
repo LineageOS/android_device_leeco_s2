@@ -36,6 +36,8 @@ on early-init
     insmod /sbin/qdrbg_module.ko
 
 on init
+    export LD_SHIM_LIBS /system/vendor/lib64/lib-imsvt.so|libshims_ims.so
+
     start qfintverify
 
     # Set permissions for persist partition

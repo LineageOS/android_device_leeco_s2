@@ -196,6 +196,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     keystore.msm8952
 
+# Libshims
+PRODUCT_PACKAGES += \
+    libshims_ims
+
 # Lights
 PRODUCT_PACKAGES += \
     lights.msm8952
