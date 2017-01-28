@@ -23,7 +23,6 @@ lib64/libloc_core.so
 lib64/libloc_ds_api.so
 lib/libmpkernel.so
 lib/libmpbase.so
-lib/libRSCpuRef.so
 lib/libarcsoft_hdr.so
 lib/libloc_eng.so
 lib/hw/sensors.msm8952.so
