@@ -2594,7 +2594,6 @@ static int responseStrings(Parcel &p, void *response, size_t responselen) {
     return 0;
 }
 
-/* Rewrite invalid radio techs >= 20 to HSPAP */
 static int responseStringsDataRegistrationState(Parcel &p, void *response, size_t responselen) {
     int numStrings;
 
@@ -2610,15 +2609,10 @@ static int responseStringsDataRegistrationState(Parcel &p, void *response, size_
 
     char **p_cur = (char **) response;
 
+    /* Rewrite invalid radio techs */
     if (p_cur[3] != NULL) {
         if (strncmp(p_cur[3], "20", 2) == 0) {
-            RLOGE("DATA_REGISTRATION_STATE: radioTechnology: 20 => 15 (HSPAP)");
-            strncpy(p_cur[3], "15", 2);
-        } else if (strncmp(p_cur[3], "21", 2) == 0) {
-            RLOGE("DATA_REGISTRATION_STATE: radioTechnology: 21 => 15 (HSPAP)");
-            strncpy(p_cur[3], "15", 2);
-        } else if (strncmp(p_cur[3], "22", 2) == 0) {
-            RLOGE("DATA_REGISTRATION_STATE: radioTechnology: 22 => 15 (HSPAP)");
+            RLOGE("DATA_REGISTRATION_STATE: radioTechnology: 20 (DC_HSPAP) => 15 (HSPAP)");
             strncpy(p_cur[3], "15", 2);
         }
     }
