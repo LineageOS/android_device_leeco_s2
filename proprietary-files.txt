@@ -7,7 +7,6 @@ sbin/qfintverify
 -app/QtiTelephonyService/QtiTelephonyService.apk
 -app/fastdormancy/fastdormancy.apk
 -app/TimeService/TimeService.apk
-lib64/libqdMetaData.so
 lib64/libloc_eng.so
 lib64/hw/fingerprint.default.so
 lib64/hw/sensors.msm8952.so
@@ -17,7 +16,6 @@ lib64/libcameraservice.so
 -lib64/libloc_api_v02.so
 lib64/libfpnav.so
 lib64/libfpservice.so
-lib64/libqservice.so
 lib64/libfp_client.so
 -lib64/libtfa9890.so
 lib64/libfp_gf_intejni.so
@@ -26,9 +24,7 @@ lib64/libloc_core.so
 lib64/libloc_ds_api.so
 lib/libmpkernel.so
 lib/libmpbase.so
-lib/libRSCpuRef.so
 lib/libarcsoft_hdr.so
-lib/libqdMetaData.so
 lib/libqomx_core.so
 lib/libloc_eng.so
 lib/hw/sensors.msm8952.so
@@ -46,7 +42,6 @@ lib/libmpstream.so
 lib/libcamera_letv_algo.so
 lib/libstlport.so
 lib/libDxHdcp.so
-lib/libqservice.so
 lib/libdashplayer.so
 lib/libLetvCameraImageSDK.so
 -lib/libtfa9890.so
