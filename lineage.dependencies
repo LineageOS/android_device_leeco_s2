@@ -1,10 +1,20 @@
 [
   {
-    "repository": "android_device_qcom_common",
-    "target_path": "device/qcom/common"
+    "remote": "github",
+    "repository": "LineageOSandroid_device_qcom_common",
+    "target_path": "device/qcom/common",
+    "revision": "cm-14.1"
   },
   {
-    "repository": "android_kernel_leeco_msm8976",
-    "target_path": "kernel/leeco/msm8976"
-  }
+    "remote": "guthub",
+    "repository": "LineageOSandroid_kernel_leeco_msm8976",
+    "target_path": "kernel/leeco/msm8976",
+    "revision": "cm-14.1"
+  },
+  {
+    "remote": "github",
+    "repository": "TheMuppetsproprietary_vendor_leeco",
+    "target_path": "vendor/leeco",
+    "revision": "cm-14.1"
+   }
 ]
