@@ -157,7 +157,7 @@ PRODUCT_PACKAGES += \
 # 196609 is decimal for 0x30001 to report major/minor versions as 3/1
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196609 \
-    sys.sf.lcd_density=420
+    ro.sf.lcd_density=420
 
 # Ebtables
 PRODUCT_PACKAGES += \
