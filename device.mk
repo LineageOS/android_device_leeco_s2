@@ -163,7 +163,7 @@ PRODUCT_PACKAGES += \
 # Display / OpenGLES
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196610 \
-    sys.sf.lcd_density=420
+    ro.sf.lcd_density=420
 
 # Ebtables
 PRODUCT_PACKAGES += \
