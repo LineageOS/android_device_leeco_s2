@@ -518,11 +518,11 @@ service netmgrd /system/bin/netmgrd
     user root
     group radio wakelock
 
-service ipacm-diag /system/bin/ipacm-diag
-    class main
-    user system
-    socket ipacm_log_file dgram 660 system net_admin
-    group net_admin diag
+#service ipacm-diag /system/bin/ipacm-diag
+#    class main
+#    user system
+#    socket ipacm_log_file dgram 660 system net_admin
+#    group net_admin diag
 
 service ipacm /system/bin/ipacm
     class main
@@ -623,11 +623,11 @@ service ptt_ffbm /system/bin/ptt_socket_app -f -d
     disabled
     oneshot
 
-service cnss_diag /system/bin/cnss_diag -q -f
-    class late_start
-    user root
-    group root
-    oneshot
+#service cnss_diag /system/bin/cnss_diag -q -f
+#    class late_start
+#    user root
+#    group root
+#    oneshot
 
 service cnss-daemon /system/bin/cnss-daemon -n -l
     class late_start
