@@ -349,3 +349,7 @@ endif
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 PRODUCT_GMS_CLIENTID_BASE := android-leeco
+
+# Model is set via init library
+PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
+    ro.product.model
