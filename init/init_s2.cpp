@@ -139,7 +139,7 @@ void vendor_load_properties() {
         {
             isX526 = 1;
         }
-        else if (!strncmp(device, "s2_wws2", 7))
+        else if (!strncmp(device, "s2_ww", 5))
         {
             isX527 = 1;
         }
