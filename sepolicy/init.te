@@ -1,3 +1,5 @@
 allow init debugfs:dir { mounton };
 allow init debugfs:file { rw_file_perms };
 allow init tee_device:chr_file { rw_file_perms };
+
+allow init proc:lnk_file { setattr };

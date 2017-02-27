@@ -1,3 +1,6 @@
 allow system_server consumer_ir_device:chr_file { rw_file_perms };
 allow system_server persist_file:file { r_file_perms };
 allow system_server unlabeled:file { unlink };
+
+allow system_server proc_touchpanel:dir search;
+allow system_server proc_touchpanel:file rw_file_perms;
