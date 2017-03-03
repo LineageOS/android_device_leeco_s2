@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2017, The LineageOS Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 //#define LOG_NDEBUG 0
 #define LOG_TAG "FingerprintWrapper"
 
@@ -38,6 +22,8 @@ static union {
     const hw_module_t *hw_module;
 } vendor;
 
+static fingerprint_notify_t original_notify;
+
 static bool ensure_vendor_module_is_loaded(void)
 {
     android::Mutex::Autolock lock(vendor_mutex);
@@ -56,12 +42,29 @@ static bool ensure_vendor_module_is_loaded(void)
     return vendor.module != NULL;
 }
 
+static void hal_notify_wrapped(const fingerprint_msg_t *msg)
+{
+    fingerprint_msg_t *new_msg = const_cast<fingerprint_msg_t *>(msg);
+
+    switch (msg->type) {
+        case FINGERPRINT_TEMPLATE_ENROLLING:
+            new_msg->data.enroll.samples_remaining = 100 - msg->data.enroll.samples_remaining;
+            break;
+
+        default:
+            break;
+    }
+
+    return original_notify(new_msg);
+}
+
 static int set_notify(struct fingerprint_device *dev, fingerprint_notify_t notify)
 {
     device_t *device = (device_t *) dev;
 
-    device->base.notify = notify;
-    return device->vendor.device->set_notify(device->vendor.device, notify);
+    original_notify = notify;
+
+    return device->vendor.device->set_notify(device->vendor.device, hal_notify_wrapped);
 }
 
 static uint64_t pre_enroll(struct fingerprint_device *dev)
@@ -72,7 +75,7 @@ static uint64_t pre_enroll(struct fingerprint_device *dev)
 }
 
 static int enroll(struct fingerprint_device *dev, const hw_auth_token_t *hat, uint32_t gid,
-                uint32_t timeout_sec)
+            uint32_t timeout_sec)
 {
     device_t *device = (device_t *) dev;
 
@@ -100,34 +103,6 @@ static int cancel(struct fingerprint_device *dev)
     return device->vendor.device->cancel(device->vendor.device);
 }
 
-#define MAX_FINGERPRINTS 100
-
-typedef int (*enumerate_2_0)(struct fingerprint_device *dev, fingerprint_finger_id_t *results,
-        uint32_t *max_size);
-
-static int enumerate_pre_2_1(struct fingerprint_device *dev)
-{
-    device_t *device = (device_t *) dev;
-    fingerprint_finger_id_t results[MAX_FINGERPRINTS];
-    uint32_t n = MAX_FINGERPRINTS;
-    enumerate_2_0 enumerate = (enumerate_2_0) device->vendor.device->enumerate;
-    int rv = enumerate(device->vendor.device, results, &n);
-
-    if (rv == 0) {
-        uint32_t i;
-        fingerprint_msg_t msg;
-
-        msg.type = FINGERPRINT_TEMPLATE_ENUMERATING;
-        for (i = 0; i < n; i++) {
-            msg.data.enumerated.finger = results[i];
-            msg.data.enumerated.remaining_templates = n - i - 1;
-            device->base.notify(&msg);
-        }
-    }
-
-    return rv;
-}
-
 static int enumerate(struct fingerprint_device *dev)
 {
     device_t *device = (device_t *) dev;
@@ -150,7 +125,7 @@ static int set_active_group(struct fingerprint_device *dev, uint32_t gid, const 
 }
 
 static int authenticate(struct fingerprint_device *dev, uint64_t operation_id, uint32_t gid)
-{
+ {
     device_t *device = (device_t *) dev;
 
     return device->vendor.device->authenticate(device->vendor.device, operation_id, gid);
@@ -164,7 +139,7 @@ static int device_close(hw_device_t *hw_device)
     return rv;
 }
 
-static int device_open(const hw_module_t *module, const char *name, hw_device_t **device_out)
+static int device_open(const hw_module_t *module, const char *name,     hw_device_t **device_out)
 {
     int rv;
     device_t *device;
@@ -180,7 +155,7 @@ static int device_open(const hw_module_t *module, const char *name, hw_device_t 
     }
 
     rv = vendor.module->common.methods->open(vendor.hw_module, name, &device->vendor.hw_device);
-    if (rv) {
+     if (rv) {
         ALOGE("%s: failed to open, error %d\n", __func__, rv);
         free(device);
         return rv;
@@ -197,11 +172,7 @@ static int device_open(const hw_module_t *module, const char *name, hw_device_t 
     device->base.post_enroll = post_enroll;
     device->base.get_authenticator_id = get_authenticator_id;
     device->base.cancel = cancel;
-    if (vendor.module->common.module_api_version >= FINGERPRINT_MODULE_API_VERSION_2_1) {
-        device->base.enumerate = enumerate;
-    } else {
-        device->base.enumerate = enumerate_pre_2_1;
-    }
+    device->base.enumerate = enumerate;
     device->base.remove = remove;
     device->base.set_active_group = set_active_group;
     device->base.authenticate = authenticate;
