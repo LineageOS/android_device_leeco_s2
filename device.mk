@@ -263,10 +263,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libstlport
 
-# Thermal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine-s2.conf:system/etc/thermal-engine-s2.conf
-
 # Wifi
 PRODUCT_PACKAGES += \
     dhcpcd.conf \
