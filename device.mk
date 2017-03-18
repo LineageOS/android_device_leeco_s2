@@ -299,11 +299,8 @@ PRODUCT_PACKAGES += \
     wcnss_service
 
 PRODUCT_COPY_FILES += \
-    kernel/leeco/msm8976/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
-    kernel/leeco/msm8976/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.disableWifiApFirmwareReload=true
+    $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
+    $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
 
 # Misc
 PRODUCT_COPY_FILES += \
