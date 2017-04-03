@@ -51,6 +51,7 @@ LOCAL_MODULE           := libmmcamera_interface
 LOCAL_SHARED_LIBRARIES := libdl libcutils liblog libutils
 LOCAL_HEADER_LIBRARIES := generated_kernel_headers
 LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH_32 := $(TARGET_OUT_VENDOR)/lib
 
 LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)
 include $(BUILD_SHARED_LIBRARY)
