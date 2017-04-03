@@ -108,6 +108,9 @@ voice.conc.fallbackpath=deep-buffer
 # parser input buffer size(256kb) in byte stream mode
 audio.parser.ip.buffer.size=262144
 
+# Dex2oat threads for faster app installation
+ro.sys.fw.dex2oat_thread_count=6
+
 #
 # system props for the data modules
 #
