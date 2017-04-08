@@ -9,10 +9,13 @@
 # executables
 /system/bin/yep_qmi_server              u:object_r:yep_qmi_server_exec:s0
 /system/bin/yepdiag                     u:object_r:yepdiag_exec:s0
-/system/vendor/bin/fidoca               u:object_r:fidoca_exec:s0
 /system/bin/gx_fpd                      u:object_r:goodix_exec:s0
+/system/bin/thermanager                 u:object_r:thermanager_exec:s0
+/system/vendor/bin/fidoca               u:object_r:fidoca_exec:s0
 
 # devices
 /dev/goodix_fp                          u:object_r:fingerprint_device:s0
 /dev/i2c_smartpa                        u:object_r:smartpa_device:s0
 /dev/ttyHSL1                            u:object_r:consumer_ir_device:s0
+
+/sys/module/msm_performance(/.*)?       u:object_r:sysfs_performance:s0

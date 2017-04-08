@@ -6,5 +6,9 @@
   {
     "repository": "android_kernel_leeco_msm8976",
     "target_path": "kernel/leeco/msm8976"
+  },
+  {
+    "repository": "android_hardware_sony_thermanager",
+    "target_path": "hardware/sony/thermanager"
   }
 ]

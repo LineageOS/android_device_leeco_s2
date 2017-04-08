@@ -273,6 +273,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libstlport
 
+# Thermal
+PRODUCT_PACKAGES += \
+    thermanager
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/thermanager.xml:system/etc/thermanager.xml
+
 # Wifi
 PRODUCT_PACKAGES += \
     hostapd \
