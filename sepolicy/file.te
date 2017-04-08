@@ -1,1 +1,2 @@
 type proc_touchpanel, fs_type;
+type sysfs_performance, sysfs_type, fs_type;

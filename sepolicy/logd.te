@@ -1,0 +1,1 @@
+allow logd self:capability { dac_read_search dac_override };
