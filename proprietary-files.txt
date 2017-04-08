@@ -916,9 +916,3 @@ vendor/lib64/libadsprpc.so
 vendor/lib64/libqti-gt.so
 vendor/lib64/libEGL_adreno.so
 vendor/qcril.db
--sbin/qdrbg_module.hmac:rootfs
--sbin/qdrbg_module.ko:rootfs
--sbin/qfintverify:rootfs
--sbin/qcrypto_module.ko:rootfs
--sbin/qfintverify.hmac:rootfs
--sbin/qcrypto_module.hmac:rootfs
