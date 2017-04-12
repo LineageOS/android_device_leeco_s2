@@ -208,9 +208,13 @@ PRODUCT_PACKAGES += \
     gps.msm8952 \
     libcurl
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/flp.conf:system/etc/flp.conf \
-    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
+PRODUCT_PACKAGES += \
+    flp.conf \
+    gps.conf \
+    izat.conf \
+    lowi.conf \
+    sap.conf \
+    xtwifi.conf
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -325,10 +329,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/display/pp_calib_data_boe_nt35596s_fhd_vdo_dsi_panel.xml:system/etc/pp_calib_data_boe_nt35596s_fhd_vdo_dsi_panel.xml \
     $(LOCAL_PATH)/display/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml:system/etc/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml \
-    $(LOCAL_PATH)/display/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml:system/etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml \
-    $(LOCAL_PATH)/configs/izat.conf:system/etc/izat.conf \
-    $(LOCAL_PATH)/configs/lowi.conf:system/etc/lowi.conf \
-    $(LOCAL_PATH)/configs/xtwifi.conf:system/etc/xtwifi.conf
+    $(LOCAL_PATH)/display/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml:system/etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml
 
 # SDcard
 PRODUCT_CHARACTERISTICS := nosdcard

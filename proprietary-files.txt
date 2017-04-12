@@ -50,21 +50,17 @@ bin/xtwifi-inet-agent
 -priv-app/com.qualcomm.location/com.qualcomm.location.apk
 -priv-app/CNEService/CNEService.apk
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
-lib/libloc_core.so
 lib/libarcimgutils.so
 lib/libmm-omxcore.so
 lib/libarcsoft_face_detection.so
 lib/libarcsoft_hdr.so
 lib/libmpstream.so
 lib/libmmcamera_interface.so
--lib/libloc_ds_api.so
 lib/libmpkernel.so
--lib/libloc_api_v02.so
 lib/libamipengine.so
 lib/libmputility.so
 lib/libarcsoft_panorama_burstcapture.so
 lib/libmmjpeg_interface.so
-lib/libloc_eng.so
 lib/libarcimgutilsbase.so
 lib/libstlport.so
 lib/libarcsoft_night_shot.so
@@ -73,7 +69,6 @@ lib/libcamera_letv_algo.so
 lib/libarcsoft_face_tracking.so
 lib/hw/sensors.msm8952.so
 lib/hw/camera.msm8952.so
-lib/hw/gps.default.so
 lib/libLetvCameraImageSDK.so
 -lib/libtfa9890.so
 lib/libarcsoft_smart_denoise.so
@@ -84,21 +79,16 @@ lib/libmpbase.so
 lib/libDxHdcp.so
 lib/libdashplayer.so
 lib/libqrDec.so
-lib/libgps.utils.so
-lib64/libloc_core.so
 -lib64/libloc_ds_api.so
 lib64/libfp_gf_intejni.so
 -lib64/libloc_api_v02.so
 lib64/libfp_client.so
 lib64/libfpservice.so
-lib64/libloc_eng.so
 lib64/hw/sensors.msm8952.so
 lib64/hw/fingerprint.vendor.msm8952.so
 lib64/hw/gxfingerprint.default.so
-lib64/hw/gps.default.so
 -lib64/libtfa9890.so
 lib64/libfpnav.so
-lib64/libgps.utils.so
 etc/acdbdata/QRD/QRD_Hdmi_cal.acdb
 etc/acdbdata/QRD/QRD_Handset_cal.acdb
 etc/acdbdata/QRD/QRD_Bluetooth_cal.acdb
@@ -140,6 +130,8 @@ etc/permissions/qcrilhook.xml
 etc/permissions/qcnvitems.xml
 etc/permissions/imscm.xml
 etc/permissions/com.qualcomm.location.xml
+etc/permissions/com.qti.location.sdk.xml
+etc/permissions/izat.xt.srv.xml
 etc/permissions/qti_permissions.xml
 etc/firmware/cpp_firmware_v1_1_1.fw
 etc/firmware/leia_pfp_470.fw
@@ -282,7 +274,6 @@ vendor/lib/libmmrtpdecoder.so
 vendor/lib/libactuator_ak7371_ov16880_sunny.so
 vendor/lib/libavenhancements.so
 vendor/lib/libomx-dts.so
-vendor/lib/libloc_ext.so
 vendor/lib/libgdtap.so
 vendor/lib/lib-rtpdaemoninterface.so
 vendor/lib/libc2d30-a5xx.so
@@ -344,7 +335,6 @@ vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_preview.so
 vendor/lib/libperipheral_client.so
 vendor/lib/libmmcamera_faceproc.so
 vendor/lib/libCB.so
-vendor/lib/libdataitems.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_cpp_preview.so
 vendor/lib/libscveTextRecoPostProcessing.so
 vendor/lib/libcneconn.so
@@ -354,7 +344,6 @@ vendor/lib/libsta_lib_third_party_staproxy_sta_proxy_loader_gyp.so
 vendor/lib/libqc-opt.so
 vendor/lib/libchromatix_ov16880_primax_bahy_6c_default_video.so
 vendor/lib/libqmi_client_qmux.so
-vendor/lib/liblowi_client.so
 vendor/lib/libmmcamera2_pproc_modules.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_common.so
 vendor/lib/libmmcamera_isp_clamp_encoder40.so
@@ -390,7 +379,6 @@ vendor/lib/libmdsprpc.so
 vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_postproc.so
 vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_cpp_preview.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_zsl_preview.so
-vendor/lib/libizat_core.so
 vendor/lib/libhwdaphal.so
 vendor/lib/lib-ims-rcscmjni.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_hfr_60.so
@@ -462,10 +450,8 @@ vendor/lib/libmmipstreamutils.so
 vendor/lib/librpmb.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_cpp_snapshot.so
 vendor/lib/libOmxQcelp13Dec.so
-vendor/lib/liblocationservice_glue.so
 vendor/lib/libSubSystemShutdown.so
 vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_cpp_video_full.so
-vendor/lib/liblocationservice.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_default_video_dw9714.so
 vendor/lib/libmmcamera_isp_color_correct40.so
 vendor/lib/lib-imsdpl.so
@@ -535,8 +521,6 @@ vendor/lib/libC2D2.so
 vendor/lib/libwfduibcsinkinterface.so
 vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_cpp_ds_chromatix.so
 vendor/lib/libcneqmiutils.so
-vendor/lib/libgeofence.so
-vendor/lib/liblowi_wifihal_nl.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_cpp_hfr_60.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_postproc.so
 vendor/lib/libsregex.so
@@ -563,7 +547,6 @@ vendor/lib/libasn1cper.so
 vendor/lib/libril-qc-qmi-1.so
 vendor/lib/libmmcamera_eeprom_util.so
 vendor/lib/drm/libdrmwvmplugin.so
-vendor/lib/liblowi_wifihal.so
 vendor/lib/lib-rcsimssjni.so
 vendor/lib/libmmcamera_ofilm_ov8865_ols8f03_eeprom.so
 vendor/lib/libaudioalsa.so
@@ -579,7 +562,6 @@ vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_liveshot.so
 vendor/lib/libchromatix_ov8865_ofilm_ffhy_20_cpp_hfr_120.so
 vendor/lib/libmmsw_platform.so
 vendor/lib/hw/vulkan.msm8952.so
-vendor/lib/hw/flp.default.so
 vendor/lib/hw/activity_recognition.msm8952.so
 vendor/lib/hw/sound_trigger.primary.msm8952.so
 vendor/lib/libOmxAacDec.so
@@ -635,7 +617,6 @@ vendor/lib/libwfdmmutils.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_hfr_120_dw9714.so
 vendor/lib/libquipc_os_api.so
 vendor/lib/libmmcamera2_iface_modules.so
-vendor/lib/libflp.so
 vendor/lib/libHevcSwEncoder.so
 vendor/lib/libvoice-svc.so
 vendor/lib/libprdrmdecrypt.so
