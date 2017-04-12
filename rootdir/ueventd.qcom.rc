@@ -260,3 +260,6 @@
 
 # misc permissions for force upgrade
 /dev/block/mmcblk0p29     0660   system     system
+
+# for lirc
+/dev/lirc0          0660   system     system
