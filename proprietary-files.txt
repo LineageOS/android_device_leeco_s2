@@ -1,6 +1,5 @@
 -app/TimeService/TimeService.apk
 -app/QtiTelephonyService/QtiTelephonyService.apk
--app/ims/ims.apk
 -app/fastdormancy/fastdormancy.apk
 bin/ims_rtp_daemon
 bin/loc_launcher
@@ -47,6 +46,7 @@ bin/xtwifi-inet-agent
 -framework/cneapiclient.jar
 -framework/imscmlibrary.jar
 -framework/qcrilhook.jar
+-framework/rcsimssettings.jar
 -priv-app/com.qualcomm.location/com.qualcomm.location.apk
 -priv-app/CNEService/CNEService.apk
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
@@ -216,6 +216,8 @@ etc/dpm/nsrm/NsrmConfiguration.xml
 etc/dpm/dpm.conf
 etc/cne/andsfCne.xml
 etc/cne/SwimConfig.xml
+-vendor/app/ims/ims.apk
+-vendor/app/imssettings/imssettings.apk
 vendor/bin/fidodaemon
 vendor/bin/mm-pp-daemon
 vendor/bin/qti
