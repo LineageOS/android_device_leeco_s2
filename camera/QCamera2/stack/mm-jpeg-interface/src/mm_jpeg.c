@@ -2371,6 +2371,7 @@ static int32_t mm_jpeg_read_meta_keyfile(mm_jpeg_job_session_t *p_session,
 
   if (!p_session->meta_enc_key) {
     CDBG_ERROR("%s:%d] error", __func__, __LINE__);
+    fclose(fp);
     return -1;
   }
 
