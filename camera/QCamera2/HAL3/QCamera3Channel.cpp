@@ -3161,31 +3161,35 @@ int32_t QCamera3ReprocessChannel::stop()
 int32_t QCamera3ReprocessChannel::unmapOfflineBuffers(bool all)
 {
     int rc = NO_ERROR;
-    if (!mOfflineBuffers.empty()) {
-        QCamera3Stream *stream = NULL;
-        List<OfflineBuffer>::iterator it = mOfflineBuffers.begin();
-        for (; it != mOfflineBuffers.end(); it++) {
-           stream = (*it).stream;
-           if (NULL != stream) {
-               rc = stream->unmapBuf((*it).type,
-                                     (*it).index,
-                                        -1);
-               if (NO_ERROR != rc) {
-                   ALOGE("%s: Error during offline buffer unmap %d",
-                         __func__, rc);
+    {
+        Mutex::Autolock lock(mOfflineBuffersLock);
+        if (!mOfflineBuffers.empty()) {
+            QCamera3Stream *stream = NULL;
+            List<OfflineBuffer>::iterator it = mOfflineBuffers.begin();
+            for (; it != mOfflineBuffers.end(); it++) {
+               stream = (*it).stream;
+               if (NULL != stream) {
+                   rc = stream->unmapBuf((*it).type,
+                                         (*it).index,
+                                            -1);
+                   if (NO_ERROR != rc) {
+                       ALOGE("%s: Error during offline buffer unmap %d",
+                             __func__, rc);
+                   }
+                   CDBG("%s: Unmapped buffer with index %d", __func__, (*it).index);
                }
-               CDBG("%s: Unmapped buffer with index %d", __func__, (*it).index);
-           }
-           if (!all) {
-               mOfflineBuffers.erase(it);
-               break;
-           }
-        }
-        if (all) {
-           mOfflineBuffers.clear();
+               if (!all) {
+                   mOfflineBuffers.erase(it);
+                   break;
+               }
+            }
+            if (all) {
+               mOfflineBuffers.clear();
+            }
         }
     }
 
+    Mutex::Autolock lock(mOfflineMetaBuffersLock);
     if (!mOfflineMetaBuffers.empty()) {
         QCamera3Stream *stream = NULL;
         List<OfflineBuffer>::iterator it = mOfflineMetaBuffers.begin();
@@ -3439,6 +3443,7 @@ int32_t QCamera3ReprocessChannel::extractCrop(qcamera_fwk_input_pp_data_t *frame
         mappedBuffer.index = buf_idx;
         mappedBuffer.stream = pStream;
         mappedBuffer.type = CAM_MAPPING_BUF_TYPE_OFFLINE_INPUT_BUF;
+        Mutex::Autolock lock(mOfflineBuffersLock);
         mOfflineBuffers.push_back(mappedBuffer);
         mOfflineBuffersIndex = (int32_t)buf_idx;
         CDBG("%s: Mapped buffer with index %d", __func__, mOfflineBuffersIndex);
@@ -3458,6 +3463,7 @@ int32_t QCamera3ReprocessChannel::extractCrop(qcamera_fwk_input_pp_data_t *frame
         mappedBuffer.index = meta_buf_idx;
         mappedBuffer.stream = pStream;
         mappedBuffer.type = CAM_MAPPING_BUF_TYPE_OFFLINE_META_BUF;
+        Mutex::Autolock lock(mOfflineMetaBuffersLock);
         mOfflineMetaBuffers.push_back(mappedBuffer);
         mOfflineMetaIndex = (int32_t)meta_buf_idx;
         CDBG("%s: Mapped meta buffer with index %d", __func__, mOfflineMetaIndex);
