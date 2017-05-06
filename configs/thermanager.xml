@@ -123,22 +123,22 @@
 		<threshold>
 			<mitigation name="cluster-0-clk" level="off" />
 		</threshold>
-		<threshold trigger="508" clear="505">
+		<threshold trigger="40" clear="39">
 			<mitigation name="cluster-0-clk" level="1" />
 		</threshold>
-		<threshold trigger="510" clear="509">
+		<threshold trigger="41" clear="40">
 			<mitigation name="cluster-0-clk" level="2" />
 		</threshold>
-		<threshold trigger="512" clear="510">
+		<threshold trigger="42" clear="41">
 			<mitigation name="cluster-0-clk" level="4" />
 		</threshold>
-		<threshold trigger="518" clear="516">
+		<threshold trigger="43" clear="42">
 			<mitigation name="cluster-0-clk" level="5" />
 		</threshold>
-		<threshold trigger="525" clear="522">
+		<threshold trigger="44" clear="43">
 			<mitigation name="cluster-0-clk" level="6" />
 		</threshold>
-		<threshold trigger="550" clear="530">
+		<threshold trigger="45" clear="44">
 			<mitigation name="cluster-0-clk" level="7" />
 		</threshold>
 	</configuration>
@@ -163,13 +163,13 @@
 		<threshold>
 			<mitigation name="cluster-1-clk" level="off" />
 		</threshold>
-		<threshold trigger="480" clear="460">
+		<threshold trigger="40" clear="39">
 			<mitigation name="cluster-1-clk" level="5" />
 		</threshold>
-		<threshold trigger="500" clear="498">
+		<threshold trigger="44" clear="43">
 			<mitigation name="cluster-1-clk" level="11" />
 		</threshold>
-		<threshold trigger="505" clear="500">
+		<threshold trigger="45" clear="44">
 			<mitigation name="cluster-1-clk" level="12" />
 		</threshold>
 	</configuration>
@@ -178,10 +178,10 @@
 		<threshold>
 			<mitigation name="cluster-1-hotplug" level="off" />
 		</threshold>
-		<threshold trigger="500" clear="498">
+		<threshold trigger="41" clear="39">
 			<mitigation name="cluster-1-hotplug" level="1" />
 		</threshold>
-		<threshold trigger="505" clear="500">
+		<threshold trigger="44" clear="42">
 			<mitigation name="cluster-1-hotplug" level="2" />
 		</threshold>
 	</configuration>
@@ -206,13 +206,13 @@
 		<threshold>
 			<mitigation name="adreno-clk" level="off" />
 		</threshold>
-		<threshold trigger="512" clear="510">
+		<threshold trigger="42" clear="41">
 			<mitigation name="adreno-clk" level="2" />
 		</threshold>
-		<threshold trigger="518" clear="516">
+		<threshold trigger="43" clear="42">
 			<mitigation name="adreno-clk" level="3" />
 		</threshold>
-		<threshold trigger="525" clear="522">
+		<threshold trigger="45" clear="44">
 			<mitigation name="adreno-clk" level="5" />
 		</threshold>
 	</configuration>
@@ -222,22 +222,22 @@
 		<threshold>
 			<mitigation name="charging" level="off" />
 		</threshold>
-		<threshold trigger="490" clear="487">
-			<mitigation name="charging" level="2" />
+		<threshold trigger="40" clear="39">
+			<mitigation name="charging" level="6" />
 		</threshold>
-		<threshold trigger="500" clear="498">
-			<mitigation name="charging" level="3" />
-		</threshold>
-		<threshold trigger="510" clear="509">
+		<threshold trigger="41" clear="40">
 			<mitigation name="charging" level="8" />
 		</threshold>
-		<threshold trigger="516" clear="512">
-			<mitigation name="charging" level="9" />
+		<threshold trigger="42" clear="41">
+			<mitigation name="charging" level="10" />
 		</threshold>
-		<threshold trigger="525" clear="522">
+		<threshold trigger="43" clear="42">
+			<mitigation name="charging" level="11" />
+		</threshold>
+		<threshold trigger="44" clear="43">
 			<mitigation name="charging" level="12" />
 		</threshold>
-		<threshold trigger="590" clear="560">
+		<threshold trigger="45" clear="44">
 			<mitigation name="charging" level="13" />
 		</threshold>
 	</configuration>
