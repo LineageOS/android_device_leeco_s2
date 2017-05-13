@@ -279,6 +279,13 @@ service fidoca /system/vendor/bin/fidoca
     user system
     group system
 
+# OSS thermal management
+service thermanager /system/bin/thermanager /system/etc/thermanager.xml
+    class late_start
+    user root
+    group root
+    seclabel u:r:thermanager:s0
+
 on property:persist.sys.le_fast_chrg_enable=1
     write /sys/class/power_supply/battery/le_quick_charge_mode 0
 
