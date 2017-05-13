@@ -112,12 +112,6 @@
 		<mitigation level="5"><value resource="charge_speed">5</value></mitigation>
 		<mitigation level="6"><value resource="charge_speed">6</value></mitigation>
 		<mitigation level="7"><value resource="charge_speed">7</value></mitigation>
-		<mitigation level="8"><value resource="charge_speed">8</value></mitigation>
-		<mitigation level="9"><value resource="charge_speed">9</value></mitigation>
-		<mitigation level="10"><value resource="charge_speed">10</value></mitigation>
-		<mitigation level="11"><value resource="charge_speed">11</value></mitigation>
-		<mitigation level="12"><value resource="charge_speed">12</value></mitigation>
-		<mitigation level="13"><value resource="charge_speed">13</value></mitigation>
 	</control>
 
 	<control name="battery_protect">
@@ -291,19 +285,19 @@
 			<mitigation name="charging" level="off" />
 		</threshold>
 		<threshold trigger="41000" clear="40000">
-			<mitigation name="charging" level="6" />
+			<mitigation name="charging" level="1" />
 		</threshold>
 		<threshold trigger="42000" clear="41000">
-			<mitigation name="charging" level="8" />
+			<mitigation name="charging" level="2" />
 		</threshold>
 		<threshold trigger="43000" clear="42000">
-			<mitigation name="charging" level="10" />
+			<mitigation name="charging" level="3" />
 		</threshold>
 		<threshold trigger="44000" clear="43000">
-			<mitigation name="charging" level="12" />
+			<mitigation name="charging" level="4" />
 		</threshold>
 		<threshold trigger="45000" clear="44000">
-			<mitigation name="charging" level="13" />
+			<mitigation name="charging" level="5" />
 		</threshold>
 	</configuration>
 
