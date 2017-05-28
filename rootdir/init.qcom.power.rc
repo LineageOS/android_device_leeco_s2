@@ -1,3 +1,18 @@
+on init
+    # cpuquiet rqbalance permissions
+    chown system system /sys/devices/system/cpu/cpuquiet/nr_min_cpus
+    chown system system /sys/devices/system/cpu/cpuquiet/nr_power_max_cpus
+    chown system system /sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus
+    chown system system /sys/devices/system/cpu/cpuquiet/rqbalance/balance_level
+    chown system system /sys/devices/system/cpu/cpuquiet/rqbalance/nr_run_thresholds
+    chown system system /sys/devices/system/cpu/cpuquiet/rqbalance/nr_down_run_thresholds
+    chmod 0660 /sys/devices/system/cpu/cpuquiet/nr_min_cpus
+    chmod 0660 /sys/devices/system/cpu/cpuquiet/nr_power_max_cpus
+    chmod 0660 /sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus
+    chmod 0660 /sys/devices/system/cpu/cpuquiet/rqbalance/balance_level
+    chmod 0660 /sys/devices/system/cpu/cpuquiet/rqbalance/nr_run_thresholds
+    chmod 0660 /sys/devices/system/cpu/cpuquiet/rqbalance/nr_down_run_thresholds
+
 on charger
 
     mkdir /system
