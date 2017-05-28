@@ -331,8 +331,8 @@ PRODUCT_COPY_FILES += \
 # SDcard
 PRODUCT_CHARACTERISTICS := nosdcard
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sys.sdcardfs=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.sys.sdcardfs=true
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
