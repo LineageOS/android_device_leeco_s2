@@ -241,3 +241,18 @@ ro.qcom.ad.calib.data=/system/etc/ad_calib.cfg
 
 # to force call stick on CS (NOT switch to VoLTE)
 persist.radio.cs_srv_type=1
+
+#
+# rqbalance specific values
+#
+cpuquiet.low.min_cpus=2
+cpuquiet.low.max_cpus=4
+rqbalance.low.balance_level=80
+rqbalance.low.up_threshold=200 400 600 4294967295
+rqbalance.low.down_threshold=0 100 300 500
+
+cpuquiet.normal.min_cpus=4
+cpuquiet.normal.max_cpus=8
+rqbalance.normal.balance_level=40
+rqbalance.normal.up_threshold=100 250 330 4294967295
+rqbalance.normal.down_threshold=0 130 220 300

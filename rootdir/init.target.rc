@@ -57,9 +57,6 @@ on fs
     mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     #write /sys/kernel/boot_adsp/boot 1
 
-    write /sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus 8
-    write /sys/devices/system/cpu/cpuquiet/nr_power_max_cpus 8
-
 on post-fs-data
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
