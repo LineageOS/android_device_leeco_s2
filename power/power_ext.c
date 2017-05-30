@@ -27,6 +27,8 @@
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 
+#include "utils.h"
+
 #define CPUQUIET_MIN_CPUS "/sys/devices/system/cpu/cpuquiet/nr_min_cpus"
 #define CPUQUIET_MAX_CPUS "/sys/devices/system/cpu/cpuquiet/nr_power_max_cpus"
 #define CPUQUIET_THERMAL_CPUS "/sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus"
@@ -60,39 +62,37 @@ char normal_balance[PROPERTY_VALUE_MAX];
 char normal_up[PROPERTY_VALUE_MAX];
 char normal_down[PROPERTY_VALUE_MAX];
 
-extern int sysfs_write(char *path, char *s);
-
 void cm_power_set_interactive_ext(int on) {
 
-    ALOGI("CPUQUIET config loaded");
+    ALOGE("CPUQUIET config loaded");
 
     property_get(LOW_MIN_CPUS, low_min_cpus, "0");
-    ALOGI("LOW_MIN_CPUS: %s", low_min_cpus);
+    ALOGE("LOW_MIN_CPUS: %s", low_min_cpus);
     property_get(LOW_MAX_CPUS, low_max_cpus, "0");
-    ALOGI("LOW_MAX_CPUS: %s", low_max_cpus);
+    ALOGE("LOW_MAX_CPUS: %s", low_max_cpus);
     property_get(LOW_POWER_BALANCE_LEVEL, low_balance, "0");
-    ALOGI("LOW_POWER_BALANCE_LEVEL: %s", low_balance);
+    ALOGE("LOW_POWER_BALANCE_LEVEL: %s", low_balance);
     property_get(LOW_POWER_UP_THRESHOLD, low_up, "0");
-    ALOGI("LOW_POWER_UP_THRESHOLD: %s", low_up);
+    ALOGE("LOW_POWER_UP_THRESHOLD: %s", low_up);
     property_get(LOW_POWER_DOWN_THRESHOLD, low_down, "0");
-    ALOGI("LOW_POWER_DOWN_THRESHOLD: %s", low_down);
+    ALOGE("LOW_POWER_DOWN_THRESHOLD: %s", low_down);
 
     property_get(NORMAL_MIN_CPUS, normal_min_cpus, "0");
-    ALOGI("NORMAL_MIN_CPUS: %s", normal_min_cpus);
+    ALOGE("NORMAL_MIN_CPUS: %s", normal_min_cpus);
     property_get(NORMAL_MAX_CPUS, normal_max_cpus, "0");
-    ALOGI("NORMAL_MAX_CPUS: %s", normal_max_cpus);
+    ALOGE("NORMAL_MAX_CPUS: %s", normal_max_cpus);
     property_get(NORMAL_POWER_BALANCE_LEVEL, normal_balance, "0");
-    ALOGI("NORMAL_POWER_BALANCE_LEVEL: %s", normal_balance);
+    ALOGE("NORMAL_POWER_BALANCE_LEVEL: %s", normal_balance);
     property_get(NORMAL_POWER_UP_THRESHOLD, normal_up, "0");
-    ALOGI("NORMAL_POWER_UP_THRESHOLD: %s", normal_up);
+    ALOGE("NORMAL_POWER_UP_THRESHOLD: %s", normal_up);
     property_get(NORMAL_POWER_DOWN_THRESHOLD, normal_down, "0");
-    ALOGI("NORMAL_POWER_DOWN_THRESHOLD: %s", normal_down);
+    ALOGE("NORMAL_POWER_DOWN_THRESHOLD: %s", normal_down);
 
     // init thermal maximum prior to setting normal power profile
     sysfs_write(CPUQUIET_THERMAL_CPUS, normal_max_cpus);
 
      if (!on) {
-        ALOGI("Setting low power mode");
+        ALOGE("Setting low power mode");
 			// MIN before MAX is intentional
 		sysfs_write(CPUQUIET_MIN_CPUS, low_min_cpus);
 		sysfs_write(CPUQUIET_MAX_CPUS, low_max_cpus);
@@ -100,7 +100,7 @@ void cm_power_set_interactive_ext(int on) {
 		sysfs_write(RQBALANCE_UP_THRESHOLD, low_up);
 		sysfs_write(RQBALANCE_DOWN_THRESHOLD, low_down);
     } else {
-         ALOGI("Setting normal power mode");
+         ALOGE("Setting normal power mode");
 			// MAX before MIN is intentional
 		sysfs_write(CPUQUIET_MAX_CPUS, normal_max_cpus);
 		sysfs_write(CPUQUIET_MIN_CPUS, normal_min_cpus);
