@@ -27,6 +27,8 @@
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 
+#include "utils.h"
+
 #define CPUQUIET_MIN_CPUS "/sys/devices/system/cpu/cpuquiet/nr_min_cpus"
 #define CPUQUIET_MAX_CPUS "/sys/devices/system/cpu/cpuquiet/nr_power_max_cpus"
 #define CPUQUIET_THERMAL_CPUS "/sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus"
@@ -60,8 +62,6 @@ char normal_balance[PROPERTY_VALUE_MAX];
 char normal_up[PROPERTY_VALUE_MAX];
 char normal_down[PROPERTY_VALUE_MAX];
 
-extern int sysfs_write(char *path, char *s);
-
 void cm_power_set_interactive_ext(int on) {
 
     ALOGI("CPUQUIET config loaded");
@@ -93,19 +93,19 @@ void cm_power_set_interactive_ext(int on) {
 
      if (!on) {
         ALOGI("Setting low power mode");
-			// MIN before MAX is intentional
-		sysfs_write(CPUQUIET_MIN_CPUS, low_min_cpus);
-		sysfs_write(CPUQUIET_MAX_CPUS, low_max_cpus);
-		sysfs_write(RQBALANCE_BALANCE_LEVEL, low_balance);
-		sysfs_write(RQBALANCE_UP_THRESHOLD, low_up);
-		sysfs_write(RQBALANCE_DOWN_THRESHOLD, low_down);
+        // MIN before MAX is intentional
+        sysfs_write(CPUQUIET_MIN_CPUS, low_min_cpus);
+        sysfs_write(CPUQUIET_MAX_CPUS, low_max_cpus);
+        sysfs_write(RQBALANCE_BALANCE_LEVEL, low_balance);
+        sysfs_write(RQBALANCE_UP_THRESHOLD, low_up);
+        sysfs_write(RQBALANCE_DOWN_THRESHOLD, low_down);
     } else {
          ALOGI("Setting normal power mode");
-			// MAX before MIN is intentional
-		sysfs_write(CPUQUIET_MAX_CPUS, normal_max_cpus);
-		sysfs_write(CPUQUIET_MIN_CPUS, normal_min_cpus);
-		sysfs_write(RQBALANCE_BALANCE_LEVEL, normal_balance);
-		sysfs_write(RQBALANCE_UP_THRESHOLD, normal_up);
-		sysfs_write(RQBALANCE_DOWN_THRESHOLD, normal_down);
-	}
+        // MAX before MIN is intentional
+        sysfs_write(CPUQUIET_MAX_CPUS, normal_max_cpus);
+        sysfs_write(CPUQUIET_MIN_CPUS, normal_min_cpus);
+        sysfs_write(RQBALANCE_BALANCE_LEVEL, normal_balance);
+        sysfs_write(RQBALANCE_UP_THRESHOLD, normal_up);
+        sysfs_write(RQBALANCE_DOWN_THRESHOLD, normal_down);
+    }
 }
