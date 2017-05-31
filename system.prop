@@ -62,6 +62,9 @@ persist.rild.nitz_short_ons_1=""
 persist.rild.nitz_short_ons_2=""
 persist.rild.nitz_short_ons_3=""
 
+# Perf
+ro.vendor.extension_library=libqti-perfd-client.so
+
 # Factory Reset Protection
 ro.frp.pst=/dev/block/bootdevice/by-name/config
 
