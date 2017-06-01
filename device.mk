@@ -138,7 +138,8 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap
+    Snap \
+    camera.msm8952
 
 # Charger
 PRODUCT_PACKAGES += \
