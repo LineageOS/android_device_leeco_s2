@@ -205,9 +205,6 @@ wifi.interface=wlan0
 persist.media.rtsp.syncframe=1
 persist.media.rtsp.dropaudio=1
 
-# Simulate sdcard on /data/media
-persist.fuse_sdcard=true
-
 # property to enable narrow search range for video encoding
 vidc.enc.narrow.searchrange=1
 persist.sys.usb.gps.notify=0
