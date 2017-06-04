@@ -43,6 +43,10 @@ TARGET_NEEDS_TEXT_RELOCATIONS := true
 TARGET_NO_BOOTLOADER := true
 TARGET_BOOTLOADER_BOARD_NAME := MSM8952
 
+# CPU
+ENABLE_CPUSETS := true
+ENABLE_SCHED_BOOST := true
+
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk
 BOARD_KERNEL_BASE := 0x80000000
@@ -63,8 +67,6 @@ TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_COMPILE_WITH_MSM_KERNEL := true
 
 BOARD_DTBTOOL_ARGS := -2
-
-#ENABLE_CPUSETS := true
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072

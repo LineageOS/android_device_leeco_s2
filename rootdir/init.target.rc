@@ -145,6 +145,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
+    writepid /dev/cpuset/system-background/tasks
 
 on init
    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
@@ -165,21 +166,25 @@ service qseecomd /system/bin/qseecomd
    class core
    user root
    group root
+   writepid /dev/cpuset/system-background/tasks
 
 service perfd /system/vendor/bin/perfd
    class main
    user root
+   writepid /dev/cpuset/system-background/tasks
    disabled
 
 service time_daemon /system/bin/time_daemon
    class late_start
    user root
    group root
+   writepid /dev/cpuset/system-background/tasks
 
 service audiod /system/bin/audiod
    class late_start
    user system
    group system
+   writepid /dev/cpuset/system-background/tasks
 
 on boot
     start rmt_storage
@@ -209,10 +214,11 @@ service wcnss-service /system/bin/wcnss_service
 
 service ppd /system/vendor/bin/mm-pp-daemon
     class late_start
-    disabled
     user system
     socket pps stream 0660 system system
     group system graphics
+    writepid /dev/cpuset/system-background/tasks
+    disabled
 
 on property:init.svc.surfaceflinger=stopped
     stop ppd
@@ -237,16 +243,19 @@ service adsprpcd /system/bin/adsprpcd
     class main
     user media
     group media
+    writepid /dev/cpuset/system-background/tasks
 
 service hvdcp_opti /system/bin/hvdcp_opti
     class main
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
 
 service per_mgr /system/bin/pm-service
     class core
     user system
     group system net_raw
+    writepid /dev/cpuset/system-background/tasks
 
 service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
     class main
@@ -258,21 +267,25 @@ service yep_qmi_server /system/bin/yep_qmi_server
     class core
     user root
     seclabel u:r:yep_qmi_server:s0
+    writepid /dev/cpuset/system-background/tasks
 
 service fingerprintd /system/bin/fingerprintd
     class late_start
     user system
+    writepid /dev/cpuset/system-background/tasks
 
 service gx_fpd /system/bin/gx_fpd
     class late_start
     user root
     group root system
     seclabel u:r:goodix:s0
+    writepid /dev/cpuset/system-background/tasks
 
 service fidoca /system/vendor/bin/fidoca
     class late_start
     user system
     group system
+    writepid /dev/cpuset/system-background/tasks
 
 # OSS thermal management
 service thermanager /system/bin/thermanager /system/etc/thermanager.xml
@@ -280,6 +293,7 @@ service thermanager /system/bin/thermanager /system/etc/thermanager.xml
     user root
     group root
     seclabel u:r:thermanager:s0
+    writepid /dev/cpuset/system-background/tasks
 
 on property:persist.sys.le_fast_chrg_enable=1
     write /sys/class/power_supply/battery/le_quick_charge_mode 0

@@ -392,10 +392,12 @@ service cnd /system/bin/cnd
     class late_start
     socket cnd stream 660 root inet
     group root wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 service dpmd /system/bin/dpmd
     class late_start
     socket dpmd stream 660 root system
+    writepid /dev/cpuset/system-background/tasks
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class main
@@ -406,10 +408,12 @@ service rmt_storage /system/bin/rmt_storage
     class core
     user root
     group system wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 service tftp_server /system/bin/tftp_server
    class main
    user root
+   writepid /dev/cpuset/system-background/tasks
 
 on property:wc_transport.start_hci=true
     start start_hci_filter
@@ -421,6 +425,7 @@ service start_hci_filter /system/bin/wcnss_filter
     class late_start
     user bluetooth
     group bluetooth diag
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:wc_transport.start_root=true
@@ -433,6 +438,7 @@ service hci_filter_root /system/bin/wcnss_filter
     class late_start
     user bluetooth
     group bluetooth diag system
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
@@ -492,6 +498,7 @@ service bridgemgrd /system/bin/bridgemgrd
     class late_start
     user radio
     group radio diag
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service port-bridge /system/bin/port-bridge /dev/mhi_pipe_32 /dev/ttyGS0
@@ -505,6 +512,7 @@ service qmiproxy /system/bin/qmiproxy
     class main
     user radio
     group radio diag
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 # QMUX must be in multiple groups to support external process connections
@@ -512,33 +520,32 @@ service qmuxd /system/bin/qmuxd
     class main
     user root
     group radio audio bluetooth wakelock gps nfc diag
+    writepid /dev/cpuset/system-background/tasks
 
 service netmgrd /system/bin/netmgrd
     class main
     user root
     group radio wakelock
-
-#service ipacm-diag /system/bin/ipacm-diag
-#    class main
-#    user system
-#    socket ipacm_log_file dgram 660 system net_admin
-#    group net_admin diag
+    writepid /dev/cpuset/system-background/tasks
 
 service ipacm /system/bin/ipacm
     class main
     user net_admin
     group net_admin inet
+    writepid /dev/cpuset/system-background/tasks
 
 service qti /system/vendor/bin/qti
     class main
     user radio
     group radio net_raw diag usb net_admin
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service sensors /system/bin/sensors.qcom
     class late_start
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:ro.use_data_netmgrd=false
@@ -623,19 +630,15 @@ service ptt_ffbm /system/bin/ptt_socket_app -f -d
     disabled
     oneshot
 
-#service cnss_diag /system/bin/cnss_diag -q -f
-#    class late_start
-#    user root
-#    group root
-#    oneshot
-
 service cnss-daemon /system/bin/cnss-daemon -n -l
     class late_start
+    writepid /dev/cpuset/system-background/tasks
 
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet net_raw diag net_admin wifi
+    writepid /dev/cpuset/system-background/tasks
 
 service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
     class late_start
@@ -693,6 +696,7 @@ service atfwd /system/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
+    writepid /dev/cpuset/system-background/tasks
 
 service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf
     class late_start
@@ -704,6 +708,7 @@ service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf
 service ims_regmanager /system/bin/exe-ims-regmanagerprocessnative
     class late_start
     group net_bt_admin inet radio wifi
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:persist.ims.regmanager.mode=1
@@ -716,6 +721,7 @@ on property:ro.data.large_tcp_window_size=true
 service battery_monitor /system/bin/battery_monitor
     user system
     group system
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service ril-daemon /system/bin/rild
@@ -725,6 +731,7 @@ service ril-daemon /system/bin/rild
     socket rild-debug stream 660 radio system
     user root
     group radio cache inet misc audio log diag net_raw
+    writepid /dev/cpuset/system-background/tasks
 
 service ril-daemon2 /system/bin/rild -c 2
     class main
@@ -733,6 +740,7 @@ service ril-daemon2 /system/bin/rild -c 2
     user root
     disabled
     group radio cache inet misc audio sdcard_r sdcard_rw diag log
+    writepid /dev/cpuset/system-background/tasks
 
 service ril-daemon3 /system/bin/rild -c 3
     class main
@@ -741,11 +749,13 @@ service ril-daemon3 /system/bin/rild -c 3
     user root
     disabled
     group radio cache inet misc audio sdcard_r sdcard_rw diag log
+    writepid /dev/cpuset/system-background/tasks
 
 service profiler_daemon /system/bin/profiler_daemon
     class late_start
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service hcidump /system/bin/sh /system/etc/hcidump.sh
@@ -758,11 +768,13 @@ service ssr_diag /system/bin/ssr_diag
     class late_start
     user system
     group system
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service hvdcp /system/bin/hvdcp
     class core
     user root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:persist.usb.hvdcp.detect=true
@@ -774,6 +786,7 @@ on property:persist.usb.hvdcp.detect=false
 service charger_monitor /system/bin/charger_monitor
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service diag_mdlog_start /system/bin/diag_mdlog
@@ -793,6 +806,7 @@ service diag_mdlog_stop /system/bin/diag_mdlog -k
 service qlogd /system/xbin/qlogd
     socket qlogd stream 0662 system system
     class main
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:persist.sys.qlogd=1
@@ -804,8 +818,10 @@ on property:persist.sys.qlogd=0
 service rootagent /system/bin/sh /system/etc/init.qcom.rootagent.sh
     disabled
     oneshot
+
 on property:persist.sys.rootagent=1
     start rootagent
+
 on property:persist.sys.rootagent=0
     stop rootagent
 
@@ -817,18 +833,21 @@ service bms-sh /system/bin/sh /init.qcom.bms.sh
 service vm_bms /system/bin/vm_bms
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     class core
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service msm_irqbal_lb /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance_little_big.conf
     class core
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service wfdservice /system/bin/wfdservice
@@ -848,6 +867,7 @@ service fidodaemon /system/vendor/bin/fidodaemon
     class late_start
     user system
     group system
+    writepid /dev/cpuset/system-background/tasks
 
 # Coresight early boot service
 service cs-early-boot /system/bin/sh /persist/coresight/qdss.agent.sh early-boot /system/etc/init.qcom.debug.sh
@@ -865,6 +885,7 @@ service quit_dloadsvr /system/bin/sh /system/etc/init.qcom.dload_quit.sh
 
 on property:persist.sys.dload.state=1
     start dloadsvr
+
 on property:persist.sys.dload.state=0
     start quit_dloadsvr
 
