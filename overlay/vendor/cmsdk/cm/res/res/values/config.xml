@@ -28,7 +28,10 @@
 
          For example, a device support pulsating, RGB notification and
          battery LEDs would set this config to 11. -->
-    <integer name="config_deviceLightCapabilities" translatable="false">35</integer>
+    <integer name="config_deviceLightCapabilities" translatable="false">43</integer>
+
+    <!-- Is the notification LED brightness adjustable ? Used to decide if the user can set LED brightness -->
+    <bool name="config_adjustableNotificationLedBrightness">true</bool>
 
     <!-- Default value for proximity check on screen wake
      NOTE ! - Enable for devices that have a fast response proximity sensor (ideally < 300ms)-->
