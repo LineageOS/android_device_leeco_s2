@@ -296,7 +296,7 @@ service fidoca /system/vendor/bin/fidoca
     group system
 
 # OSS thermal management
-service thermanager /system/bin/thermanager /system/etc/thermanager.xml
+service thermanager /system/bin/thermanager ${ro.thermanager.config}
     class late_start
     user root
     group root
@@ -309,10 +309,10 @@ on property:persist.sys.le_fast_chrg_enable=0
     write /sys/class/power_supply/battery/le_quick_charge_mode 1
 
 on property:sys.settings.powerlimit=1
-   write /sys/class/power_supply/battery/charging_enabled 0
+    write /sys/class/power_supply/battery/charging_enabled 0
 
 on property:sys.settings.powerlimit=0
-   write /sys/class/power_supply/battery/charging_enabled 1
+    write /sys/class/power_supply/battery/charging_enabled 1
 
 on property:sys.usb.config.powerlimit=1
     write /sys/class/power_supply/battery/system_temp_level 3
@@ -321,10 +321,10 @@ on property:sys.usb.config.powerlimit=0
     write /sys/class/power_supply/battery/system_temp_level 0
 
 on property:sys.typec.set.mode=master
-   write /sys/class/type-c/info/mode 0
+    write /sys/class/type-c/info/mode 0
 
 on property:sys.typec.set.mode=client
-   write /sys/class/type-c/info/mode 3
+    write /sys/class/type-c/info/mode 3
 
 on property:persist.sys.usb.gps.notify=1
     write /sys/class/type-c/info/vbus_status 1
