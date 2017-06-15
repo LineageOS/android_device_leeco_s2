@@ -14,4 +14,4 @@
 /misc           emmc        /dev/block/bootdevice/by-name/misc                                   flags=display="Misc"
 /firmware       vfat        /dev/block/bootdevice/by-name/modem                                  flags=display="Firmware";backup=1
 /frp            emmc        /dev/block/bootdevice/by-name/config                                 flags=display="Frp";backup=1
-/usb-otg        vfat        /dev/block/sda1                                /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable
+/usb-otg        auto        /dev/block/sda1                                /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable
