@@ -249,6 +249,7 @@ vendor/lib/libOmxApeDec.so
 vendor/lib/libmmhttpstack.so
 vendor/lib/libwfduibcinterface.so
 vendor/lib/libwvdrm_L1.so
+vendor/lib/libwvdrm_L3.so
 vendor/lib/libmmcamera_isp_chroma_suppress40.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_cpp_ds_chromatix.so
 vendor/lib/libmmcamera_isp_cs_stats44.so
@@ -385,6 +386,7 @@ vendor/lib/libchromatix_ov16880_sunny_bahy_6c_hfr_60.so
 vendor/lib/libchromatix_ov16880_primax_bahy_6c_snapshot.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_hfr_60.so
 vendor/lib/libWVStreamControlAPI_L1.so
+vendor/lib/libWVStreamControlAPI_L3.so
 vendor/lib/libmmcamera_hdr_gb_lib.so
 vendor/lib/libSampleAuthJNI.so
 vendor/lib/libdpmtcm.so
@@ -575,7 +577,6 @@ vendor/lib/libchromatix_ov16880_primax_bahy_6c_cpp_hfr_120.so
 vendor/lib/libmmQSM.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_cpp_us_chromatix.so
 vendor/lib/mediadrm/libwvdrmengine.so
-vendor/lib/mediadrm/libdrmclearkeyplugin.so
 vendor/lib/libmmcamera_pdaf.so
 vendor/lib/lib-rtpsl.so
 vendor/lib/libdpmnsrm.so
