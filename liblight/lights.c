@@ -44,15 +44,6 @@ static struct light_state_t g_attention;
 char const*const RED_LED_FILE
         = "/sys/class/leds/red/brightness";
 
-char const*const RED_BLINK_FILE
-	= "/sys/class/leds/red/blink";
-
-char const*const GREEN_BLINK_FILE
-	= "/sys/class/leds/green/blink";
-
-char const*const BLUE_BLINK_FILE
-	= "/sys/class/leds/blue/blink";
-
 char const*const GREEN_LED_FILE
         = "/sys/class/leds/green/brightness";
 
@@ -354,20 +345,16 @@ set_speaker_light_locked(struct light_device_t* dev,
 
     } else {
         blink = 0;
-        sprintf(breath_pattern,"1 2 1 2");
+        sprintf(breath_pattern,"1 1 1 1");
     }
-
-    // Do everything with the lights out, then turn up the brightness
-    write_str(RED_BREATH_FILE, breath_pattern);
-    write_int(RED_BLINK_FILE, (blink && red ? 1 : 0));
-    write_str(GREEN_BREATH_FILE, breath_pattern);
-    write_int(GREEN_BLINK_FILE, (blink && green ? 1 : 0));
-    write_str(BLUE_BREATH_FILE, breath_pattern);
-    write_int(BLUE_BLINK_FILE, (blink && blue ? 1 : 0));
 
     write_int(RED_LED_FILE, red);
     write_int(GREEN_LED_FILE, green);
     write_int(BLUE_LED_FILE, blue);
+
+    write_str(RED_BREATH_FILE, breath_pattern);
+    write_str(GREEN_BREATH_FILE, breath_pattern);
+    write_str(BLUE_BREATH_FILE, breath_pattern);
 
     return 0;
 }
