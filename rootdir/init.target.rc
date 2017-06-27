@@ -157,6 +157,9 @@ on post-fs-data
     chown system camera /sys/class/leds/led:switch/brightness
     chmod 0664 /sys/class/leds/led:switch/brightness
 
+    # default display backlight max brightness
+    write /sys/class/leds/lcd-backlight/max_brightness 255
+
     # reduced power rate when normal charge
     chown system system /sys/class/power_supply/battery/le_quick_charge_mode
     chmod 666 /sys/class/power_supply/battery/le_quick_charge_mode

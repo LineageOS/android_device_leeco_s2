@@ -122,13 +122,13 @@
 
 	<control name="backlight">
 		<mitigation level="off"><value resource="backlight">255</value></mitigation>
-		<mitigation level="1"><value resource="backlight">230</value></mitigation>
-		<mitigation level="2"><value resource="backlight">210</value></mitigation>
-		<mitigation level="3"><value resource="backlight">190</value></mitigation>
-		<mitigation level="4"><value resource="backlight">170</value></mitigation>
-		<mitigation level="5"><value resource="backlight">150</value></mitigation>
-		<mitigation level="6"><value resource="backlight">130</value></mitigation>
-		<mitigation level="7"><value resource="backlight">110</value></mitigation>
+		<mitigation level="1"><value resource="backlight">245</value></mitigation>
+		<mitigation level="2"><value resource="backlight">235</value></mitigation>
+		<mitigation level="3"><value resource="backlight">225</value></mitigation>
+		<mitigation level="4"><value resource="backlight">215</value></mitigation>
+		<mitigation level="5"><value resource="backlight">205</value></mitigation>
+		<mitigation level="6"><value resource="backlight">195</value></mitigation>
+		<mitigation level="7"><value resource="backlight">185</value></mitigation>
 	</control>
 
 	<!-- LCD backlight -->
@@ -136,16 +136,16 @@
 		<threshold>
 			<mitigation name="backlight" level="off" />
 		</threshold>
-		<threshold trigger="37" clear="35">
+		<threshold trigger="42" clear="40">
 			<mitigation name="backlight" level="1" />
 		</threshold>
-		<threshold trigger="39" clear="37">
+		<threshold trigger="44" clear="42">
 			<mitigation name="backlight" level="2" />
 		</threshold>
-		<threshold trigger="41" clear="39">
+		<threshold trigger="46" clear="44">
 			<mitigation name="backlight" level="3" />
 		</threshold>
-		<threshold trigger="50" clear="45">
+		<threshold trigger="48" clear="46">
 			<mitigation name="backlight" level="4" />
 		</threshold>
 	</configuration>
