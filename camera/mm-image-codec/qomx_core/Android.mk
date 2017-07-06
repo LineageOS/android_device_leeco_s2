@@ -20,7 +20,8 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../qexif
 
 LOCAL_SRC_FILES := qomx_core.c
 
-LOCAL_MODULE           := libqomx_core
+LOCAL_MODULE := libqomx_core
+LOCAL_VENDOR_MODULE := true
 LOCAL_SHARED_LIBRARIES := libcutils libdl liblog
 
 LOCAL_32_BIT_ONLY := true
