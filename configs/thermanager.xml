@@ -136,16 +136,16 @@
 		<threshold>
 			<mitigation name="backlight" level="off" />
 		</threshold>
-		<threshold trigger="37" clear="35">
+		<threshold trigger="42" clear="40">
 			<mitigation name="backlight" level="1" />
 		</threshold>
-		<threshold trigger="39" clear="37">
+		<threshold trigger="44" clear="42">
 			<mitigation name="backlight" level="2" />
 		</threshold>
-		<threshold trigger="41" clear="39">
+		<threshold trigger="46" clear="44">
 			<mitigation name="backlight" level="3" />
 		</threshold>
-		<threshold trigger="50" clear="45">
+		<threshold trigger="48" clear="46">
 			<mitigation name="backlight" level="4" />
 		</threshold>
 	</configuration>
