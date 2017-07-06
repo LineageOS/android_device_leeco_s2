@@ -56,7 +56,7 @@ LOCAL_SRC_FILES := \
 LOCAL_MODULE           := libmmjpeg_interface
 LOCAL_SHARED_LIBRARIES := libdl libcutils liblog libqomx_core
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_PATH_32 := $(TARGET_OUT_VENDOR)/lib
+LOCAL_VENDOR_MODULE := true
 
 LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)
 include $(BUILD_SHARED_LIBRARY)
