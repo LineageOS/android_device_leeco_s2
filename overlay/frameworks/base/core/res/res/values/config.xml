@@ -145,6 +145,10 @@
     <!-- Enable adjusting the button backlight -->
     <bool name="config_deviceHasVariableButtonBrightness">true</bool>
 
+    <!-- If enabled, capacitive keys will only light up when pressed.
+         Otherwise, the buttons will light up whenever the user interacts with the device -->
+    <bool name="config_buttonLightOnKeypressOnly">true</bool>
+
     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
     <bool name="config_unplugTurnsOnScreen">true</bool>
 
