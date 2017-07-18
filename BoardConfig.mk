@@ -116,8 +116,16 @@ QCOM_BT_USE_BTNV := true
 QCOM_BT_USE_SMD_TTY := true
 
 # Camera
-USE_DEVICE_SPECIFIC_CAMERA := true
-BOARD_QTI_CAMERA_32BIT_ONLY := true
+ USE_DEVICE_SPECIFIC_CAMERA := true
+ # Force camera module to be compiled only in 32-bit mode on 64-bit systems
+ # Once camera module can run in the native mode of the system (either
+ # 32-bit or 64-bit), the following line should be deleted
+ BOARD_QTI_CAMERA_32BIT_ONLY := true
+ TARGET_USES_MEDIA_EXTENSIONS := true
+ TARGET_CAMERASERVICE_CLOSES_NATIVE_HANDLES := true
+ #test these flags
+ #BOARD_QTI_CAMERA_32BIT_ONLY := true
+ TARGET_TS_MAKEUP := true
 
 # This is needed for us as it disables tcache, which is breaking camera.
 MALLOC_SVELTE := true

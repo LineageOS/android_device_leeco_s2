@@ -1,3 +1,9 @@
+on early-init
+    # Speed up boot
+    write /sys/block/mmcblk0/queue/scheduler "noop"
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 512
+    write /sys/block/mmcblk1/bdi/read_ahead_kb 512
+
 on init
     # cpuquiet rqbalance permissions
     chown system system /sys/devices/system/cpu/cpuquiet/nr_min_cpus
@@ -12,6 +18,15 @@ on init
     chmod 0660 /sys/devices/system/cpu/cpuquiet/rqbalance/balance_level
     chmod 0660 /sys/devices/system/cpu/cpuquiet/rqbalance/nr_run_thresholds
     chmod 0660 /sys/devices/system/cpu/cpuquiet/rqbalance/nr_down_run_thresholds
+    
+# add a cpuset for the camera daemon
+    # we want all the little cores for camera
+    mkdir /dev/cpuset/camera-daemon
+    write /dev/cpuset/camera-daemon/cpus 0-3
+    write /dev/cpuset/camera-daemon/mems 0
+    chown system system /dev/cpuset/camera-daemon
+    chown system system /dev/cpuset/camera-daemon/tasks
+    chmod 0664 /dev/cpuset/camera-daemon/tasks
 
 on charger
 
