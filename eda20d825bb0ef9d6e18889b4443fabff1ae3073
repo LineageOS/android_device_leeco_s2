@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8122c13a_062ab63b",
+        "filename": "rootdir/init.qcom.power.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 16082
+      },
+      "writtenOn": "2017-07-25T15:05:12Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "eda20d825bb0ef9d6e18889b4443fabff1ae3073",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
