@@ -1,3 +1,8 @@
+on early-init
+     # Speed up boot
+     write /sys/block/mmcblk0/bdi/read_ahead_kb 512
+     write /sys/block/mmcblk1/bdi/read_ahead_kb 512
+     
 on init
     # cpuquiet rqbalance permissions
     chown system system /sys/devices/system/cpu/cpuquiet/nr_min_cpus
