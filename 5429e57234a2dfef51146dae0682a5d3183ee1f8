@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0839c576_b3bee34c",
+        "filename": "rootdir/init.qcom.power.rc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 16082
+      },
+      "writtenOn": "2017-07-27T19:57:59Z",
+      "side": 1,
+      "message": "A new line is recommended, just for readability, between lines 4 and 5. What I wasn\u0027t happy with was the trailing space character on the blank line.",
+      "parentUuid": "",
+      "revId": "5429e57234a2dfef51146dae0682a5d3183ee1f8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
