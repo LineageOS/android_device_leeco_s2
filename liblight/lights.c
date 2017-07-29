@@ -44,20 +44,23 @@ static struct light_state_t g_attention;
 char const*const RED_LED_FILE
         = "/sys/class/leds/red/brightness";
 
+char const*const RED_BLINK_FILE
+	= "/sys/class/leds/red/blink";
+
+char const*const GREEN_BLINK_FILE
+	= "/sys/class/leds/green/blink";
+
+char const*const BLUE_BLINK_FILE
+	= "/sys/class/leds/blue/blink";
+
 char const*const GREEN_LED_FILE
         = "/sys/class/leds/green/brightness";
 
 char const*const BLUE_LED_FILE
         = "/sys/class/leds/blue/brightness";
 
-char const*const RED_BLINK_FILE
-        = "/sys/class/leds/red/blink";
-
-char const*const GREEN_BLINK_FILE
-        = "/sys/class/leds/green/blink";
-
-char const*const BLUE_BLINK_FILE
-        = "/sys/class/leds/blue/blink";
+char const*const LCD_FILE
+        = "/sys/class/leds/lcd-backlight/brightness";
 
 char const*const RED_BREATH_FILE
         = "/sys/class/leds/red/led_time";
@@ -67,9 +70,6 @@ char const*const GREEN_BREATH_FILE
 
 char const*const BLUE_BREATH_FILE
         = "/sys/class/leds/blue/led_time";
-
-char const*const LCD_FILE
-        = "/sys/class/leds/lcd-backlight/brightness";
 
 char const*const BUTTON_FILE
         = "/sys/class/leds/button-backlight/brightness";
@@ -290,7 +290,6 @@ set_speaker_light_locked(struct light_device_t* dev,
     int red, green, blue;
     int blink;
     int onMS, offMS;
-    int onS, offS;
     unsigned int colorRGB;
     char breath_pattern[64] = { 0, };
     struct color *nearest = NULL;
@@ -321,11 +320,14 @@ set_speaker_light_locked(struct light_device_t* dev,
 
     colorRGB = state->color;
 
+    ALOGD("set_speaker_light_locked mode %d, colorRGB=%08X, onMS=%d, offMS=%d\n",
+            state->flashMode, colorRGB, onMS, offMS);
+
     red = (colorRGB >> 16) & 0xFF;
     green = (colorRGB >> 8) & 0xFF;
     blue = colorRGB & 0xFF;
 
-    blink = onMS > 1 && offMS > 1;
+    blink = onMS > 0 && offMS > 0;
 
     if (blink) {
         // Driver doesn't permit us to set individual duty cycles, so only
@@ -338,48 +340,34 @@ set_speaker_light_locked(struct light_device_t* dev,
 
         // Make sure the values are between 1 and 7 seconds
         if (onMS < 1000)
-            onS = 0;
+            onMS = 1000;
         else if (onMS > 7000)
-            onS = 7;
-        else
-            onS = (int)(onMS/1000);
+            onMS = 7000;
 
         if (offMS < 1000)
-            offS = 0;
+            offMS = 1000;
         else if (offMS > 7000)
-            offS = 7;
-        else
-            offS = (int)(offMS/1000);
+            offMS = 7000;
 
         // ramp up, lit, ramp down, unlit. in seconds.
-        sprintf(breath_pattern,"%d %d %d %d", onS, onS, offS, offS);
-
-        write_int(RED_LED_FILE, red);
-        write_int(GREEN_LED_FILE, green);
-        write_int(BLUE_LED_FILE, blue);
-
-        if (red)
-            write_str(RED_BREATH_FILE, breath_pattern);
-        else if (green)
-            write_str(GREEN_BREATH_FILE, breath_pattern);
-        else if (blue)
-            write_str(BLUE_BREATH_FILE, breath_pattern);
+        sprintf(breath_pattern,"1 %d 1 %d",(int)(onMS/1000),(int)(offMS/1000));
 
     } else {
         blink = 0;
-        sprintf(breath_pattern,"0 0 0 0");
-
-        write_int(RED_BLINK_FILE, blink);
-        write_int(GREEN_BLINK_FILE, blink);
-        write_int(BLUE_BLINK_FILE, blink);
-
-        write_int(RED_LED_FILE, red);
-        write_int(GREEN_LED_FILE, green);
-        write_int(BLUE_LED_FILE, blue);
+        sprintf(breath_pattern,"1 2 1 2");
     }
 
-    ALOGD("set_speaker_light_locked mode %d, colorRGB=%08X, onMS=%d, offMS=%d, breathPattern=%s\n",
-            state->flashMode, colorRGB, onMS, offMS, breath_pattern);
+    // Do everything with the lights out, then turn up the brightness
+    write_str(RED_BREATH_FILE, breath_pattern);
+    write_int(RED_BLINK_FILE, (blink && red ? 1 : 0));
+    write_str(GREEN_BREATH_FILE, breath_pattern);
+    write_int(GREEN_BLINK_FILE, (blink && green ? 1 : 0));
+    write_str(BLUE_BREATH_FILE, breath_pattern);
+    write_int(BLUE_BLINK_FILE, (blink && blue ? 1 : 0));
+
+    write_int(RED_LED_FILE, red);
+    write_int(GREEN_LED_FILE, green);
+    write_int(BLUE_LED_FILE, blue);
 
     return 0;
 }
