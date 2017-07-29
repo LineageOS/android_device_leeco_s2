@@ -171,7 +171,8 @@ void vendor_load_properties() {
     }
     else
     {
-        property_set("ro.product.model", "UNKNOWN");
+        // Unknown variant
+        property_set("ro.product.model", "X52X");
     }
 
     init_alarm_boot_properties();
