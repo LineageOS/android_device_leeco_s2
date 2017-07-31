@@ -97,6 +97,7 @@ debug.sf.hw=1
 debug.sf.latch_unsignaled=1
 debug.egl.hw=1
 debug.enable.sglscale=1
+debug.hwui.use_buffer_age=false
 debug.mdpcomp.logs=0
 debug.sf.disable_backpressure=1 
 debug.sf.recomputecrop=0
