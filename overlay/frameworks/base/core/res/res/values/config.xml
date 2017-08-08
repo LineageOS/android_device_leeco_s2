@@ -465,4 +465,79 @@
     <!-- Is the device capable of hot swapping an UICC Card -->
     <bool name="config_hotswapCapable">true</bool>
 
+    <!-- Whether cpu boost is enabled for AppLaunch -->
+    <bool name="config_enableCpuBoostForAppLaunch">true</bool>
+    <integer name="launchboost_timeout_param">2000</integer>
+    <integer-array name="launchboost_param_value">
+        <item>0x40C00000</item>
+        <item>0x00000001</item>
+        <item>0x40800000</item>
+        <item>0x00000708</item>
+        <item>0x40400000</item>
+        <item>0x00000001</item>
+        <item>0x41000000</item>
+        <item>0x00000004</item>
+        <item>0x42804000</item>
+        <item>0x00000001</item>
+    </integer-array>
+
+    <!-- Whether disablepacking is enabled or not -->
+    <bool name="config_disablePacking">true</bool>
+    <integer name="disablepacking_timeout_param">5000</integer>
+    <integer-array name="launchboost_packing_param_value">
+        <item>0x40C04000</item>
+        <item>0x00000001</item>
+        <item>0x40C0C000</item>
+        <item>0x00000001</item>
+        <item>0x40C14000</item>
+        <item>0x00000001</item>
+        <item>0x40C10000</item>
+        <item>0x00000001</item>
+    </integer-array>
+
+    <!-- Whether cpu boost is enabled for animation. -->
+    <bool name="config_enablePerfBoostForAnimation">true</bool>
+    <integer name="animationboost_timeout_param">600</integer>
+    <integer-array name="animationboost_param_value">
+        <item>0x40C00000</item>
+        <item>0x00000001</item>
+        <item>0x40800000</item>
+        <item>0x0000044C</item>
+        <item>0x42804000</item>
+        <item>0x00000001</item>
+    </integer-array>
+
+    <!-- Whether cpu boost is enabled for overscroller fling. -->
+    <bool name="config_enableCpuBoostForOverScrollerFling">true</bool>
+    <integer name="flingboost_timeout_param">0</integer>
+    <integer-array name="flingboost_param_value">
+        <item>0x40C00000</item>
+        <item>0x00000001</item>
+        <item>0x40800000</item>
+        <item>0x00000708</item>
+        <item>0x40C04000</item>
+        <item>0x00000001</item>
+    </integer-array>
+
+    <!-- Whether cpu boost is enabled for horizontal scroll. -->
+    <bool name="config_enableCpuBoostForScroller">true</bool>
+    <integer name="scrollboost_timeout_param">0</integer>
+    <integer-array name="scrollboost_param_value">
+        <item>0x40C00000</item>
+        <item>0x00000001</item>
+        <item>0x40800000</item>
+        <item>0x00000708</item>
+        <item>0x40C04000</item>
+        <item>0x00000001</item>
+    </integer-array>
+
+   <!-- Whether cpu boost is enabled for PanelView fling -->
+   <bool name="config_enableCpuBoostForPanelViewFling">false</bool>
+   <integer-array name="panelview_flingboost_param_value">
+       <item>0x40C00000</item> <!-- SCHEDBOOST resource opcode-->
+       <item>0x1</item>        <!-- SCHEDBOOST resource value-->
+       <item>0x40800000</item> <!-- CPUBOOST_MIN_FREQ resource opcode-->
+       <item>0x514</item>      <!-- CPUBOOST MIN_FREQ resource value-->
+   </integer-array>
+
 </resources>
