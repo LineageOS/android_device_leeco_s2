@@ -48,6 +48,7 @@ bin/xtwifi-inet-agent
 -framework/imscmlibrary.jar
 -framework/izat.xt.srv.jar
 -framework/qcrilhook.jar
+-framework/QPerformance.jar
 -framework/rcsimssettings.jar
 -priv-app/com.qualcomm.location/com.qualcomm.location.apk
 -priv-app/CNEService/CNEService.apk
@@ -215,6 +216,16 @@ vendor/bin/slim_daemon
 vendor/bin/perfd
 vendor/bin/fidoca
 vendor/bin/thermal-engine
+vendor/etc/perf-profile0.conf
+vendor/etc/perf-profile1.conf
+vendor/etc/perf-profile2.conf
+vendor/etc/perf-profile3.conf
+vendor/etc/perf-profile4.conf
+vendor/etc/perf-profile5.conf
+vendor/etc/perf-profile6.conf
+vendor/etc/perf-profile7.conf
+vendor/etc/perf-profile8.conf
+vendor/etc/public.libraries.txt
 vendor/lib/lib-imsqimf.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_default_preview_ak7371.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_preview.so
@@ -665,6 +676,7 @@ vendor/lib/libchromatix_ov16880_primax_bahy_6c_hfr_90_ak7371.so
 vendor/lib/libadsprpc.so
 vendor/lib/libqti-gt.so
 vendor/lib/libEGL_adreno.so
+vendor/lib/libqti_performance.so
 vendor/lib64/lib-imsqimf.so
 vendor/lib64/libmmcamera2_is.so
 vendor/lib64/libc2d30-a4xx.so
@@ -897,4 +909,6 @@ vendor/lib64/libasn1crtx.so
 vendor/lib64/libadsprpc.so
 vendor/lib64/libqti-gt.so
 vendor/lib64/libEGL_adreno.so
+vendor/lib64/libqti_performance.so
 vendor/qcril.db
+
