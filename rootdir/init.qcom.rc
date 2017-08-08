@@ -274,8 +274,9 @@ on post-fs-data
     #Create PERFD deamon related dirs
     mkdir /data/misc/perfd 0755 root system
     chmod 2755 /data/misc/perfd
-    mkdir /data/system/perfd 0770 root system
-    chmod 2770 /data/system/perfd
+    mkdir /data/system/perfd 2770 root system
+    rm /data/system/perfd/default_values
+    start perfd
 
     # NFC local data and nfcee xml storage
     mkdir /data/nfc 0770 nfc nfc
@@ -326,6 +327,11 @@ on property:persist.sys.ssr.enable_ramdumps=1
 
 on property:persist.sys.ssr.enable_ramdumps=0
     write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
+
+    # Create PERFD deamon related dirs
+    mkdir /data/system/perfd 2770 root system
+    rm /data/system/perfd/default_values
+    start perfd
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
@@ -765,6 +771,15 @@ service hvdcp /system/bin/hvdcp
 
 on property:persist.usb.hvdcp.detect=true
     start hvdcp
+
+service thermal-engine /system/vendor/bin/thermal-engine
+   class main
+   user root
+   socket thermal-send-client stream 0666 system system
+   socket thermal-recv-client stream 0660 system system
+   socket thermal-recv-passive-client stream 0666 system system
+   group root
+   writepid /dev/cpuset/system-background/tasks
 
 on property:persist.usb.hvdcp.detect=false
     stop hvdcp
