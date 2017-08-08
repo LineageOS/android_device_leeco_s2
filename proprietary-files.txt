@@ -42,9 +42,11 @@ bin/qmuxd
 bin/port-bridge
 bin/xtwifi-inet-agent
 -framework/qcnvitems.jar
+-framework/com.qti.location.sdk.jar
 -framework/com.quicinc.cne.jar
 -framework/cneapiclient.jar
 -framework/imscmlibrary.jar
+-framework/izat.xt.srv.jar
 -framework/qcrilhook.jar
 -framework/rcsimssettings.jar
 -priv-app/com.qualcomm.location/com.qualcomm.location.apk
