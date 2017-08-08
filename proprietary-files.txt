@@ -898,3 +898,15 @@ vendor/lib64/libadsprpc.so
 vendor/lib64/libqti-gt.so
 vendor/lib64/libEGL_adreno.so
 vendor/qcril.db
+
+framework/QPerformance.jar
+vendor/etc/public.libraries.txt
+vendor/lib64/libqti_performance.so
+vendor/lib/libqti_performance.so
+vendor/etc/perf-profile0.conf
+vendor/etc/perf-profile1.conf
+vendor/etc/perf-profile2.conf
+vendor/etc/perf-profile3.conf
+vendor/etc/perf-profile4.conf
+vendor/etc/perf-profile5.conf
+vendor/etc/perf-profile6.conf
