@@ -89,6 +89,11 @@ persist.media.rtsp.dropaudio=1
 
 av.debug.disable.pers.cache=1
 
+# Assertive Display
+ro.qcom.ad=1
+ro.qcom.ad.calib.data=/system/etc/ad_calib.cfg
+ro.qcom.ad.sensortype=2
+
 # Camera
 persist.camera.HAL3.enabled=1
 vidc.enc.dcvs.extra-buff-count=2
@@ -234,9 +239,6 @@ ro.internal.model=Le X520
 
 persist.radio.flexmap_type=none
 persist.radio.ignore_dom_time=5
-
-ro.qcom.ad=1
-ro.qcom.ad.calib.data=/system/etc/ad_calib.cfg
 
 # to force call stick on CS (NOT switch to VoLTE)
 persist.radio.cs_srv_type=1
