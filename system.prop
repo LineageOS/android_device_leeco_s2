@@ -89,6 +89,10 @@ persist.media.rtsp.dropaudio=1
 
 av.debug.disable.pers.cache=1
 
+# Assertive Display
+ro.qcom.ad=1
+ro.qcom.ad.calib.data=/system/etc/ad_calib.cfg
+
 # Camera
 persist.camera.HAL3.enabled=1
 vidc.enc.dcvs.extra-buff-count=2
