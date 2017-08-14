@@ -164,6 +164,7 @@ case "$target" in
                 echo 1 > /sys/devices/system/cpu/cpu5/online
                 echo 1 > /sys/devices/system/cpu/cpu6/online
                 echo 1 > /sys/devices/system/cpu/cpu7/online
+                restorecon -R /sys/devices/system/cpu
 
                 # Enable Low power modes
                 echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
@@ -335,6 +336,7 @@ case "$target" in
                 echo 1 > /sys/devices/system/cpu/cpu5/online
                 echo 1 > /sys/devices/system/cpu/cpu6/online
                 echo 1 > /sys/devices/system/cpu/cpu7/online
+                restorecon -R /sys/devices/system/cpu
 
                 if [ `cat /sys/devices/soc0/revision` == "1.0" ]; then
                     # Disable l2-pc and l2-gdhs low power modes
