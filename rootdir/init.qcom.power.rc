@@ -40,6 +40,8 @@ on charger
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "powersave"
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 400000
 
+    restorecon -R /sys/devices/system/cpu
+
     # Bring CPUs offline
     write /sys/devices/system/cpu/cpu1/online 0
     write /sys/devices/system/cpu/cpu2/online 0

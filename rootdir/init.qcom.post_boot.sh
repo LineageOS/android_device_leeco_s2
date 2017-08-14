@@ -164,6 +164,7 @@ case "$target" in
                 echo 1 > /sys/devices/system/cpu/cpu5/online
                 echo 1 > /sys/devices/system/cpu/cpu6/online
                 echo 1 > /sys/devices/system/cpu/cpu7/online
+                restorecon -R /sys/devices/system/cpu
 
                 # Enable Low power modes
                 echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
@@ -286,6 +287,7 @@ case "$target" in
                 # enable governor for power cluster
                 echo 1 > /sys/devices/system/cpu/cpu0/online
                 echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                restorecon -R /sys/devices/system/cpu
                 echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
                 echo 20000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate
                 echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
@@ -295,6 +297,7 @@ case "$target" in
                 # enable governor for perf cluster
                 echo 1 > /sys/devices/system/cpu/cpu4/online
                 echo "interactive" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+                restorecon -R /sys/devices/system/cpu
                 echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load
                 echo 20000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate
                 echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy
