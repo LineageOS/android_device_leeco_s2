@@ -10,7 +10,6 @@ LOCAL_C_INCLUDES += external/icu/icu4c/source/common
 else
 LOCAL_C_INCLUDES += external/icu4c/common
 endif
-LOCAL_C_INCLUDES += external/dhcpcd
 LOCAL_C_INCLUDES += external/libxml2/include
 LOCAL_C_INCLUDES += external/libnetfilter_conntrack/include
 LOCAL_C_INCLUDES += external/libnfnetlink/include
