@@ -36,7 +36,7 @@ on early-init
     insmod /sbin/qdrbg_module.ko
 
 on init
-    export LD_SHIM_LIBS "/system/vendor/lib64/lib-imsvt.so|libshims_ims.so:/system/bin/mm-qcamera-daemon|libshims_camera.so"
+    export LD_SHIM_LIBS "/system/vendor/lib64/lib-imsvt.so|libshims_ims.so:/system/bin/mm-qcamera-daemon|libshims_camera.so:/system/bin/cameraserver|libshims_cameraservice.so:/system/bin/mediaserver|libshims_cameraservice.so"
 
     start qfintverify
 
