@@ -140,6 +140,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     Snap
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
+
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
@@ -194,6 +198,7 @@ PRODUCT_PACKAGES += \
 # Libshims
 PRODUCT_PACKAGES += \
     libshims_camera \
+    libshims_cameraservice \
     libshims_ims
 
 # Lights
