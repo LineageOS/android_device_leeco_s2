@@ -318,6 +318,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     hostapd \
     wpa_supplicant \
+    wificond \
+    wifilogd \
     wpa_supplicant.conf
 
 PRODUCT_PACKAGES += \
@@ -335,7 +337,6 @@ PRODUCT_PACKAGES += \
     WCNSS_wlan_dictionary.dat
 
 PRODUCT_PACKAGES += \
-    libQWiFiSoftApCfg \
     wcnss_service
 
 PRODUCT_COPY_FILES += \
