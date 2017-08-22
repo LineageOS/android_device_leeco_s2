@@ -1,3 +1,2 @@
 allow mediaserver cameraserver_service:service_manager { add };
 allow mediaserver cameraproxy_service:service_manager { find };
-
