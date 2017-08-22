@@ -57,12 +57,10 @@ lib/libmm-omxcore.so
 lib/libarcsoft_face_detection.so
 lib/libarcsoft_hdr.so
 lib/libmpstream.so
-lib/libmmcamera_interface.so
 lib/libmpkernel.so
 lib/libamipengine.so
 lib/libmputility.so
 lib/libarcsoft_panorama_burstcapture.so
-lib/libmmjpeg_interface.so
 lib/libarcimgutilsbase.so
 lib/libstlport.so
 lib/libarcsoft_night_shot.so
@@ -70,11 +68,9 @@ lib/drm/libfwdlockengine.so
 lib/libcamera_letv_algo.so
 lib/libarcsoft_face_tracking.so
 lib/hw/sensors.msm8952.so
-lib/hw/camera.msm8952.so
 lib/libLetvCameraImageSDK.so
 -lib/libtfa9890.so
 lib/libarcsoft_smart_denoise.so
-lib/libqomx_core.so
 lib/libarcsoft_beautyshot.so
 lib/libmm-qcamera.so
 lib/libmpbase.so
