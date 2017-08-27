@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91593c_cf2a0eb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2017-08-27T17:51:39Z",
+      "side": 1,
+      "message": "s2: add missing config for assertive display",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "f678985e243eed868f47540b297ae2457bffd815",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9189d15c_a8f24ad1",
+        "filename": "system.prop",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2017-08-27T17:51:39Z",
+      "side": 1,
+      "message": "Duplicate",
+      "range": {
+        "startLine": 96,
+        "startChar": 3,
+        "endLine": 96,
+        "endChar": 11
+      },
+      "revId": "f678985e243eed868f47540b297ae2457bffd815",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
