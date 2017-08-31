@@ -509,7 +509,6 @@ lib/libloc_pla.so
 -lib64/libloc_ds_api.so
 lib64/libloc_pla.so
 -priv-app/com.qualcomm.location/com.qualcomm.location.apk
-vendor/bin/slim_daemon
 vendor/lib64/hw/flp.default.so
 vendor/lib64/libalarmservice_jni.so
 vendor/lib64/libasn1cper.so
