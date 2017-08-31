@@ -67,6 +67,7 @@ lib/libarcsoft_night_shot.so
 lib/drm/libfwdlockengine.so
 lib/libcamera_letv_algo.so
 lib/libarcsoft_face_tracking.so
+lib/hw/camera.msm8952.so
 lib/hw/sensors.msm8952.so
 lib/libLetvCameraImageSDK.so
 -lib/libtfa9890.so

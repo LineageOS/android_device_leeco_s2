@@ -142,8 +142,11 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    camera.msm8952 \
-    Snap
+    Snap \
+    libqomx_core \
+    libmmcamera_interface \
+    libmmjpeg_interface
+#    camera.msm8952.so \
 
 # Charger
 PRODUCT_PACKAGES += \
