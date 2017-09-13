@@ -27,6 +27,7 @@ vendor.voice.conc.fallbackpath=deep-buffer
 vendor.voice.path.for.pcm.voip=true
 vendor.voice.voip.conc.disabled=false
 vendor.voice.record.conc.disabled=false
+ro.af.client_heap_size_kbyte=7168
 ro.config.media_vol_steps=25
 
 # Property for AudioSphere Post Processing
