@@ -93,6 +93,7 @@ static struct color colors[] = {
 };
 
 #define MAX_COLOR 9
+#define MAX_BUTTON_BRIGHTNESS 40
 
 // Convert RGB to L*a*b colorspace
 // from http://www.brucelindbloom.com
@@ -436,6 +437,8 @@ set_light_buttons(struct light_device_t* dev,
     if(!dev) {
         return -1;
     }
+    // Scale the brihgtness to between 0-40, as 40 is the max
+    brightness = ((float) brightness / 255.0) * MAX_BUTTON_BRIGHTNESS;
     pthread_mutex_lock(&g_lock);
     err = write_int(BUTTON_FILE, state->color & 0xFF);
     pthread_mutex_unlock(&g_lock);
