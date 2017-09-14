@@ -752,6 +752,12 @@ service hcidump /system/bin/sh /system/etc/hcidump.sh
     disabled
     oneshot
 
+service config_bt_addr /system/bin/btnvtool -O
+    class core
+    user bluetooth
+    group bluetooth radio
+    oneshot
+
 service ssr_diag /system/bin/ssr_diag
     class late_start
     user system

@@ -1,6 +1,7 @@
 -app/TimeService/TimeService.apk
 -app/QtiTelephonyService/QtiTelephonyService.apk
 -app/fastdormancy/fastdormancy.apk
+bin/btnvtool
 bin/ims_rtp_daemon
 bin/loc_launcher
 bin/ssr_diag
