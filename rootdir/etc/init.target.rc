@@ -194,7 +194,7 @@ on boot
 
     write /proc/sys/kernel/sched_boost 1
 
-service wcnss-service /system/bin/wcnss_service
+service wcnss-service /system/vendor/bin/wcnss_service
     class main
     user system
     group system wifi radio
