@@ -44,6 +44,7 @@
 
 		<!-- hotplugging -->
 		<resource name="thermal-max-cpus" type="sysfs">/sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus</resource>
+		<resource name="power-max-cpus" type="sysfs">/sys/devices/system/cpu/cpuquiet/nr_power_max_cpus</resource>
 
 		<!-- device-specific -->
 		<resource name="adreno-max-clk" type="sysfs">/sys/class/kgsl/kgsl-3d0/max_gpuclk</resource>
@@ -89,9 +90,17 @@
 	</control>
 
 	<control name="cluster-1-hotplug">
-		<mitigation level="off"><value resource="thermal-max-cpus">6</value></mitigation>
-		<mitigation level="1"><value resource="thermal-max-cpus">5</value></mitigation>
-		<mitigation level="2"><value resource="thermal-max-cpus">4</value></mitigation>
+		<mitigation level="off">
+			<value resource="thermal-max-cpus">8</value>
+			<value resource="power-max-cpus">8</value>
+		</mitigation>
+		<mitigation level="1">
+			<value resource="thermal-max-cpus">6</value>
+			<value resource="power-max-cpus">6</value>
+		</mitigation>
+		<mitigation level="2">
+			<value resource="thermal-max-cpus">4</value>
+		</mitigation>
 	</control>
 
 	<control name="adreno-clk">
