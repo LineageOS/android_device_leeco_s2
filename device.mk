@@ -155,6 +155,19 @@ PRODUCT_PACKAGES += \
     libmmjpeg_interface
 endif
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    libbt-vendor
+
+# Netutils
+PRODUCT_PACKAGES += \
+    netutils-wrapper-1.0 \
+    libandroid_net
+
+# Launcher
+PRODUCT_PACKAGES += \
+    Launcher3
+
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
@@ -168,7 +181,9 @@ PRODUCT_PACKAGES += \
     gralloc.msm8952 \
     copybit.msm8952 \
     hwcomposer.msm8952 \
-    memtrack.msm8952
+    memtrack.msm8952 \
+    liboverlay \
+    libgenlock
 
 # Display / OpenGLES
 PRODUCT_PROPERTY_OVERRIDES += \
