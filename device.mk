@@ -30,6 +30,9 @@ PRODUCT_AAPT_CONFIG := normal
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-3072-dalvik-heap.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-hwui-memory.mk)
 
+# HIDL HALs
+$(call inherit-product, $(LOCAL_PATH)/hidl-hals.mk)
+
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
