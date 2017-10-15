@@ -83,6 +83,10 @@ TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
 TARGET_INIT_VENDOR_LIB := libinit_s2
 TARGET_RECOVERY_DEVICE_MODULES := libinit_s2
 
+# HIDL
+DEVICE_MANIFEST_FILE := $(LOCAL_PATH)/manifest.xml
+DEVICE_MATRIX_FILE   := $(LOCAL_PATH)/compatibility_matrix.xml
+
 # Qualcomm support
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QC_TIME_SERVICES := true
