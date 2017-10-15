@@ -58,7 +58,8 @@ on early-boot
     write /sys/kernel/codec_type/boot ${persist.sys.external}
     write /sys/kernel/boot_adsp/boot 1
     chown root audio /sys/kernel/boot_adsp/boot
-    exec u:r:qti_init_shell:s0 -- /init.qcom.early_boot.sh
+    #exec u:r:qti_init_shell:s0 -- /init.qcom.early_boot.sh
+    exec - root root system -- /init.qcom.early_boot.sh
 
 on boot
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
@@ -293,7 +294,7 @@ on post-fs-data
 service qfintverify /sbin/qfintverify
     user root
     class core
-    seclabel u:r:qfips:s0
+    #seclabel u:r:qfips:s0
     oneshot
 
 service qcomsysd /system/bin/qcom-system-daemon

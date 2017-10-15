@@ -55,4 +55,4 @@ on charger
 service charger /sbin/healthd -c
     class charger
     critical
-    seclabel u:r:healthd:s0
+    #seclabel u:r:healthd:s0

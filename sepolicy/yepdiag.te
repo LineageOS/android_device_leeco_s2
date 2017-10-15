@@ -1,6 +1,0 @@
-type yepdiag, domain;
-type yepdiag_exec, exec_type, file_type;
-
-init_daemon_domain(yepdiag)
-
-allow yepdiag self:capability { dac_override };

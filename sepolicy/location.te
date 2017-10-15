@@ -1,1 +1,0 @@
-allow location self:capability { net_raw };
