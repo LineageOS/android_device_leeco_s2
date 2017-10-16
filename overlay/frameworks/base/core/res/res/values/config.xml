@@ -492,4 +492,6 @@
          and one pSIM) -->
     <integer name="config_num_physical_slots">2</integer>
 
+   <!-- Whether the Unprocessed audio source supports the required frequency range and level -->
+   <bool name="config_supportAudioSourceUnprocessed">true</bool>
 </resources>
