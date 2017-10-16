@@ -483,7 +483,7 @@ service btsnoop /system/bin/btsnoop
 service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
     class late_start
     user root
-    group bluetooth net_bt_admin misc net_bt_stack diag net_bt
+    group bluetooth net_bt_admin misc diag net_bt
     disabled
     oneshot
 
@@ -821,7 +821,7 @@ service msm_irqbal_lb /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqba
 service wfdservice /system/bin/wfdservice
     class main
     user system
-    group graphics audio camera inet net_bt net_bt_admin net_bt_stack drmrpc bluetooth media_rw media
+    group graphics audio camera inet net_bt net_bt_admin drmrpc bluetooth media_rw media
     disabled
     oneshot
 
