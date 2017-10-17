@@ -2,13 +2,13 @@
 mode: 0700
 user: AID_RADIO
 group: AID_SHELL
-caps: CAP_BLOCK_SUSPEND
+caps: BLOCK_SUSPEND
 
 [system/bin/mm-qcamera-daemon]
 mode: 0700
 user: AID_CAMERA
 group: AID_SHELL
-caps: CAP_SYS_NICE
+caps: SYS_NICE
 
 [system/bin/pm-service]
 mode: 0755
@@ -38,7 +38,7 @@ caps: NET_BIND_SERVICE
 mode: 0755
 user: AID_SYSTEM
 group: AID_GPS
-caps: CAP_NET_BIND_SERVICE
+caps: NET_BIND_SERVICE
 
 [system/bin/wcnss_filter]
 mode: 0755
