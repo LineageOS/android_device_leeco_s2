@@ -46,7 +46,7 @@ ifneq (1,$(filter 1,$(shell echo "$$(( $(PLATFORM_SDK_VERSION) >= 17 ))" )))
 endif
 
 LOCAL_CFLAGS += -Wall -Wextra -Werror
-LOCAL_CLANG := false
+LOCAL_CLANG := true
 
 LOCAL_SRC_FILES := $(MM_CAM_FILES)
 
