@@ -1028,7 +1028,7 @@ int QCameraMetadataStreamMemory::getRegFlags(uint8_t *regFlags) const
 QCameraStreamMemory::QCameraStreamMemory(camera_request_memory memory,
         bool cached,
         QCameraMemoryPool *pool,
-        cam_stream_type_t streamType, cam_stream_buf_type bufType)
+        cam_stream_type_t streamType, __unused cam_stream_buf_type bufType)
     :QCameraMemory(cached, pool, streamType),
      mGetMemory(memory)
 {
@@ -1645,7 +1645,6 @@ int QCameraVideoMemory::closeNativeHandle(const void *data)
 int QCameraVideoMemory::closeNativeHandle(const void *data, bool metadata)
 {
     int32_t rc = NO_ERROR;
-    int32_t index = -1;
 
     if (metadata) {
         const media_metadata_buffer *packet = (const media_metadata_buffer*)data;
@@ -1980,7 +1979,6 @@ int QCameraGrallocMemory::displayBuffer(uint32_t index)
 int32_t QCameraGrallocMemory::enqueueBuffer(uint32_t index, nsecs_t timeStamp)
 {
     int32_t err = NO_ERROR;
-    int32_t dequeuedIdx = BAD_INDEX;
 
     if (BUFFER_NOT_OWNED == mLocalFlag[index]) {
         ALOGE("%s: buffer to be enqueued is not owned", __func__);
@@ -2021,7 +2019,6 @@ int32_t QCameraGrallocMemory::dequeueBuffer()
     int32_t dequeuedIdx = BAD_INDEX;
     buffer_handle_t *buffer_handle = NULL;
     int32_t stride = 0;
-    uint8_t dequeueCnt = 1;
 
     dequeuedIdx = BAD_INDEX;
     err = mWindow->dequeue_buffer(mWindow, &buffer_handle, &stride);

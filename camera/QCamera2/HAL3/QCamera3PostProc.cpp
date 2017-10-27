@@ -333,7 +333,6 @@ int32_t QCamera3PostProcessor::getFWKJpegEncodeConfig(
     CDBG("%s : X", __func__);
     return NO_ERROR;
 
-on_error:
     CDBG("%s : X with error %d", __func__, ret);
     return ret;
 }
@@ -490,7 +489,6 @@ on_error:
  *==========================================================================*/
 int32_t QCamera3PostProcessor::processData(mm_camera_super_buf_t *frame)
 {
-    QCamera3HardwareInterface* hal_obj = (QCamera3HardwareInterface*)m_parent->mUserData;
     pthread_mutex_lock(&mReprocJobLock);
     // enqueue to post proc input queue
     m_inputPPQ.enqueue((void *)frame);

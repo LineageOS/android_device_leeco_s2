@@ -414,7 +414,6 @@ static void mm_channel_process_stream_buf(mm_camera_cmdcb_t * cmd_cb,
       CDBG_HIGH("%s: [ZSL Retro] In loop pending cnt (%d), req type (%d)",
             __func__, ch_obj->pending_cnt, ch_obj->req_type);
         /* dequeue */
-        uint32_t match_frame = 0;
         mm_channel_node_info_t info;
         memset(&info, 0x0, sizeof(info));
         if (ch_obj->req_type == MM_CAMERA_REQ_FRAME_SYNC_BUF) {
@@ -498,7 +497,6 @@ static void mm_channel_process_stream_buf(mm_camera_cmdcb_t * cmd_cb,
             }
         }
         if (info.num_nodes > 0) {
-             uint8_t bReady = 0;
 
             /* decrease pending_cnt */
             if (MM_CAMERA_SUPER_BUF_NOTIFY_BURST == notify_mode) {

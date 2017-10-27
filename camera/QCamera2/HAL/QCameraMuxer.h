@@ -221,7 +221,6 @@ private:
     qcamera_physical_descriptor_t *m_pPhyCamera;
     qcamera_logical_descriptor_t *m_pLogicalCamera;
     const camera_module_callbacks_t *m_pCallbacks;
-    bool m_bDualCameraEnabled;
     bool m_bAuxCameraExposed;
     uint8_t m_nPhyCameras;
     uint8_t m_nLogicalCameras;

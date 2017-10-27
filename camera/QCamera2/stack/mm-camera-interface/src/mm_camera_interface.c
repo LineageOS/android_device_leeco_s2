@@ -47,7 +47,7 @@
 
 static pthread_mutex_t g_intf_lock = PTHREAD_MUTEX_INITIALIZER;
 
-static mm_camera_ctrl_t g_cam_ctrl = {0, {{0}}, {0}, {{0}}, {0}, {0}, {0}};
+static mm_camera_ctrl_t g_cam_ctrl;
 
 static pthread_mutex_t g_handler_lock = PTHREAD_MUTEX_INITIALIZER;
 static uint16_t g_handler_history_count = 0; /* history count for handler */
@@ -435,7 +435,6 @@ static int32_t mm_camera_intf_close(uint32_t camera_handle)
 static int32_t mm_camera_intf_error_close(uint32_t camera_handle)
 {
     int32_t rc = -1;
-    uint8_t cam_idx = camera_handle & 0x00ff;
     mm_camera_obj_t * my_obj = NULL;
 
     CDBG("%s E: camera_handler = %d ", __func__, camera_handle);

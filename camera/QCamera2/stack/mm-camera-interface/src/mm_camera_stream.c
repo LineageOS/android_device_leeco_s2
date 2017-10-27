@@ -1813,7 +1813,6 @@ int32_t mm_stream_map_buf(mm_stream_t * my_obj,
                           size_t size)
 {
     int32_t rc = 0;
-    int8_t i;
     if (NULL == my_obj || NULL == my_obj->ch_obj || NULL == my_obj->ch_obj->cam_obj) {
         CDBG_ERROR("%s: NULL obj of stream/channel/camera", __func__);
         return -1;
@@ -2168,11 +2167,9 @@ int32_t mm_stream_unreg_buf(mm_stream_t * my_obj)
 
     /* reset buf reference count */
     pthread_mutex_lock(&my_obj->buf_lock);
-    if (NULL != my_obj->buf_status) {
-        for(i = 0; i < my_obj->buf_num; i++){
-            my_obj->buf_status[i].buf_refcnt = 0;
-            my_obj->buf_status[i].in_kernel = 0;
-        }
+    for(i = 0; i < my_obj->buf_num; i++){
+        my_obj->buf_status[i].buf_refcnt = 0;
+        my_obj->buf_status[i].in_kernel = 0;
     }
     pthread_mutex_unlock(&my_obj->buf_lock);
 
@@ -3421,8 +3418,6 @@ int32_t mm_stream_calc_offset_video(cam_format_t fmt,
 {
     int32_t rc = 0;
     int stride = 0, scanline = 0;
-    int meta_stride = 0,meta_scanline = 0;
-
 
     switch (fmt) {
         case CAM_FORMAT_YUV_420_NV12:

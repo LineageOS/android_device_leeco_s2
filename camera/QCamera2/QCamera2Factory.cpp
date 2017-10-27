@@ -152,7 +152,6 @@ QCamera2Factory::~QCamera2Factory()
 int QCamera2Factory::get_number_of_cameras()
 {
     int numCameras = 0;
-    int rc = NO_ERROR;
 
     if (!gQCamera2Factory) {
         gQCamera2Factory = new QCamera2Factory();
@@ -450,7 +449,7 @@ int QCamera2Factory::camera_device_open(
 }
 
 struct hw_module_methods_t QCamera2Factory::mModuleMethods = {
-    open: QCamera2Factory::camera_device_open,
+    .open = QCamera2Factory::camera_device_open,
 };
 
 /*===========================================================================
@@ -516,8 +515,8 @@ int QCamera2Factory::openLegacy(
 
 #define SYSFS_FLASH_PATH_BRIGHTNESS "/sys/class/leds/led:torch_0/brightness"
 #define SYSFS_FLASH_PATH_ENABLE "/sys/class/leds/led:switch/brightness"
- 
-int QCamera2Factory::setTorchMode(const char* camera_id, bool on)
+
+int QCamera2Factory::setTorchMode(__attribute__((unused)) const char* camera_id, bool on)
 {
     int retVal(0);
     int fd_brightness(-1);

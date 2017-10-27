@@ -84,10 +84,8 @@ private:
     size_t checkScaleSizeTable(size_t scale_cnt, cam_dimension_t *scale_tbl,
             size_t org_cnt, cam_dimension_t *org_tbl);
 
-    QCameraParameters *mParent;
     bool mScaleEnabled;
     bool mIsUnderScaling;   //if in scale status
-    bool mScaleDirection;   // 0: Upscaling; 1: Downscaling
 
     // picture size cnt that need scale operation
     size_t mNeedScaleCnt;

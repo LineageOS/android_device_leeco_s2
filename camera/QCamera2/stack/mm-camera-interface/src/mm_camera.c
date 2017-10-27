@@ -2198,7 +2198,6 @@ int32_t mm_camera_reg_stream_buf_cb(mm_camera_obj_t *my_obj,
         mm_camera_stream_cb_type cb_type, void *userdata)
 {
     int rc = 0;
-    mm_stream_t *stream = NULL;
     mm_stream_data_cb_t buf_cb;
     mm_channel_t * ch_obj =
             mm_camera_util_get_channel_by_handler(my_obj, ch_id);
