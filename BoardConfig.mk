@@ -144,11 +144,12 @@ MALLOC_SVELTE := true
 BOARD_GLOBAL_CFLAGS += -DDECAY_TIME_DEFAULT=0
 
 # Charger
-WITH_CM_CHARGER := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BACKLIGHT_PATH := "/sys/class/leds/lcd-backlight/brightness"
 BLINK_PATH := "/sys/class/leds/red/blink"
+WITH_LINEAGE_CHARGER := false
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.s2
 
 # CNE
 BOARD_USES_QCNE := true

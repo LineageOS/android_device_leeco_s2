@@ -52,7 +52,7 @@ on charger
     # Enable thermal
     write /sys/module/msm_thermal/core_control/enabled 1
 
-service charger /sbin/healthd -c
+service charger /charger
     class charger
-    critical
+    group system graphics
     #seclabel u:r:healthd:s0
