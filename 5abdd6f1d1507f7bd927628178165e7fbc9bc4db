@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a0492c_4d886b9d",
+        "filename": "rootdir/init.qcom.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2017-11-05T10:34:39Z",
+      "side": 1,
+      "message": "you should probably write \"1\" to enable it.\nOtherwise you can simply abandon this patch since it does nothing.",
+      "range": {
+        "startLine": 66,
+        "startChar": 49,
+        "endLine": 66,
+        "endChar": 71
+      },
+      "revId": "5abdd6f1d1507f7bd927628178165e7fbc9bc4db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
