@@ -19,7 +19,7 @@ bin/adsprpcd
 bin/sensors.qcom
 bin/hvdcp_opti
 bin/dpm
-bin/cnd
+bin/cnd|37b4cafc4ebfe3e6b46dd1d79d308c51e7f3920a
 bin/yepdiag
 bin/rmt_storage
 bin/irsc_util
@@ -644,7 +644,7 @@ vendor/lib/libdrmfs.so
 vendor/lib/libOmxMux.so
 vendor/lib/libchromatix_ov16880_sunny_bahy_6c_liveshot.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_cpp_ds_chromatix.so
-vendor/lib/libcne.so
+vendor/lib/libcne.so|54e80e1cb24945ec87b2fdf7f0541a6faa643ef5
 vendor/lib/liblistensoundmodel2.so
 vendor/lib/libchromatix_ov16880_primax_bahy_6c_common_night.so
 vendor/lib/libmmcamera2_frame_algorithm.so
@@ -675,7 +675,8 @@ vendor/lib64/lib-rtpcommon.so
 vendor/lib64/libOpenCL.so
 vendor/lib64/libmmparser_lite.so
 vendor/lib64/libdisp-aba.so
-vendor/lib64/libcneapiclient.so
+vendor/lib64/libcneapiclient.so|2992bca7d57c6f59156039b948ac959c40ea45e8
+vendor/lib64/libprotobuf-cpp-lgcy.so|196013f7f1a84dfb0efdb736dd661b615ef4c5ae
 vendor/lib64/libmm-color-convertor.so
 vendor/lib64/libqmi_encdec.so
 vendor/lib64/libqdp.so
