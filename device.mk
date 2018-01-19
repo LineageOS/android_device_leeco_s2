@@ -165,7 +165,8 @@ PRODUCT_PACKAGES += \
     memtrack.msm8952 \
     libdisplayconfig \
     libgenlock \
-    liboverlay
+    liboverlay \
+    libqdMetaData.system
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ad_calib.cfg:system/etc/ad_calib.cfg
