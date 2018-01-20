@@ -142,11 +142,15 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap \
+    Snap
+
+ifneq ($(USE_PROPRIETARY_CAMERA),true)
+PRODUCT_PACKAGES += \
+    camera.msm8952.so \
     libqomx_core \
     libmmcamera_interface \
     libmmjpeg_interface
-#    camera.msm8952.so \
+endif
 
 # Charger
 PRODUCT_PACKAGES += \
