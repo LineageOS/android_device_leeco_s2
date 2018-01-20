@@ -139,14 +139,6 @@ start_msm_irqbalance()
 	fi
 }
 
-start_copying_prebuilt_qcril_db()
-{
-    if [ -f /vendor/radio/qcril_database/qcril.db -a ! -f /data/vendor/radio/qcril.db ]; then
-        cp /vendor/radio/qcril_database/qcril.db /data/vendor/radio/qcril.db
-        chown -h radio.radio /data/vendor/radio/qcril.db
-    fi
-}
-
 baseband=`getprop ro.baseband`
 echo 1 > /proc/sys/net/ipv6/conf/default/accept_ra_defrtr
 
@@ -160,7 +152,6 @@ cp -f /etc/sensors/sensors_dbg_config.txt /persist/sensors/sensors_dbg_config.tx
 chmod 664 /persist/sensors/sensors_dbg_config.txt
 
 start_sensors
-start_copying_prebuilt_qcril_db
 
 if [ -f /sys/class/graphics/fb0/modes ]; then
 	panel_res=`cat /sys/class/graphics/fb0/modes`
@@ -461,48 +452,26 @@ case "$target" in
 esac
 
 #
-# Make modem config folder and copy firmware config to that folder
+# Make modem config folder and copy firmware config to that folder for RIL
 #
-#rm -rf /data/misc/radio/modem_config
-#mkdir /data/misc/radio/modem_config
-#chmod 770 /data/misc/radio/modem_config
-#cp -r /firmware/image/modem_pr/mbn_ota/* /data/misc/radio/modem_config
-#chown -hR radio.radio /data/misc/radio/modem_config
-#echo 1 > /data/misc/radio/copy_complete
-rm -rf /data/vendor/radio/modem_config/mcfg_sw
-mkdir -p /data/vendor/radio/modem_config/mcfg_sw
-chmod 770 /data/vendor/radio/modem_config
-chmod 770 /data/vendor/radio/modem_config/mcfg_sw
-product_name=`getprop ro.product.name`
+if [ -f /data/vendor/radio/ver_info.txt ]; then
+    prev_version_info=`cat /data/vendor/radio/ver_info.txt`
+else
+    prev_version_info=""
+fi
 
-case "$product_name" in
-    "Le2_CN" | "Le2_CU" | "Le2_CM" | "Le2_HK")
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/cmcc.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/ct.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/cu.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/row.mbn /data/vendor/radio/modem_config/mcfg_sw
-    ;;
-    "Le2_NA")
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/att.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/tmo.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/row.mbn /data/vendor/radio/modem_config/mcfg_sw
-    ;;
-    "Le2_WW")
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/rjil.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/row.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/cmcc.mbn /data/vendor/radio/modem_config/mcfg_sw
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/cu.mbn /data/vendor/radio/modem_config/mcfg_sw
-    ;;
-    *)
-    cp -r /firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/mbn_ota/row.mbn /data/vendor/radio/modem_config/mcfg_sw
-    ;;
-esac
-chmod 770 /data/vendor/radio/modem_config/mcfg_sw/*
-chown -hR radio.radio /data/vendor/radio/modem_config
-chown -hR radio.radio /data/vendor/radio/modem_config/mcfg_sw
-cp /firmware/verinfo/ver_info.txt /data/vendor/radio/ver_info.txt
-chown radio.radio /data/vendor/radio/ver_info.txt
-echo 1 > /data/vendor/radio/copy_complete
+cur_version_info=`cat /firmware/verinfo/ver_info.txt`
+if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_version_info" ]; then
+    rm -rf /data/vendor/modem_config/*
+    # preserve the read only mode for all subdir and files
+    cp --preserve=m -dr /firmware/image/modem_pr/mcfg/configs/* /data/vendor/modem_config
+    cp --preserve=m -d /firmware/verinfo/ver_info.txt /data/vendor/modem_config/
+    cp --preserve=m -d /firmware/image/modem_pr/mbn_ota.txt /data/vendor/modem_config/
+    cp --preserve=m -d /firmware/image/modem_pr/mbn_oin.txt /data/vendor/modem_config/
+    cp --preserve=m -d /firmware/image/modem_pr/mbn_ogl.txt /data/vendor/modem_config/
+    chown -hR radio.radio /data/vendor/modem_config/*
+fi
+setprop ro.runtime.mbn_copy_completed 1
 
 #check build variant for printk logging
 #current default minimum boot-time-default
