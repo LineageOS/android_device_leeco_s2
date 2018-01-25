@@ -96,9 +96,9 @@ volatile uint32_t gCamHal3LogLevel = 0;
 extern uint8_t gNumCameraSessions;
 
 const QCamera3HardwareInterface::QCameraPropMap QCamera3HardwareInterface::CDS_MAP [] = {
-    {"On",  CAM_CDS_MODE_ON},
-    {"Off", CAM_CDS_MODE_OFF},
-    {"Auto",CAM_CDS_MODE_AUTO}
+    {"on",  CAM_CDS_MODE_ON},
+    {"off", CAM_CDS_MODE_OFF},
+    {"auto",CAM_CDS_MODE_AUTO}
 };
 
 const QCamera3HardwareInterface::QCameraMap<
@@ -453,6 +453,7 @@ QCamera3HardwareInterface::~QCamera3HardwareInterface()
             memset(&stream_config_info, 0, sizeof(cam_stream_size_info_t));
             stream_config_info.buffer_info.min_buffers = MIN_INFLIGHT_REQUESTS;
             stream_config_info.buffer_info.max_buffers = MAX_INFLIGHT_REQUESTS;
+            clear_metadata_buffer(mParameters);
             ADD_SET_PARAM_ENTRY_TO_BATCH(mParameters, CAM_INTF_META_STREAM_INFO,
                     stream_config_info);
             int rc = mCameraHandle->ops->set_parms(mCameraHandle->camera_handle, mParameters);
@@ -5319,7 +5320,10 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
                       availableVstabModes, sizeof(availableVstabModes));
 
     /*HAL 1 and HAL 3 common*/
-    float maxZoom = 4;
+    uint32_t zoomSteps = gCamCapability[cameraId]->zoom_ratio_tbl_cnt;
+    uint32_t maxZoomStep = gCamCapability[cameraId]->zoom_ratio_tbl[zoomSteps - 1];
+    uint32_t minZoomStep = 100; //as per HAL1/API1 spec
+    float maxZoom = maxZoomStep/minZoomStep;
     staticInfo.update(ANDROID_SCALER_AVAILABLE_MAX_DIGITAL_ZOOM,
             &maxZoom, 1);
 

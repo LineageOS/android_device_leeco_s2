@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2015, The Linux Foundataion. All rights reserved.
+/* Copyright (c) 2012-2016, The Linux Foundataion. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -1141,10 +1141,16 @@ int32_t QCameraStream::bufDone(const void *opaque, bool isMetaData)
 {
     int32_t rc = NO_ERROR;
     int index;
+#ifdef USE_MEDIA_EXTENSIONS
+    QCameraVideoMemory *lVideoMem = NULL;
+#endif
 
     if (mStreamInfo != NULL
             && mStreamInfo->streaming_mode == CAM_STREAMING_MODE_BATCH) {
         index = mStreamBatchBufs->getMatchBufIndex(opaque, TRUE);
+#ifdef USE_MEDIA_EXTENSIONS
+        lVideoMem = (QCameraVideoMemory *)mStreamBatchBufs;
+#endif
         if (index == -1 || index >= mNumBufs || mBufDefs == NULL) {
             ALOGE("%s: Cannot find buf for opaque data = %p", __func__, opaque);
             return BAD_INDEX;
@@ -1164,6 +1170,9 @@ int32_t QCameraStream::bufDone(const void *opaque, bool isMetaData)
         }
     } else {
         index = mStreamBufs->getMatchBufIndex(opaque, isMetaData);
+#ifdef USE_MEDIA_EXTENSIONS
+        lVideoMem = (QCameraVideoMemory *)mStreamBufs;
+#endif
         if (index == -1 || index >= mNumBufs || mBufDefs == NULL) {
             ALOGE("%s: Cannot find buf for opaque data = %p", __func__, opaque);
             return BAD_INDEX;
@@ -1171,6 +1180,18 @@ int32_t QCameraStream::bufDone(const void *opaque, bool isMetaData)
         CDBG_HIGH("%s: Buffer Index = %d, Frame Idx = %d", __func__, index,
                 mBufDefs[index].frame_idx);
     }
+#ifdef USE_MEDIA_EXTENSIONS
+    //Close and delete duplicated native handle and FD's.
+    if (lVideoMem != NULL) {
+        rc = lVideoMem->closeNativeHandle(opaque, isMetaData);
+        if (rc != NO_ERROR) {
+            CDBG_HIGH("Invalid video metadata");
+            return rc;
+        }
+    } else {
+        CDBG_HIGH("Possible FD leak. Release recording called after stop");
+    }
+#endif
     rc = bufDone((uint32_t)index);
     return rc;
 }
@@ -1491,7 +1512,7 @@ int32_t QCameraStream::allocateBuffers()
 
     if (!mStreamBufs) {
         ALOGE("%s: Failed to allocate stream buffers", __func__);
-        rc = NO_MEMORY;
+        return NO_MEMORY;
     }
 
     mNumBufs = (uint8_t)(numBufAlloc + mNumBufsNeedAlloc);
@@ -1839,6 +1860,14 @@ err1:
 int32_t QCameraStream::releaseBuffs()
 {
     int rc = NO_ERROR;
+
+    if (mBufAllocPid != 0) {
+        cond_signal(true);
+        CDBG_HIGH("%s: wait for buf allocation thread dead", __func__);
+        pthread_join(mBufAllocPid, NULL);
+        mBufAllocPid = 0;
+        CDBG_HIGH("%s: return from buf allocation thread", __func__);
+    }
 
     if (mStreamInfo->streaming_mode == CAM_STREAMING_MODE_BATCH) {
         return releaseBatchBufs(NULL);
