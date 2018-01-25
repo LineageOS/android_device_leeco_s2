@@ -117,7 +117,7 @@ QCOM_BT_USE_SMD_TTY := true
 
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
-USE_PROPRIETARY_CAMERA := true
+USE_PROPRIETARY_CAMERA := false
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 
 # This is needed for us as it disables tcache, which is breaking camera.
