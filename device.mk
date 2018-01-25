@@ -146,7 +146,7 @@ PRODUCT_PACKAGES += \
 
 ifneq ($(USE_PROPRIETARY_CAMERA),true)
 PRODUCT_PACKAGES += \
-    camera.msm8952.so \
+    camera.msm8952 \
     libqomx_core \
     libmmcamera_interface \
     libmmjpeg_interface
