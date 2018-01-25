@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2016, The Linux Foundataion. All rights reserved.
+/* Copyright (c) 2012-2015, The Linux Foundataion. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -61,8 +61,6 @@ namespace qcamera {
 
 #define DATA_PTR(MEM_OBJ,INDEX) MEM_OBJ->getPtr( INDEX )
 
-#define TIME_SOURCE ANDROID_SENSOR_INFO_TIMESTAMP_SOURCE_UNKNOWN
-
 #define EMPTY_PIPELINE_DELAY 2
 #define PARTIAL_RESULT_COUNT 2
 #define FRAME_SKIP_DELAY     0
@@ -98,9 +96,9 @@ volatile uint32_t gCamHal3LogLevel = 0;
 extern uint8_t gNumCameraSessions;
 
 const QCamera3HardwareInterface::QCameraPropMap QCamera3HardwareInterface::CDS_MAP [] = {
-    {"on",  CAM_CDS_MODE_ON},
-    {"off", CAM_CDS_MODE_OFF},
-    {"auto",CAM_CDS_MODE_AUTO}
+    {"On",  CAM_CDS_MODE_ON},
+    {"Off", CAM_CDS_MODE_OFF},
+    {"Auto",CAM_CDS_MODE_AUTO}
 };
 
 const QCamera3HardwareInterface::QCameraMap<
@@ -206,7 +204,6 @@ const QCamera3HardwareInterface::QCameraMap<
         camera_metadata_enum_android_statistics_face_detect_mode_t,
         cam_face_detect_mode_t> QCamera3HardwareInterface::FACEDETECT_MODES_MAP[] = {
     { ANDROID_STATISTICS_FACE_DETECT_MODE_OFF,    CAM_FACE_DETECT_MODE_OFF     },
-    { ANDROID_STATISTICS_FACE_DETECT_MODE_SIMPLE, CAM_FACE_DETECT_MODE_SIMPLE  },
     { ANDROID_STATISTICS_FACE_DETECT_MODE_FULL,   CAM_FACE_DETECT_MODE_FULL    }
 };
 
@@ -328,8 +325,7 @@ QCamera3HardwareInterface::QCamera3HardwareInterface(uint32_t cameraId,
       mUpdateDebugLevel(false),
       mCallbacks(callbacks),
       mCaptureIntent(0),
-      mCacMode(0),
-      mBootToMonoTimestampOffset(0)
+      mCacMode(0)
 {
     getLogLevel();
     mCameraDevice.common.tag = HARDWARE_DEVICE_TAG;
@@ -382,7 +378,6 @@ QCamera3HardwareInterface::QCamera3HardwareInterface(uint32_t cameraId,
          }
          dlclose(lib_surface_utils);
     }
-    memset(&mFpsRange, 0, sizeof(cam_fps_range_t));
 }
 
 /*===========================================================================
@@ -458,7 +453,6 @@ QCamera3HardwareInterface::~QCamera3HardwareInterface()
             memset(&stream_config_info, 0, sizeof(cam_stream_size_info_t));
             stream_config_info.buffer_info.min_buffers = MIN_INFLIGHT_REQUESTS;
             stream_config_info.buffer_info.max_buffers = MAX_INFLIGHT_REQUESTS;
-            clear_metadata_buffer(mParameters);
             ADD_SET_PARAM_ENTRY_TO_BATCH(mParameters, CAM_INTF_META_STREAM_INFO,
                     stream_config_info);
             int rc = mCameraHandle->ops->set_parms(mCameraHandle->camera_handle, mParameters);
@@ -645,23 +639,6 @@ int QCamera3HardwareInterface::openCamera()
         }
         pthread_mutex_unlock(&gCamLock);
     }
-
-    // Setprop to decide the time source (whether boottime or monotonic).
-    // By default, use monotonic time.
-    property_get("persist.camera.time.monotonic", value, "1");
-    mBootToMonoTimestampOffset = 0;
-    if (atoi(value) == 1) {
-        // if monotonic is set, then need to use time in monotonic.
-        // So, Measure the clock offset between BOOTTIME and MONOTONIC
-        // The clock domain source for ISP is BOOTTIME and
-        // for display is MONOTONIC
-        // The below offset is used to convert from clock domain of other subsystem
-        // (hardware composer) to that of camera. Assumption is that this
-        // offset won't change during the life cycle of the camera device. In other
-        // words, camera device shouldn't be open during CPU suspend.
-        mBootToMonoTimestampOffset = getBootToMonoTimeOffset();
-    }
-    CDBG_HIGH("mBootToMonoTimestampOffset = %lld", mBootToMonoTimestampOffset);
 
     return NO_ERROR;
 }
@@ -889,8 +866,7 @@ bool QCamera3HardwareInterface::isSupportChannelNeeded(camera3_stream_configurat
  *              none-zero failure code
  *
  *==========================================================================*/
-int32_t QCamera3HardwareInterface::getSensorOutputSize(cam_dimension_t &sensor_dim,
-                                                             CameraMetadata *frame_settings)
+int32_t QCamera3HardwareInterface::getSensorOutputSize(cam_dimension_t &sensor_dim)
 {
     int32_t rc = NO_ERROR;
 
@@ -903,13 +879,6 @@ int32_t QCamera3HardwareInterface::getSensorOutputSize(cam_dimension_t &sensor_d
     }
 
     clear_metadata_buffer(mParameters);
-
-    if (frame_settings) {
-        rc = setHalFpsRange(*frame_settings, mParameters);
-        if (rc != NO_ERROR) {
-            ALOGE("%s: setHalFpsRange failed", __func__);
-        }
-    }
 
     rc = ADD_SET_PARAM_ENTRY_TO_BATCH(mParameters, CAM_INTF_PARM_MAX_DIMENSION,
             max_dim);
@@ -1335,22 +1304,24 @@ int QCamera3HardwareInterface::configureStreams(
         return rc;
     }
 
-    /* Create analysis stream to support FD */
-    mAnalysisChannel = new QCamera3SupportChannel(
-            mCameraHandle->camera_handle,
-            mCameraHandle->ops,
-            &gCamCapability[mCameraId]->analysis_padding_info,
-            fullFeatureMask,
-            CAM_STREAM_TYPE_ANALYSIS,
-            &gCamCapability[mCameraId]->analysis_recommended_res,
-            (gCamCapability[mCameraId]->analysis_recommended_format
-            == CAM_FORMAT_Y_ONLY ? CAM_FORMAT_Y_ONLY
-            : CAM_FORMAT_YUV_420_NV21),
-            this);
-    if (!mAnalysisChannel) {
-        ALOGE("%s: Analysis channel cannot be created", __func__);
-        pthread_mutex_unlock(&mMutex);
-        return -ENOMEM;
+    /* Create analysis stream if h/w support is available */
+    if (gCamCapability[mCameraId]->hw_analysis_supported) {
+        mAnalysisChannel = new QCamera3SupportChannel(
+                mCameraHandle->camera_handle,
+                mCameraHandle->ops,
+                &gCamCapability[mCameraId]->analysis_padding_info,
+                fullFeatureMask,
+                CAM_STREAM_TYPE_ANALYSIS,
+                &gCamCapability[mCameraId]->analysis_recommended_res,
+                (gCamCapability[mCameraId]->analysis_recommended_format
+                == CAM_FORMAT_Y_ONLY ? CAM_FORMAT_Y_ONLY
+                : CAM_FORMAT_YUV_420_NV21),
+                this);
+        if (!mAnalysisChannel) {
+            ALOGE("%s: H/W Analysis channel cannot be created", __func__);
+            pthread_mutex_unlock(&mMutex);
+            return -ENOMEM;
+        }
     }
 
     if (isSupportChannelNeeded(streamList)) {
@@ -1971,12 +1942,6 @@ void QCamera3HardwareInterface::handleMetadataWithLock(
     uint32_t frame_number, urgent_frame_number;
     int64_t capture_time;
 
-    // Convert Boottime from camera to Monotime.
-    uint8_t timestampSource = TIME_SOURCE;
-    nsecs_t timeOffset = mBootToMonoTimestampOffset;
-    if (ANDROID_SENSOR_INFO_TIMESTAMP_SOURCE_UNKNOWN != timestampSource)
-        timeOffset = 0;
-
     int32_t *p_frame_number_valid =
             POINTER_OF_META(CAM_INTF_META_FRAME_NUMBER_VALID, metadata);
     uint32_t *p_frame_number = POINTER_OF_META(CAM_INTF_META_FRAME_NUMBER, metadata);
@@ -2000,7 +1965,7 @@ void QCamera3HardwareInterface::handleMetadataWithLock(
     } else {
         frame_number_valid = *p_frame_number_valid;
         frame_number = *p_frame_number;
-        capture_time = *p_capture_time - timeOffset;
+        capture_time = *p_capture_time;
         urgent_frame_number_valid = *p_urgent_frame_number_valid;
         urgent_frame_number = *p_urgent_frame_number;
     }
@@ -2727,28 +2692,6 @@ int QCamera3HardwareInterface::processCaptureRequest(
         mWokenUpByDaemon = false;
         mPendingRequest = 0;
         mFirstConfiguration = false;
-    }
-
-    if (!mFirstRequest && meta.exists(ANDROID_CONTROL_AE_TARGET_FPS_RANGE)) {
-        cam_dimension_t sensor_dim;
-        cam_fps_range_t fps_range;
-        fps_range.min_fps = (float)
-                meta.find(ANDROID_CONTROL_AE_TARGET_FPS_RANGE).data.i32[0];
-        fps_range.max_fps = (float)
-                meta.find(ANDROID_CONTROL_AE_TARGET_FPS_RANGE).data.i32[1];
-        if ((fps_range.min_fps != mFpsRange.min_fps) ||
-                (fps_range.max_fps != mFpsRange.max_fps)) {
-            memset(&sensor_dim, 0, sizeof(sensor_dim));
-            rc = getSensorOutputSize(sensor_dim, &meta);
-            if (rc != NO_ERROR) {
-                ALOGE("%s: Failed to get sensor output size", __func__);
-                pthread_mutex_unlock(&mMutex);
-                return rc;
-            }
-            mCropRegionMapper.update(gCamCapability[mCameraId]->active_array_size.width,
-                    gCamCapability[mCameraId]->active_array_size.height,
-                    sensor_dim.width, sensor_dim.height);
-        }
     }
 
     uint32_t frameNumber = request->frame_number;
@@ -3743,6 +3686,52 @@ QCamera3HardwareInterface::translateFromHalMetadata(
         camMetadata.update(ANDROID_CONTROL_AWB_LOCK, &fwk_awb_lock, 1);
     }
 
+    IF_META_AVAILABLE(cam_face_detection_data_t, faceDetectionInfo,
+            CAM_INTF_META_FACE_DETECTION, metadata) {
+        uint8_t numFaces = MIN(faceDetectionInfo->num_faces_detected, MAX_ROI);
+        int32_t faceIds[MAX_ROI];
+        uint8_t faceScores[MAX_ROI];
+        int32_t faceRectangles[MAX_ROI * 4];
+        int32_t faceLandmarks[MAX_ROI * 6];
+        size_t j = 0, k = 0;
+        for (size_t i = 0; i < numFaces; i++) {
+            faceIds[i] = faceDetectionInfo->faces[i].face_id;
+            faceScores[i] = (uint8_t)faceDetectionInfo->faces[i].score;
+            // Adjust crop region from sensor output coordinate system to active
+            // array coordinate system.
+            cam_rect_t& rect = faceDetectionInfo->faces[i].face_boundary;
+            mCropRegionMapper.toActiveArray(rect.left, rect.top,
+                    rect.width, rect.height);
+
+            convertToRegions(faceDetectionInfo->faces[i].face_boundary,
+                faceRectangles+j, -1);
+
+            // Map the co-ordinate sensor output coordinate system to active
+            // array coordinate system.
+            cam_face_detection_info_t& face = faceDetectionInfo->faces[i];
+            mCropRegionMapper.toActiveArray(face.left_eye_center.x,
+                    face.left_eye_center.y);
+            mCropRegionMapper.toActiveArray(face.right_eye_center.x,
+                    face.right_eye_center.y);
+            mCropRegionMapper.toActiveArray(face.mouth_center.x,
+                    face.mouth_center.y);
+
+            convertLandmarks(faceDetectionInfo->faces[i], faceLandmarks+k);
+            j+= 4;
+            k+= 6;
+        }
+        if (numFaces <= 0) {
+            memset(faceIds, 0, sizeof(int32_t) * MAX_ROI);
+            memset(faceScores, 0, sizeof(uint8_t) * MAX_ROI);
+            memset(faceRectangles, 0, sizeof(int32_t) * MAX_ROI * 4);
+            memset(faceLandmarks, 0, sizeof(int32_t) * MAX_ROI * 6);
+        }
+        camMetadata.update(ANDROID_STATISTICS_FACE_IDS, faceIds, numFaces);
+        camMetadata.update(ANDROID_STATISTICS_FACE_SCORES, faceScores, numFaces);
+        camMetadata.update(ANDROID_STATISTICS_FACE_RECTANGLES, faceRectangles, numFaces * 4U);
+        camMetadata.update(ANDROID_STATISTICS_FACE_LANDMARKS, faceLandmarks, numFaces * 6U);
+    }
+
     IF_META_AVAILABLE(uint32_t, color_correct_mode, CAM_INTF_META_COLOR_CORRECT_MODE, metadata) {
         uint8_t fwk_color_correct_mode = (uint8_t) *color_correct_mode;
         camMetadata.update(ANDROID_COLOR_CORRECTION_MODE, &fwk_color_correct_mode, 1);
@@ -3881,61 +3870,6 @@ QCamera3HardwareInterface::translateFromHalMetadata(
         if (NAME_NOT_FOUND != val) {
             uint8_t fwk_faceDetectMode = (uint8_t)val;
             camMetadata.update(ANDROID_STATISTICS_FACE_DETECT_MODE, &fwk_faceDetectMode, 1);
-            if (fwk_faceDetectMode != ANDROID_STATISTICS_FACE_DETECT_MODE_OFF) {
-                IF_META_AVAILABLE(cam_face_detection_data_t, faceDetectionInfo,
-                            CAM_INTF_META_FACE_DETECTION, metadata) {
-                    uint8_t numFaces = MIN(
-                            faceDetectionInfo->num_faces_detected, MAX_ROI);
-                    int32_t faceIds[MAX_ROI];
-                    uint8_t faceScores[MAX_ROI];
-                    int32_t faceRectangles[MAX_ROI * 4];
-                    int32_t faceLandmarks[MAX_ROI * 6];
-                    size_t j = 0, k = 0;
-
-                    for (size_t i = 0; i < numFaces; i++) {
-                        faceScores[i] = (uint8_t)faceDetectionInfo->faces[i].score;
-                        // Adjust crop region from sensor output coordinate system to active
-                        // array coordinate system.
-                        cam_rect_t& rect = faceDetectionInfo->faces[i].face_boundary;
-                        mCropRegionMapper.toActiveArray(rect.left, rect.top,
-                                 rect.width, rect.height);
-
-                        convertToRegions(faceDetectionInfo->faces[i].face_boundary,
-                                 faceRectangles+j, -1);
-
-                         // Map the co-ordinate sensor output coordinate system to active
-                         // array coordinate system.
-                         cam_face_detection_info_t& face = faceDetectionInfo->faces[i];
-                         mCropRegionMapper.toActiveArray(face.left_eye_center.x,
-                                 face.left_eye_center.y);
-                         mCropRegionMapper.toActiveArray(face.right_eye_center.x,
-                                 face.right_eye_center.y);
-                         mCropRegionMapper.toActiveArray(face.mouth_center.x,
-                                 face.mouth_center.y);
-
-                         convertLandmarks(faceDetectionInfo->faces[i], faceLandmarks+k);
-                         j+= 4;
-                         k+= 6;
-                    }
-                    if (numFaces <= 0) {
-                        memset(faceIds, 0, sizeof(int32_t) * MAX_ROI);
-                        memset(faceScores, 0, sizeof(uint8_t) * MAX_ROI);
-                        memset(faceRectangles, 0, sizeof(int32_t) * MAX_ROI * 4);
-                        memset(faceLandmarks, 0, sizeof(int32_t) * MAX_ROI * 6);
-                    }
-
-                    camMetadata.update(ANDROID_STATISTICS_FACE_SCORES, faceScores,
-                            numFaces);
-                    camMetadata.update(ANDROID_STATISTICS_FACE_RECTANGLES,
-                            faceRectangles, numFaces * 4U);
-                    if (fwk_faceDetectMode ==
-                            ANDROID_STATISTICS_FACE_DETECT_MODE_FULL) {
-                        camMetadata.update(ANDROID_STATISTICS_FACE_IDS, faceIds, numFaces);
-                        camMetadata.update(ANDROID_STATISTICS_FACE_LANDMARKS,
-                                faceLandmarks, numFaces * 6U);
-                    }
-                }
-            }
         }
     }
 
@@ -3997,7 +3931,7 @@ QCamera3HardwareInterface::translateFromHalMetadata(
     IF_META_AVAILABLE(cam_color_correct_gains_t, colorCorrectionGains,
             CAM_INTF_META_COLOR_CORRECT_GAINS, metadata) {
         camMetadata.update(ANDROID_COLOR_CORRECTION_GAINS, colorCorrectionGains->gains,
-                CC_GAIN_MAX);
+                CC_GAINS_COUNT);
     }
 
     IF_META_AVAILABLE(cam_color_correct_matrix_t, colorCorrectionMatrix,
@@ -5224,7 +5158,6 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     size_t count = 0;
     bool limitedDevice = false;
     int64_t m_MinDurationBoundNs = 50000000; // 50 ms, 20 fps
-    char prop[PROPERTY_VALUE_MAX];
     /* If sensor is YUV sensor (no raw support) or if per-frame control is not
      * guaranteed or if min fps of max resolution is less than 20 fps, its
      * advertised as limited device*/
@@ -5254,16 +5187,16 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
 
     staticInfo.update(ANDROID_LENS_INFO_AVAILABLE_APERTURES,
                       gCamCapability[cameraId]->apertures,
-                      MIN(CAM_APERTURES_MAX, gCamCapability[cameraId]->apertures_count));
+                      gCamCapability[cameraId]->apertures_count);
 
     staticInfo.update(ANDROID_LENS_INFO_AVAILABLE_FILTER_DENSITIES,
                 gCamCapability[cameraId]->filter_densities,
-                MIN(CAM_FILTER_DENSITIES_MAX, gCamCapability[cameraId]->filter_densities_count));
+                gCamCapability[cameraId]->filter_densities_count);
 
 
     staticInfo.update(ANDROID_LENS_INFO_AVAILABLE_OPTICAL_STABILIZATION,
                       (uint8_t *)gCamCapability[cameraId]->optical_stab_modes,
-                      MIN((size_t)CAM_OPT_STAB_MAX, gCamCapability[cameraId]->optical_stab_modes_count));
+                      gCamCapability[cameraId]->optical_stab_modes_count);
 
     #ifdef USE_L_MR1
     staticInfo.update(ANDROID_LENS_POSITION,
@@ -5271,9 +5204,8 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
                       sizeof(gCamCapability[cameraId]->lens_position)/ sizeof(float));
     #endif
 
-    int32_t lens_shading_map_size[] = {
-            MIN(CAM_MAX_SHADING_MAP_WIDTH, gCamCapability[cameraId]->lens_shading_map_size.width),
-            MIN(CAM_MAX_SHADING_MAP_HEIGHT, gCamCapability[cameraId]->lens_shading_map_size.height)};
+    int32_t lens_shading_map_size[] = {gCamCapability[cameraId]->lens_shading_map_size.width,
+            gCamCapability[cameraId]->lens_shading_map_size.height};
     staticInfo.update(ANDROID_LENS_INFO_SHADING_MAP_SIZE,
                       lens_shading_map_size,
                       sizeof(lens_shading_map_size)/sizeof(int32_t));
@@ -5302,11 +5234,11 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
                       pixel_array_size, sizeof(pixel_array_size)/sizeof(pixel_array_size[0]));
 
     int32_t active_array_size[] = {gCamCapability[cameraId]->active_array_size.left,
-            gCamCapability[cameraId]->active_array_size.top,
-            gCamCapability[cameraId]->active_array_size.width,
-            gCamCapability[cameraId]->active_array_size.height};
+                                                gCamCapability[cameraId]->active_array_size.top,
+                                                gCamCapability[cameraId]->active_array_size.width,
+                                                gCamCapability[cameraId]->active_array_size.height};
     staticInfo.update(ANDROID_SENSOR_INFO_ACTIVE_ARRAY_SIZE,
-            active_array_size, sizeof(active_array_size)/sizeof(active_array_size[0]));
+                      active_array_size, sizeof(active_array_size)/sizeof(active_array_size[0]));
 
     staticInfo.update(ANDROID_SENSOR_INFO_WHITE_LEVEL,
             &gCamCapability[cameraId]->white_level, 1);
@@ -5315,12 +5247,16 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
             gCamCapability[cameraId]->black_level_pattern, BLACK_LEVEL_PATTERN_CNT);
 
     staticInfo.update(ANDROID_FLASH_INFO_CHARGE_DURATION,
-            &gCamCapability[cameraId]->flash_charge_duration, 1);
+                      &gCamCapability[cameraId]->flash_charge_duration, 1);
 
     staticInfo.update(ANDROID_TONEMAP_MAX_CURVE_POINTS,
-            &gCamCapability[cameraId]->max_tone_map_curve_points, 1);
+                      &gCamCapability[cameraId]->max_tone_map_curve_points, 1);
 
-    uint8_t timestampSource = TIME_SOURCE;
+    int32_t maxFaces = gCamCapability[cameraId]->max_num_roi;
+    staticInfo.update(ANDROID_STATISTICS_INFO_MAX_FACE_COUNT,
+                      (int32_t *)&maxFaces, 1);
+
+    uint8_t timestampSource = ANDROID_SENSOR_INFO_TIMESTAMP_SOURCE_UNKNOWN;
     staticInfo.update(ANDROID_SENSOR_INFO_TIMESTAMP_SOURCE,
             &timestampSource, 1);
 
@@ -5330,8 +5266,7 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     staticInfo.update(ANDROID_STATISTICS_INFO_MAX_HISTOGRAM_COUNT,
             &gCamCapability[cameraId]->max_histogram_count, 1);
 
-    int32_t sharpness_map_size[] = {
-            gCamCapability[cameraId]->sharpness_map_size.width,
+    int32_t sharpness_map_size[] = {gCamCapability[cameraId]->sharpness_map_size.width,
             gCamCapability[cameraId]->sharpness_map_size.height};
 
     staticInfo.update(ANDROID_STATISTICS_INFO_SHARPNESS_MAP_SIZE,
@@ -5384,10 +5319,7 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
                       availableVstabModes, sizeof(availableVstabModes));
 
     /*HAL 1 and HAL 3 common*/
-    uint32_t zoomSteps = gCamCapability[cameraId]->zoom_ratio_tbl_cnt;
-    uint32_t maxZoomStep = gCamCapability[cameraId]->zoom_ratio_tbl[zoomSteps - 1];
-    uint32_t minZoomStep = 100; //as per HAL1/API1 spec
-    float maxZoom = maxZoomStep/minZoomStep;
+    float maxZoom = 4;
     staticInfo.update(ANDROID_SCALER_AVAILABLE_MAX_DIGITAL_ZOOM,
             &maxZoom, 1);
 
@@ -5400,35 +5332,15 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     staticInfo.update(ANDROID_CONTROL_MAX_REGIONS,
             max3aRegions, 3);
 
-    /* 0: OFF, 1: OFF+SIMPLE, 2: OFF+FULL, 3: OFF+SIMPLE+FULL */
-    memset(prop, 0, sizeof(prop));
-    property_get("persist.camera.facedetect", prop, "1");
-    uint8_t supportedFaceDetectMode = (uint8_t)atoi(prop);
-    CDBG("%s: Support face detection mode: %d",
-            __func__, supportedFaceDetectMode);
-
-    int32_t maxFaces = gCamCapability[cameraId]->max_num_roi;
-    Vector<uint8_t> availableFaceDetectModes;
-    availableFaceDetectModes.add(ANDROID_STATISTICS_FACE_DETECT_MODE_OFF);
-    if (supportedFaceDetectMode == 1) {
-        availableFaceDetectModes.add(ANDROID_STATISTICS_FACE_DETECT_MODE_SIMPLE);
-    } else if (supportedFaceDetectMode == 2) {
-        availableFaceDetectModes.add(ANDROID_STATISTICS_FACE_DETECT_MODE_FULL);
-    } else if (supportedFaceDetectMode == 3) {
-        availableFaceDetectModes.add(ANDROID_STATISTICS_FACE_DETECT_MODE_SIMPLE);
-        availableFaceDetectModes.add(ANDROID_STATISTICS_FACE_DETECT_MODE_FULL);
-    } else {
-        maxFaces = 0;
-    }
+    uint8_t availableFaceDetectModes[] = {
+            ANDROID_STATISTICS_FACE_DETECT_MODE_OFF,
+            ANDROID_STATISTICS_FACE_DETECT_MODE_FULL };
     staticInfo.update(ANDROID_STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES,
-            availableFaceDetectModes.array(),
-            availableFaceDetectModes.size());
-    staticInfo.update(ANDROID_STATISTICS_INFO_MAX_FACE_COUNT,
-            (int32_t *)&maxFaces, 1);
+            availableFaceDetectModes,
+            sizeof(availableFaceDetectModes)/sizeof(availableFaceDetectModes[0]));
 
-    int32_t exposureCompensationRange[] = {
-            gCamCapability[cameraId]->exposure_compensation_min,
-            gCamCapability[cameraId]->exposure_compensation_max};
+    int32_t exposureCompensationRange[] = {gCamCapability[cameraId]->exposure_compensation_min,
+                                           gCamCapability[cameraId]->exposure_compensation_max};
     staticInfo.update(ANDROID_CONTROL_AE_COMPENSATION_RANGE,
             exposureCompensationRange,
             sizeof(exposureCompensationRange)/sizeof(int32_t));
@@ -5441,36 +5353,50 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
                       available_thumbnail_sizes,
                       sizeof(available_thumbnail_sizes)/sizeof(int32_t));
 
-    Vector<int32_t> available_stream_configs;
+    /*all sizes will be clubbed into this tag*/
+    count = MIN(gCamCapability[cameraId]->picture_sizes_tbl_cnt, MAX_SIZES_CNT);
+    /*android.scaler.availableStreamConfigurations*/
+    size_t max_stream_configs_size = count * scalar_formats_count * 4;
+    int32_t available_stream_configs[max_stream_configs_size];
+    size_t idx = 0;
     for (size_t j = 0; j < scalar_formats_count; j++) {
         switch (scalar_formats[j]) {
         case ANDROID_SCALER_AVAILABLE_FORMATS_RAW16:
         case ANDROID_SCALER_AVAILABLE_FORMATS_RAW_OPAQUE:
         case HAL_PIXEL_FORMAT_RAW10:
-            for (size_t i = 0; i < MIN(MAX_SIZES_CNT,
-                    gCamCapability[cameraId]->supported_raw_dim_cnt); i++) {
-                available_stream_configs.add(scalar_formats[j]);
-                available_stream_configs.add(gCamCapability[cameraId]->raw_dim[i].width);
-                available_stream_configs.add(gCamCapability[cameraId]->raw_dim[i].height);
-                available_stream_configs.add(ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_OUTPUT);
+            for (size_t i = 0; i < gCamCapability[cameraId]->supported_raw_dim_cnt; i++) {
+                available_stream_configs[idx] = scalar_formats[j];
+                available_stream_configs[idx+1] =
+                    gCamCapability[cameraId]->raw_dim[i].width;
+                available_stream_configs[idx+2] =
+                    gCamCapability[cameraId]->raw_dim[i].height;
+                available_stream_configs[idx+3] =
+                    ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_OUTPUT;
+                idx+=4;
             }
             break;
         case HAL_PIXEL_FORMAT_BLOB:
             for (size_t i = 0; i < MIN(MAX_SIZES_CNT,
                     gCamCapability[cameraId]->picture_sizes_tbl_cnt); i++) {
-                available_stream_configs.add(scalar_formats[j]);
-                available_stream_configs.add(gCamCapability[cameraId]->picture_sizes_tbl[i].width);
-                available_stream_configs.add(gCamCapability[cameraId]->picture_sizes_tbl[i].height);
-                available_stream_configs.add(ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_OUTPUT);
+                available_stream_configs[idx] = scalar_formats[j];
+                available_stream_configs[idx+1] =
+                        gCamCapability[cameraId]->picture_sizes_tbl[i].width;
+                available_stream_configs[idx+2] =
+                        gCamCapability[cameraId]->picture_sizes_tbl[i].height;
+                available_stream_configs[idx+3] = ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_OUTPUT;
+                idx+=4;
             }
             break;
         default:
-            for (size_t i = 0; i < MIN(MAX_SIZES_CNT,
-                    gCamCapability[cameraId]->picture_sizes_tbl_cnt); i++) {
-                available_stream_configs.add(scalar_formats[j]);
-                available_stream_configs.add(gCamCapability[cameraId]->picture_sizes_tbl[i].width);
-                available_stream_configs.add(gCamCapability[cameraId]->picture_sizes_tbl[i].height);
-                available_stream_configs.add(ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_OUTPUT);
+            for (size_t i = 0; i < gCamCapability[cameraId]->picture_sizes_tbl_cnt; i++) {
+                available_stream_configs[idx] = scalar_formats[j];
+                available_stream_configs[idx+1] =
+                    gCamCapability[cameraId]->picture_sizes_tbl[i].width;
+                available_stream_configs[idx+2] =
+                    gCamCapability[cameraId]->picture_sizes_tbl[i].height;
+                available_stream_configs[idx+3] =
+                    ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_OUTPUT;
+                idx+=4;
             }
 
 
@@ -5478,7 +5404,7 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
         }
     }
     staticInfo.update(ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS,
-                      available_stream_configs.array(), available_stream_configs.size());
+                      available_stream_configs, idx);
     static const uint8_t hotpixelMode = ANDROID_HOT_PIXEL_MODE_FAST;
     staticInfo.update(ANDROID_HOT_PIXEL_MODE, &hotpixelMode, 1);
 
@@ -5486,31 +5412,40 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     staticInfo.update(ANDROID_STATISTICS_HOT_PIXEL_MAP_MODE, &hotPixelMapMode, 1);
 
     /* android.scaler.availableMinFrameDurations */
-    Vector<int64_t> available_min_durations;
+    int64_t available_min_durations[max_stream_configs_size];
+    idx = 0;
     for (size_t j = 0; j < scalar_formats_count; j++) {
         switch (scalar_formats[j]) {
         case ANDROID_SCALER_AVAILABLE_FORMATS_RAW16:
         case ANDROID_SCALER_AVAILABLE_FORMATS_RAW_OPAQUE:
         case HAL_PIXEL_FORMAT_RAW10:
-            for (size_t i = 0; i < MIN(MAX_SIZES_CNT, gCamCapability[cameraId]->supported_raw_dim_cnt); i++) {
-                available_min_durations.add(scalar_formats[j]);
-                available_min_durations.add(gCamCapability[cameraId]->raw_dim[i].width);
-                available_min_durations.add(gCamCapability[cameraId]->raw_dim[i].height);
-                available_min_durations.add(gCamCapability[cameraId]->raw_min_duration[i]);
+            for (size_t i = 0; i < gCamCapability[cameraId]->supported_raw_dim_cnt; i++) {
+                available_min_durations[idx] = scalar_formats[j];
+                available_min_durations[idx+1] =
+                    gCamCapability[cameraId]->raw_dim[i].width;
+                available_min_durations[idx+2] =
+                    gCamCapability[cameraId]->raw_dim[i].height;
+                available_min_durations[idx+3] =
+                    gCamCapability[cameraId]->raw_min_duration[i];
+                idx+=4;
             }
             break;
         default:
-            for (size_t i = 0; i < MIN(MAX_SIZES_CNT, gCamCapability[cameraId]->picture_sizes_tbl_cnt); i++) {
-                available_min_durations.add(scalar_formats[j]);
-                available_min_durations.add(gCamCapability[cameraId]->picture_sizes_tbl[i].width);
-                available_min_durations.add(gCamCapability[cameraId]->picture_sizes_tbl[i].height);
-                available_min_durations.add(gCamCapability[cameraId]->picture_min_duration[i]);
+            for (size_t i = 0; i < gCamCapability[cameraId]->picture_sizes_tbl_cnt; i++) {
+                available_min_durations[idx] = scalar_formats[j];
+                available_min_durations[idx+1] =
+                    gCamCapability[cameraId]->picture_sizes_tbl[i].width;
+                available_min_durations[idx+2] =
+                    gCamCapability[cameraId]->picture_sizes_tbl[i].height;
+                available_min_durations[idx+3] =
+                    gCamCapability[cameraId]->picture_min_duration[i];
+                idx+=4;
             }
             break;
         }
     }
     staticInfo.update(ANDROID_SCALER_AVAILABLE_MIN_FRAME_DURATIONS,
-                      available_min_durations.array(), available_min_durations.size());
+                      &available_min_durations[0], idx);
 
     Vector<int32_t> available_hfr_configs;
     for (size_t i = 0; i < gCamCapability[cameraId]->hfr_tbl_cnt; i++) {
@@ -5555,6 +5490,7 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
        }
     }
     //Advertise HFR capability only if the property is set
+    char prop[PROPERTY_VALUE_MAX];
     memset(prop, 0, sizeof(prop));
     property_get("persist.camera.hal3hfr.enable", prop, "0");
     uint8_t hfrEnable = (uint8_t)atoi(prop);
@@ -5986,7 +5922,8 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
        ANDROID_STATISTICS_FACE_DETECT_MODE, ANDROID_STATISTICS_HISTOGRAM_MODE,
        ANDROID_STATISTICS_SHARPNESS_MAP, ANDROID_STATISTICS_SHARPNESS_MAP_MODE,
        ANDROID_STATISTICS_PREDICTED_COLOR_GAINS, ANDROID_STATISTICS_PREDICTED_COLOR_TRANSFORM,
-       ANDROID_STATISTICS_SCENE_FLICKER, ANDROID_STATISTICS_FACE_RECTANGLES,
+       ANDROID_STATISTICS_SCENE_FLICKER, ANDROID_STATISTICS_FACE_IDS,
+       ANDROID_STATISTICS_FACE_LANDMARKS, ANDROID_STATISTICS_FACE_RECTANGLES,
        ANDROID_STATISTICS_FACE_SCORES};
     size_t result_keys_cnt =
             sizeof(result_keys_basic)/sizeof(result_keys_basic[0]);
@@ -5999,14 +5936,6 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     if (CAM_SENSOR_RAW == gCamCapability[cameraId]->sensor_type.sens_type) {
         available_result_keys.add(ANDROID_SENSOR_NOISE_PROFILE);
         available_result_keys.add(ANDROID_SENSOR_GREEN_SPLIT);
-    }
-    if (supportedFaceDetectMode == 1) {
-        available_result_keys.add(ANDROID_STATISTICS_FACE_RECTANGLES);
-        available_result_keys.add(ANDROID_STATISTICS_FACE_SCORES);
-    } else if ((supportedFaceDetectMode == 2) ||
-             (supportedFaceDetectMode == 3)) {
-        available_result_keys.add(ANDROID_STATISTICS_FACE_IDS);
-        available_result_keys.add(ANDROID_STATISTICS_FACE_LANDMARKS);
     }
     staticInfo.update(ANDROID_REQUEST_AVAILABLE_RESULT_KEYS,
             available_result_keys.array(), available_result_keys.size());
@@ -6072,29 +6001,34 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     int32_t stall_formats[] = {HAL_PIXEL_FORMAT_BLOB, ANDROID_SCALER_AVAILABLE_FORMATS_RAW16};
     size_t stall_formats_count = sizeof(stall_formats)/sizeof(int32_t);
 
-    Vector<int64_t> available_stall_durations;
+    count = MIN(gCamCapability[cameraId]->picture_sizes_tbl_cnt, MAX_SIZES_CNT);
+    size_t raw_count = MIN(gCamCapability[cameraId]->supported_raw_dim_cnt,
+            MAX_SIZES_CNT);
+    size_t available_stall_size = count * 4;
+    int64_t available_stall_durations[available_stall_size];
+    idx = 0;
     for (uint32_t j = 0; j < stall_formats_count; j++) {
        if (stall_formats[j] == HAL_PIXEL_FORMAT_BLOB) {
-          for (uint32_t i = 0; i < MIN(MAX_SIZES_CNT,
-                  gCamCapability[cameraId]->picture_sizes_tbl_cnt); i++) {
-             available_stall_durations.add(stall_formats[j]);
-             available_stall_durations.add(gCamCapability[cameraId]->picture_sizes_tbl[i].width);
-             available_stall_durations.add(gCamCapability[cameraId]->picture_sizes_tbl[i].height);
-             available_stall_durations.add(gCamCapability[cameraId]->jpeg_stall_durations[i]);
+          for (uint32_t i = 0; i < count; i++) {
+             available_stall_durations[idx]   = stall_formats[j];
+             available_stall_durations[idx+1] = gCamCapability[cameraId]->picture_sizes_tbl[i].width;
+             available_stall_durations[idx+2] = gCamCapability[cameraId]->picture_sizes_tbl[i].height;
+             available_stall_durations[idx+3] = gCamCapability[cameraId]->jpeg_stall_durations[i];
+             idx+=4;
           }
        } else {
-          for (uint32_t i = 0; i < MIN(MAX_SIZES_CNT,
-                  gCamCapability[cameraId]->supported_raw_dim_cnt); i++) {
-             available_stall_durations.add(stall_formats[j]);
-             available_stall_durations.add(gCamCapability[cameraId]->raw_dim[i].width);
-             available_stall_durations.add(gCamCapability[cameraId]->raw_dim[i].height);
-             available_stall_durations.add(gCamCapability[cameraId]->raw16_stall_durations[i]);
+          for (uint32_t i = 0; i < raw_count; i++) {
+             available_stall_durations[idx]   = stall_formats[j];
+             available_stall_durations[idx+1] = gCamCapability[cameraId]->raw_dim[i].width;
+             available_stall_durations[idx+2] = gCamCapability[cameraId]->raw_dim[i].height;
+             available_stall_durations[idx+3] = gCamCapability[cameraId]->raw16_stall_durations[i];
+             idx+=4;
           }
        }
     }
     staticInfo.update(ANDROID_SCALER_AVAILABLE_STALL_DURATIONS,
-                      available_stall_durations.array(),
-                      available_stall_durations.size());
+                      available_stall_durations,
+                      idx);
     //QCAMERA3_OPAQUE_RAW
     uint8_t raw_format = QCAMERA3_OPAQUE_RAW_FORMAT_LEGACY;
     cam_format_t fmt = CAM_FORMAT_BAYER_QCOM_RAW_10BPP_GBRG;
@@ -6124,18 +6058,17 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     }
     staticInfo.update(QCAMERA3_OPAQUE_RAW_FORMAT, &raw_format, 1);
 
-    Vector<int32_t> strides;
-    for (size_t i = 0; i < MIN(MAX_SIZES_CNT,
-            gCamCapability[cameraId]->supported_raw_dim_cnt); i++) {
+    int32_t strides[3*raw_count];
+    for (size_t i = 0; i < raw_count; i++) {
         cam_stream_buf_plane_info_t buf_planes;
-        strides.add(gCamCapability[cameraId]->raw_dim[i].width);
-        strides.add(gCamCapability[cameraId]->raw_dim[i].height);
+        strides[i*3] = gCamCapability[cameraId]->raw_dim[i].width;
+        strides[i*3+1] = gCamCapability[cameraId]->raw_dim[i].height;
         mm_stream_calc_offset_raw(fmt, &gCamCapability[cameraId]->raw_dim[i],
             &gCamCapability[cameraId]->padding_info, &buf_planes);
-        strides.add(buf_planes.plane_info.mp[0].stride);
+        strides[i*3+2] = buf_planes.plane_info.mp[0].stride;
     }
-    staticInfo.update(QCAMERA3_OPAQUE_RAW_STRIDES, strides.array(),
-            strides.size());
+    staticInfo.update(QCAMERA3_OPAQUE_RAW_STRIDES, strides,
+            3*raw_count);
 
     gStaticMetadata[cameraId] = staticInfo.release();
     return rc;
@@ -6485,7 +6418,7 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
     uint8_t focusMode;
     uint8_t vsMode;
     uint8_t optStabMode;
-    uint8_t cacMode = ANDROID_COLOR_CORRECTION_ABERRATION_MODE_OFF;
+    uint8_t cacMode;
     bool highQualityModeEntryAvailable = FALSE;
     bool fastModeEntryAvailable = FALSE;
     uint8_t edge_mode = ANDROID_EDGE_MODE_FAST;
@@ -6497,13 +6430,12 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
         controlIntent = ANDROID_CONTROL_CAPTURE_INTENT_PREVIEW;
         focusMode = ANDROID_CONTROL_AF_MODE_CONTINUOUS_PICTURE;
         optStabMode = ANDROID_LENS_OPTICAL_STABILIZATION_MODE_ON;
-        if (gCamCapability[mCameraId]->aberration_modes_count > 0)
-            cacMode = ANDROID_COLOR_CORRECTION_ABERRATION_MODE_FAST;
         break;
       case CAMERA3_TEMPLATE_STILL_CAPTURE:
         controlIntent = ANDROID_CONTROL_CAPTURE_INTENT_STILL_CAPTURE;
         focusMode = ANDROID_CONTROL_AF_MODE_CONTINUOUS_PICTURE;
         optStabMode = ANDROID_LENS_OPTICAL_STABILIZATION_MODE_ON;
+        cacMode = ANDROID_COLOR_CORRECTION_ABERRATION_MODE_OFF;
         // Order of priority for default CAC is HIGH Quality -> FAST -> OFF
         for (size_t i = 0; i < gCamCapability[mCameraId]->aberration_modes_count; i++) {
             if (gCamCapability[mCameraId]->aberration_modes[i] ==
@@ -6524,6 +6456,7 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
         noise_red_mode = ANDROID_NOISE_REDUCTION_MODE_HIGH_QUALITY;
         tonemap_mode = ANDROID_TONEMAP_MODE_HIGH_QUALITY;
         #endif
+        settings.update(ANDROID_COLOR_CORRECTION_ABERRATION_MODE, &cacMode, 1);
         break;
       case CAMERA3_TEMPLATE_VIDEO_RECORD:
         controlIntent = ANDROID_CONTROL_CAPTURE_INTENT_VIDEO_RECORD;
@@ -6531,8 +6464,6 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
         optStabMode = ANDROID_LENS_OPTICAL_STABILIZATION_MODE_OFF;
         if (forceVideoOis)
             optStabMode = ANDROID_LENS_OPTICAL_STABILIZATION_MODE_ON;
-        if (gCamCapability[mCameraId]->aberration_modes_count > 0)
-            cacMode = ANDROID_COLOR_CORRECTION_ABERRATION_MODE_FAST;
         break;
       case CAMERA3_TEMPLATE_VIDEO_SNAPSHOT:
         controlIntent = ANDROID_CONTROL_CAPTURE_INTENT_VIDEO_SNAPSHOT;
@@ -6562,8 +6493,6 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
         focusMode = ANDROID_CONTROL_AF_MODE_OFF;
     }
     settings.update(ANDROID_CONTROL_AF_MODE, &focusMode, 1);
-
-    settings.update(ANDROID_COLOR_CORRECTION_ABERRATION_MODE, &cacMode, 1);
 
     if (gCamCapability[mCameraId]->optical_stab_modes_count == 1 &&
             gCamCapability[mCameraId]->optical_stab_modes[0] == CAM_OPT_STAB_ON)
@@ -6790,11 +6719,11 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
     /* CDS default */
     char prop[PROPERTY_VALUE_MAX];
     memset(prop, 0, sizeof(prop));
-    property_get("persist.camera.CDS", prop, "off");
-    cam_cds_mode_type_t cds_mode = CAM_CDS_MODE_OFF;
+    property_get("persist.camera.CDS", prop, "Auto");
+    cam_cds_mode_type_t cds_mode = CAM_CDS_MODE_AUTO;
     cds_mode = lookupProp(CDS_MAP, METADATA_MAP_SIZE(CDS_MAP), prop);
     if (CAM_CDS_MODE_MAX == cds_mode) {
-        cds_mode = CAM_CDS_MODE_OFF;
+        cds_mode = CAM_CDS_MODE_AUTO;
     }
     //@note: force cds mode to be OFF when TNR is enabled.
     if (m_bTnrEnabled == true) {
@@ -7022,9 +6951,6 @@ int32_t QCamera3HardwareInterface::setHalFpsRange(const CameraMetadata &settings
     if (ADD_SET_PARAM_ENTRY_TO_BATCH(hal_metadata, CAM_INTF_PARM_FPS_RANGE, fps_range)) {
         rc = BAD_VALUE;
     }
-    if (rc == NO_ERROR) {
-        mFpsRange = fps_range;
-    }
     CDBG("%s: fps: [%f %f] vid_fps: [%f %f]", __func__, fps_range.min_fps,
             fps_range.max_fps, fps_range.video_min_fps, fps_range.video_max_fps);
     return rc;
@@ -7251,7 +7177,7 @@ int QCamera3HardwareInterface::translateToHalMetadata
 
     if (frame_settings.exists(ANDROID_COLOR_CORRECTION_GAINS)) {
         cam_color_correct_gains_t colorCorrectGains;
-        for (size_t i = 0; i < CC_GAIN_MAX; i++) {
+        for (size_t i = 0; i < CC_GAINS_COUNT; i++) {
             colorCorrectGains.gains[i] =
                     frame_settings.find(ANDROID_COLOR_CORRECTION_GAINS).data.f[i];
         }
@@ -7489,6 +7415,7 @@ int QCamera3HardwareInterface::translateToHalMetadata
             rc = BAD_VALUE;
         }
     }
+
     if (frame_settings.exists(ANDROID_SHADING_MODE)) {
         uint8_t shadingMode = frame_settings.find(ANDROID_SHADING_MODE).data.u8[0];
         if (ADD_SET_PARAM_ENTRY_TO_BATCH(mParameters, CAM_INTF_META_SHADING_MODE, shadingMode)) {
@@ -7615,6 +7542,7 @@ int QCamera3HardwareInterface::translateToHalMetadata
             rc = BAD_VALUE;
         }
     }
+
     if (frame_settings.exists(ANDROID_STATISTICS_LENS_SHADING_MAP_MODE)) {
         uint8_t lensShadingMapMode =
                 frame_settings.find(ANDROID_STATISTICS_LENS_SHADING_MAP_MODE).data.u8[0];
