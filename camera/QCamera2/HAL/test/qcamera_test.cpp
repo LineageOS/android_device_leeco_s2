@@ -46,6 +46,7 @@
 #include <system/camera.h>
 
 #include <camera/Camera.h>
+#include <camera/ICamera.h>
 #include <camera/CameraParameters.h>
 #include <media/mediarecorder.h>
 
@@ -1730,7 +1731,7 @@ status_t  CameraContext::openCamera()
 
     mCamera = Camera::connect(mCameraIndex,
                               packageName,
-                              Camera::USE_CALLING_UID,getpid());
+                              Camera::USE_CALLING_UID);
 
 #else
 

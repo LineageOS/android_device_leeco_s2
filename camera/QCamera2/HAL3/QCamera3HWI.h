@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2016, The Linux Foundataion. All rights reserved.
+/* Copyright (c) 2012-2015, The Linux Foundataion. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -69,6 +69,7 @@ namespace qcamera {
 #endif
 
 /* Time related macros */
+typedef int64_t nsecs_t;
 #define NSEC_PER_SEC 1000000000LLU
 #define NSEC_PER_USEC 1000LLU
 #define NSEC_PER_33MSEC 33000000LLU
@@ -228,7 +229,7 @@ private:
     bool isSupportChannelNeeded(camera3_stream_configuration_t *streamList);
     int32_t setMobicat();
 
-    int32_t getSensorOutputSize(cam_dimension_t &sensor_dim, CameraMetadata *frame_settings = NULL);
+    int32_t getSensorOutputSize(cam_dimension_t &sensor_dim);
     int32_t setHalFpsRange(const CameraMetadata &settings,
             metadata_buffer_t *hal_metadata);
     int32_t extractSceneMode(const CameraMetadata &frame_settings, uint8_t metaMode,
@@ -270,7 +271,6 @@ private:
     bool m_bEisEnable;
     uint8_t m_MobicatMask;
     uint8_t m_bTnrEnabled;
-    uint8_t mSupportedFaceDetectMode;
 
     /* Data structure to store pending request */
     typedef struct {
@@ -389,9 +389,6 @@ private:
     void *lib_surface_utils;
     int (*LINK_get_surface_pixel_alignment)();
     uint32_t mSurfaceStridePadding;
-    cam_fps_range_t mFpsRange;
-    //The offset between BOOTTIME and MONOTONIC timestamps
-    nsecs_t mBootToMonoTimestampOffset;
 };
 
 }; // namespace qcamera
