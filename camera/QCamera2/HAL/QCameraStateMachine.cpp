@@ -32,6 +32,7 @@
 #include <utils/Errors.h>
 #include "QCamera2HWI.h"
 #include "QCameraStateMachine.h"
+#include "QCameraMem.h"
 
 namespace qcamera {
 
@@ -607,12 +608,16 @@ int32_t QCameraStateMachine::procEvtPreviewStoppedState(qcamera_sm_evt_enum_t ev
             m_parent->signalAPIResult(&result);
         }
         break;
+    case QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME:
+    {
+        ALOGV("Free video handle %d %d", evt, m_state);
+        QCameraVideoMemory::closeNativeHandle((const void *)payload);
+    }
     case QCAMERA_SM_EVT_PRE_START_RECORDING:
     case QCAMERA_SM_EVT_RESTART_STOP_PREVIEW:
     case QCAMERA_SM_EVT_RESTART_START_PREVIEW:
     case QCAMERA_SM_EVT_START_RECORDING:
     case QCAMERA_SM_EVT_STOP_RECORDING:
-    case QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME:
     case QCAMERA_SM_EVT_PREPARE_SNAPSHOT:
     case QCAMERA_SM_EVT_PRE_TAKE_PICTURE:
     case QCAMERA_SM_EVT_TAKE_PICTURE:
@@ -721,7 +726,9 @@ int32_t QCameraStateMachine::procEvtPreviewStoppedState(qcamera_sm_evt_enum_t ev
                if (NO_ERROR != rc) {
                    ALOGE("%s:%d Param init deferred work failed", __func__, __LINE__);
                } else {
+                   pthread_mutex_lock(&m_parent->m_parm_lock);
                    rc = m_parent->mParameters.updateFlashMode(internal_evt->led_data);
+                   pthread_mutex_unlock(&m_parent->m_parm_lock);
                }
                break;
            default:
@@ -1049,6 +1056,11 @@ int32_t QCameraStateMachine::procEvtPreviewReadyState(qcamera_sm_evt_enum_t evt,
             m_parent->signalAPIResult(&result);
         }
         break;
+    case QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME:
+    {
+        ALOGV("Free video handle %d %d", evt, m_state);
+        QCameraVideoMemory::closeNativeHandle((const void *)payload);
+    }
     case QCAMERA_SM_EVT_PRE_START_RECORDING:
     case QCAMERA_SM_EVT_RESTART_STOP_PREVIEW:
     case QCAMERA_SM_EVT_RESTART_START_PREVIEW:
@@ -1058,7 +1070,6 @@ int32_t QCameraStateMachine::procEvtPreviewReadyState(qcamera_sm_evt_enum_t evt,
     case QCAMERA_SM_EVT_PRE_TAKE_PICTURE:
     case QCAMERA_SM_EVT_TAKE_PICTURE:
     case QCAMERA_SM_EVT_CANCEL_PICTURE:
-    case QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME:
     case QCAMERA_SM_EVT_RELEASE:
         {
             ALOGE("%s: Error!! cannot handle evt(%d) in state(%d)", __func__, evt, m_state);
@@ -1111,7 +1122,9 @@ int32_t QCameraStateMachine::procEvtPreviewReadyState(qcamera_sm_evt_enum_t evt,
                    (qcamera_sm_internal_evt_payload_t *)payload;
            switch (internal_evt->evt_type) {
            case QCAMERA_INTERNAL_EVT_LED_MODE_OVERRIDE:
+               pthread_mutex_lock(&m_parent->m_parm_lock);
                rc = m_parent->mParameters.updateFlashMode(internal_evt->led_data);
+               pthread_mutex_unlock(&m_parent->m_parm_lock);
                break;
            default:
                ALOGE("%s: Error!! cannot handle evt(%d) in state(%d)", __func__, evt, m_state);
@@ -1487,7 +1500,9 @@ int32_t QCameraStateMachine::procEvtPreviewingState(qcamera_sm_evt_enum_t evt,
            ALOGV("%s: QCAMERA_SM_EVT_TAKE_PICTURE ", __func__);
            if ( m_parent->mParameters.getRecordingHintValue() == true) {
                 m_parent->stopPreview();
+                pthread_mutex_lock(&m_parent->m_parm_lock);
                 m_parent->mParameters.updateRecordingHintValue(FALSE);
+                pthread_mutex_unlock(&m_parent->m_parm_lock);
                 // start preview again
                 rc = m_parent->preparePreview();
                 if (rc == NO_ERROR) {
@@ -1599,9 +1614,13 @@ int32_t QCameraStateMachine::procEvtPreviewingState(qcamera_sm_evt_enum_t evt,
             m_parent->signalAPIResult(&result);
         }
         break;
+    case QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME:
+    {
+        ALOGD("Free video handle %d %d", evt, m_state);
+        QCameraVideoMemory::closeNativeHandle((const void *)payload);
+    }
     case QCAMERA_SM_EVT_CANCEL_PICTURE:
     case QCAMERA_SM_EVT_STOP_RECORDING:
-    case QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME:
     case QCAMERA_SM_EVT_RELEASE:
         {
             ALOGE("%s: Error!! cannot handle evt(%d) in state(%d)", __func__, evt, m_state);
@@ -1635,7 +1654,9 @@ int32_t QCameraStateMachine::procEvtPreviewingState(qcamera_sm_evt_enum_t evt,
                 rc = m_parent->processASDUpdate(internal_evt->asd_data);
                 break;
             case QCAMERA_INTERNAL_EVT_LED_MODE_OVERRIDE:
+                pthread_mutex_lock(&m_parent->m_parm_lock);
                 rc = m_parent->mParameters.updateFlashMode(internal_evt->led_data);
+                pthread_mutex_unlock(&m_parent->m_parm_lock);
                 break;
             case QCAMERA_INTERNAL_EVT_AWB_UPDATE:
                 rc = m_parent->transAwbMetaToParams(internal_evt->awb_data);
