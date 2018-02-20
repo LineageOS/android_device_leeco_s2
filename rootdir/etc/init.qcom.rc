@@ -509,10 +509,10 @@ service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service loc_launcher /vendor/bin/loc_launcher
-    #loc_launcher will start as root and set its uid to gps
+service vendor.loc_launcher /system/vendor/bin/loc_launcher
     class late_start
-    group gps inet diag wifi
+    user gps
+    group gps
 
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
