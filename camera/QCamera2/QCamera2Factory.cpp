@@ -266,7 +266,6 @@ int QCamera2Factory::open_legacy(const struct hw_module_t* module,
  *==========================================================================*/
 int QCamera2Factory::set_torch_mode(const char* camera_id, bool on)
 {
-    ALOGD("%s", __func__);
     return gQCamera2Factory->setTorchMode(camera_id, on);
 }
 
@@ -540,7 +539,7 @@ int QCamera2Factory::setTorchMode(const char* camera_id, bool on)
     }
 
     if (on) {
-        ALOGD("%s: enabling flash unit via sysfs\n", __FUNCTION__);
+        ALOGD("%s: on\n", __FUNCTION__);
         int bytes = snprintf(buffer, sizeof(buffer), "255");
         retVal = write(fd_brightness, buffer, (size_t)bytes);
         if (retVal <= 0) {
@@ -554,7 +553,7 @@ int QCamera2Factory::setTorchMode(const char* camera_id, bool on)
             return -EBADFD;
         }
     } else {
-        ALOGD("%s: disabling flash unit via sysfs\n", __FUNCTION__);
+        ALOGD("%s: off\n", __FUNCTION__);
         int bytes = snprintf(buffer, sizeof(buffer), "0");
         retVal = write(fd_brightness, buffer, (size_t)bytes);
         if (retVal <= 0) {
