@@ -1,2 +1,3 @@
 android.hardware.fingerprint.IFingerprintCustomDaemon       u:object_r:fingerprintd_custom_service:s0
 goodix.fp                                                   u:object_r:goodix_service:s0
+vendor.perfservice                                          u:object_r:vendor_perf_service:s0
