@@ -28,26 +28,15 @@ ro.telephony.call_ring.multiple=false
 persist.radio.atfwd.start=false
 
 # IMS
-# Enable IMS service by default
-persist.radio.calls.on.ims=0
-
-# qmi property to send unsolicited call state for PS call only to ims pipe & not to ril
+persist.dbg.ims_volte_enable=1 
+persist.dbg.volte_avail_ovr=1 
+persist.dbg.vt_avail_ovr=1
+persist.dbg.wfc_avail_ovr=1
+persist.radio.rat_on=combine
+persist.radio.data_ltd_sys_ind=1
+persist.radio.data_con_rprt=1
+persist.radio.calls.on.ims=1
 persist.radio.jbims=0
-
-# Property to enable VT function in IMS library
-#persist.radio.VT_ENABLE=1
-
-# Property to enable HYBRID mode at android side, IMS daemon will use qmi to communicate with modem
-#persist.radio.VT_HYBRID_ENABLE=1
-
-# Property to enable VT ROTATION in ims library
-#persist.radio.ROTATION_ENABLE=1
-
-# Property to enable PLI for VT call video quality
-#persist.radio.RATE_ADAPT_ENABLE=1
-
-# Property to disable IMS_DEBUG log
-#persist.ims.disableDebugLogs=1
 
 # NITZ
 persist.rild.nitz_plmn="" \
@@ -221,8 +210,13 @@ ro.sys.fw.trim_empty_percent=100
 ro.sys.fw.trim_cache_percent=100
 ro.sys.fw.trim_enable_memory=2147483648
 
-# Optimal dex2oat threads for faster app installation
-ro.sys.fw.dex2oat_thread_count=4
+# Dex2oat optimisation
+# use all Cores during bootup dex compilation
+dalvik.vm.boot-dex2oat-threads=8
+# use 4 cores durning normal dex compilation (app installations)
+dalvik.vm.dex2oat-threads=4
+# use 4 cores during boot image dex compilation
+dalvik.vm.image-dex2oat-threads=4
 
 # set cutoff voltage to 3200mV
 ro.cutoff_voltage_mv=3200
@@ -242,17 +236,16 @@ persist.radio.ignore_dom_time=5
 # to force call stick on CS (NOT switch to VoLTE)
 persist.radio.cs_srv_type=1
 
-#
-# rqbalance specific values
-#
-cpuquiet.low.min_cpus=2
-cpuquiet.low.max_cpus=4
-rqbalance.low.balance_level=80
-rqbalance.low.up_threshold=200 400 600 4294967295
-rqbalance.low.down_threshold=0 100 300 500
+# ADB Debugging
+ro.secure=0
+ro.adb.secure=0
+persist.service.adb.enable=1
+persist.service.debuggable=1
+persist.sys.usb.config=adb
 
-cpuquiet.normal.min_cpus=4
-cpuquiet.normal.max_cpus=8
-rqbalance.normal.balance_level=40
-rqbalance.normal.up_threshold=100 250 330 4294967295
-rqbalance.normal.down_threshold=0 130 220 300
+# fling_velocity
+ro.min.fling_velocity=160
+ro.max.fling_velocity=20000
+
+#low audio flinger standby delay to reduce power consumption
+ro.audio.flinger_standbytime_ms=300
