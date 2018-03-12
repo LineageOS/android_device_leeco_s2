@@ -290,6 +290,7 @@ service yep_qmi_server /system/bin/yep_qmi_server
 
 service fingerprintd /system/bin/fingerprintd
     class late_start
+    socket fpce stream 0666 system system
     user system
 
 service gx_fpd /system/bin/gx_fpd
