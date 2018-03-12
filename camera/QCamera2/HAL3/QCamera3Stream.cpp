@@ -602,7 +602,7 @@ int32_t QCamera3Stream::bufRelease(int32_t index)
 
         mBufDefs[index].mem_info = NULL;
     } else {
-        ALOGE("%s: Buffer at index %d not registered", __func__);
+        ALOGE("%s: Buffer at index %d not registered", __func__, index);
         return BAD_INDEX;
     }
 

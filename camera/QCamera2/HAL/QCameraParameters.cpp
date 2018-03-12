@@ -5389,7 +5389,7 @@ int32_t QCameraParameters::initDefaultParameters()
             m_pCapability->hfr_tbl,
             m_pCapability->hfr_tbl_cnt);
     set(KEY_QC_SUPPORTED_HFR_SIZES, hfrSizeValues.string());
-    CDBG("HFR values %s HFR Sizes = %d", hfrValues.string(), hfrSizeValues.string());
+    CDBG("HFR values %s HFR Sizes = %s", hfrValues.string(), hfrSizeValues.string());
     setHighFrameRate(CAM_HFR_MODE_OFF);
 
     // Set Focus algorithms
@@ -9531,8 +9531,8 @@ int32_t QCameraParameters::getStreamFormat(cam_stream_type_t streamType,
                 CAM_FORMAT_Y_ONLY) {
             format = m_pCapability->analysis_recommended_format;
         } else {
-            ALOGE("%s:%d invalid analysis_recommended_format %d\n",
-                    m_pCapability->analysis_recommended_format);
+            ALOGE("%s: invalid analysis_recommended_format %d\n",
+                   __func__, m_pCapability->analysis_recommended_format);
             format = mAppPreviewFormat;
         }
       break;
@@ -11301,7 +11301,7 @@ int32_t QCameraParameters::bundleRelatedCameras(bool sync,
         rc = m_pCamOpsTbl->ops->sync_related_sensors(
                 m_pCamOpsTbl->camera_handle, m_pRelCamSyncBuf);
     } else {
-        ALOGE("%s: Related Cam SyncBuffer not allocated", __func__, rc);
+        ALOGE("%s: Related Cam SyncBuffer not allocated, rc=%d", __func__, rc);
         return NO_INIT;
     }
 

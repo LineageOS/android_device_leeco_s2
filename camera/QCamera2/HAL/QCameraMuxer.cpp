@@ -1718,7 +1718,7 @@ int QCameraMuxer::close_camera_device(hw_device_t *hw_dev)
         CHECK_CAMERA_ERROR(pCam);
 
         hw_device_t *dev = (hw_device_t*)(pCam->dev);
-        CDBG_HIGH("%s: hw device %x, hw %x", __func__, dev, pCam->hwi);
+        CDBG_HIGH("%s: hw device %p, hw %p", __func__, dev, pCam->hwi);
 
         rc = QCamera2HardwareInterface::close_camera_device(dev);
         if (rc != NO_ERROR) {
@@ -2151,7 +2151,7 @@ int QCameraMuxer::cameraDeviceOpen(int camera_id,
             m_pPhyCamera[phyId].dev = reinterpret_cast<camera_device_t*>(hw_dev[i]);
             m_pPhyCamera[phyId].hwi = hw;
             cam->sId[i] = m_pPhyCamera[phyId].camera_server_id;
-            CDBG_HIGH("%s: camera id %d server id : %d hw device %x, hw %x",
+            CDBG_HIGH("%s: camera id %d server id : %d hw device %p, hw %p",
                     __func__, phyId, cam->sId[i], hw_dev[i], hw);
         }
     } else {
@@ -2346,7 +2346,7 @@ void QCameraMuxer::composeMpo(cam_compose_jpeg_info_t* main_Jpeg,
                     mpo_compose_info.primary_image.buf_vaddr,
                     mpo_compose_info.primary_image.buf_filled_len);
             fchmod(file_fd_main, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-            CDBG("%s: written number of bytes for main Image %zd\n",
+            CDBG("%s: written number of bytes for main Image %ld\n",
                     __func__, written_len);
             close(file_fd_main);
         }
@@ -2363,7 +2363,7 @@ void QCameraMuxer::composeMpo(cam_compose_jpeg_info_t* main_Jpeg,
                     mpo_compose_info.aux_images[0].buf_vaddr,
                     mpo_compose_info.aux_images[0].buf_filled_len);
             fchmod(file_fd_aux, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-            CDBG("%s: written number of bytes for Aux Image %zd\n",
+            CDBG("%s: written number of bytes for Aux Image %ld\n",
                     __func__, written_len);
             close(file_fd_aux);
         }
@@ -2391,7 +2391,7 @@ void QCameraMuxer::composeMpo(cam_compose_jpeg_info_t* main_Jpeg,
                     m_pRelCamMpoJpeg->data,
                     m_pRelCamMpoJpeg->size);
             fchmod(file_fd_mpo, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-            CDBG("%s: written number of bytes for MPO Image %zd\n",
+            CDBG("%s: written number of bytes for MPO Image %ld\n",
                     __func__, written_len);
             close(file_fd_mpo);
         }

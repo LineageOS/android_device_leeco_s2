@@ -1360,7 +1360,7 @@ int32_t QCameraStream::getBufs(cam_frame_len_offset_t *offset,
     *num_bufs = mNumBufs;
     *initial_reg_flag = regFlags;
     *bufs = mBufDefs;
-    CDBG_HIGH("%s: stream type: %d, mRegFlags: 0x%x, numBufs: %d",
+    CDBG_HIGH("%s: stream type: %d, mRegFlags: %p, numBufs: %d",
             __func__, mStreamInfo->stream_type, regFlags, mNumBufs);
 
     if (mNumBufsNeedAlloc > 0) {
@@ -1415,7 +1415,7 @@ int32_t QCameraStream::getBufsDeferred(__unused cam_frame_len_offset_t *offset,
     *num_bufs           = mNumBufs;
     *bufs               = mBufDefs;
 
-    CDBG_HIGH("%s: stream type: %d, mRegFlags: 0x%x, numBufs: %d",
+    CDBG_HIGH("%s: stream type: %d, mRegFlags: %p, numBufs: %d",
             __func__, getMyType(), mRegFlags, mNumBufs);
 
     return NO_ERROR;
@@ -1969,7 +1969,7 @@ void *QCameraStream::BufAllocRoutine(void *data)
                                                    pme->mFrameLenOffset.frame_len,
                                                    pme->mNumBufsNeedAlloc);
         if (rc != NO_ERROR) {
-            ALOGE("%s: Failed to allocate buffers, __func__");
+            ALOGE("%s: Failed to allocate buffers", __func__);
             pme->mNumBufsNeedAlloc = 0;
             return NULL;
         }

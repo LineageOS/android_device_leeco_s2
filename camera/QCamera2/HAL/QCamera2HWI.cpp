@@ -36,7 +36,6 @@
 #include <stdlib.h>
 #include <utils/Errors.h>
 #include <gralloc_priv.h>
-#include <gui/Surface.h>
 #include <binder/Parcel.h>
 #include <binder/IServiceManager.h>
 #include <utils/RefBase.h>
@@ -2911,7 +2910,7 @@ QCameraHeapMemory *QCamera2HardwareInterface::allocateStreamInfoBuf(
             mParameters.getHfrFps(pFpsRange);
             streamInfo->user_buf_info.frameInterval =
                     (long)((1000/pFpsRange.video_max_fps) * 1000);
-            CDBG_HIGH("%s: Video Batch Count = %d, interval = %d", __func__,
+            CDBG_HIGH("%s: Video Batch Count = %d, interval = %ld", __func__,
                     streamInfo->user_buf_info.frame_buf_cnt,
                     streamInfo->user_buf_info.frameInterval);
         }
@@ -9153,7 +9152,7 @@ void *QCamera2HardwareInterface::deferredWorkRoutine(void *obj)
                         pthread_mutex_unlock(&pme->m_parm_lock);
                         rc = pme->mParameters.getRelatedCamCalibration(
                             &(pme->mJpegMetadata.otp_calibration_data));
-                        CDBG("%s: Dumping Calibration Data Version Id %f rc %d",
+                        CDBG("%s: Dumping Calibration Data Version Id %d rc %d",
                                 __func__,
                                 pme->mJpegMetadata.otp_calibration_data.calibration_format_version,
                                 rc);
@@ -9376,7 +9375,7 @@ int32_t QCamera2HardwareInterface::getJpegHandleInfo(mm_jpeg_ops_t *ops,
         memcpy(ops, &mJpegHandle, sizeof(mm_jpeg_ops_t));
         memcpy(mpo_ops, &mJpegMpoHandle, sizeof(mm_jpeg_mpo_ops_t));
         *pJpegClientHandle = mJpegClientHandle;
-        CDBG_HIGH("%s: Getting JPEG client handle %d", __func__,
+        CDBG_HIGH("%s: Getting JPEG client handle %p", __func__,
                 pJpegClientHandle);
         return NO_ERROR;
     } else {

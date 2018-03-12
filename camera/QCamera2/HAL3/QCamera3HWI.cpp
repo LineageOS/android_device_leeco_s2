@@ -1682,7 +1682,7 @@ int QCamera3HardwareInterface::validateCaptureRequest(
     }
     if (request->num_output_buffers >= MAX_NUM_STREAMS) {
         ALOGE("%s: Number of buffers %d equals or is greater than maximum number of streams!",
-                __func__, request->num_output_buffers, MAX_NUM_STREAMS);
+                __func__, request->num_output_buffers);
         return BAD_VALUE;
     }
     if (request->input_buffer != NULL) {
@@ -3286,7 +3286,7 @@ int QCamera3HardwareInterface::flushPerf()
     }
 
     if (mPendingBuffersMap.num_buffers == 0) {
-        CDBG("%s: No pending buffers in the HAL, return flush");
+        CDBG("%s: No pending buffers in the HAL, return flush", __func__);
         mFlushPerf = false;
         pthread_mutex_unlock(&mMutex);
         return rc;
