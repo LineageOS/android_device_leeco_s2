@@ -38,7 +38,10 @@ extern int exTfa98xx_calibration(void);
 extern int exTfa98xx_speakeron(uint32_t);
 extern int exTfa98xx_speakeroff();
 
+#define MAX_SND_CARD 2
+#define CDLA_SND_CARD_NAME "LeEco_CDLA_DH1"
 #define AMP_MIXER_CTL "Smart PA I2S"
+#define CDLA_MIXER_CTL "Headphone Playback Volume"
 
 typedef enum {
     SMART_PA_FOR_AUDIO = 0,
@@ -110,6 +113,59 @@ static int set_clocks_enabled(bool enable)
     return 0;
 }
 
+static int set_cdla_volume(audio_mode_t mode)
+{
+    int snd_card_num = 0;
+    const char *snd_card_name;
+    enum mixer_ctl_type type;
+    struct mixer_ctl *ctl;
+    struct mixer *mixer;
+
+    while (snd_card_num < MAX_SND_CARD) {
+        mixer = mixer_open(snd_card_num);
+
+        if (!mixer) {
+            snd_card_num++;
+            continue;
+        }
+
+        snd_card_name = mixer_get_name(mixer);
+
+        if (strcmp(snd_card_name, CDLA_SND_CARD_NAME) == 0) {
+            ALOGV("%s: Found sound card: %s", __func__, snd_card_name);
+            ctl = mixer_get_ctl_by_name(mixer, CDLA_MIXER_CTL);
+            if (ctl == NULL) {
+                mixer_close(mixer);
+                ALOGE("%s: Could not find %s\n", __func__, CDLA_MIXER_CTL);
+                return -ENODEV;
+            }
+
+            type = mixer_ctl_get_type(ctl);
+            if (type != MIXER_CTL_TYPE_INT) {
+                ALOGE("%s: %s is not supported\n", __func__, CDLA_MIXER_CTL);
+                mixer_close(mixer);
+                return -ENOTTY;
+            }
+
+            switch(mode) {
+                case AUDIO_MODE_IN_CALL:
+                case AUDIO_MODE_IN_COMMUNICATION:
+                    ALOGV("%s: Setting volume for CALL/COMMUNICATION", __func__);
+                    mixer_ctl_set_value(ctl, 0, 4);
+                    mixer_ctl_set_value(ctl, 1, 4);
+                    break;
+                default:
+                    ALOGV("%s: Setting default volume", __func__);
+                    mixer_ctl_set_value(ctl, 0, 7);
+                    mixer_ctl_set_value(ctl, 1, 7);
+            }
+        }
+        mixer_close(mixer);
+        snd_card_num++;
+    }
+    return 0;
+}
+
 static int amp_set_mode(struct amplifier_device *device, audio_mode_t mode)
 {
     int ret = 0;
@@ -119,7 +175,7 @@ static int amp_set_mode(struct amplifier_device *device, audio_mode_t mode)
     return ret;
 }
 
-static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool enable) 
+static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool enable)
 {
     tfa9890_device_t *tfa9890 = (tfa9890_device_t*) device;
     int ret = 0;
@@ -130,13 +186,13 @@ static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool
             smart_pa_mode_t mode;
 
             switch(tfa9890->mode) {
-                case AUDIO_MODE_IN_CALL: 
+                case AUDIO_MODE_IN_CALL:
                     mode = SMART_PA_FOR_VOICE;
                     break;
-                case AUDIO_MODE_IN_COMMUNICATION: 
+                case AUDIO_MODE_IN_COMMUNICATION:
                     mode = SMART_PA_FOR_VOIP;
                     break;
-                default: 
+                default:
                     mode = SMART_PA_FOR_AUDIO;
             }
 
@@ -160,10 +216,13 @@ static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool
         }
 
     }
+
+    set_cdla_volume(tfa9890->mode);
+
     return 0;
 }
 
-static int amp_dev_close(hw_device_t *device) 
+static int amp_dev_close(hw_device_t *device)
 {
     tfa9890_device_t *tfa9890 = (tfa9890_device_t*) device;
     free(tfa9890);
@@ -171,8 +230,8 @@ static int amp_dev_close(hw_device_t *device)
     return 0;
 }
 
-static int amp_init(tfa9890_device_t *tfa9890) 
-{   
+static int amp_init(tfa9890_device_t *tfa9890)
+{
     int ret = 0;
 
     set_clocks_enabled(true);
@@ -189,7 +248,6 @@ static int amp_init(tfa9890_device_t *tfa9890)
 static int amp_module_open(const hw_module_t *module,
         __attribute__((unused)) const char *name, hw_device_t **device)
 {
-    
     if (tfa9890_dev) {
         ALOGE("%s:%d: Unable to open second instance of TFA9890 amplifier\n",
                 __func__, __LINE__);
