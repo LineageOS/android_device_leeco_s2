@@ -297,6 +297,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermanager.xml:system/etc/thermanager.xml \
     $(LOCAL_PATH)/configs/thermanager_X526.xml:system/etc/thermanager_X526.xml
 
+# USB
+PRODUCT_PACKAGES += \
+    com.android.future.usb.accessory
+
 # Wifi
 PRODUCT_PACKAGES += \
     hostapd \
@@ -346,10 +350,6 @@ PRODUCT_CHARACTERISTICS := nosdcard
 
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    ro.sys.sdcardfs=true
-
-# Set default USB interface
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
