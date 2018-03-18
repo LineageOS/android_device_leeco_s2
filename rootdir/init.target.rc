@@ -271,6 +271,7 @@ service hvdcp_opti /system/bin/hvdcp_opti
     class main
     user root
     group root
+    seclabel u:r:hvdcp:s0
 
 service per_mgr /system/bin/pm-service
     class core
@@ -280,13 +281,13 @@ service per_mgr /system/bin/pm-service
 service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
     class main
     user root
+    seclabel u:r:qti_init_shell:s0
     oneshot
     disabled
 
 service yep_qmi_server /system/bin/yep_qmi_server
     class core
     user root
-    #seclabel u:r:yep_qmi_server:s0
 
 service fingerprintd /system/bin/fingerprintd
     class late_start
@@ -297,7 +298,7 @@ service gx_fpd /system/bin/gx_fpd
     class late_start
     user root
     group root system
-    #seclabel u:r:goodix:s0
+    seclabel u:r:goodix:s0
 
 service fidoca /system/vendor/bin/fidoca
     class late_start
@@ -309,7 +310,6 @@ service thermanager /system/bin/thermanager ${ro.thermanager.config}
     class late_start
     user root
     group root
-    #seclabel u:r:thermanager:s0
 
 on property:persist.sys.le_fast_chrg_enable=1
     write /sys/class/power_supply/battery/le_quick_charge_mode 0

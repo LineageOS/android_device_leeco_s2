@@ -1,0 +1,6 @@
+type goodix, domain;
+type goodix_exec, exec_type, file_type;
+
+init_daemon_domain(goodix)
+
+allow goodix self:capability { dac_override };

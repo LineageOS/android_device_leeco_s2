@@ -1,0 +1,1 @@
+genfscon debugfs /rmt_storage/rmts u:object_r:qti_debugfs:s0

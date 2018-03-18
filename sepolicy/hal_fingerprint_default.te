@@ -1,0 +1,8 @@
+allow hal_fingerprint_default servicemanager:binder { call transfer };
+
+allow hal_fingerprint_default keystore_service:service_manager { find };
+allow hal_fingerprint_default keystore:binder { call };
+
+allow hal_fingerprint_default keystore:keystore_key { add_auth };
+
+add_service(hal_fingerprint_default, fingerprintd_custom_service);

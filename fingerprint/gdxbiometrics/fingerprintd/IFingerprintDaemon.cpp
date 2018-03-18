@@ -329,6 +329,6 @@ class BpFingerprintDaemon : public BpInterface<IFingerprintDaemon> {
         }
 };
 
-IMPLEMENT_META_INTERFACE(FingerprintDaemon, "android.hardware.fingerprint.IFingerprintDaemon");
+IMPLEMENT_META_INTERFACE(FingerprintDaemon, "android.hardware.fingerprint.IFingerprintCustomDaemon");
 
 }; // namespace android
