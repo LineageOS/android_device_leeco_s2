@@ -116,6 +116,9 @@ BOARD_SUPPORTS_SOUND_TRIGGER := false
 USE_CUSTOM_AUDIO_POLICY := 1
 USE_XML_AUDIO_POLICY_CONF := 1
 
+# Bionic
+TARGET_LD_SHIM_LIBS := /system/vendor/lib64/lib-imsvt.so|libshims_ims.so:/system/bin/mm-qcamera-daemon|libshims_camera.so:/system/vendor/lib64/libril-qc-qmi-1.so|libshims_rild_socket.so:/system/vendor/bin/slim_daemon|libshims_sensor.so
+
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 BOARD_HAVE_BLUETOOTH := true
