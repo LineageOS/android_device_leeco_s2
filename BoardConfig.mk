@@ -82,7 +82,6 @@ DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 
 # Qualcomm support
 BOARD_USES_QCOM_HARDWARE := true
-BOARD_USES_QC_TIME_SERVICES := true
 TARGET_USE_SDCLANG := true
 
 # Power
