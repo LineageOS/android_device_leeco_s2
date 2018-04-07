@@ -24,7 +24,7 @@
 
 #define BT_CLEAN_TURN_ON_DISABLED 1
 
-#define MAX_ACL_CONNECTIONS    7
+#define MAX_ACL_CONNECTIONS   16
 #define MAX_L2CAP_CHANNELS    16
 
 #define BLE_VND_INCLUDED   TRUE
@@ -33,4 +33,9 @@
 #define BTA_BLE_SKIP_CONN_UPD  FALSE
 #define BTM_LE_SECURE_CONN  TRUE
 
+/* Increasing SEPs to 12 from 6 to support SHO/MCast i.e. two streams per codec */
+#define AVDT_NUM_SEPS 12
+
+/* Enable HFP WBS feature */
+#define BTIF_HF_CLIENT_WBS_INCLUDED TRUE
 #endif
