@@ -305,11 +305,15 @@ service fidoca /system/vendor/bin/fidoca
     user system
     group system
 
-# OSS thermal management
-service thermanager /system/bin/thermanager ${ro.thermanager.config}
-    class late_start
+service thermal-engine /vendor/bin/thermal-engine
+    class main
     user root
+    socket thermal-send-client stream 0666 system system
+    socket thermal-recv-client stream 0660 system system
+    socket thermal-recv-passive-client stream 0666 system system
     group root
+    writepid /dev/cpuset/system-background/tasks
+    seclabel u:r:thermal-engine:s0
 
 on property:persist.sys.le_fast_chrg_enable=1
     write /sys/class/power_supply/battery/le_quick_charge_mode 0
