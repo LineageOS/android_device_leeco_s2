@@ -302,6 +302,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
+# VR
+PRODUCT_PACKAGES += \
+    vr.msm8952
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.vr.high_performance.xml:system/etc/permissions/android.hardware.vr.high_performance.xml
+
 # Wifi
 PRODUCT_PACKAGES += \
     hostapd \
