@@ -113,9 +113,6 @@ BACKLIGHT_PATH := "/sys/class/leds/lcd-backlight/brightness"
 BLINK_PATH := "/sys/class/leds/red/blink"
 WITH_LINEAGE_CHARGER := false
 
-# CNE
-BOARD_USES_QCNE := true
-
 # CSVT
 TARGET_USES_CSVT := true
 
