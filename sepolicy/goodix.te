@@ -4,3 +4,14 @@ type goodix_exec, exec_type, file_type;
 init_daemon_domain(goodix)
 
 allow goodix self:capability { dac_override };
+allow goodix tee_device:chr_file { rw_file_perms };
+allow goodix ion_device:chr_file { rw_file_perms };
+allow goodix goodix_device:chr_file { rw_file_perms };
+
+allow goodix firmware_file:file { r_file_perms };
+allow goodix firmware_file:dir { r_dir_perms };
+
+binder_call(goodix, servicemanager);
+binder_call(goodix, hal_fingerprint_default);
+
+add_service(goodix, goodix_service);
