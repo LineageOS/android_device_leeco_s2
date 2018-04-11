@@ -1,3 +1,12 @@
 allow servicemanager hal_fingerprint_default:process { getattr };
 allow servicemanager hal_fingerprint_default:dir { search };
 allow servicemanager hal_fingerprint_default:file { r_file_perms };
+allow servicemanager fidodaemon:dir search;
+allow servicemanager fidodaemon:file { open read };
+allow servicemanager fidodaemon:process getattr;
+allow servicemanager goodix:dir search;
+allow servicemanager goodix:file { open read };
+allow servicemanager goodix:process getattr;
+allow servicemanager init:dir search;
+allow servicemanager init:file { open read };
+allow servicemanager init:process getattr;
