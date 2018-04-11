@@ -44,9 +44,6 @@
 /system/bin/wcnss_filter                                    u:object_r:wcnss_filter_exec:s0
 /system/bin/xtwifi-inet-agent                               u:object_r:location_exec:s0
 
-/data/misc/location(/.*)?                                   u:object_r:location_data_file:s0
-/data/misc/location/mq/location-mq-s                        u:object_r:location_socket:s0
-/data/misc/location/mq/alarm_svc                            u:object_r:location_socket:s0
 /data/misc/location/xtra/socket_xtra                        u:object_r:location_socket:s0
 /data/misc/location/xtra/socket_hal_xtra                    u:object_r:location_socket:s0
 
