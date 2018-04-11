@@ -2,3 +2,5 @@ allow qti_init_shell shell_exec:file { r_file_perms entrypoint };
 allow qti_init_shell toolbox_exec:file { r_file_perms execute_no_trans execute };
 
 allow qti_init_shell sysfs:file { rw_file_perms };
+allow qti_init_shell file_contexts_file:file { r_file_perms };
+allow qti_init_shell nv_data_file:file r_file_perms;

@@ -1,0 +1,2 @@
+allow cameraserver sysfs:file write;
+allow cameraserver sysfs_leds:dir search;

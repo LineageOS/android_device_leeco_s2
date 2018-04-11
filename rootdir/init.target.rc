@@ -56,7 +56,7 @@ on fs
     restorecon_recursive /dsp
 
     wait /dev/block/bootdevice/by-name/modem
-    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
+    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     #write /sys/kernel/boot_adsp/boot 1
 
     write /sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus 8
@@ -284,10 +284,6 @@ service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
     seclabel u:r:qti_init_shell:s0
     oneshot
     disabled
-
-service yep_qmi_server /system/bin/yep_qmi_server
-    class core
-    user root
 
 service fingerprintd /system/bin/fingerprintd
     class late_start

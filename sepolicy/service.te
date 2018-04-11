@@ -1,1 +1,2 @@
 type fingerprintd_custom_service, service_manager_type;
+type goodix_service, service_manager_type;

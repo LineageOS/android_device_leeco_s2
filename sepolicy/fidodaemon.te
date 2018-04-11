@@ -1,0 +1,1 @@
+allow fidodaemon servicemanager:binder { call transfer };
