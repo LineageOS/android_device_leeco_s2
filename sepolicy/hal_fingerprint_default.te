@@ -5,4 +5,7 @@ allow hal_fingerprint_default keystore:binder { call };
 
 allow hal_fingerprint_default keystore:keystore_key { add_auth };
 
+binder_call(hal_fingerprint_default, goodix);
+
 add_service(hal_fingerprint_default, fingerprintd_custom_service);
+allow hal_fingerprint_default goodix_service:service_manager { find };

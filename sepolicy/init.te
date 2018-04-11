@@ -1,1 +1,17 @@
 allow init proc:lnk_file { setattr };
+allow init cnd:unix_stream_socket connectto;
+allow init cnd_socket:sock_file write;
+allow init netmgrd:unix_stream_socket connectto;
+allow init netmgrd_socket:sock_file write;
+allow init node:udp_socket node_bind;
+allow init property_socket:sock_file write;
+allow init qmuxd:unix_stream_socket connectto;
+allow init qmuxd_socket:sock_file write;
+allow init self:netlink_route_socket { bind create nlmsg_read read write };
+allow init self:netlink_socket { bind create read };
+allow init self:socket { create  read write };
+allow init self:udp_socket { bind getattr getopt  read setopt write };
+allow init ims:unix_stream_socket connectto;
+allow init ims_socket:sock_file write;
+allow init servicemanager:binder { call transfer };
+allow init socket_device:sock_file { create setattr };
