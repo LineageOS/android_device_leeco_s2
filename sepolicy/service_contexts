@@ -1,3 +1,2 @@
 android.hardware.fingerprint.IFingerprintCustomDaemon       u:object_r:fingerprintd_custom_service:s0
-android.vendor.fido.IFidoDaemon                             u:object_r:per_mgr:s0
 goodix.fp                                                   u:object_r:goodix_service:s0
