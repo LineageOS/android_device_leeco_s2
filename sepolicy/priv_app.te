@@ -1,0 +1,4 @@
+allow priv_app device:dir r_dir_perms;
+allow priv_app proc_interrupts:file { r_file_perms };
+allow priv_app proc_modules:file { r_file_perms };
+allow priv_app proc_stat:file { r_file_perms };

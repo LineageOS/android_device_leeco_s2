@@ -23,11 +23,15 @@
 /system/bin/cnss-daemon                                     u:object_r:wcnss_service_exec:s0
 /system/bin/fidodaemon                                      u:object_r:fidodaemon_exec:s0
 /system/bin/hvdcp_opti                                      u:object_r:hvdcp_exec:s0
+/system/bin/imsdatadaemon                                   u:object_r:ims_exec:s0
 /system/bin/imsqmidaemon                                    u:object_r:ims_exec:s0
+/system/bin/ims_rtp_daemon                                  u:object_r:hal_imsrtp_exec:s0
+/system/bin/imscmservice                                    u:object_r:ims_exec:s0
 /system/bin/ipacm                                           u:object_r:ipacm_exec:s0
 /system/bin/ipacm-diag                                      u:object_r:ipacm-diag_exec:s0
 /system/bin/irsc_util                                       u:object_r:irsc_util_exec:s0
 /system/bin/loc_launcher                                    u:object_r:location_exec:s0
+/system/bin/lowi-server                                     u:object_r:location_exec:s0
 /system/bin/mm-qcamera-daemon                               u:object_r:mm-qcamerad_exec:s0
 /system/bin/netmgrd                                         u:object_r:netmgrd_exec:s0
 /system/bin/pm-service                                      u:object_r:per_mgr_exec:s0
@@ -42,12 +46,15 @@
 /system/bin/tftp_server                                     u:object_r:rfs_access_exec:s0
 /system/bin/time_daemon                                     u:object_r:time_daemon_exec:s0
 /system/bin/wcnss_filter                                    u:object_r:wcnss_filter_exec:s0
+/system/bin/xtwifi-client                                   u:object_r:location_exec:s0
 /system/bin/xtwifi-inet-agent                               u:object_r:location_exec:s0
+/(vendor|system/vendor)/bin/fidoca                          u:object_r:fidoca_exec:s0
 
-/data/misc/location(/.*)?                                   u:object_r:location_data_file:s0
-/data/misc/location/mq/location-mq-s                        u:object_r:location_socket:s0
-/data/misc/location/mq/alarm_svc                            u:object_r:location_socket:s0
 /data/misc/location/xtra/socket_xtra                        u:object_r:location_socket:s0
 /data/misc/location/xtra/socket_hal_xtra                    u:object_r:location_socket:s0
 
 /data/misc/tloc(/.*)? u:object_r:tlocd_data_file:s0
+
+/dev/goodix_fp                                             u:object_r:goodix_device:s0
+/data/goodix(/.*)?                                         u:object_r:goodix_data_file:s0
+/dev/i2c_smartpa                                           u:object_r:smartpa_device:s0

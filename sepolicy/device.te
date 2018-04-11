@@ -1,0 +1,2 @@
+type goodix_device, dev_type;
+type smartpa_device, dev_type;
