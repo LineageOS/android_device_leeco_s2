@@ -1,1 +1,2 @@
 get_prop(location, wcnss_prop);
+allow location sysfs:dir read;
