@@ -25,6 +25,7 @@
 /system/bin/hvdcp_opti                                      u:object_r:hvdcp_exec:s0
 /system/bin/imsdatadaemon                                   u:object_r:ims_exec:s0
 /system/bin/imsqmidaemon                                    u:object_r:ims_exec:s0
+/system/bin/ims_rtp_daemon                                  u:object_r:hal_imsrtp_exec:s0
 /system/bin/imscmservice                                    u:object_r:ims_exec:s0
 /system/bin/ipacm                                           u:object_r:ipacm_exec:s0
 /system/bin/ipacm-diag                                      u:object_r:ipacm-diag_exec:s0
