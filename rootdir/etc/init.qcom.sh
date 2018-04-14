@@ -462,6 +462,8 @@ fi
 
 cur_version_info=`cat /firmware/verinfo/ver_info.txt`
 if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_version_info" ]; then
+    # add W for group recursively before delete
+    chmod g+w -R /data/vendor/modem_config/*
     rm -rf /data/vendor/modem_config/*
     # preserve the read only mode for all subdir and files
     cp --preserve=m -dr /firmware/image/modem_pr/mcfg/configs/* /data/vendor/modem_config
@@ -469,8 +471,10 @@ if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_versio
     cp --preserve=m -d /firmware/image/modem_pr/mbn_ota.txt /data/vendor/modem_config/
     cp --preserve=m -d /firmware/image/modem_pr/mbn_oin.txt /data/vendor/modem_config/
     cp --preserve=m -d /firmware/image/modem_pr/mbn_ogl.txt /data/vendor/modem_config/
-    chown -hR radio.radio /data/vendor/modem_config/*
+    # the group must be root, otherwise this script could not add "W" for group recursively
+    chown -hR radio.root /data/vendor/modem_config/*
 fi
+chmod g-w /data/vendor/modem_config
 setprop ro.runtime.mbn_copy_completed 1
 
 #check build variant for printk logging
