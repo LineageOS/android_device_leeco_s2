@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "401f2a5d_aab3917d",
+        "filename": "sepolicy/fidodaemon.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "binder_call(fidodaemon, servicemanager)",
+      "range": {
+        "startLine": 1,
+        "startChar": 40,
+        "endLine": 1,
+        "endChar": 41
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3103424_c23a8939",
+        "filename": "sepolicy/goodix.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "binder_call(goodix, hal_fingerprint_default)",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88f18576_0ec6fc31",
+        "filename": "sepolicy/goodix.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "binder_call(goodix, servicemanager)",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ed2529d_9352f60b",
+        "filename": "sepolicy/hal_fingerprint_default.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "binder_call(hal_fingerprint_default, goodix)",
+      "range": {
+        "startLine": 9,
+        "startChar": 30,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b224b189_1a1b2a85",
+        "filename": "sepolicy/hal_graphics_allocator_default.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "r_file_perms",
+      "range": {
+        "startLine": 1,
+        "startChar": 67,
+        "endLine": 1,
+        "endChar": 71
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30c999ec_9690921a",
+        "filename": "sepolicy/priv_app.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "which app wants that?",
+      "range": {
+        "startLine": 4,
+        "startChar": 15,
+        "endLine": 4,
+        "endChar": 24
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad5c6dc_e4c9e09b",
+        "filename": "sepolicy/service_contexts",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "doesn\u0027t look right",
+      "range": {
+        "startLine": 2,
+        "startChar": 71,
+        "endLine": 2,
+        "endChar": 78
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22e49b54_46c8dd5e",
+        "filename": "sepolicy/untrusted_app.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1,
+        "startChar": 37,
+        "endLine": 1,
+        "endChar": 44
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4059bcc_24914bac",
+        "filename": "sepolicy/wcnss_service.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:01:14Z",
+      "side": 1,
+      "message": "remove and check service definition in init.rc",
+      "range": {
+        "startLine": 1,
+        "startChar": 44,
+        "endLine": 1,
+        "endChar": 45
+      },
+      "revId": "25b9fc65b95d8ad8b7c46b1022b1bfaea6f9fd76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
