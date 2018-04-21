@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0527f275_17216635",
+        "filename": "sepolicy/init.te",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:04:51Z",
+      "side": 1,
+      "message": "looks like you\u0027ve missed to label a service",
+      "range": {
+        "startLine": 13,
+        "startChar": 29,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "c9a22d5f5c67324815ac653a8322a72833764e9a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb1519a2_0bd59898",
+        "filename": "sepolicy/property.te",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-04-21T19:04:51Z",
+      "side": 1,
+      "message": "? just delete the file",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "c9a22d5f5c67324815ac653a8322a72833764e9a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
