@@ -56,7 +56,7 @@ on fs
     restorecon_recursive /dsp
 
     wait /dev/block/bootdevice/by-name/modem
-    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
+    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     #write /sys/kernel/boot_adsp/boot 1
 
     write /sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus 8
@@ -195,7 +195,7 @@ service qseecomd /system/bin/qseecomd
    user root
    group root
 
-service perfd /system/vendor/bin/perfd
+service perfd /vendor/bin/perfd
    class main
    user root
    disabled
@@ -236,7 +236,7 @@ service wcnss-service /system/bin/wcnss_service
     group system wifi radio
     oneshot
 
-service ppd /system/vendor/bin/mm-pp-daemon
+service ppd /vendor/bin/mm-pp-daemon
     class late_start
     disabled
     user system
@@ -278,17 +278,6 @@ service per_mgr /system/bin/pm-service
     user system
     group system net_raw
 
-service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
-    class main
-    user root
-    seclabel u:r:qti_init_shell:s0
-    oneshot
-    disabled
-
-service yep_qmi_server /system/bin/yep_qmi_server
-    class core
-    user root
-
 service fingerprintd /system/bin/fingerprintd
     class late_start
     socket fpce stream 0666 system system
@@ -300,7 +289,7 @@ service gx_fpd /system/bin/gx_fpd
     group root system
     seclabel u:r:goodix:s0
 
-service fidoca /system/vendor/bin/fidoca
+service fidoca /vendor/bin/fidoca
     class late_start
     user system
     group system
