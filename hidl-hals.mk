@@ -72,6 +72,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl
 
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-service-qti
+
 # RenderScript
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
@@ -112,7 +116,3 @@ PRODUCT_PACKAGES += \
     android.hardware.health@1.0-convert \
     android.hardware.health@1.0-service \
     android.hardware.health@1.0
-
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-impl
