@@ -35,11 +35,6 @@ on fs
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
 
-service s2-usb-sh /system/bin/sh /init.s2.usb.sh
-    class main
-    user root
-    oneshot
-
 # Following are the parameters required for usb functionality. They provide configurable options like
 # product_id/vendor id and allows specifying required functions:
 #

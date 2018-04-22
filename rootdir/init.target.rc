@@ -278,13 +278,6 @@ service per_mgr /system/bin/pm-service
     user system
     group system net_raw
 
-service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
-    class main
-    user root
-    seclabel u:r:qti_init_shell:s0
-    oneshot
-    disabled
-
 service fingerprintd /system/bin/fingerprintd
     class late_start
     socket fpce stream 0666 system system
