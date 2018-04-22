@@ -78,6 +78,8 @@ lib/libmpbase.so
 lib/libDxHdcp.so
 lib/libdashplayer.so
 lib/libqrDec.so
+lib/libloc_stub.so
+lib/libloc_pla.so
 -lib64/libloc_ds_api.so
 lib64/libfp_gf_intejni.so
 -lib64/libloc_api_v02.so
@@ -88,6 +90,8 @@ lib64/hw/fingerprint.vendor.msm8952.so
 lib64/hw/gxfingerprint.default.so
 -lib64/libtfa9890.so
 lib64/libfpnav.so
+lib64/libloc_stub.so
+lib64/libloc_pla.so
 etc/acdbdata/QRD/QRD_Hdmi_cal.acdb
 etc/acdbdata/QRD/QRD_Handset_cal.acdb
 etc/acdbdata/QRD/QRD_Bluetooth_cal.acdb
@@ -199,7 +203,7 @@ etc/firmware/goodixfp.b00
 etc/firmware/a225_pm4.fw
 etc/firmware/leia_pm4_470.fw
 etc/sensors/sensors_dbg_config.txt
-etc/sensors/hals.conf
+vendor/etc/sensors/hals.conf
 etc/sensors/sensor_def_qcomdev.conf
 etc/dts/dts-m6m8-lic.key
 etc/settings/mono_qcom.cnt
@@ -666,6 +670,8 @@ vendor/lib/libchromatix_ov16880_primax_bahy_6c_hfr_90_ak7371.so
 vendor/lib/libadsprpc.so
 vendor/lib/libqti-gt.so
 vendor/lib/libEGL_adreno.so
+vendor/lib/libtinyxml.so
+vendor/lib/libhardware_aaaaaa.so
 vendor/lib64/lib-imsqimf.so
 vendor/lib64/libmmcamera2_is.so
 vendor/lib64/libc2d30-a4xx.so
@@ -699,6 +705,8 @@ vendor/lib64/libqmi_client_helper.so
 vendor/lib64/libmmrtpdecoder.so
 vendor/lib64/libavenhancements.so
 vendor/lib64/libloc_ext.so
+vendor/lib64/libtinyxml.so
+vendor/lib64/libhardware_aaaaaa.so
 vendor/lib64/libgdtap.so
 vendor/lib64/lib-rtpdaemoninterface.so
 vendor/lib64/libc2d30-a5xx.so

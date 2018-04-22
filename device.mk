@@ -156,8 +156,10 @@ PRODUCT_PACKAGES += \
     copybit.msm8952 \
     hwcomposer.msm8952 \
     memtrack.msm8952 \
+    libgenlock \
     liboverlay \
-    libgenlock
+    libtinyxml
+
 
 # Display / OpenGLES
 PRODUCT_PROPERTY_OVERRIDES += \
