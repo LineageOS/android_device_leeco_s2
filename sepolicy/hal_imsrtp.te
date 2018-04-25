@@ -1,0 +1,1 @@
+allow hal_imsrtp self:capability net_raw;
