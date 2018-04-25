@@ -41,6 +41,8 @@ on fs
     mount_all fstab.qcom
 
     mkdir /persist/data 0700 system system
+    restorecon_recursive /persist
+    restorecon_recursive /dsp
 
     write /sys/devices/system/cpu/cpuquiet/nr_thermal_max_cpus 8
     write /sys/devices/system/cpu/cpuquiet/nr_power_max_cpus 8

@@ -41,3 +41,16 @@ service charger /charger
     class charger
     group system graphics
     seclabel u:r:charger:s0
+
+on property:sys.boot_completed=1
+     # Enable Low Memory Killer
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
+
+    # Enable Energy Awareness
+    start energy-awareness
+
+    # Enable sched colocation
+    write /proc/sys/kernel/sched_grp_upmigrate 130
+    write /proc/sys/kernel/sched_grp_downmigrate 110
+    write /proc/sys/kernel/sched_enable_thread_grouping 1
