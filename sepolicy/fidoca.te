@@ -5,8 +5,13 @@ init_daemon_domain(fidoca)
 
 allow fidoca tee_device:chr_file { rw_file_perms };
 allow fidoca ion_device:chr_file { rw_file_perms };
+
 allow fidoca firmware_file:dir search;
+allow fidoca firmware_file:file { r_file_perms };
 
 binder_call(fidoca, servicemanager);
 
 add_service(fidoca, fidoca_service);
+add_service(fidoca, fidodaemon_service);
+
+
