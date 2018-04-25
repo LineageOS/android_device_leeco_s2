@@ -13,3 +13,7 @@ allow servicemanager goodix:process getattr;
 allow servicemanager init:dir search;
 allow servicemanager init:file { open read };
 allow servicemanager init:process getattr;
+
+allow servicemanager fidoca:dir search;
+allow servicemanager fidoca:file { open read };
+allow servicemanager fidoca:process getattr;
