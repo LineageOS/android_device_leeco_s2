@@ -532,8 +532,3 @@ service config_bt_addr /vendor/bin/btnvtool -O
     group bluetooth radio
     seclabel u:r:btnvtool:s0
     oneshot
-
-service fidodaemon /system/vendor/bin/fidodaemon
-    class late_start
-    user system
-    group system
