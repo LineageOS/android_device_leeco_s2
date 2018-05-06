@@ -274,11 +274,6 @@ service gx_fpd /system/bin/gx_fpd
     group root system
     seclabel u:r:goodix:s0
 
-service fidoca /vendor/bin/fidoca
-    class late_start
-    user system
-    group system
-
 service thermal-engine /vendor/bin/thermal-engine
     class main
     user root
