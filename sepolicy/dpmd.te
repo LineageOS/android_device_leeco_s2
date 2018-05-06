@@ -1,0 +1,1 @@
+allow dpmd self:capability { dac_override };

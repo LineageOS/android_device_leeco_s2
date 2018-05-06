@@ -11,42 +11,9 @@
 
 # Legacy (TODO: move to vendor)
 /sbin/qfipsverify                                           u:object_r:sectest_exec:s0
-
-/system/bin/adsprpcd                                        u:object_r:adsprpcd_exec:s0
-/system/bin/ATFWD-daemon                                    u:object_r:atfwd_exec:s0
-/system/bin/audiod                                          u:object_r:audiod_exec:s0
-/system/bin/btnvtool                                        u:object_r:btnvtool_exec:s0
-/system/bin/cnd                                             u:object_r:cnd_exec:s0
-/system/bin/cnss-daemon                                     u:object_r:wcnss_service_exec:s0
-/system/bin/fidodaemon                                      u:object_r:fidodaemon_exec:s0
-/system/bin/hvdcp_opti                                      u:object_r:hvdcp_exec:s0
-/system/bin/imsdatadaemon                                   u:object_r:ims_exec:s0
-/system/bin/imsqmidaemon                                    u:object_r:ims_exec:s0
-/system/bin/ims_rtp_daemon                                  u:object_r:hal_imsrtp_exec:s0
-/system/bin/imscmservice                                    u:object_r:ims_exec:s0
 /system/bin/ipacm                                           u:object_r:ipacm_exec:s0
 /system/bin/ipacm-diag                                      u:object_r:ipacm-diag_exec:s0
-/system/bin/irsc_util                                       u:object_r:irsc_util_exec:s0
-/system/bin/loc_launcher                                    u:object_r:location_exec:s0
-/system/bin/lowi-server                                     u:object_r:location_exec:s0
 /system/bin/mm-qcamera-daemon                               u:object_r:mm-qcamerad_exec:s0
-/system/bin/netmgrd                                         u:object_r:netmgrd_exec:s0
-/system/bin/pm-service                                      u:object_r:per_mgr_exec:s0
-/system/bin/port-bridge                                     u:object_r:port-bridge_exec:s0
-/system/bin/qcom-system-daemon                              u:object_r:qcomsysd_exec:s0
-/system/bin/qmuxd                                           u:object_r:qmuxd_exec:s0
-/system/bin/qseecomd                                        u:object_r:tee_exec:s0
-/system/bin/rmt_storage                                     u:object_r:rmt_storage_exec:s0
-/system/bin/sensors.qcom                                    u:object_r:sensors_exec:s0
-/system/bin/ssr_setup                                       u:object_r:ssr_setup_exec:s0
-/system/bin/ssr_diag                                        u:object_r:ssr_diag_exec:s0
-/system/bin/tftp_server                                     u:object_r:rfs_access_exec:s0
-/system/bin/time_daemon                                     u:object_r:time_daemon_exec:s0
-/system/bin/wcnss_filter                                    u:object_r:wcnss_filter_exec:s0
-/system/bin/xtwifi-client                                   u:object_r:location_exec:s0
-/system/bin/xtwifi-inet-agent                               u:object_r:location_exec:s0
-/(vendor|system/vendor)/bin/fidoca                          u:object_r:fidoca_exec:s0
-
 /data/misc/location/xtra/socket_xtra                        u:object_r:location_socket:s0
 /data/misc/location/xtra/socket_hal_xtra                    u:object_r:location_socket:s0
 

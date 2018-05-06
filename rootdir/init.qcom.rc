@@ -293,17 +293,10 @@ service qfintverify /sbin/qfintverify
     seclabel u:r:qfips:s0
     oneshot
 
-service qcomsysd /system/bin/qcom-system-daemon
+service qcomsysd /vendor/bin/qcom-system-daemon
     class main
     user root
     group root diag
-
-service ssr_setup /system/bin/ssr_setup
-    oneshot
-    disabled
-
-on property:persist.sys.ssr.restart_level=*
-    start ssr_setup
 
 on property:ro.baseband=msm
     start qmuxd
@@ -350,27 +343,34 @@ on property:vold.decrypt=trigger_restart_framework
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
-service atfwd /system/bin/ATFWD-daemon
+service atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
 
-service cnd /system/bin/cnd
+service cnd /vendor/bin/cnd
     class late_start
     socket cnd stream 660 root inet
     group root wakelock
 
-service irsc_util /system/bin/irsc_util "/etc/sec_config"
+service dpmd /system/bin/dpmd
+    class late_start
+    socket dpmd stream 660 root system
+    socket tcm  stream 660 root inet
+    socket dpmwrapper stream 660 root inet
+    group system readproc inet radio wake
+
+service irsc_util /vendor/bin/irsc_util "/etc/sec_config"
     class main
     user root
     oneshot
 
-service rmt_storage /system/bin/rmt_storage
+service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
     group system wakelock
 
-service tftp_server /system/bin/tftp_server
+service tftp_server /vendor/bin/tftp_server
    class main
    user root
 
@@ -400,13 +400,13 @@ service hci_filter_root /system/bin/wcnss_filter
     seclabel u:r:wcnss_filter:s0
     disabled
 
-service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
+service config_bluetooth /vendor/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     class core
     user root
     oneshot
     seclabel u:r:qti_init_shell:s0
 
-service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
+service hciattach /vendor/bin/sh /system/etc/init.qcom.bt.sh
     class late_start
     user bluetooth
     group bluetooth net_bt_admin
@@ -420,27 +420,20 @@ on property:bluetooth.hciattach=true
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
 
-service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
+service ftmd /vendor/bin/logwrapper /vendor/bin/ftmdaemon
     class late_start
     user root
     group bluetooth net_bt_admin misc diag net_bt
     disabled
     oneshot
 
-service port-bridge /system/bin/port-bridge /dev/mhi_pipe_32 /dev/ttyGS0
-    class main
-    user radio system
-    group radio system inet
-    disabled
-    oneshot
-
 # QMUX must be in multiple groups to support external process connections
-service qmuxd /system/bin/qmuxd
+service qmuxd /vendor/bin/qmuxd
     class main
     user root
     group radio audio bluetooth wakelock gps nfc diag
 
-service netmgrd /system/bin/netmgrd
+service netmgrd /vendor/bin/netmgrd
     class main
     user root
     group radio wakelock
@@ -462,7 +455,7 @@ service qti /system/vendor/bin/qti
     group radio net_raw diag usb net_admin
     disabled
 
-service sensors /system/bin/sensors.qcom
+service sensors /vendor/bin/sensors.qcom
     class late_start
     user root
     group root
@@ -502,10 +495,10 @@ service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
 #    group root
 #    oneshot
 
-service cnss-daemon /system/bin/cnss-daemon -n -l
+service cnss-daemon /vendor/bin/cnss-daemon -n -l
     class late_start
 
-service loc_launcher /system/bin/loc_launcher
+service loc_launcher /vendor/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet net_raw diag net_admin wifi
@@ -514,13 +507,13 @@ on property:crypto.driver.load=1
      insmod /system/lib/modules/qce.ko
      insmod /system/lib/modules/qcedev.ko
 
-service qcom-sh /system/bin/sh /init.qcom.sh
+service qcom-sh /vendor/bin/sh /init.qcom.sh
     class late_start
     user root
     seclabel u:r:qti_init_shell:s0
     oneshot
 
-service qcom-post-boot /system/bin/sh /init.qcom.post_boot.sh
+service qcom-post-boot /vendor/bin/sh /init.qcom.post_boot.sh
     class late_start
     user root
     seclabel u:r:qti_init_shell:s0
@@ -533,33 +526,14 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
     group radio cache inet misc audio log readproc wakelock sdcard_r sdcard_rw net_raw
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
-service config_bt_addr /system/bin/btnvtool -O
+service config_bt_addr /vendor/bin/btnvtool -O
     class core
     user bluetooth
     group bluetooth radio
     seclabel u:r:btnvtool:s0
     oneshot
 
-service ssr_diag /system/bin/ssr_diag
-    class late_start
-    user system
-    group system
-    disabled
-
 service fidodaemon /system/vendor/bin/fidodaemon
     class late_start
     user system
     group system
-
-service wfdservice /system/bin/wfdservice
-    class main
-    user system
-    group graphics audio camera inet net_bt net_bt_admin drmrpc bluetooth media_rw media
-    disabled
-    oneshot
-
-on property:sys.wfdservice=enable
-    start wfdservice
-
-on property:sys.wfdservice=disable
-    stop wfdservice
