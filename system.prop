@@ -243,9 +243,5 @@ persist.service.adb.enable=1
 persist.service.debuggable=1
 persist.sys.usb.config=adb
 
-# fling_velocity
-ro.min.fling_velocity=160
-ro.max.fling_velocity=20000
-
 #low audio flinger standby delay to reduce power consumption
 ro.audio.flinger_standbytime_ms=300
