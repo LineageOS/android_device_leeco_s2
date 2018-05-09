@@ -273,11 +273,7 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     libxml2 \
     libqsap_sdk \
-    telephony-ext \
     libminui
-
-PRODUCT_BOOT_JARS += \
-    telephony-ext
 
 # Sensors
 PRODUCT_COPY_FILES += \
@@ -292,6 +288,14 @@ PRODUCT_COPY_FILES += \
 # Stlport
 PRODUCT_PACKAGES += \
     libstlport
+
+# Telephony
+PRODUCT_PACKAGES += \
+    qti-telephony-common \
+    telephony-ext
+
+PRODUCT_BOOT_JARS += \
+    telephony-ext
 
 # Thermal
 PRODUCT_PACKAGES += \
