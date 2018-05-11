@@ -28,6 +28,9 @@
 
 /dev/goodix_fp                                             u:object_r:goodix_device:s0
 
+# Perf
+/system/bin/perfservice                                                                   u:object_r:perfservice_exec:s0
+
 # Sensor
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service\.s2                u:object_r:hal_sensors_default_exec:s0
 
