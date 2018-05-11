@@ -3,4 +3,6 @@ allow system_server consumer_ir_device:chr_file { rw_file_perms };
 allow system_server unlabeled:file unlink;
 
 #Allow system_server to add and find perf service
-add_service(system_server, vendor_perf_service);
+#add_service(system_server, vendor_perf_service);
+allow system_server vendor_perf_service:service_manager find;
+
