@@ -45,6 +45,9 @@ ro.btconfig.if=smd
 ro.btconfig.vendor=qcom
 ro.qualcomm.bt.hci_transport=smd
 
+# Boot
+sys.vendor.shutdown.waittime=500
+
 # Camera
 camera.lowpower.record.enable=1
 camera.hal1.packagelist=com.skype.raider,com.google.android.talk
