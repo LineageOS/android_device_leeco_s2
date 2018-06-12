@@ -188,6 +188,9 @@ vendor/lib/vendor.qti.hardware.qteeconnector@1.0_vendor.so
 vendor/lib64/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so
 vendor/lib64/vendor.qti.hardware.qteeconnector@1.0_vendor.so
 
+# Energy awareness - from smartron (smartron-rimo02a-8.0.0-T5524INDURC-475)
+vendor/bin/energy-awareness|8ec3f96a118c37a2dda0d70122ff075861641ccc
+
 # Gatekeeper
 vendor/lib64/hw/gatekeeper.msm8952.so
 
