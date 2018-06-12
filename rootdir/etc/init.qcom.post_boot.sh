@@ -191,6 +191,9 @@ echo 50000 > /proc/sys/kernel/sched_freq_dec_notify
 # Enable timer migration to little cluster
 echo 1 > /proc/sys/kernel/power_aware_timer_migration
 
+# Start energy-awareness for 8976
+start vendor.energy-awareness
+
 #enable sched colocation and colocation inheritance
 echo 130 > /proc/sys/kernel/sched_grp_upmigrate
 echo 110 > /proc/sys/kernel/sched_grp_downmigrate
