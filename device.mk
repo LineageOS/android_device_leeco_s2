@@ -184,6 +184,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     Doze
 
+# Fake logprint for fingerprint libs
+PRODUCT_PACKAGES += \
+    fakelogprint
+
 # Fingerprint
 PRODUCT_PACKAGES += \
     fingerprint.msm8952
