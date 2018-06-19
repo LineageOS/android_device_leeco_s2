@@ -34,15 +34,29 @@ on early-init
 on fs
     wait /dev/block/platform/soc.0/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc.0/${ro.boot.bootdevice} /dev/block/bootdevice
-    mount_all /vendor/etc/fstab.qcom
+    mount_all /system/vendor/etc/fstab.qcom --early
 
     mkdir /persist/data 0700 system system
-    
+
     # Bluetooth 
     mkdir /persist/wlan_bt 0700 system system
-    
+
     restorecon_recursive /persist
     restorecon_recursive /dsp
+
+    # Start HW service manager early
+    start hwservicemanager
+
+on late-fs
+    # Start services for bootanim
+    start surfaceflinger
+    start bootanim
+
+    start configstore-hal-1-0
+    start gralloc-2-0
+
+    # mount RW partitions which need run fsck
+    mount_all /system/vendor/etc/fstab.qcom --late
 
 on post-fs-data
     mkdir /data/tombstones 0771 system system
