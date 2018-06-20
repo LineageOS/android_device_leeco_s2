@@ -373,8 +373,8 @@ on post-fs-data
     mkdir /data/vendor/qti-logkit/logdata/ 2750 system shell
 
     #Create SWAP related dirs
-    mkdir /data/system/swap 0770 root system
-    chmod 2770 /data/system/swap
+    mkdir /data/vendor/swap 0770 root system
+    chmod 2770 /data/vendor/swap
 
     # set aggressive read ahead during boot up
     write /sys/block/mmcblk0/queue/read_ahead_kb 2048
