@@ -150,10 +150,16 @@ mkdir /data/vendor/camera 0770 camera camera
 
 # start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
-    class late_start
+    class main
     user camera
     group camera system inet input graphics
     writepid /dev/cpuset/camera-daemon/tasks
+
+on property:init.svc.media=restarting
+    restart qcamerasvr
+
+on property:init.svc.servicemanager=restarting
+    restart qcamerasvr
 
 on init
    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
