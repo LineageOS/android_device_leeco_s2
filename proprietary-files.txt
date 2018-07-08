@@ -361,8 +361,8 @@ etc/cne/andsfCne.xml
 etc/cne/SwimConfig.xml
 etc/permissions/cneapiclient.xml
 etc/permissions/com.quicinc.cne.xml
--framework/cneapiclient.jar
--framework/com.quicinc.cne.jar
+framework/cneapiclient.jar
+framework/com.quicinc.cne.jar
 -priv-app/CNEService/CNEService.apk
 vendor/lib64/libcne.so|54e80e1cb24945ec87b2fdf7f0541a6faa643ef5
 vendor/lib64/libcneapiclient.so|2992bca7d57c6f59156039b948ac959c40ea45e8
@@ -502,8 +502,8 @@ vendor/bin/xtwifi-inet-agent
 etc/permissions/com.qti.location.sdk.xml
 etc/permissions/com.qualcomm.location.xml
 etc/permissions/izat.xt.srv.xml
--framework/com.qti.location.sdk.jar
--framework/izat.xt.srv.jar
+framework/com.qti.location.sdk.jar
+framework/izat.xt.srv.jar
 lib/libloc_pla.so
 -lib64/libloc_api_v02.so
 -lib64/libloc_ds_api.so
@@ -796,17 +796,17 @@ vendor/lib/libsmemlog.so
 # Radio
 -app/fastdormancy/fastdormancy.apk
 -app/QtiTelephonyService/QtiTelephonyService.apk
--framework/qcnvitems.jar
--framework/qcrilhook.jar
+framework/qcnvitems.jar
+framework/qcrilhook.jar
 vendor/bin/ATFWD-daemon
 vendor/bin/netmgrd
 vendor/bin/qmuxd
+vendor/bin/qti
 vendor/bin/rmt_storage
 vendor/bin/tftp_server
 etc/permissions/qcnvitems.xml
 etc/permissions/qcrilhook.xml
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
-vendor/bin/qti
 vendor/lib64/libconfigdb.so
 vendor/lib64/libmdmdetect.so
 vendor/lib64/libnetmgr.so
@@ -831,8 +831,8 @@ vendor/bin/imscmservice
 vendor/bin/imsdatadaemon
 vendor/bin/imsqmidaemon
 etc/permissions/imscm.xml
--framework/imscmlibrary.jar
--framework/rcsimssettings.jar
+framework/imscmlibrary.jar
+framework/rcsimssettings.jar
 -vendor/app/ims/ims.apk
 -vendor/app/imssettings/imssettings.apk
 vendor/lib64/lib-dplmedia.so
