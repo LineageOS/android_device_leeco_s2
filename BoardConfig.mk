@@ -213,6 +213,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # RIL
 TARGET_RIL_VARIANT := caf
+TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 
 # Sepolicy
 include device/qcom/sepolicy/sepolicy.mk
