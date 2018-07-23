@@ -204,8 +204,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libshims_camera \
     libshims_ims \
-    libshims_rild_socket \
-    libshims_sensor
+    libshims_rild_socket
 
 # Lights
 PRODUCT_PACKAGES += \
