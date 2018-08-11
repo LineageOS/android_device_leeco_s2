@@ -915,15 +915,12 @@ vendor/lib64/libTimeService.so
 vendor/lib/libTimeService.so
 -vendor/lib/libtime_genoff.so
 
-# Widewine
-lib/drm/libfwdlockengine.so
-vendor/lib/drm/libdrmwvmplugin.so
-vendor/lib/mediadrm/libwvdrmengine.so
-vendor/lib/libwvdrm_L1.so
-vendor/lib/libwvdrm_L3.so
-vendor/lib/libwvm.so
-vendor/lib/libWVStreamControlAPI_L1.so
-vendor/lib/libWVStreamControlAPI_L3.so
+# Widevine DRM - Marlin - 8.1.0 OPM1.171019.021 4565141
+vendor/bin/hw/android.hardware.drm@1.0-service.widevine|fd6e14710c196fdd4131afe2ce10c4a5be1b309c
+vendor/etc/init/android.hardware.drm@1.0-service.widevine.rc|51a3168a0dbc064d78ee11ca83614c0cd2e6daa5
+vendor/lib/libwvhidl.so|f7288f7a7ed6765bd1d80d639a0aeb0c31eda795
+
+# Widevine firmware
 etc/firmware/widevine.b00
 etc/firmware/widevine.b01
 etc/firmware/widevine.b02
