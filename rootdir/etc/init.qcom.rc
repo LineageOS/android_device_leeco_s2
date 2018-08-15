@@ -54,6 +54,8 @@ on init
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
+    # Allow writing to the kernel trace log.
+    chmod 0222 /sys/kernel/debug/tracing/trace_marker
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
