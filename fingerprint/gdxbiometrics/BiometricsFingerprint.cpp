@@ -196,16 +196,13 @@ Return<RequestStatus> BiometricsFingerprint::cancel() {
 }
 
 #define MAX_FINGERPRINTS 100
-
 typedef int (*enumerate_2_0)(struct fingerprint_device *dev, fingerprint_finger_id_t *results,
         uint32_t *max_size);
-
 Return<RequestStatus> BiometricsFingerprint::enumerate()  {
     fingerprint_finger_id_t results[MAX_FINGERPRINTS];
     uint32_t n = MAX_FINGERPRINTS;
     enumerate_2_0 enumerate = (enumerate_2_0) mDevice->enumerate;
     int ret = enumerate(mDevice, results, &n);
-
     if (ret == 0 && mClientCallback != nullptr) {
         ALOGD("Got %d enumerated templates", n);
         for (uint32_t i = 0; i < n; i++) {
@@ -217,7 +214,6 @@ Return<RequestStatus> BiometricsFingerprint::enumerate()  {
             }
         }
     }
-
     return ErrorFilter(ret);
 }
 
