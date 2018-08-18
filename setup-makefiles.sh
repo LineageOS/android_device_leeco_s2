@@ -22,6 +22,8 @@ set -e
 DEVICE=s2
 VENDOR=leeco
 
+INITIAL_COPYRIGHT_YEAR=2018
+
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
@@ -43,6 +45,8 @@ write_headers
 
 # The blobs
 write_makefiles "$MY_DIR"/proprietary-files.txt
+echo "" >> "$PRODUCTMK"
+write_makefiles "$MY_DIR"/proprietary-files-qc.txt
 
 # We are done!
 write_footers
