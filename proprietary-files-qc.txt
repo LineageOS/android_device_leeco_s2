@@ -56,12 +56,14 @@ vendor/lib64/libaudioparsers.so
 vendor/lib64/libavenhancements.so
 vendor/lib64/libFlacSwDec.so
 
-# Bluetooth
-vendor/bin/btnvtool
-vendor/bin/hci_qcomm_init
-vendor/bin/ftmdaemon
-vendor/lib/libbtnv.so
-vendor/lib64/libbtnv.so
+# Bluetooth - from SRT Phone 8.0.0
+vendor/bin/btnvtool|062b5261293fe12ffe3a5794f86df3266086babf
+vendor/lib/libbtnv.so|6bed150f70d3ddd91752dccc5ec3d9eab332a713
+vendor/lib/com.qualcomm.qti.bluetooth_audio@1.0_vendor.so|e843cbb159a0a3f39dbc7049f9830754e40981cd
+vendor/lib/hw/android.hardware.bluetooth@1.0-impl-qti.so|1aedc27dec31faff77f4a71b18a8a5e00be1e78d
+vendor/lib64/libbtnv.so|89c9392ae151148d7a88c4de6962c0628af2af45
+vendor/lib64/com.qualcomm.qti.bluetooth_audio@1.0_vendor.so|65741ce5d42b118146362929864fae6ff46d3531
+vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|7b0558d59626a90e2d48b2626334dc39238c6505
 
 # Charger
 vendor/bin/hvdcp_opti
