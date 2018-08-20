@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a61db427_85120aec",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-08-20T11:54:22Z",
+      "side": 1,
+      "message": "as far as i can remember the display isn\u0027t readable below 15.",
+      "range": {
+        "startLine": 31,
+        "startChar": 58,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "7af8d022180c1cded68e1f886a05a94feeb9c9e5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d622bdf_98f15ca9",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2018-08-20T11:54:22Z",
+      "side": 1,
+      "message": "as far as i can remember the display isn\u0027t readable below 15.",
+      "range": {
+        "startLine": 40,
+        "startChar": 45,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "7af8d022180c1cded68e1f886a05a94feeb9c9e5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
