@@ -96,9 +96,6 @@
     <!-- < LAFITE-609 lichuangchuang 20160116 begin -->
     <ctl name="Smart PA I2S" value="DISABLE" />
     <!-- LAFITE-609 lichuangchuang 20160116 end > -->
-    <!-- < LAFITE-5621 lichuangchuang 20160324 begin -->
-    <ctl name="SuperVoiceWakeLock" value="UNLOCK" />
-    <!-- LAFITE-5621 lichuangchuang 20160324 end > -->
     <!-- Added by lichuangchuang to fix audio loopback test fail (QL1530) LAFITE-750 2016-01-21 begin -->
     <ctl name="IIR1 INP1 MUX" value="ZERO" />
     <!-- Added by lichuangchuang to fix audio loopback test fail (QL1530) LAFITE-750 2016-01-21 end -->
@@ -1273,12 +1270,6 @@
         <path name="speaker" />
     </path>
     <!--LAFITE-1551 chaofubang 20160219 end-->
-
-    <!-- < LAFITE-5621 lichuangchuang 20160324 begin -->
-    <path name="Super-Voice-WakeLock">
-        <ctl name="SuperVoiceWakeLock" value="LOCK" />
-    </path>
-    <!-- LAFITE-5621 lichuangchuang 20160324 end > -->
 
     <path name="wsa-speaker">
         <ctl name="RX1 MIX1 INP1" value="RX1" />
