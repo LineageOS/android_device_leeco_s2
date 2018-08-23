@@ -292,6 +292,11 @@ vendor/lib/libmmcamera_sunny_ov8865_d8v05f_eeprom.so
 # Dolby
 etc/dts/dts-m6m8-lic.key
 
+# Display Calibration data
+etc/pp_calib_data_boe_nt35596s_fhd_vdo_dsi_panel.xml
+etc/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml
+etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml
+
 # Fingerprint sensor
 bin/fingerprintd
 bin/gx_fpd
@@ -332,11 +337,6 @@ etc/firmware/fidotap.mdt
 etc/firmware/ice40.bin
 etc/firmware/leia_pfp_470.fw
 etc/firmware/leia_pm4_470.fw
-
-# Sensors
-etc/sensors/sensor_def_qcomdev.conf
-etc/sensors/sensors_dbg_config.txt
-vendor/etc/sensors/hals.conf
 
 # Widevine firmware
 etc/firmware/widevine.b00

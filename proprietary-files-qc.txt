@@ -466,6 +466,9 @@ vendor/bin/rmt_storage
 vendor/bin/tftp_server
 etc/permissions/qcnvitems.xml
 etc/permissions/qcrilhook.xml
+etc/data/dsi_config.xml
+etc/data/netmgr_config.xml
+etc/data/qmi_config.xml
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 vendor/lib/libconfigdb.so
 vendor/lib/libmdmdetect.so

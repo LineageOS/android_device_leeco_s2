@@ -1,222 +1,183 @@
-#
-# system.prop for msm8952
-#
+#Audio
+af.fast_track_multiplier=1
+audio.deep_buffer.media=true
+audio.offload.min.duration.secs=30
+audio.offload.video=true
+audio_hal.period_size=192
+persist.vendor.audio.fluence.speaker=true
+persist.vendor.audio.fluence.voicecall=true
+persist.vendor.audio.fluence.voicerec=false
+ro.vendor.audio.sdk.fluencetype=fluence
+ro.vendor.audio.sdk.ssr=false
+vendor.audio.dolby.ds2.enabled=true
+vendor.audio.offload.buffer.size.kb=64
+vendor.audio.offload.gapless.enabled=true
+vendor.audio.offload.multiple.enabled=false
+vendor.audio.offload.track.enable=true
+vendor.audio.offload.pcm.16bit.enable=true
+vendor.audio.offload.pcm.24bit.enable=true
+vendor.audio.playback.mch.downsample=true
+vendor.voice.playback.conc.disabled=true
+vendor.audio.safx.pbe.enabled=true
+vendor.audio.tunnel.encode = false
+vendor.audio.use.sw.alac.decoder=true
+vendor.audio.use.sw.ape.decoder=true
+vendor.voice.conc.fallbackpath=deep-buffer
+vendor.voice.path.for.pcm.voip=true
+vendor.voice.voip.conc.disabled=false
+vendor.voice.record.conc.disabled=false
 
-debug.sf.hw=0
-debug.egl.hw=0
-persist.hwc.mdpcomp.enable=true
-debug.mdpcomp.logs=0
-dev.pm.dyn_samplingrate=1
-persist.demo.hdmirotationlock=false
-debug.enable.sglscale=1
-persist.hwc.downscale_threshold=1.15
-qcom.hw.aac.encoder=true
-
-# RIL
-rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
-rild.libargs=-d /dev/smd0
-ril.subscription.types=NV,RUIM
-DEVICE_PROVISIONED=1
-ro.telephony.default_network=22
-persist.radio.multisim.config=dsds
-persist.radio.csvt.enabled=false
-persist.radio.rat_on=combine
-persist.radio.mt_sms_ack=20
-ro.telephony.call_ring.multiple=false
-
-# ATFWD
-persist.radio.atfwd.start=false
-
-# IMS
-persist.dbg.ims_volte_enable=1 
-persist.dbg.volte_avail_ovr=1 
-persist.dbg.vt_avail_ovr=1
-persist.dbg.wfc_avail_ovr=1
-persist.radio.rat_on=combine
-persist.radio.data_ltd_sys_ind=1
-persist.radio.data_con_rprt=1
-persist.radio.calls.on.ims=1
-persist.radio.jbims=0
-
-# NITZ
-persist.rild.nitz_plmn="" \
-persist.rild.nitz_long_ons_0=""
-persist.rild.nitz_long_ons_1=""
-persist.rild.nitz_long_ons_2=""
-persist.rild.nitz_long_ons_3=""
-persist.rild.nitz_short_ons_0=""
-persist.rild.nitz_short_ons_1=""
-persist.rild.nitz_short_ons_2=""
-persist.rild.nitz_short_ons_3=""
-
-# Perf
-ro.vendor.extension_library=libqti-perfd-client.so
-
-# Factory Reset Protection
-ro.frp.pst=/dev/block/bootdevice/by-name/config
-
-#
-# system props for the cne module
-#
-persist.cne.feature=1
-
-# system props for the MM modules
-media.msm8956hw=0
-mm.enable.smoothstreaming=true
-mmp.enable.3g2=true
-media.aac_51_output_enabled=true
-persist.media.treble_omx=false
-
-# codecs:(PARSER_)AAC AC3 AMR_NB AMR_WB ASF AVI DTS FLV 3GP 3G2 MKV MP2PS MP2TS MP3 OGG QCP WAV FLAC AIFF APE
-mm.enable.qcom_parser=4194303
-media.vpp.enable=false
-media.vpp.default.config=false
-
-persist.media.rtsp.syncframe=1
-persist.media.rtsp.dropaudio=1
-
-av.debug.disable.pers.cache=1
+# Property for AudioSphere Post Processing
+vendor.audio.pp.asphere.enabled=false
 
 # Assertive Display
 ro.qcom.ad=1
 ro.qcom.ad.calib.data=/system/etc/ad_calib.cfg
 ro.qcom.ad.sensortype=2
 
+# Bluetooth
+bluetooth.hfp.client=1
+qcom.bluetooth.soc=smd
+ro.btconfig.if=smd
+ro.btconfig.vendor=qcom
+ro.qualcomm.bt.hci_transport=smd
+
 # Camera
-persist.camera.HAL3.enabled=1
-vidc.enc.dcvs.extra-buff-count=2
 camera.lowpower.record.enable=1
+camera.hal1.packagelist=com.skype.raider,com.google.android.talk
+persist.camera.HAL3.enabled=1
+persist.vendor.qti.telephony.vt_cam_interface=1
 
-# Audio voice concurrency related flags
-voice.playback.conc.disabled=true
-voice.record.conc.disabled=false
-voice.voip.conc.disabled=false
-# Decides the audio fallback path during voice call, deep-buffer and fast are the two allowed fallback paths now.
-voice.conc.fallbackpath=deep-buffer
+# Additional buffers shared between Camera and Video
+vidc.enc.dcvs.extra-buff-count=2
 
-# parser input buffer size(256kb) in byte stream mode
-audio.parser.ip.buffer.size=262144
+# CNE/DPM
+persist.cne.feature=1
+persist.dpm.feature=1
 
-#
-# system props for the data modules
-#
+# Coresight
+persist.debug.coresight.config=stm-events
+
+# Dex2oat optimisation
+# use 6 cores during bootup dex compilation
+dalvik.vm.boot-dex2oat-threads=6
+# use 4 cores durning normal dex compilation (app installations)
+dalvik.vm.dex2oat-threads=4
+# use 4 cores during boot image dex compilation
+dalvik.vm.image-dex2oat-threads=4
+
+# Fastcharge
+persist.sys.le_fast_chrg_enable=1
+
+# Fingerprint
+persist.qfp=false
+
+#Fm
+ro.fm.transmitter=false
+
+# FRP
+ro.frp.pst=/dev/block/bootdevice/by-name/config
+
+# GPS
+persist.gps.qc_nlp_in_use=1
+persist.loc.nlp_name=com.qualcomm.location
+ro.gps.agps_provider=1
+
+# Graphics
+debug.sf.hw=0
+debug.egl.hw=0
+debug.enable.sglscale=1
+debug.mdpcomp.logs=0
+dev.pm.dyn_samplingrate=1
+persist.demo.hdmirotationlock=false
+persist.hwc.mdpcomp.enable=true
+persist.hwc.downscale_threshold=1.15
+persist.hwc.enable_vds=
+persist.debug.wfd.enable=1
+qcom.hw.aac.encoder=true
+ro.opengles.version=196610
+ro.sf.lcd_density=420
+ro.qualcomm.cabl=0
+
+# Media
+av.debug.disable.pers.cache=1
+media.msm8956hw=1
+mm.enable.smoothstreaming=true
+mmp.enable.3g2=true
+media.aac_51_output_enabled=true
+mm.enable.qcom_parser=4194303
+persist.media.treble_omx=false
+
+# Netmgrd
 ro.use_data_netmgrd=true
 persist.data.netmgrd.qos.enable=true
 persist.data.mode=concurrent
 
-# system props for time-services
+# NITZ
+persist.rild.nitz_plmn=
+persist.rild.nitz_long_ons_0=
+persist.rild.nitz_long_ons_1=
+persist.rild.nitz_long_ons_2=
+persist.rild.nitz_long_ons_3=
+persist.rild.nitz_short_ons_0=
+persist.rild.nitz_short_ons_1=
+persist.rild.nitz_short_ons_2=
+persist.rild.nitz_short_ons_3=
+
+# Perf
+ro.vendor.extension_library=libqti-perfd-client.so
+
+# Radio
+DEVICE_PROVISIONED=1
+ril.subscription.types=RUIM
+rild.libargs=-d /dev/smd0
+rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
+ro.telephony.default_network=22,20
+telephony.lteOnCdmaDevice=1
+persist.dbg.ims_volte_enable=1
+persist.dbg.volte_avail_ovr=1
+persist.dbg.vt_avail_ovr=1
+persist.radio.apm_sim_not_pwdn=1
+persist.radio.hw_mbn_update=0
+persist.radio.multisim.config=dsds
+persist.radio.videopause.mode=1
+persist.radio.schd.cache=3500
+persist.vendor.radio.custom_ecc=1
+persist.vendor.radio.rat_on=combine
+persist.vendor.radio.sib16_support=1
+persist.vendor.radio.add_power_save=1
+persist.vendor.radio.start_ota_daemon=1
+persist.vendor.radio.adb_log_on=1
+persist.radio.sw_mbn_update=0
+persist.data.qmi.adb_logmask=0
+persist.radio.aosp_usr_pref_sel=true
+persist.radio.cs_srv_type=1
+persist.radio.force_on_dc=true
+persist.radio.redir_party_num=0
+persist.radio.start_ota_daemon=1
+
+# TCP
+net.tcp.2g_init_rwnd=10
+
+# Time Services
 persist.timed.enable=true
 
-# System property for cabl
-ro.qualcomm.cabl=0
+# WiFi
+wifi.interface=wlan0
 
-#
-# System props for bluetooh
-#
-bluetooth.hfp.client=1
-ro.qualcomm.bt.hci_transport=smd
-qcom.bluetooth.soc=smd
+#Unsorted
+persist.media.rtsp.syncframe=1
+persist.media.rtsp.dropaudio=1
 
 # Simulate sdcard on /data/media
 persist.fuse_sdcard=true
-
-#
-#snapdragon value add features
-#
-ro.qc.sdk.audio.ssr=false
-##fluencetype can be "fluence" or "fluencepro" or "none"
-ro.qc.sdk.audio.fluencetype=fluence
-persist.audio.fluence.voicecall=true
-persist.audio.fluence.voicerec=false
-persist.audio.fluence.speaker=false
-
-# Set for msm8952
-tunnel.audio.encode = false
-# Buffer size in kbytes for compress offload playback
-audio.offload.buffer.size.kb=64
-# Minimum duration for offload playback in secs
-audio.offload.min.duration.secs=30
-# Enable offload audio video playback by default
-audio.offload.video=true
-
-#Enable PCM offload by default
-audio.offload.pcm.16bit.enable=true
-audio.offload.pcm.24bit.enable=true
-
-# Enable audio track offload by default
-# disable audio track offload for create audioTrack fail
-audio.offload.track.enable=false
-
-# Enable music through deep buffer
-audio.deep_buffer.media=true
-
-# Enable downsampling for multi-channel content > 48Khz
-audio.playback.mch.downsample=true
-
-# enable voice path for PCM VoIP by default
-use.voice.path.for.pcm.voip=true
-
-# System property for FM transmitter
-ro.fm.transmitter=false
-# enable dsp gapless mode by default
-audio.offload.gapless.enabled=true
-
-# multi offload
-audio.offload.multiple.enabled=false
-
-# enable pbe effects
-audio.safx.pbe.enabled=true
-# property for AudioSphere Post processing
-audio.pp.asphere.enabled=false
-
-# property to enable user to access Google WFD settings
-persist.debug.wfd.enable=1
-# property to enable VDS WFD solution
-persist.hwc.enable_vds=1
-
-# selects CoreSight configuration to enable
-persist.debug.coresight.config=stm-events
-
-# property for vendor specific library
-ro.vendor.at_library=libqti-at.so
-ro.vendor.gt_library=libqti-gt.so
 
 # property to enable narrow search range for video encoding
 vidc.enc.narrow.searchrange=1
 persist.sys.usb.gps.notify=0
 
-# property to enable fingerprint
-persist.qfp=false
-
-# min/max cpu in core control
-ro.core_ctl_min_cpu=2
-ro.core_ctl_max_cpu=4
-
-# property to enable DS2 dap
-audio.dolby.ds2.enabled=true
-
-# Enable B service adj transition by default
-ro.sys.fw.bservice_enable=true
-ro.sys.fw.bservice_limit=5
-ro.sys.fw.bservice_age=5000
-
 # Enable Delay Service Restart
 ro.am.reschedule_service=true
-
-# Trim properties
-ro.sys.fw.use_trim_settings=true
-ro.sys.fw.empty_app_percent=50
-ro.sys.fw.trim_empty_percent=100
-ro.sys.fw.trim_cache_percent=100
-ro.sys.fw.trim_enable_memory=2147483648
-
-# Dex2oat optimisation
-# use all Cores during bootup dex compilation
-dalvik.vm.boot-dex2oat-threads=8
-# use 4 cores durning normal dex compilation (app installations)
-dalvik.vm.dex2oat-threads=4
-# use 4 cores during boot image dex compilation
-dalvik.vm.image-dex2oat-threads=4
 
 # set cutoff voltage to 3200mV
 ro.cutoff_voltage_mv=3200
@@ -229,19 +190,7 @@ sched.colocate.enable=1
 
 # for alipay auth
 ro.internal.model=Le X520
-
-persist.radio.flexmap_type=none
-persist.radio.ignore_dom_time=5
-
-# to force call stick on CS (NOT switch to VoLTE)
-persist.radio.cs_srv_type=1
-
-# ADB Debugging
-ro.secure=0
-ro.adb.secure=0
-persist.service.adb.enable=1
-persist.service.debuggable=1
-persist.sys.usb.config=adb
+ro.vendor.wechatpay.support=true
 
 #low audio flinger standby delay to reduce power consumption
 ro.audio.flinger_standbytime_ms=300

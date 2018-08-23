@@ -42,15 +42,7 @@ $(WIDEVINE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(WIDEVINE_SYMLINKS)
 
-
-PERSIST_WCNSS := $(TARGET_OUT_ETC)/firmware/wlan/qca_cld/WCNSS_qcom_wlan_nv.bin
-$(PERSIST_WCNSS): $(LOCAL_INSTALLED_MODULE)
-	@echo "WCNSS_qcom_wlan_factory_nv.bin firmware link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /persist/$(notdir $@) $@
-
-WCNSS_CFG_INI := $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
+WCNSS_CFG_INI := $(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
 $(WCNSS_CFG_INI): $(LOCAL_INSTALLED_MODULE)
 	@echo "WCNSS_qcom_cfg.ini firmware link: $@"
 	@mkdir -p $(dir $@)
@@ -71,7 +63,7 @@ $(WLAN_MAC): $(LOCAL_INSTALLED_MODULE)
 	@rm -rf $@
 	$(hide) ln -sf /persist/$(notdir $@) $@
 
-ALL_DEFAULT_INSTALLED_MODULES += $(PERSIST_WCNSS) $(WCNSS_CFG_INI) $(WCNSS_DICT_DAT) $(WLAN_MAC)
+ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_CFG_INI) $(WCNSS_DICT_DAT) $(WLAN_MAC)
 
 
 CMNLIB_IMAGES := cmnlib.b00 cmnlib.b01 cmnlib.b02 cmnlib.b03 cmnlib.mdt
@@ -88,7 +80,7 @@ ALL_DEFAULT_INSTALLED_MODULES += $(CMNLIB_SYMLINKS)
 RFS_SYMLINKS := $(TARGET_OUT)/rfs
 $(RFS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "RFS links"
-	@rm -rf $(TARGET_OUT)/rfs 
+	@rm -rf $(TARGET_OUT)/rfs
 	@mkdir -p $(TARGET_OUT)/rfs/apq/gnss/readonly
 	$(hide) ln -sf /persist/hlos_rfs/shared $(TARGET_OUT)/rfs/apq/gnss/hlos
 	$(hide) ln -sf /data/tombstones/lpass $(TARGET_OUT)/rfs/apq/gnss/ramdumps
