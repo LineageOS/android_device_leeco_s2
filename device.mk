@@ -282,6 +282,10 @@ PRODUCT_PACKAGES += \
     libOmxVenc \
     libstagefrighthw
 
+# Privapp Whitelist
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+
 # Qualcomm dependencies
 PRODUCT_PACKAGES += \
     libtinyxml \
@@ -332,6 +336,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # VR
 PRODUCT_PACKAGES += \
     vr.msm8952
+
+# Whitelisted app
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
 
 # Wifi
 PRODUCT_PACKAGES += \
