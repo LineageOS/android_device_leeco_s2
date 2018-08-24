@@ -174,16 +174,14 @@ on boot
     chown root system /sys/kernel/dload/dload_mode
     chmod 0660 /sys/kernel/dload/dload_mode
 
-    # Mark the copy complete flag to not completed
-    write /data/misc/radio/copy_complete 0
-    chown radio radio /data/misc/radio/copy_complete
-    chmod 0660 /data/misc/radio/copy_complete
-
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
     # Create directory used for display
     mkdir /persist/display 0770 system graphics
+
+    # Create vpp directory
+    mkdir /persist/vpp 0770 media media
 
 on post-fs
     start qseecomd
@@ -195,28 +193,66 @@ on post-fs-data
     # Create directory used by display clients
     mkdir /data/vendor/display 0770 system graphics
 
+    # Change lm related dirs
+    mkdir /data/vendor/lm 0700 root root
+
+    # Create directory used by media clients
+    mkdir /data/vendor/media 0770 mediacodec media
+
+    # create QDMA dropbox
+    mkdir /data/vendor/qdmastats 0700 system system
+    mkdir /data/vendor/qdma 0770 system system
+
     # Create directory for TZ Apps
     mkdir /data/misc/qsee 0770 system system
 
-    # we will remap this as /mnt/sdcard with the sdcard fuse tool
+    # Create directory for apps access via QTEEConnector
+    mkdir /data/vendor/qtee 0770 system system
+
+    # Create directory for voiceprint
+    mkdir /data/misc/qvop 0771 system system
+
+    #Create folder for mm-qcamera-daemon
     mkdir /data/misc/camera 0770 camera camera
 
-    mkdir /data/misc/ipa 0700 net_admin net_admin
+    mkdir /data/media 0770 media_rw media_rw
+    chown media_rw media_rw /data/media
 
-    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+    #Create directory for tftp
+    mkdir /data/vendor/tombstones 0771 system system
+
+    mkdir /data/vendor/ramdump 0771 root system
+    mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
+    mkdir /data/vendor/ramdump/bluetooth 0770 bluetooth bluetooth
 
     # Create the directories used by the Wireless subsystem
+    mkdir /data/vendor/wifi 0770 wifi wifi
+    mkdir /data/vendor/wifi/sockets 0770 wifi wifi
+    mkdir /data/vendor/wifi/hostapd 0770 wifi wifi
+    mkdir /data/vendor/wifi/hostapd/ctrl 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
+    mkdir /data/vendor/wifi/wigig_hostapd 0770 wifi wifi
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/misc/dhcp 0777 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
+
+    #create port-bridge log dir
+    mkdir /data/vendor/port_bridge 0770 radio radio
+    chmod 0770 /data/vendor/port_bridge
+
+    #create netmgr log dir
+    mkdir /data/vendor/netmgr 0770 radio radio
+    chmod 0770 /data/vendor/netmgr
+
+    #create ipacm log dir
+    mkdir /data/vendor/ipa 0770 radio radio
+    chmod 0770 /data/vendor/ipa
 
     # Create the directories used by CnE subsystem
     mkdir /data/connectivity 0771 system system
     chown system system /data/connectivity
-    mkdir /data/connectivity/wqeclient 0771 system system
-    chown system system /data/connectivity/wqeclient
 
     # Create the directories used by DPM subsystem
     mkdir /data/dpm 0771 system system
@@ -226,10 +262,17 @@ on post-fs-data
     chown system system /data/dpm/nsrm
 
     # Create directory used by audio subsystem
-    mkdir /data/misc/audio 0770 audio audio
+    mkdir /data/vendor/misc/audio 0770 audio audio
+
+    # Create directory for audio delta files
+    mkdir /data/vendor/misc/audio/acdbdata 0770 media audio
+    mkdir /data/vendor/misc/audio/acdbdata/delta 0770 media audio
 
     # Create directory used by the DASH client
     mkdir /data/misc/dash 0770 media audio
+
+    # Create directory for radio
+    mkdir /data/vendor/radio 0770 system radio
 
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
@@ -251,12 +294,9 @@ on post-fs-data
     #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
     #Create directories for Location services
-    mkdir /data/misc/location 0770 gps gps
-    mkdir /data/misc/location/mq 0770 gps gps
-    mkdir /data/misc/location/xtwifi 0770 gps gps
-    mkdir /data/misc/location/gpsone_d 0770 system gps
-    mkdir /data/misc/location/quipc 0770 gps system
-    mkdir /data/misc/location/gsiff 0770 gps gps
+    mkdir /data/vendor/location 0770 gps gps
+    mkdir /data/vendor/location/mq 0770 gps gps
+    mkdir /data/vendor/location/xtwifi 0770 gps gps
 
     #Create directory from IMS services
     mkdir /data/shared 0755
@@ -266,10 +306,18 @@ on post-fs-data
     mkdir /data/fota 0771
     chown system system /data/fota
 
+    #Create directory for hostapd
+    mkdir /data/hostapd 0770 system wifi
+
     # Create /data/time folder for time-services
     mkdir /data/time/ 0700 system system
 
+    mkdir /data/vendor/audio/ 0770 media audio
     mkdir /data/audio/ 0770 media audio
+
+    # Create a folder for audio delta files
+    mkdir /data/vendor/audio/acdbdata 0770 media audio
+    mkdir /data/vendor/audio/acdbdata/delta 0770 media audio
 
     setprop vold.post_fs_data_done 1
 
@@ -280,10 +328,9 @@ on post-fs-data
     mkdir /data/camera 0770 media camera
 
     #Create PERFD deamon related dirs
-    mkdir /data/misc/perfd 0755 root system
-    chmod 2755 /data/misc/perfd
-    mkdir /data/system/perfd 0770 root system
-    chmod 2770 /data/system/perfd
+    mkdir /data/vendor/perfd 0770 root system
+    chmod 2770 /data/vendor/perfd
+    rm /data/vendor/perfd/default_values
 
     # NFC local data and nfcee xml storage
     mkdir /data/nfc 0770 nfc nfc
@@ -298,11 +345,43 @@ on post-fs-data
     mkdir /data/misc/fm 0770 system system
     chmod 0770 /data/misc/fm
 
-service qcomsysd /vendor/bin/qcom-system-daemon
-    class main
-    user root
-    group root diag
-    disabled
+    #Create IOP deamon related dirs
+    mkdir /data/vendor/iop 0770 root system
+
+    # Mark the copy complete flag to not completed
+    write /data/vendor/radio/copy_complete 0
+    chown radio radio /data/vendor/radio/copy_complete
+    chmod 0660 /data/vendor/radio/copy_complete
+
+    # copy prebuilt qcril.db files always
+    copy /vendor/radio/qcril_database/qcril.db /data/vendor/radio/qcril_prebuilt.db
+    chown radio radio /data/vendor/radio/qcril_prebuilt.db
+    chmod 0660 /data/vendor/radio/qcril_prebuilt.db
+    # File flags for prebuilt ril db file
+    write /data/vendor/radio/prebuilt_db_support 1
+    chown radio radio /data/vendor/radio/prebuilt_db_support
+    chmod 0400 /data/vendor/radio/prebuilt_db_support
+    write /data/vendor/radio/db_check_done 0
+    chown radio radio /data/vendor/radio/db_check_done
+    chmod 0660 /data/vendor/radio/db_check_done
+
+    # qti-logkit data
+    mkdir /data/vendor/qti-logkit/ 0771 system system
+    mkdir /data/vendor/qti-logkit/shared-privileged/ 2770 system system
+    mkdir /data/vendor/qti-logkit/shared-public/ 2770 system diag
+    mkdir /data/vendor/qti-logkit/socket-privileged/ 2770 system system
+    mkdir /data/vendor/qti-logkit/socket-public/ 2750 system diag
+    mkdir /data/vendor/qti-logkit/logdata/ 2750 system shell
+
+    #Create SWAP related dirs
+    mkdir /data/system/swap 0770 root system
+    chmod 2770 /data/system/swap
+
+    # set aggressive read ahead during boot up
+    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+
+    # Create vpp directory
+    mkdir /data/vendor/vpp 0770 media media
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
@@ -318,16 +397,14 @@ on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
 service cnd /vendor/bin/cnd
-    class late_start
+    class main
     user system
     group system wifi inet radio wakelock net_admin
 
-service dpmd /system/bin/dpmd
-    class late_start
-    socket dpmd stream 660 root system
-    socket tcm  stream 660 root inet
-    socket dpmwrapper stream 660 root inet
-    group system readproc inet radio wake
+service dpmQmiMgr /system/vendor/bin/dpmQmiMgr
+    class main
+    user system
+    group radio system
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
@@ -341,8 +418,8 @@ service rmt_storage /vendor/bin/rmt_storage
     ioprio rt 0
 
 service tftp_server /vendor/bin/tftp_server
-   class core
-   user root
+    class core
+    user root
 
 on property:wc_transport.start_hci=true
     start start_hci_filter
@@ -391,7 +468,7 @@ service ipacm /vendor/bin/ipacm
     user radio
     group radio inet
 
-service qti /system/vendor/bin/qti
+service qti /vendor/bin/qti
     class main
     user radio
     group radio oem_2901 diag usb net_admin
