@@ -27,18 +27,14 @@
  *
  */
 
-#define LOG_NDDEBUG 0
+#define LOG_NDEBUG 0
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include "loc_log.h"
 #include "msg_q.h"
-#ifdef USE_GLIB
-#include <time.h>
-#endif /* USE_GLIB  */
-#include "log_util.h"
-#include "platform_lib_includes.h"
+#include <platform_lib_includes.h>
 
 #define  BUFFER_SIZE  120
 
@@ -113,7 +109,6 @@ static const loc_name_val_s_type target_name[] =
     NAME_VAL(GNSS_MSM),
     NAME_VAL(GNSS_GSS),
     NAME_VAL(GNSS_MDM),
-    NAME_VAL(GNSS_QCA1530),
     NAME_VAL(GNSS_AUTO),
     NAME_VAL(GNSS_UNKNOWN)
 };

@@ -34,11 +34,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <hardware/gps.h>
 #include <cutils/properties.h>
 #include "loc_target.h"
 #include "loc_log.h"
-#include "log_util.h"
+#include <platform_lib_includes.h>
 
 #define APQ8064_ID_1 "109"
 #define APQ8064_ID_2 "153"
@@ -49,21 +48,19 @@
 #define APQ8074_ID_1 "184"
 
 #define LINE_LEN 100
-#define STR_LIQUID    "Liquid"
-#define STR_SURF      "Surf"
-#define STR_MTP       "MTP"
-#define STR_APQ       "apq"
-#define STR_AUTO      "auto"
+#define STR_LIQUID      "Liquid"
+#define STR_SURF        "Surf"
+#define STR_MTP         "MTP"
+#define STR_APQ         "apq"
+#define STR_SDC         "sdc"  // alternative string for APQ targets
+#define STR_MSM         "msm"
+#define STR_SDM         "sdm"  // alternative string for MSM targets
+#define STR_APQ_NO_WGR  "baseband_apq_nowgr"
+#define STR_AUTO        "auto"
 #define IS_STR_END(c) ((c) == '\0' || (c) == '\n' || (c) == '\r')
 #define LENGTH(s) (sizeof(s) - 1)
 #define GPS_CHECK_NO_ERROR 0
 #define GPS_CHECK_NO_GPS_HW 1
-/* When system server is started, it uses 20 seconds as ActivityManager
- * timeout. After that it sends SIGSTOP signal to process.
- */
-#define QCA1530_DETECT_TIMEOUT 15
-#define QCA1530_DETECT_PRESENT "yes"
-#define QCA1530_DETECT_PROGRESS "detect"
 
 static unsigned int gTarget = (unsigned int)-1;
 
@@ -87,63 +84,6 @@ static int read_a_line(const char * file_path, char * line, int line_size)
         fclose(fp);
     }
     return result;
-}
-
-/*!
- * \brief Checks if QCA1530 is avalable.
- *
- * Function verifies if qca1530 SoC is configured on the device. The test is
- * based on property value. For 1530 scenario, the value shall be one of the
- * following: "yes", "no", "detect". All other values are treated equally to
- * "no". When the value is "detect" the system waits for SoC detection to
- * finish before returning result.
- *
- * \retval true - QCA1530 is available.
- * \retval false - QCA1530 is not available.
- */
-static bool is_qca1530(void)
-{
-    static const char qca1530_property_name[] = "sys.qca1530";
-    bool res = false;
-    int ret, i;
-    char buf[PROPERTY_VALUE_MAX];
-
-    memset(buf, 0, sizeof(buf));
-
-    for (i = 0; i < QCA1530_DETECT_TIMEOUT; ++i)
-    {
-        ret = property_get(qca1530_property_name, buf, NULL);
-        if (ret < 0)
-        {
-            LOC_LOGV( "qca1530: property %s is not accessible, ret=%d",
-                  qca1530_property_name,
-                  ret);
-
-            break;
-        }
-
-        LOC_LOGV( "qca1530: property %s is set to %s",
-                  qca1530_property_name,
-                  buf);
-
-        if (!memcmp(buf, QCA1530_DETECT_PRESENT,
-                    sizeof(QCA1530_DETECT_PRESENT)))
-        {
-            res = true;
-            break;
-        }
-        if (!memcmp(buf, QCA1530_DETECT_PROGRESS,
-                    sizeof(QCA1530_DETECT_PROGRESS)))
-        {
-            LOC_LOGV("qca1530: SoC detection is in progress.");
-            sleep(1);
-            continue;
-        }
-        break;
-    }
-
-    LOC_LOGD("qca1530: detected=%s", res ? "true" : "false");
-    return res;
 }
 
 /*The character array passed to this function should have length
@@ -174,6 +114,20 @@ void loc_get_platform_name(char *platform_name, int array_length)
     }
 }
 
+/*The character array passed to this function should have length
+  of atleast PROPERTY_VALUE_MAX*/
+void loc_get_auto_platform_name(char *platform_name, int array_length)
+{
+    if(platform_name && (array_length >= PROPERTY_VALUE_MAX)) {
+        property_get("ro.hardware.type", platform_name, "");
+        LOC_LOGD("%s:%d]: Autoplatform name: %s\n", __func__, __LINE__, platform_name);
+    }
+    else {
+        LOC_LOGE("%s:%d]: Null parameter or array length less than PROPERTY_VALUE_MAX\n",
+                 __func__, __LINE__);
+    }
+}
+
 unsigned int loc_get_target(void)
 {
     if (gTarget != (unsigned int)-1)
@@ -184,17 +138,13 @@ unsigned int loc_get_target(void)
     static const char hw_platform_dep[]  =
         "/sys/devices/system/soc/soc0/hw_platform";
     static const char id_dep[]           = "/sys/devices/system/soc/soc0/id";
-    static const char mdm[]              = "/dev/mdm"; // No such file or directory
+    static const char mdm[]              = "/target"; // mdm target we are using
 
     char rd_hw_platform[LINE_LEN];
     char rd_id[LINE_LEN];
     char rd_mdm[LINE_LEN];
     char baseband[LINE_LEN];
-
-    if (is_qca1530()) {
-        gTarget = TARGET_QCA1530;
-        goto detected;
-    }
+    char rd_auto_platform[LINE_LEN];
 
     loc_get_target_baseband(baseband, sizeof(baseband));
 
@@ -208,41 +158,51 @@ unsigned int loc_get_target(void)
     } else {
         read_a_line(id_dep, rd_id, LINE_LEN);
     }
-    if( !memcmp(baseband, STR_AUTO, LENGTH(STR_AUTO)) )
+
+    /*check automotive platform*/
+    loc_get_auto_platform_name(rd_auto_platform, sizeof(rd_auto_platform));
+    if( !memcmp(rd_auto_platform, STR_AUTO, LENGTH(STR_AUTO)) )
     {
           gTarget = TARGET_AUTO;
           goto detected;
     }
-    if( !memcmp(baseband, STR_APQ, LENGTH(STR_APQ)) ){
+
+    if( !memcmp(baseband, STR_APQ_NO_WGR, LENGTH(STR_APQ_NO_WGR)) ){
+
+        gTarget = TARGET_NO_GNSS;
+        goto detected;
+    }
+
+    if( !memcmp(baseband, STR_APQ, LENGTH(STR_APQ)) ||
+        !memcmp(baseband, STR_SDC, LENGTH(STR_SDC)) ) {
 
         if( !memcmp(rd_id, MPQ8064_ID_1, LENGTH(MPQ8064_ID_1))
             && IS_STR_END(rd_id[LENGTH(MPQ8064_ID_1)]) )
-            gTarget = TARGET_MPQ;
+            gTarget = TARGET_NO_GNSS;
         else
             gTarget = TARGET_APQ_SA;
-    }
-    else {
-        if( (!memcmp(rd_hw_platform, STR_LIQUID, LENGTH(STR_LIQUID))
-             && IS_STR_END(rd_hw_platform[LENGTH(STR_LIQUID)])) ||
-            (!memcmp(rd_hw_platform, STR_SURF,   LENGTH(STR_SURF))
-             && IS_STR_END(rd_hw_platform[LENGTH(STR_SURF)])) ||
-            (!memcmp(rd_hw_platform, STR_MTP,   LENGTH(STR_MTP))
-             && IS_STR_END(rd_hw_platform[LENGTH(STR_MTP)]))) {
-
-            if (!read_a_line( mdm, rd_mdm, LINE_LEN))
-                gTarget = TARGET_MDM;
-        }
-        else if( (!memcmp(rd_id, MSM8930_ID_1, LENGTH(MSM8930_ID_1))
-                   && IS_STR_END(rd_id[LENGTH(MSM8930_ID_1)])) ||
-                  (!memcmp(rd_id, MSM8930_ID_2, LENGTH(MSM8930_ID_2))
-                   && IS_STR_END(rd_id[LENGTH(MSM8930_ID_2)])) )
-             gTarget = TARGET_MSM_NO_SSC;
-        else
-             gTarget = TARGET_UNKNOWN;
+    } else if (((!memcmp(rd_hw_platform, STR_LIQUID, LENGTH(STR_LIQUID))
+                 && IS_STR_END(rd_hw_platform[LENGTH(STR_LIQUID)])) ||
+                (!memcmp(rd_hw_platform, STR_SURF,   LENGTH(STR_SURF))
+                 && IS_STR_END(rd_hw_platform[LENGTH(STR_SURF)])) ||
+                (!memcmp(rd_hw_platform, STR_MTP,   LENGTH(STR_MTP))
+                 && IS_STR_END(rd_hw_platform[LENGTH(STR_MTP)]))) &&
+               !read_a_line( mdm, rd_mdm, LINE_LEN)) {
+        gTarget = TARGET_MDM;
+    } else if( (!memcmp(rd_id, MSM8930_ID_1, LENGTH(MSM8930_ID_1))
+                && IS_STR_END(rd_id[LENGTH(MSM8930_ID_1)])) ||
+               (!memcmp(rd_id, MSM8930_ID_2, LENGTH(MSM8930_ID_2))
+                && IS_STR_END(rd_id[LENGTH(MSM8930_ID_2)])) ) {
+        gTarget = TARGET_MSM_NO_SSC;
+    } else if ( !memcmp(baseband, STR_MSM, LENGTH(STR_MSM)) ||
+                !memcmp(baseband, STR_SDM, LENGTH(STR_SDM)) ) {
+        gTarget = TARGET_DEFAULT;
+    } else {
+        gTarget = TARGET_UNKNOWN;
     }
 
 detected:
-    LOC_LOGD("HAL: %s returned %d", __FUNCTION__, gTarget);
+    LOC_LOGW("HAL: %s returned %d", __FUNCTION__, gTarget);
     return gTarget;
 }
 
