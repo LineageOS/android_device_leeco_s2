@@ -338,6 +338,22 @@ etc/firmware/ice40.bin
 etc/firmware/leia_pfp_470.fw
 etc/firmware/leia_pm4_470.fw
 
+# Media firmware
+etc/firmware/venus.b00
+etc/firmware/venus.b01
+etc/firmware/venus.b02
+etc/firmware/venus.b03
+etc/firmware/venus.b04
+etc/firmware/venus.mbn
+etc/firmware/venus.mdt
+etc/firmware/venus-v1.b00
+etc/firmware/venus-v1.b01
+etc/firmware/venus-v1.b02
+etc/firmware/venus-v1.b03
+etc/firmware/venus-v1.b04
+etc/firmware/venus-v1.mbn
+etc/firmware/venus-v1.mdt
+
 # Widevine firmware
 etc/firmware/widevine.b00
 etc/firmware/widevine.b01
@@ -346,12 +362,9 @@ etc/firmware/widevine.b03
 etc/firmware/widevine.mdt
 
 # Wlan
-vendor/bin/cnss-daemon
 etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv_nofem.bin
 
 # Haxx
-vendor/lib/libhardware_aaaaaa.so
 vendor/lib/libstlport_sta.so
-vendor/lib64/libhardware_aaaaaa.so
 vendor/lib64/libstlport_sta.so
