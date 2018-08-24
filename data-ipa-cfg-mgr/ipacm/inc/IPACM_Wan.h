@@ -54,11 +54,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef FEATURE_IPA_ANDROID
 #define IPA_V2_NUM_DEFAULT_WAN_FILTER_RULE_IPV6 6
+#define IPA_V2_NUM_TCP_WAN_FILTER_RULE_IPV6 3
+#define IPA_V2_NUM_MULTICAST_WAN_FILTER_RULE_IPV6 3
 #else
 #define IPA_V2_NUM_DEFAULT_WAN_FILTER_RULE_IPV6 3
 #endif
 
-#define NETWORK_STATS "%s %lu %lu %lu %lu"
+#define NETWORK_STATS "%s %llu %llu %llu %llu"
 #define IPA_NETWORK_STATS_FILE_NAME "/data/misc/ipa/network_stats"
 
 typedef struct _wan_client_rt_hdl
@@ -104,7 +106,12 @@ public:
 	static bool isWanUP(int ipa_if_num_tether)
 	{
 #ifdef FEATURE_IPA_ANDROID
-		int i;
+#ifdef FEATURE_IPACM_HAL
+		/*To avoid -Wall -Werror error */
+		IPACMDBG_H("ipa_if_num_tether: %d\n",ipa_if_num_tether);
+		return wan_up;
+#else
+		uint32_t i;
 		for (i=0; i < ipa_if_num_tether_v4_total;i++)
 		{
 			if (ipa_if_num_tether_v4[i] == ipa_if_num_tether)
@@ -116,6 +123,7 @@ public:
 			}
 		}
 		return false;
+#endif
 #else
 		return wan_up;
 #endif
@@ -124,7 +132,12 @@ public:
 	static bool isWanUP_V6(int ipa_if_num_tether)
 	{
 #ifdef FEATURE_IPA_ANDROID
-		int i;
+#ifdef FEATURE_IPACM_HAL
+		/*To avoid -Wall -Werror error */
+		IPACMDBG_H("ipa_if_num_tether: %d\n",ipa_if_num_tether);
+		return wan_up_v6;
+#else
+		uint32_t i;
 		for (i=0; i < ipa_if_num_tether_v6_total;i++)
 		{
 			if (ipa_if_num_tether_v6[i] == ipa_if_num_tether)
@@ -136,10 +149,70 @@ public:
 			}
 		}
 		return false;
+#endif
 #else
 		return wan_up_v6;
 #endif
 	}
+
+#ifdef FEATURE_IPA_ANDROID
+	static int delete_tether_iface(ipa_ip_type iptype, int ipa_if_num_tether)
+	{
+		uint32_t i, j;
+
+		if (iptype == IPA_IP_v4)
+		{
+			/* delete support tether ifaces to its array*/
+			for (i=0; i < IPACM_Wan::ipa_if_num_tether_v4_total; i++)
+			{
+				if(IPACM_Wan::ipa_if_num_tether_v4[i] == ipa_if_num_tether)
+				{
+					IPACMDBG_H("Found tether client at position %d name(%s)\n", i,
+					IPACM_Iface::ipacmcfg->iface_table[ipa_if_num_tether].iface_name);
+					break;
+				}
+			}
+			if(i == IPACM_Wan::ipa_if_num_tether_v4_total)
+			{
+				IPACMDBG_H("Not finding the tethered ipv4 client.\n");
+				return IPACM_FAILURE;
+			}
+			for(j = i+1; j < IPACM_Wan::ipa_if_num_tether_v4_total; j++)
+			{
+				IPACM_Wan::ipa_if_num_tether_v4[j-1] = IPACM_Wan::ipa_if_num_tether_v4[j];
+			}
+			IPACM_Wan::ipa_if_num_tether_v4_total--;
+			IPACMDBG_H("Now the total num of ipa_if_num_tether_v4_total is %d\n",
+				IPACM_Wan::ipa_if_num_tether_v4_total);
+		}
+		else
+		{
+			/* delete support tether ifaces to its array*/
+			for (i=0; i < IPACM_Wan::ipa_if_num_tether_v6_total; i++)
+			{
+				if(IPACM_Wan::ipa_if_num_tether_v6[i] == ipa_if_num_tether)
+				{
+					IPACMDBG_H("Found tether client at position %d name(%s)\n", i,
+					IPACM_Iface::ipacmcfg->iface_table[ipa_if_num_tether].iface_name);
+					break;
+				}
+			}
+			if(i == IPACM_Wan::ipa_if_num_tether_v6_total)
+			{
+				IPACMDBG_H("Not finding the tethered ipv6 client.\n");
+				return IPACM_FAILURE;
+			}
+			for(j = i+1; j < IPACM_Wan::ipa_if_num_tether_v6_total; j++)
+			{
+				IPACM_Wan::ipa_if_num_tether_v6[j-1] = IPACM_Wan::ipa_if_num_tether_v6[j];
+			}
+			IPACM_Wan::ipa_if_num_tether_v6_total--;
+			IPACMDBG_H("Now the total num of ipa_if_num_tether_v6_total is %d\n",
+				IPACM_Wan::ipa_if_num_tether_v6_total);
+		}
+		return IPACM_SUCCESS;
+	}
+#endif
 
 	static uint32_t getWANIP()
 	{
@@ -174,9 +247,9 @@ public:
 	}
 #ifdef FEATURE_IPA_ANDROID
 	/* IPACM interface id */
-	static int ipa_if_num_tether_v4_total;
+	static uint32_t ipa_if_num_tether_v4_total;
 	static int ipa_if_num_tether_v4[IPA_MAX_IFACE_ENTRIES];
-	static int ipa_if_num_tether_v6_total;
+	static uint32_t ipa_if_num_tether_v6_total;
 	static int ipa_if_num_tether_v6[IPA_MAX_IFACE_ENTRIES];
 #endif
 
@@ -230,7 +303,7 @@ private:
 	int wan_client_len;
 	ipa_wan_client *wan_client;
 	int header_name_count;
-	int num_wan_client;
+	uint32_t num_wan_client;
 	uint8_t invalid_mac[IPA_MAC_ADDR_SIZE];
 	bool is_xlat;
 
@@ -475,6 +548,8 @@ private:
 	int del_wan_firewall_rule(ipa_ip_type iptype);
 
 	int add_dft_filtering_rule(struct ipa_flt_rule_add* rules, int rule_offset, ipa_ip_type iptype);
+
+	int add_tcpv6_filtering_rule(struct ipa_flt_rule_add* rules, int rule_offset);
 
 	int install_wan_filtering_rule(bool is_sw_routing);
 

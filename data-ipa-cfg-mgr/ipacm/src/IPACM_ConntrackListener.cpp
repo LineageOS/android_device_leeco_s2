@@ -96,10 +96,7 @@ void IPACM_ConntrackListener::event_callback(ipa_cm_event_id evt,
 	 case IPA_HANDLE_WAN_UP:
 			IPACMDBG_H("Received IPA_HANDLE_WAN_UP event\n");
 			CreateConnTrackThreads();
-			if(!isWanUp())
-			{
-				TriggerWANUp(data);
-			}
+			TriggerWANUp(data);
 			break;
 
 	 case IPA_HANDLE_WAN_DOWN:
@@ -118,9 +115,12 @@ void IPACM_ConntrackListener::event_callback(ipa_cm_event_id evt,
 			IPACMDBG_H("Received event: %d with ifname: %s and address: 0x%x\n",
 							 evt, ((ipacm_event_iface_up *)data)->ifname,
 							 ((ipacm_event_iface_up *)data)->ipv4_addr);
-			CreateConnTrackThreads();
-			IPACM_ConntrackClient::UpdateUDPFilters(data, false);
-			IPACM_ConntrackClient::UpdateTCPFilters(data, false);
+			if(isWanUp())
+			{
+				CreateConnTrackThreads();
+				IPACM_ConntrackClient::UpdateUDPFilters(data, false);
+				IPACM_ConntrackClient::UpdateTCPFilters(data, false);
+			}
 			break;
 
 	 case IPA_NEIGH_CLIENT_IP_ADDR_ADD_EVENT:
@@ -142,7 +142,7 @@ void IPACM_ConntrackListener::event_callback(ipa_cm_event_id evt,
 int IPACM_ConntrackListener::CheckNatIface(
    ipacm_event_data_all *data, bool *NatIface)
 {
-	int fd = 0, len = 0, cnt, i, j;
+	int fd = 0, len = 0, cnt, i;
 	struct ifreq ifr;
 	*NatIface = false;
 
@@ -213,8 +213,8 @@ int IPACM_ConntrackListener::CheckNatIface(
 					sizeof(pNatIfaces[i].iface_name)) == 0)
 		{
 			IPACMDBG_H("Nat iface (%s), entry (%d), dont cache",
-						pNatIfaces[i].iface_name, j);
-			iptodot("with ipv4 address: ", nat_iface_ipv4_addr[j]);
+						pNatIfaces[i].iface_name, i);
+			iptodot("with ipv4 address: ", nat_iface_ipv4_addr[i]);
 			*NatIface = true;
 			return IPACM_SUCCESS;
 		}
@@ -356,6 +356,14 @@ void IPACM_ConntrackListener::TriggerWANUp(void *in_param)
 		 return;
 	 }
 
+	 if(isWanUp())
+	 {
+		 if (wan_ipaddr != wanup_data->ipv4_addr)
+			 TriggerWANDown(wan_ipaddr);
+		 else
+			 return;
+	 }
+
 	 WanUp = true;
 	 isStaMode = wanup_data->is_sta;
 	 IPACMDBG("isStaMode: %d\n", isStaMode);
@@ -379,38 +387,32 @@ int IPACM_ConntrackListener::CreateConnTrackThreads(void)
 
 	if(isCTReg == false)
 	{
-		if(!tcp_thread)
+		ret = pthread_create(&tcp_thread, NULL, IPACM_ConntrackClient::TCPRegisterWithConnTrack, NULL);
+		if(0 != ret)
 		{
-			ret = pthread_create(&tcp_thread, NULL, IPACM_ConntrackClient::TCPRegisterWithConnTrack, NULL);
-			if(0 != ret)
-			{
-				IPACMERR("unable to create TCP conntrack event listner thread\n");
-				PERROR("unable to create TCP conntrack\n");
-				return -1;
-			}
-
-			IPACMDBG("created TCP conntrack event listner thread\n");
-			if(pthread_setname_np(tcp_thread, "tcp ct listener") != 0)
-			{
-				IPACMERR("unable to set thread name\n");
-			}
+			IPACMERR("unable to create TCP conntrack event listner thread\n");
+			PERROR("unable to create TCP conntrack\n");
+			goto error;
 		}
 
-		if(!udp_thread)
+		IPACMDBG("created TCP conntrack event listner thread\n");
+		if(pthread_setname_np(tcp_thread, "tcp ct listener") != 0)
 		{
-			ret = pthread_create(&udp_thread, NULL, IPACM_ConntrackClient::UDPRegisterWithConnTrack, NULL);
-			if(0 != ret)
-			{
-				IPACMERR("unable to create UDP conntrack event listner thread\n");
-				PERROR("unable to create UDP conntrack\n");
-				goto error;
-			}
+			IPACMERR("unable to set thread name\n");
+		}
 
-			IPACMDBG("created UDP conntrack event listner thread\n");
-			if(pthread_setname_np(udp_thread, "udp ct listener") != 0)
-			{
-				IPACMERR("unable to set thread name\n");
-			}
+		ret = pthread_create(&udp_thread, NULL, IPACM_ConntrackClient::UDPRegisterWithConnTrack, NULL);
+		if(0 != ret)
+		{
+			IPACMERR("unable to create UDP conntrack event listner thread\n");
+			PERROR("unable to create UDP conntrack\n");
+			goto error;
+		}
+
+		IPACMDBG("created UDP conntrack event listner thread\n");
+		if(pthread_setname_np(udp_thread, "udp ct listener") != 0)
+		{
+			IPACMERR("unable to set thread name\n");
 		}
 
 		isCTReg = true;
@@ -428,21 +430,18 @@ int IPACM_ConntrackListener::CreateNatThreads(void)
 
 	if(isNatThreadStart == false)
 	{
-		if(!udpcto_thread)
+		ret = pthread_create(&udpcto_thread, NULL, IPACM_ConntrackClient::UDPConnTimeoutUpdate, NULL);
+		if(0 != ret)
 		{
-			ret = pthread_create(&udpcto_thread, NULL, IPACM_ConntrackClient::UDPConnTimeoutUpdate, NULL);
-			if(0 != ret)
-			{
-				IPACMERR("unable to create udp conn timeout thread\n");
-				PERROR("unable to create udp conn timeout\n");
-				goto error;
-			}
+			IPACMERR("unable to create udp conn timeout thread\n");
+			PERROR("unable to create udp conn timeout\n");
+			goto error;
+		}
 
-			IPACMDBG("created upd conn timeout thread\n");
-			if(pthread_setname_np(udpcto_thread, "udp conn timeout") != 0)
-			{
-				IPACMERR("unable to set thread name\n");
-			}
+		IPACMDBG("created upd conn timeout thread\n");
+		if(pthread_setname_np(udpcto_thread, "udp conn timeout") != 0)
+		{
+			IPACMERR("unable to set thread name\n");
 		}
 
 		isNatThreadStart = true;
@@ -455,16 +454,20 @@ error:
 
 void IPACM_ConntrackListener::TriggerWANDown(uint32_t wan_addr)
 {
-	 IPACMDBG_H("Deleting ipv4 nat table with");
-	 IPACMDBG_H(" public ip address(0x%x): %d.%d.%d.%d\n", wan_addr,
-		    ((wan_addr>>24) & 0xFF), ((wan_addr>>16) & 0xFF), 
-		    ((wan_addr>>8) & 0xFF), (wan_addr & 0xFF));
-	 
-	 WanUp = false;
+	int ret = 0;
+	IPACMDBG_H("Deleting ipv4 nat table with");
+	IPACMDBG_H(" public ip address(0x%x): %d.%d.%d.%d\n", wan_addr,
+			((wan_addr>>24) & 0xFF), ((wan_addr>>16) & 0xFF),
+			((wan_addr>>8) & 0xFF), (wan_addr & 0xFF));
 
 	 if(nat_inst != NULL)
 	 {
-		 nat_inst->DeleteTable(wan_addr);
+		 ret = nat_inst->DeleteTable(wan_addr);
+		 if (ret)
+			 return;
+
+		 WanUp = false;
+		 wan_ipaddr = 0;
 	 }
 }
 

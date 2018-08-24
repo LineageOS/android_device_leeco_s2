@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013, The Linux Foundation. All rights reserved.
+Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -237,8 +237,6 @@ fail:
 int IPACM_Iface::handle_software_routing_disable(void)
 {
 	int res = IPACM_SUCCESS;
-	ipa_ip_type ip;
-	uint32_t flt_hdl;
 
 	if (rx_prop == NULL)
 	{
@@ -450,12 +448,15 @@ void IPACM_Iface::iface_addr_query
 						freeifaddrs(myaddrs);
 						return ;
 					}
+					memset(data_addr, 0, sizeof(ipacm_event_data_addr));
 					data_addr->iptype = IPA_IP_v4;
 					data_addr->if_index = interface_index;
 					data_addr->ipv4_addr = 	iface_ipv4.s_addr;
 					data_addr->ipv4_addr = ntohl(data_addr->ipv4_addr);
-					IPACMDBG_H("Posting IPA_ADDR_ADD_EVENT with if index:%d, ipv4 addr:0x%x\n",
+					strlcpy(data_addr->iface_name, ifr.ifr_name, sizeof(data_addr->iface_name));
+					IPACMDBG_H("Posting IPA_ADDR_ADD_EVENT with if index:%d, if name:%s, ipv4 addr:0x%x\n",
 						data_addr->if_index,
+						data_addr->iface_name,
 						data_addr->ipv4_addr);
 
 					evt_data.event = IPA_ADDR_ADD_EVENT;
@@ -475,6 +476,7 @@ void IPACM_Iface::iface_addr_query
 						freeifaddrs(myaddrs);
 						return ;
 					}
+					memset(data_addr, 0, sizeof(ipacm_event_data_addr));
 					data_addr->iptype = IPA_IP_v6;
 					data_addr->if_index = interface_index;
 					memcpy(data_addr->ipv6_addr,
@@ -484,8 +486,10 @@ void IPACM_Iface::iface_addr_query
 					data_addr->ipv6_addr[1] = ntohl(data_addr->ipv6_addr[1]);
 					data_addr->ipv6_addr[2] = ntohl(data_addr->ipv6_addr[2]);
 					data_addr->ipv6_addr[3] = ntohl(data_addr->ipv6_addr[3]);
-					IPACMDBG_H("Posting IPA_ADDR_ADD_EVENT with if index:%d, ipv6 addr:0x%x:%x:%x:%x\n",
+					strlcpy(data_addr->iface_name, ifr.ifr_name, sizeof(data_addr->iface_name));
+					IPACMDBG_H("Posting IPA_ADDR_ADD_EVENT with if index:%d, if name:%s, ipv6 addr:0x%x:%x:%x:%x\n",
 							data_addr->if_index,
+							data_addr->iface_name,
 							data_addr->ipv6_addr[0], data_addr->ipv6_addr[1], data_addr->ipv6_addr[2], data_addr->ipv6_addr[3]);
 
 					evt_data.event = IPA_ADDR_ADD_EVENT;
@@ -616,13 +620,6 @@ int IPACM_Iface::query_iface_property(void)
 								 cnt, rx_prop->rx[cnt].attrib.attrib_mask, rx_prop->rx[cnt].ip, rx_prop->rx[cnt].src_pipe);
 			}
 		}
-	}
-
-	/* Add Natting iface to IPACM_Config if there is  Rx/Tx property */
-	if (rx_prop != NULL || tx_prop != NULL)
-	{
-		IPACMDBG_H(" Has rx/tx properties registered for iface %s, add for NATTING \n", dev_name);
-        IPACM_Iface::ipacmcfg->AddNatIfaces(dev_name);
 	}
 
 	close(fd);
@@ -837,6 +834,21 @@ int IPACM_Iface::init_fl_rule(ipa_ip_type iptype)
 #endif
 		memcpy(&(m_pFilteringTable->rules[2]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
 
+		/* Configuring fd00::/8 Unique Local Ipv6 Address */
+		flt_rule_entry.rule.attrib.u.v6.dst_addr_mask[0] = 0xFF000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr_mask[1] = 0x00000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr_mask[2] = 0x00000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr_mask[3] = 0x00000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr[0] = 0xFD000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr[1] = 0x00000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr[2] = 0x00000000;
+		flt_rule_entry.rule.attrib.u.v6.dst_addr[3] = 0X00000000;
+#ifdef FEATURE_IPA_V3
+		flt_rule_entry.at_rear = true;
+		flt_rule_entry.rule.hashable = true;
+#endif
+		memcpy(&(m_pFilteringTable->rules[3]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
+
 #ifdef FEATURE_IPA_ANDROID
 		IPACMDBG_H("Add TCP ctrl rules: total num %d\n", IPV6_DEFAULT_FILTERTING_RULES);
 		memset(&flt_rule_entry, 0, sizeof(struct ipa_flt_rule_add));
@@ -853,7 +865,11 @@ int IPACM_Iface::init_fl_rule(ipa_ip_type iptype)
 
 		if(rx_prop->rx[0].attrib.attrib_mask & IPA_FLT_META_DATA)
 		{
+#ifdef FEATURE_IPA_V3
+			flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<9);
+#else
 			flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<14);
+#endif
 			flt_rule_entry.rule.eq_attrib.metadata_meq32_present = 1;
 			flt_rule_entry.rule.eq_attrib.metadata_meq32.offset = 0;
 			flt_rule_entry.rule.eq_attrib.metadata_meq32.value = rx_prop->rx[0].attrib.meta_data;
@@ -864,24 +880,28 @@ int IPACM_Iface::init_fl_rule(ipa_ip_type iptype)
 		flt_rule_entry.rule.eq_attrib.protocol_eq_present = 1;
 		flt_rule_entry.rule.eq_attrib.protocol_eq = IPACM_FIREWALL_IPPROTO_TCP;
 
+#ifdef FEATURE_IPA_V3
+		flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<7);
+#else
 		flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<8);
+#endif
 		flt_rule_entry.rule.eq_attrib.num_ihl_offset_meq_32 = 1;
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].offset = 12;
 
 		/* add TCP FIN rule*/
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].value = (((uint32_t)1)<<TCP_FIN_SHIFT);
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].mask = (((uint32_t)1)<<TCP_FIN_SHIFT);
-		memcpy(&(m_pFilteringTable->rules[3]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
+		memcpy(&(m_pFilteringTable->rules[4]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
 
 		/* add TCP SYN rule*/
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].value = (((uint32_t)1)<<TCP_SYN_SHIFT);
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].mask = (((uint32_t)1)<<TCP_SYN_SHIFT);
-		memcpy(&(m_pFilteringTable->rules[4]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
+		memcpy(&(m_pFilteringTable->rules[5]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
 
 		/* add TCP RST rule*/
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].value = (((uint32_t)1)<<TCP_RST_SHIFT);
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].mask = (((uint32_t)1)<<TCP_RST_SHIFT);
-		memcpy(&(m_pFilteringTable->rules[5]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
+		memcpy(&(m_pFilteringTable->rules[6]), &flt_rule_entry, sizeof(struct ipa_flt_rule_add));
 #endif
 		if (m_filtering.AddFilteringRule(m_pFilteringTable) == false)
 		{
@@ -910,6 +930,12 @@ int IPACM_Iface::init_fl_rule(ipa_ip_type iptype)
 		}
 	}
 
+	/* Add Natting iface to IPACM_Config if there is  Rx/Tx property */
+	if (rx_prop != NULL || tx_prop != NULL)
+	{
+		IPACMDBG_H(" Has rx/tx properties registered for iface %s, add for NATTING for ip-family %d \n", dev_name, iptype);
+		IPACM_Iface::ipacmcfg->AddNatIfaces(dev_name, iptype);
+	}
 
 fail:
 	free(m_pFilteringTable);
@@ -924,30 +950,37 @@ int IPACM_Iface::ipa_get_if_index
   int * if_index
 )
 {
-  int fd;
-  struct ifreq ifr;
+	int fd;
+	struct ifreq ifr;
 
-  if((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
-  {
-    IPACMERR("get interface index socket create failed \n");
-    return IPACM_FAILURE;
-  }
+	if((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+	{
+		IPACMERR("get interface index socket create failed \n");
+		return IPACM_FAILURE;
+	}
 
-  memset(&ifr, 0, sizeof(struct ifreq));
-  (void)strncpy(ifr.ifr_name, if_name, sizeof(ifr.ifr_name));
-  IPACMDBG_H("interface name (%s)\n", if_name);
+	if(strlen(if_name) >= sizeof(ifr.ifr_name))
+	{
+		IPACMERR("interface name overflows: len %zu\n", strlen(if_name));
+		close(fd);
+		return IPACM_FAILURE;
+	}
 
-  if (ioctl(fd,SIOCGIFINDEX , &ifr) < 0)
-  {
-    IPACMERR("call_ioctl_on_dev: ioctl failed, interface name (%s):\n", ifr.ifr_name);
-    close(fd);
-    return IPACM_FAILURE;
-  }
+	memset(&ifr, 0, sizeof(struct ifreq));
+	(void)strlcpy(ifr.ifr_name, if_name, sizeof(ifr.ifr_name));
+	IPACMDBG_H("interface name (%s)\n", if_name);
 
-  *if_index = ifr.ifr_ifindex;
-  IPACMDBG_H("Interface index %d\n", *if_index);
-  close(fd);
-  return IPACM_SUCCESS;
+	if(ioctl(fd,SIOCGIFINDEX , &ifr) < 0)
+	{
+		IPACMERR("call_ioctl_on_dev: ioctl failed, interface name (%s):\n", ifr.ifr_name);
+		close(fd);
+		return IPACM_FAILURE;
+	}
+
+	*if_index = ifr.ifr_ifindex;
+	IPACMDBG_H("Interface index %d\n", *if_index);
+	close(fd);
+	return IPACM_SUCCESS;
 }
 
 void IPACM_Iface::config_ip_type(ipa_ip_type iptype)

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -166,12 +166,14 @@ typedef enum
 	IPA_WAN_XLAT_CONNECT_EVENT,               /* ipacm_event_data_fid */
 	IPA_TETHERING_STATS_UPDATE_EVENT,         /* ipacm_event_data_fid */
 	IPA_NETWORK_STATS_UPDATE_EVENT,           /* ipacm_event_data_fid */
+	IPA_DOWNSTREAM_ADD,                       /* ipacm_event_ipahal_stream */
+	IPA_DOWNSTREAM_DEL,                       /* ipacm_event_ipahal_stream */
 
 	IPA_EXTERNAL_EVENT_MAX,
 
 	IPA_HANDLE_WAN_UP,                        /* ipacm_event_iface_up  */
 	IPA_HANDLE_WAN_DOWN,                      /* ipacm_event_iface_up  */
-	IPA_HANDLE_WAN_UP_V6,                     /* NULL */
+	IPA_HANDLE_WAN_UP_V6,                     /* ipacm_event_iface_up */
 	IPA_HANDLE_WAN_DOWN_V6,                   /* NULL */
 	IPA_HANDLE_WAN_UP_TETHER,                 /* ipacm_event_iface_up_tehter */
 	IPA_HANDLE_WAN_DOWN_TETHER,               /* ipacm_event_iface_up_tehter */
@@ -184,6 +186,15 @@ typedef enum
 	IPA_ETH_BRIDGE_CLIENT_ADD,                /* ipacm_event_eth_bridge */
 	IPA_ETH_BRIDGE_CLIENT_DEL,                /* ipacm_event_eth_bridge*/
 	IPA_ETH_BRIDGE_WLAN_SCC_MCC_SWITCH,       /* ipacm_event_eth_bridge*/
+	IPA_SSR_NOTICE,						      /* NULL*/
+#ifdef FEATURE_L2TP
+	IPA_ADD_VLAN_IFACE,                       /* ipa_ioc_vlan_iface_info */
+	IPA_DEL_VLAN_IFACE,                       /* ipa_ioc_vlan_iface_info */
+	IPA_ADD_L2TP_VLAN_MAPPING,                /* ipa_ioc_l2tp_vlan_mapping_info */
+	IPA_DEL_L2TP_VLAN_MAPPING,                /* ipa_ioc_l2tp_vlan_mapping_info */
+	IPA_HANDLE_VLAN_CLIENT_INFO,              /* ipacm_event_data_all */
+	IPA_HANDLE_VLAN_IFACE_INFO,               /* ipacm_event_data_all */
+#endif
 	IPA_LAN_DELETE_SELF,                      /* ipacm_event_data_fid */
 	IPACM_EVENT_MAX
 } ipa_cm_event_id;
@@ -247,6 +258,7 @@ typedef struct _ipacm_event_data_all
 	uint32_t  ipv4_addr;
 	uint32_t  ipv6_addr[4];
 	uint8_t mac_addr[IPA_MAC_ADDR_SIZE];
+	char iface_name[IPA_IFACE_NAME_LEN];
 } ipacm_event_data_all;
 
 class IPACM_Lan;
@@ -261,6 +273,7 @@ typedef struct
 	IPACM_Lan *p_iface;
 	ipa_ip_type iptype;
 	uint8_t mac_addr[6];
+	char iface_name[IPA_IFACE_NAME_LEN];
 } ipacm_event_eth_bridge;
 
 typedef struct
@@ -297,6 +310,7 @@ typedef struct _ipacm_event_data_iptype
 typedef struct _ipacm_event_data_addr
 {
 	enum ipa_ip_type iptype;
+	char iface_name[IPA_IFACE_NAME_LEN];
 	int if_index;
 	uint32_t  ipv4_addr_gw;
 	uint32_t  ipv4_addr;
@@ -350,5 +364,18 @@ typedef struct _ipacm_ifacemgr_data
 	ipacm_wan_iface_type if_type;
 	uint8_t mac_addr[IPA_MAC_ADDR_SIZE];
 }ipacm_ifacemgr_data;
+
+typedef struct _ipacm_offload_prefix {
+	enum ipa_ip_type iptype;
+	uint32_t v4Addr;
+	uint32_t v4Mask;
+	uint32_t v6Addr[4];
+	uint32_t v6Mask[4];
+} ipacm_offload_prefix;
+
+typedef struct {
+	int if_index;
+	_ipacm_offload_prefix prefix;
+} ipacm_event_ipahal_stream;
 
 #endif /* IPA_CM_DEFS_H */

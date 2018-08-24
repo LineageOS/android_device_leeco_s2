@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -46,7 +46,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 typedef struct
 {
-  char iface_name[IPA_IFACE_NAME_LEN];
+	char iface_name[IPA_IFACE_NAME_LEN];
+	bool v4_up;
+	bool v6_up;
 }NatIfaces;
 
 /* for IPACM rm dependency use*/
@@ -135,8 +137,8 @@ public:
 	uint8_t bridge_mac[IPA_MAC_ADDR_SIZE];
 
 	/* Store the flt rule count for each producer client*/
-	int flt_rule_count_v4[IPA_CLIENT_CONS - IPA_CLIENT_PROD];
-	int flt_rule_count_v6[IPA_CLIENT_CONS - IPA_CLIENT_PROD];
+	int flt_rule_count_v4[IPA_CLIENT_MAX];
+	int flt_rule_count_v6[IPA_CLIENT_MAX];
 
 	/* IPACM routing table name for v4/v6 */
 	struct ipa_ioc_get_rt_tbl rt_tbl_lan_v4, rt_tbl_wan_v4, rt_tbl_default_v4, rt_tbl_v6, rt_tbl_wan_v6;
@@ -152,7 +154,7 @@ public:
 
 	inline void increaseFltRuleCount(int index, ipa_ip_type iptype, int increment)
 	{
-		if((index >= IPA_CLIENT_CONS - IPA_CLIENT_PROD) || (index < 0))
+		if((index >= IPA_CLIENT_MAX) || (index < 0))
 		{
 			IPACMERR("Index is out of range: %d.\n", index);
 			return;
@@ -172,7 +174,7 @@ public:
 
 	inline void decreaseFltRuleCount(int index, ipa_ip_type iptype, int decrement)
 	{
-		if((index >= IPA_CLIENT_CONS - IPA_CLIENT_PROD) || (index < 0))
+		if((index >= IPA_CLIENT_MAX) || (index < 0))
 		{
 			IPACMERR("Index is out of range: %d.\n", index);
 			return;
@@ -192,7 +194,7 @@ public:
 
 	inline int getFltRuleCount(int index, ipa_ip_type iptype)
 	{
-		if((index >= IPA_CLIENT_CONS - IPA_CLIENT_PROD) || (index < 0))
+		if((index >= IPA_CLIENT_MAX) || (index < 0))
 		{
 			IPACMERR("Index is out of range: %d.\n", index);
 			return -1;
@@ -230,9 +232,11 @@ public:
 
 	void DelRmDepend(ipa_rm_resource_name rm1);
 
-	int AddNatIfaces(char *dev_name);
+	int AddNatIfaces(char *dev_name, ipa_ip_type ip_type);
 
 	int DelNatIfaces(char *dev_name);
+
+	int CheckNatIfaces(const char *dev_name, ipa_ip_type ip_type);
 
 	inline void SetQmapId(uint8_t id)
 	{

@@ -60,6 +60,10 @@ IPACM_ConntrackClient::IPACM_ConntrackClient()
 	udp_hdl = NULL;
 	tcp_filter = NULL;
 	udp_filter = NULL;
+	fd_tcp = -1;
+	fd_udp = -1;
+	subscrips_tcp = NF_NETLINK_CONNTRACK_UPDATE | NF_NETLINK_CONNTRACK_DESTROY;
+	subscrips_udp = NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY;
 }
 
 IPACM_ConntrackClient* IPACM_ConntrackClient::GetInstance()
@@ -100,6 +104,7 @@ int IPACM_ConntrackClient::IPAConntrackEventCB
 	ipacm_cmd_q_data evt_data;
 	ipacm_ct_evt_data *ct_data;
 	uint8_t ip_type = 0;
+	data = NULL;
 
 	IPACMDBG("Event callback called with msgtype: %d\n",type);
 
@@ -172,8 +177,16 @@ int IPACM_ConntrackClient::IPA_Conntrack_Filters_Ignore_Bridge_Addrs
 	/* retrieve bridge interface ipv4 address */
 	memset(&ifr, 0, sizeof(struct ifreq));
 	ifr.ifr_addr.sa_family = AF_INET;
-	(void)strncpy(ifr.ifr_name, IPACM_Iface::ipacmcfg->ipa_virtual_iface_name, sizeof(ifr.ifr_name));
+	(void)strlcpy(ifr.ifr_name, IPACM_Iface::ipacmcfg->ipa_virtual_iface_name, sizeof(ifr.ifr_name));
 	IPACMDBG("bridge interface name (%s)\n", ifr.ifr_name);
+
+	if(strlen(IPACM_Iface::ipacmcfg->ipa_virtual_iface_name) >= sizeof(ifr.ifr_name))
+	{
+		IPACMERR("interface name overflows: len %zu\n",
+			strlen(IPACM_Iface::ipacmcfg->ipa_virtual_iface_name));
+		close(fd);
+		return -1;
+	}
 
 	ret = ioctl(fd, SIOCGIFADDR, &ifr);
 	if (ret < 0)
@@ -204,7 +217,7 @@ int IPACM_ConntrackClient::IPA_Conntrack_Filters_Ignore_Bridge_Addrs
 
 	nfct_filter_add_attr(filter, NFCT_FILTER_SRC_IPV4, &filter_ipv4);
 
-  return 0;
+	return 0;
 }
 
 int IPACM_ConntrackClient::IPA_Conntrack_Filters_Ignore_Local_Iface
@@ -374,8 +387,8 @@ int IPACM_ConntrackClient::IPA_Conntrack_UDP_Filter_Init(void)
 
 void* IPACM_ConntrackClient::UDPConnTimeoutUpdate(void *ptr)
 {
-
 	NatApp *nat_inst = NULL;
+	ptr = NULL;
 #ifdef IPACM_DEBUG
 	IPACMDBG("\n");
 #endif
@@ -421,10 +434,20 @@ void* IPACM_ConntrackClient::TCPRegisterWithConnTrack(void *)
 	subscrips |= NF_NETLINK_CONNTRACK_NEW;
 #endif
 
+#ifdef FEATURE_IPACM_HAL
+	if (pClient->fd_tcp < 0) {
+		IPACMERR("unable to get conntrack TCP handle due to fd_tcp is invalid \n");
+		return NULL;
+	} else {
+		pClient->tcp_hdl = nfct_open2(CONNTRACK, subscrips, pClient->fd_tcp);
+	}
+#else
 	pClient->tcp_hdl = nfct_open(CONNTRACK, subscrips);
+#endif
+
 	if(pClient->tcp_hdl == NULL)
 	{
-		PERROR("nfct_open\n");
+		PERROR("nfct_open failed on getting tcp_hdl\n");
 		return NULL;
 	}
 
@@ -445,7 +468,7 @@ void* IPACM_ConntrackClient::TCPRegisterWithConnTrack(void *)
 	}
 
 	/* Register callback with netfilter handler */
-	IPACMDBG_H("tcp handle:%p, fd:%d\n", pClient->tcp_hdl, nfct_fd(pClient->tcp_hdl));
+	IPACMDBG_H("tcp handle:%pK, fd:%d\n", pClient->tcp_hdl, nfct_fd(pClient->tcp_hdl));
 #ifndef CT_OPT
 	nfct_callback_register(pClient->tcp_hdl,
 			(nf_conntrack_msg_type)	(NFCT_T_UPDATE | NFCT_T_DESTROY | NFCT_T_NEW),
@@ -475,7 +498,11 @@ void* IPACM_ConntrackClient::TCPRegisterWithConnTrack(void *)
 	/* de-register the callback */
 	nfct_callback_unregister(pClient->tcp_hdl);
 	/* close the handle */
+#ifdef FEATURE_IPACM_HAL
+	nfct_close2(pClient->tcp_hdl, true);
+#else
 	nfct_close(pClient->tcp_hdl);
+#endif
 	pClient->tcp_hdl = NULL;
 
 	pthread_exit(NULL);
@@ -497,11 +524,21 @@ void* IPACM_ConntrackClient::UDPRegisterWithConnTrack(void *)
 		return NULL;
 	}
 
+#ifdef FEATURE_IPACM_HAL
+	if (pClient->fd_udp < 0) {
+		IPACMERR("unable to get conntrack UDP handle due to fd_udp is invalid \n");
+		return NULL;
+	} else {
+		pClient->udp_hdl = nfct_open2(CONNTRACK,
+					(NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY), pClient->fd_udp);
+	}
+#else
 	pClient->udp_hdl = nfct_open(CONNTRACK,
 					(NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY));
+#endif
 	if(pClient->udp_hdl == NULL)
 	{
-		PERROR("nfct_open\n");
+		PERROR("nfct_open failed on getting udp_hdl\n");
 		return NULL;
 	}
 
@@ -522,7 +559,7 @@ void* IPACM_ConntrackClient::UDPRegisterWithConnTrack(void *)
 	}
 
 	/* Register callback with netfilter handler */
-	IPACMDBG_H("udp handle:%p, fd:%d\n", pClient->udp_hdl, nfct_fd(pClient->udp_hdl));
+	IPACMDBG_H("udp handle:%pK, fd:%d\n", pClient->udp_hdl, nfct_fd(pClient->udp_hdl));
 	nfct_callback_register(pClient->udp_hdl,
 			(nf_conntrack_msg_type)(NFCT_T_NEW | NFCT_T_DESTROY),
 			IPAConntrackEventCB,
@@ -551,11 +588,63 @@ ctcatch:
 	/* de-register the callback */
 	nfct_callback_unregister(pClient->udp_hdl);
 	/* close the handle */
+#ifdef FEATURE_IPACM_HAL
+	nfct_close2(pClient->udp_hdl, true);
+#else
 	nfct_close(pClient->udp_hdl);
+#endif
 	pClient->udp_hdl = NULL;
 
 	pthread_exit(NULL);
 	return NULL;
+}
+
+/* Thread to initialize TCP Conntrack Filters*/
+void IPACM_ConntrackClient::UNRegisterWithConnTrack(void)
+{
+	IPACM_ConntrackClient *pClient = NULL;
+
+	IPACMDBG("\n");
+
+	pClient = IPACM_ConntrackClient::GetInstance();
+	if(pClient == NULL)
+	{
+		IPACMERR("unable to retrieve instance of conntrack client\n");
+		return;
+	}
+
+	/* destroy the TCP filter.. this will not detach the filter */
+	if (pClient->tcp_filter) {
+		nfct_filter_destroy(pClient->tcp_filter);
+		pClient->tcp_filter = NULL;
+	}
+
+	/* de-register the callback */
+	if (pClient->tcp_hdl) {
+		nfct_callback_unregister(pClient->tcp_hdl);
+		/* close the handle */
+		nfct_close(pClient->tcp_hdl);
+		pClient->tcp_hdl = NULL;
+	}
+
+	/* destroy the filter.. this will not detach the filter */
+	if (pClient->udp_filter) {
+		nfct_filter_destroy(pClient->udp_filter);
+		pClient->udp_filter = NULL;
+	}
+
+	/* de-register the callback */
+	if (pClient->udp_hdl) {
+		nfct_callback_unregister(pClient->udp_hdl);
+		/* close the handle */
+		nfct_close(pClient->udp_hdl);
+		pClient->udp_hdl = NULL;
+	}
+
+	pClient->fd_tcp = -1;
+	pClient->fd_udp = -1;
+
+	return;
 }
 
 void IPACM_ConntrackClient::UpdateUDPFilters(void *param, bool isWan)
@@ -597,7 +686,7 @@ void IPACM_ConntrackClient::UpdateUDPFilters(void *param, bool isWan)
 		if(ret == -1)
 		{
 			PERROR("unable to attach the filter to udp handle\n");
-			IPACMERR("udp handle:%p, fd:%d Error: %d\n",pClient->udp_hdl, nfct_fd(pClient->udp_hdl), ret);
+			IPACMERR("udp handle:%pK, fd:%d Error: %d\n",pClient->udp_hdl, nfct_fd(pClient->udp_hdl), ret);
 			return;
 		}
 	}
@@ -642,7 +731,7 @@ void IPACM_ConntrackClient::UpdateTCPFilters(void *param, bool isWan)
 		if(ret == -1)
 		{
 			PERROR("unable to attach the filter to tcp handle\n");
-			IPACMERR("tcp handle:%p, fd:%d Error: %d\n",pClient->tcp_hdl, nfct_fd(pClient->tcp_hdl), ret);
+			IPACMERR("tcp handle:%pK, fd:%d Error: %d\n",pClient->tcp_hdl, nfct_fd(pClient->tcp_hdl), ret);
 			return;
 		}
 	}
