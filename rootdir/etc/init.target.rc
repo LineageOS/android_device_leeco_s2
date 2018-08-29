@@ -26,7 +26,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import init.s2.usb.rc
+import /vendor/etc/init/hw/init.s2.usb.rc
 
 on early-init
     symlink /data/tombstones /tombstones
@@ -34,7 +34,7 @@ on early-init
 on fs
     wait /dev/block/platform/soc.0/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc.0/${ro.boot.bootdevice} /dev/block/bootdevice
-    mount_all fstab.qcom
+    mount_all /vendor/etc/fstab.qcom
 
     mkdir /persist/data 0700 system system
     restorecon_recursive /persist

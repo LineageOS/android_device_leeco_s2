@@ -304,8 +304,16 @@ PRODUCT_PACKAGES += \
     libxml2
 
 # Ramdisk
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,${LOCAL_PATH}/rootdir,root)
+PRODUCT_PACKAGES += \
+    fstab.qcom \
+    init.qcom.sh \
+    init.qcom.post_boot.sh
+
+PRODUCT_PACKAGES += \
+    init.qcom.rc \
+    init.target.rc \
+    init.s2.usb.rc \
+    ueventd.qcom.rc
 
 # RCS
 PRODUCT_PACKAGES += \
