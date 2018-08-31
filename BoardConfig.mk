@@ -128,6 +128,10 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
+# Camera
+TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
+	/system/bin/mm-qcamera-daemon=23
+
 # Display
 MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
