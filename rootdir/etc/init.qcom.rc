@@ -25,6 +25,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+import /vendor/etc/init/hw/init.qcom.power.rc
 import /vendor/etc/init/hw/init.target.rc
 
 on early-init
@@ -517,16 +518,6 @@ service qcom-sh /vendor/bin/init.qcom.sh
     seclabel u:r:qti_init_shell:s0
     oneshot
 
-service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
-    class late_start
-    user root
-    seclabel u:r:qti_init_shell:s0
-    disabled
-    oneshot
-
-on property:sys.boot_completed=1
-    start qcom-post-boot
-
 service atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
@@ -568,7 +559,6 @@ service vendor.msm_irqbal_lb /vendor/bin/msm_irqbalance -f /system/vendor/etc/ms
 on charger
     setprop persist.sys.usb.config mass_storage
     load_system_props
-    start qcom-post-boot
 
 on property:init.svc.surfaceflinger=restarting
     stop hwcomposer-2-1
