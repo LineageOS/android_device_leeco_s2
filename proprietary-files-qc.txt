@@ -19,6 +19,14 @@ vendor/lib/rfsa/adsp/libexternal_dog_skel.so
 vendor/lib/rfsa/adsp/libfastcvadsp.so
 vendor/lib/rfsa/adsp/libfastcvadsp_skel.so
 
+# ANT+
+lib/com.qualcomm.qti.ant@1.0.so
+-lib/libantradio.so
+lib64/com.qualcomm.qti.ant@1.0.so
+-lib64/libantradio.so
+vendor/lib64/com.qualcomm.qti.ant@1.0_vendor.so
+vendor/lib64/hw/com.qualcomm.qti.ant@1.0-impl.so
+
 # Audio libraries
 vendor/lib/libacdb-fts.so
 vendor/lib/libacdbloader.so
@@ -45,13 +53,13 @@ vendor/lib64/soundfx/libqcreverb.so
 vendor/lib64/soundfx/libqcvirt.so
 
 # Bluetooth - from SRT Phone 8.0.0
-vendor/bin/btnvtool|062b5261293fe12ffe3a5794f86df3266086babf
-vendor/lib/libbtnv.so|6bed150f70d3ddd91752dccc5ec3d9eab332a713
-vendor/lib/com.qualcomm.qti.bluetooth_audio@1.0_vendor.so|e843cbb159a0a3f39dbc7049f9830754e40981cd
-vendor/lib/hw/android.hardware.bluetooth@1.0-impl-qti.so|1aedc27dec31faff77f4a71b18a8a5e00be1e78d
-vendor/lib64/libbtnv.so|89c9392ae151148d7a88c4de6962c0628af2af45
-vendor/lib64/com.qualcomm.qti.bluetooth_audio@1.0_vendor.so|65741ce5d42b118146362929864fae6ff46d3531
-vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|7b0558d59626a90e2d48b2626334dc39238c6505
+vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
+vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc
+vendor/lib64/com.qualcomm.qti.bluetooth_audio@1.0_vendor.so
+vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so
+vendor/lib64/libbt-hidlclient.so
+vendor/lib64/libbtnv.so
+vendor/lib64/vendor.qti.hardware.fm@1.0_vendor.so
 
 # Charger
 vendor/bin/hvdcp_opti

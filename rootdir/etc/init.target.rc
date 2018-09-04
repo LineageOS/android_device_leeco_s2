@@ -37,6 +37,10 @@ on fs
     mount_all /vendor/etc/fstab.qcom
 
     mkdir /persist/data 0700 system system
+    
+    # Bluetooth 
+    mkdir /persist/wlan_bt 0700 system system
+    
     restorecon_recursive /persist
     restorecon_recursive /dsp
 
