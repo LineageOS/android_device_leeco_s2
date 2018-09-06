@@ -270,11 +270,6 @@ on property:vendor.ims.DATA_DAEMON_STATUS=1
     start ims_rtp_daemon
     start imsrcsservice
 
-service fingerprintd /system/bin/fingerprintd
-    class late_start
-    socket fpce stream 0666 system system
-    user system
-
 service gx_fpd /system/bin/gx_fpd
     class late_start
     user root
