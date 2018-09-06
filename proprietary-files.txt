@@ -298,7 +298,6 @@ etc/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml
 etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml
 
 # Fingerprint sensor
-bin/fingerprintd
 bin/gx_fpd
 bin/gx_fpcmd
 lib64/hw/fingerprint.vendor.msm8952.so
