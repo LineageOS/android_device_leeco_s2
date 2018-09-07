@@ -1,0 +1,4 @@
+allow hal_dpmQmiMgr sysfs:file r_file_perms;
+allow hal_dpmQmiMgr qmuxd_socket:dir rw_dir_perms;
+allow hal_dpmQmiMgr qmuxd_socket:sock_file { read write create };
+allow hal_dpmQmiMgr qmuxd:unix_stream_socket { connectto };

@@ -1,0 +1,1 @@
+allow ipacm system_server:netlink_socket { getattr read setopt write };
