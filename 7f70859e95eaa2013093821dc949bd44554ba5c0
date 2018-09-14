@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a934c6_eb026d23",
+        "filename": "rootdir/etc/init.qcom.power.rc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2018-09-14T11:27:01Z",
+      "side": 1,
+      "message": "Look at this file and remove all this red extra whitespace!",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "7f70859e95eaa2013093821dc949bd44554ba5c0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
