@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5dc5d0e_a241b310",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2018-09-14T00:36:11Z",
+      "side": 1,
+      "message": "Pls delete spaces from here",
+      "revId": "a12a5566d19d9c2549b727371b2a89561ead7a5b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
