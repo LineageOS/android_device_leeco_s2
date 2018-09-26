@@ -50,7 +50,7 @@
     </hal>
     <hal format="hidl">
         <name>android.hardware.camera.provider</name>
-        <transport arch="32+64">passthrough</transport>
+        <transport>hwbinder</transport>
         <version>2.4</version>
         <interface>
             <name>ICameraProvider</name>
@@ -129,7 +129,7 @@
     </hal>
     <hal format="hidl">
         <name>android.hardware.graphics.composer</name>
-        <transport arch="32+64">passthrough</transport>
+        <transport>hwbinder</transport>
         <version>2.1</version>
         <interface>
             <name>IComposer</name>
