@@ -1682,8 +1682,8 @@ int QCamera3HardwareInterface::validateCaptureRequest(
         return BAD_VALUE;
     }
     if (request->num_output_buffers >= MAX_NUM_STREAMS) {
-        ALOGE("%s: Number of buffers %d equals or is greater than maximum number of streams!",
-                __func__, request->num_output_buffers);
+        ALOGE("%s: Number of buffers %d equals or is greater than maximum number of streams! %d",
+                __func__, request->num_output_buffers, MAX_NUM_STREAMS);
         return BAD_VALUE;
     }
     if (request->input_buffer != NULL) {
