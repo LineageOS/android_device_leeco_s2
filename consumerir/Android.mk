@@ -1,5 +1,6 @@
 #
-# Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2013 The Android Open Source Project
+# Copyright (C) 2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +18,25 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := consumerir.c
-
-LOCAL_SHARED_LIBRARIES := liblog libcutils
-
+LOCAL_MODULE := android.hardware.ir@1.0-service.leeco
+LOCAL_INIT_RC := android.hardware.ir@1.0-service.leeco.rc
 LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_SHARED_LIBRARIES := \
+    liblog \
+    libcutils \
+    libdl \
+    libxml2 \
+    libhidlbase \
+    libhidltransport \
+    libhardware \
+    libutils \
+    android.hardware.ir@1.0
 
-LOCAL_MODULE := consumerir.$(TARGET_BOARD_PLATFORM)
+LOCAL_SRC_FILES := \
+    service.cpp \
+    ConsumerIr.cpp
+
 LOCAL_MODULE_TAGS := optional
+LOCAL_VENDOR_MODULE := true
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_EXECUTABLE)
