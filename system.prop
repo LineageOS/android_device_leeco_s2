@@ -170,6 +170,7 @@ net.tcp.2g_init_rwnd=10
 
 # Time Services
 persist.timed.enable=true
+persist.delta_time.enable=true
 
 # WiFi
 wifi.direct.interface=p2p0
