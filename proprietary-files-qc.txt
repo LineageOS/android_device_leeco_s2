@@ -332,6 +332,9 @@ vendor/lib/libOmxEvrcDec.so
 vendor/lib/libOmxQcelp13Dec.so
 vendor/lib/libOmxWmaDec.so
 
+# Offline charger - from s2 - EUi 5.9.028s
+vendor/bin/charger|a6ca35eff5ecc01b437e8cec2a53d7d5013d4f6e
+
 # Perf
 lib/libqti-perfd-client_system.so
 lib/libqti_performance.so
