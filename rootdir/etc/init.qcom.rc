@@ -388,6 +388,10 @@ on property:sys.boot_completed=1
     chown media audio /sys/kernel/wdsp0/boot
     chown media audio /sys/kernel/wcd_cpe0/fw_name
 
+    # Enable ZRAM on boot_complete
+    swapon_all /vendor/etc/fstab.qcom
+    write /proc/sys/vm/swappiness 100
+
 on property:vold.decrypt=trigger_restart_framework
     start config_bt_addr
     start wcnss-service
@@ -565,7 +569,6 @@ on property:init.svc.recovery=running
 
 on property:dev.bootcomplete=1
     trigger enable-low-power
-    swapon_all /vendor/etc/fstab.qcom
 
 service time_daemon /system/vendor/bin/time_daemon
     class main
