@@ -113,6 +113,8 @@
             <instance>default</instance>
             <instance>gnss_vendor</instance>
         </interface>
+            <fqname>@1.0::IGnss/default</fqname>
+            <fqname>@1.0::IGnss/gnss_vendor</fqname>
     </hal>
     <hal format="hidl">
         <name>android.hardware.graphics.allocator</name>
@@ -147,6 +149,7 @@
         <version>2.0</version>
         <interface>
             <name>IHealth</name>
+            <instance>backup</instance>
             <instance>default</instance>
         </interface>
     </hal>
