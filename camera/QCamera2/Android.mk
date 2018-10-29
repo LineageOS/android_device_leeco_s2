@@ -67,9 +67,8 @@ LOCAL_C_INCLUDES += \
         frameworks/native/include/media/hardware \
         device/leeco/s2/camera/QCamera2/HAL
 
-ifeq ($(TARGET_COMPILE_WITH_MSM_KERNEL),true)
-LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
-endif
+LOCAL_HEADER_LIBRARIES := generated_kernel_headers
+
 ifeq ($(TARGET_TS_MAKEUP),true)
 LOCAL_CFLAGS += -DTARGET_TS_MAKEUP
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/HAL/tsMakeuplib/include
