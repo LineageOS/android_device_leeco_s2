@@ -114,16 +114,6 @@ WITH_LINEAGE_CHARGER := false
 # CSVT
 TARGET_USES_CSVT := true
 
-# Dex
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    WITH_DEXPREOPT_DEBUG_INFO := false
-    USE_DEX2OAT_DEBUG := false
-    DONT_DEXPREOPT_PREBUILTS := true
-    WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
-  endif
-endif
-
 # Camera
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
 	/system/bin/mm-qcamera-daemon=23
