@@ -86,15 +86,16 @@ persist.loc.nlp_name=com.qualcomm.location
 ro.gps.agps_provider=1
 
 # Graphics
-debug.sf.hw=0
-debug.egl.hw=0
+debug.sf.hw=1
+debug.sf.latch_unsignaled=1
+debug.egl.hw=1
 debug.enable.sglscale=1
 debug.mdpcomp.logs=0
 dev.pm.dyn_samplingrate=1
 persist.demo.hdmirotationlock=false
 persist.hwc.mdpcomp.enable=true
 persist.hwc.downscale_threshold=1.15
-persist.hwc.enable_vds=
+persist.hwc.enable_vds=0
 persist.debug.wfd.enable=1
 qcom.hw.aac.encoder=true
 ro.opengles.version=196610
@@ -127,6 +128,8 @@ persist.rild.nitz_short_ons_3=
 
 # Perf
 ro.vendor.extension_library=libqti-perfd-client.so
+ro.vendor.qti.core_ctl_min_cpu=2
+ro.vendor.qti.core_ctl_max_cpu=4
 
 # Radio
 DEVICE_PROVISIONED=1
@@ -196,3 +199,7 @@ ro.vendor.wechatpay.support=true
 
 #low audio flinger standby delay to reduce power consumption
 ro.audio.flinger_standbytime_ms=300
+
+#UI efficiency props
+ro.min.fling_velocity=160
+ro.max.fling_velocity=20000
