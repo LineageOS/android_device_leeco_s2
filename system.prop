@@ -61,10 +61,10 @@ persist.dpm.feature=1
 persist.debug.coresight.config=stm-events
 
 # Dex2oat optimisation
-# use 6 cores during bootup dex compilation
-dalvik.vm.boot-dex2oat-threads=6
+# use all cores during bootup dex compilation
+dalvik.vm.boot-dex2oat-threads=8
 # use 4 cores durning normal dex compilation (app installations)
-dalvik.vm.dex2oat-threads=4
+dalvik.vm.dex2oat-threads=6
 # use 4 cores during boot image dex compilation
 dalvik.vm.image-dex2oat-threads=4
 
