@@ -225,7 +225,7 @@ BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # Shims
 TARGET_LD_SHIM_LIBS := \
-   /system/vendor/lib64/lib-imsvt.so|libshims_ims.so \
+   /system/lib64/lib-imsvt.so|libshims_ims.so \
    /system/bin/mm-qcamera-daemon|libshims_camera.so \
    /system/vendor/lib64/libril-qc-qmi-1.so|libshims_rild_socket.so \
    /system/lib64/hw/gxfingerprint.default.so|fakelogprint.so \
