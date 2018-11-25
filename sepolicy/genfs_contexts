@@ -1,1 +1,14 @@
+# RMT Storage
 genfscon debugfs /rmt_storage/rmts u:object_r:qti_debugfs:s0
+
+# Battery
+genfscon sysfs /devices/soc.0/78db000.usb/power_supply/usb                              u:object_r:sysfs_usb_supply:s0
+genfscon sysfs /devices/soc.0/78b6000.i2c/i2c-2/2-001d/power_supply/usb-parallel/type   u:object_r:sysfs_usb_supply:s0
+genfscon sysfs /devices/soc.0/msm-bcl-20/power_supply                                   u:object_r:sysfs_batteryinfo:s0
+genfscon sysfs /devices/soc.0/qcom,bcl.57                                               u:object_r:sysfs_batteryinfo:s0
+
+# Leds
+genfscon sysfs /devices/soc.0/leds-qpnp-21/leds/                            u:object_r:sysfs_leds:s0
+genfscon sysfs /devices/soc.0/7af8000.i2c/i2c-8/8-0045/leds/red             u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/soc.0/7af8000.i2c/i2c-8/8-0045/leds/green           u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/soc.0/7af8000.i2c/i2c-8/8-0045/leds/blue            u:object_r:sysfs_graphics:s0
