@@ -328,6 +328,12 @@ PRODUCT_PACKAGES += \
     init.s2.usb.rc \
     ueventd.qcom.rc
 
+# RCS
+PRODUCT_PACKAGES += \
+    com.android.ims.rcsmanager \
+    PresencePolling \
+    RcsService
+
 # Releasetools
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/releasetools/devinfo.sh:install/bin/devinfo.sh
