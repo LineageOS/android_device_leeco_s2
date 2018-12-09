@@ -11,6 +11,9 @@
 /dev/ttyHSL1                                               u:object_r:consumer_ir_device:s0
 /sys/remote/enable                                         u:object_r:sysfs_ir_enable:s0
 
+# DRM
+/(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.1-service.clearkey               u:object_r:hal_drm_clearkey_exec:s0
+
 # Fingerprint
 /(vendor|system/vendor|system)/bin/gx_fpd                  u:object_r:goodix_exec:s0
 /system/vendor/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.leeco_s2   u:object_r:hal_fingerprint_default_exec:s0
