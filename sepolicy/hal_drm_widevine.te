@@ -1,1 +1,2 @@
 allow hal_drm_widevine firmware_file:lnk_file { r_file_perms };
+allow hal_drm_widevine hal_allocator:fd use;
