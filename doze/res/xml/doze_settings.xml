@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2015 The CyanogenMod Project
+                   2018-2010 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License"
      you may not use this file except in compliance with the License.
@@ -22,6 +23,7 @@
 
         <SwitchPreference
             android:defaultValue="false"
+            android:icon="@drawable/ic_pickup"
             android:key="gesture_pick_up"
             android:summary="@string/pick_up_gesture_summary"
             android:title="@string/pick_up_gesture_title" />
@@ -34,12 +36,14 @@
 
         <SwitchPreference
             android:defaultValue="false"
+            android:icon="@drawable/ic_pickup"
             android:key="gesture_hand_wave"
             android:summary="@string/hand_wave_gesture_summary"
             android:title="@string/hand_wave_gesture_title" />
 
         <SwitchPreference
             android:defaultValue="false"
+            android:icon="@drawable/ic_pickup"
             android:key="gesture_pocket"
             android:summary="@string/pocket_gesture_summary"
             android:title="@string/pocket_gesture_title" />
