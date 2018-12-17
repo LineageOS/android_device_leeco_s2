@@ -174,6 +174,11 @@ persist.vendor.radio.sw_mbn_update=0
 persist.data.qmi.adb_logmask=0
 persist.radio.aosp_usr_pref_sel=true
 
+# SurfaceFlinger
+ro.surface_flinger.max_frame_buffer_acquired_buffers=3
+ro.surface_flinger.vsync_event_phase_offset_ns=2000000
+ro.surface_flinger.vsync_sf_event_phase_offset_ns=6000000
+
 # TCP
 net.tcp.2g_init_rwnd=10
 
