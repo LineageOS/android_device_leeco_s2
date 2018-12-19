@@ -133,7 +133,6 @@ on enable-low-power
     # VM
     write /proc/sys/vm/dirty_background_ratio 20
     write /proc/sys/vm/dirty_expire_centisecs 100
-    write /proc/sys/vm/swappiness 5
     write /proc/sys/vm/vfs_cache_pressure 60
 
     # Core Control
