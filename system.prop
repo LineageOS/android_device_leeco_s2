@@ -115,6 +115,9 @@ mmp.enable.3g2=true
 media.aac_51_output_enabled=true
 mm.enable.qcom_parser=4194303
 
+# Memory optimizations
+ro.vendor.qti.sys.fw.bservice_enable=true
+
 # Netmgrd
 ro.use_data_netmgrd=true
 persist.data.netmgrd.qos.enable=true
