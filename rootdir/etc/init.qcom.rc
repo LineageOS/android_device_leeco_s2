@@ -25,7 +25,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import /vendor/etc/init/hw/init.qcom.power.rc
 import /vendor/etc/init/hw/init.target.rc
 
 on early-init
@@ -187,6 +186,23 @@ on boot
     # Create vpp directory
     mkdir /persist/vpp 0770 media media
 
+    # Update foreground cpuset now that processors are up
+    # reserve CPU 3 for the top app and camera daemon
+    write /dev/cpuset/foreground/cpus 0-2,4-5
+    write /dev/cpuset/background/cpus 0
+    write /dev/cpuset/system-background/cpus 0-2
+    write /dev/cpuset/top-app/cpus 0-5
+    write /dev/cpuset/restricted/cpus 0-3
+
+    # Add a cpuset for the camera daemon
+    # we want all the little cores for camera
+    mkdir /dev/cpuset/camera-daemon
+    chown system system /dev/cpuset/camera-daemon
+    chown system system /dev/cpuset/camera-daemon/tasks
+    chmod 0664 /dev/cpuset/camera-daemon/tasks
+    write /dev/cpuset/camera-daemon/cpus 0-3
+    write /dev/cpuset/camera-daemon/mems 0
+
 on post-fs
     start qseecomd
 
@@ -218,9 +234,6 @@ on post-fs-data
 
     #Create folder for mm-qcamera-daemon
     mkdir /data/misc/camera 0770 camera camera
-
-    mkdir /data/media 0770 media_rw media_rw
-    chown media_rw media_rw /data/media
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -333,10 +346,6 @@ on post-fs-data
     chmod 2770 /data/vendor/perfd
     rm /data/vendor/perfd/default_values
 
-    # NFC local data and nfcee xml storage
-    mkdir /data/nfc 0770 nfc nfc
-    mkdir /data/nfc/param 0770 nfc nfc
-
     # Sensor
     mkdir /persist/sensors 0775 system system
     chmod 664 /persist/sensors/sensors_settings
@@ -392,10 +401,14 @@ on property:sys.boot_completed=1
 
     # Enable ZRAM on boot_complete
     swapon_all /vendor/etc/fstab.qcom
-    write /proc/sys/vm/swappiness 100
+
+    # Set read_ahead_kb to 128 on boot completion
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 128
+    write /sys/block/mmcblk0/queue/read_ahead_kb 128
+    write /sys/block/mmcblk0rpmb/bdi/read_ahead_kb 128
+    write /sys/block/mmcblk0rpmb/queue/read_ahead_kb 128
 
 on property:vold.decrypt=trigger_restart_framework
-    start config_bt_addr
     start wcnss-service
 
 on property:persist.env.fastdorm.enabled=true
@@ -405,11 +418,13 @@ service cnd /vendor/bin/cnd
     class main
     user system
     group system wifi inet radio wakelock net_admin
+    writepid /dev/cpuset/system-background/tasks
 
 service dpmQmiMgr /system/vendor/bin/dpmQmiMgr
     class main
     user system
     group radio system
+    writepid /dev/cpuset/system-background/tasks
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
@@ -421,67 +436,42 @@ service rmt_storage /vendor/bin/rmt_storage
     user root
     shutdown critical 
     ioprio rt 0
+    writepid /dev/cpuset/system-background/tasks
 
 service tftp_server /vendor/bin/tftp_server
     class core
     user root
-
-on property:wc_transport.start_hci=true
-    start start_hci_filter
-
-on property:wc_transport.start_hci=false
-    stop start_hci_filter
-
-service start_hci_filter /system/bin/wcnss_filter
-    class late_start
-    user bluetooth
-    group bluetooth diag
-    seclabel u:r:wcnss_filter:s0
-    disabled
-
-on property:wc_transport.start_root=true
-    start hci_filter_root
-
-on property:wc_transport.start_root=false
-    stop hci_filter_root
-
-service hci_filter_root /system/bin/wcnss_filter
-    class late_start
-    user bluetooth
-    group bluetooth diag system
-    seclabel u:r:wcnss_filter:s0
-    disabled
-
-service config_bt_addr /system/vendor/bin/btnvtool -O
-    class core
-    user bluetooth
-    group bluetooth radio
-    oneshot
+    writepid /dev/cpuset/system-background/tasks
 
 # QMUX must be in multiple groups to support external process connections
 service qmuxd /vendor/bin/qmuxd
     class main
     user root
     group radio audio bluetooth gps nfc diag
+    writepid /dev/cpuset/system-background/tasks
 
 service netmgrd /vendor/bin/netmgrd
     class main
     group root wifi wakelock radio inet oem_2901
+    writepid /dev/cpuset/system-background/tasks
 
 service ipacm /vendor/bin/ipacm
     class main
     user radio
     group radio inet
+    writepid /dev/cpuset/system-background/tasks
 
 service qti /vendor/bin/qti
     class main
     user radio
     group radio oem_2901 diag usb net_admin
+    writepid /dev/cpuset/system-background/tasks
 
 service sensors /vendor/bin/sensors.qcom
     class core
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
 
 on property:ro.use_data_netmgrd=false
     # netmgr not supported on specific target
@@ -511,14 +501,28 @@ service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
 
 service vendor.loc_launcher /system/vendor/bin/loc_launcher
     class late_start
-    user gps
-    group gps
+    group gps inet diag wifi
 
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
+    group root system radio
     seclabel u:r:qti_init_shell:s0
     oneshot
+
+service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
+    class late_start
+    user root
+    group root system wakelock
+    disabled
+    oneshot
+
+on property:sys.boot_completed=1
+    start qcom-post-boot
+    trigger enable-low-power
+
+on property:init.svc.recovery=running
+    trigger enable-low-power
 
 service atfwd /vendor/bin/ATFWD-daemon
     class late_start
@@ -551,28 +555,32 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/m
     user root
     group root
     disabled
+    writepid /dev/cpuset/system-background/tasks
 
 service vendor.msm_irqbal_lb /vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance_little_big.conf
     class core
     user root
     group root
     disabled
+    writepid /dev/cpuset/system-background/tasks
 
 on charger
     setprop persist.sys.usb.config mass_storage
     load_system_props
+    start qcom-post-boot
 
 on property:init.svc.surfaceflinger=restarting
     stop vendor.hwcomposer-2-1
     start vendor.hwcomposer-2-1
 
-on property:init.svc.recovery=running
-    trigger enable-low-power
-
-on property:dev.bootcomplete=1
-    trigger enable-low-power
-
 service time_daemon /system/vendor/bin/time_daemon
     class main
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
+
+service power_off_alarm /vendor/bin/power_off_alarm
+    class core
+    group system
+    disabled
+    oneshot
