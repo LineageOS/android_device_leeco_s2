@@ -41,11 +41,11 @@ etc/settings/mono_qcom.cnt
 -lib64/libtfa9890.so
 
 # Camera
-bin/mm-qcamera-daemon
+bin/mm-qcamera-daemon|38080d77baf6f4d20c9a967cf39f23479d843c19
 lib/libcamera_letv_algo.so
 lib/libLetvCameraImageSDK.so
 lib/libmm-omxcore.so
-lib/libmm-qcamera.so
+lib/libmm-qcamera.so|5a8eccd388c512fb9bb0813e16d195c77f74482a
 lib/libamipengine.so
 lib/libarcimgutilsbase.so
 lib/libarcimgutils.so
@@ -78,27 +78,27 @@ vendor/lib64/libmmcamera2_q3a_core.so
 vendor/lib64/libmmcamera2_sensor_debug.so
 vendor/lib64/libmmcamera2_stats_algorithm.so
 vendor/lib/libmmcamera2_c2d_module.so
-vendor/lib/libmmcamera2_cpp_module.so
+vendor/lib/libmmcamera2_cpp_module.so|a82398efb3f277cf5afbf5bc4a8bbb54c28dcd62
 vendor/lib/libmmcamera2_frame_algorithm.so
-vendor/lib/libmmcamera2_iface_modules.so
-vendor/lib/libmmcamera2_imglib_modules.so
+vendor/lib/libmmcamera2_iface_modules.so|d1c7393862986b23cc555250620cad851996ea87
+vendor/lib/libmmcamera2_imglib_modules.so|44be8963099b44ccb4a1698b7dcb38b230018439
 vendor/lib/libmmcamera2_isp_modules.so
 vendor/lib/libmmcamera2_is.so
-vendor/lib/libmmcamera2_mct.so
+vendor/lib/libmmcamera2_mct.so|8eb312033fbeec02752edd78f73803367815421a
 vendor/lib/libmmcamera2_pp_buf_mgr.so
 vendor/lib/libmmcamera2_pproc_modules.so
 vendor/lib/libmmcamera2_q3a_core.so
 vendor/lib/libmmcamera2_sensor_debug.so
-vendor/lib/libmmcamera2_sensor_modules.so
+vendor/lib/libmmcamera2_sensor_modules.so|d85f6eceff02dbbfc6bf097849cd897102a1f827
 vendor/lib/libmmcamera2_stats_algorithm.so
-vendor/lib/libmmcamera2_stats_modules.so
+vendor/lib/libmmcamera2_stats_modules.so|89356700d54e9710e76b28d1ff22819751e78629
 vendor/lib/libmmcamera2_vpe_module.so
 vendor/lib/libmmcamera2_wnr_module.so
 
 vendor/lib/libmmcamera_eztune_module.so
 vendor/lib/libmmcamera_faceproc.so
 vendor/lib/libmmcamera_hdr_gb_lib.so
-vendor/lib/libmmcamera_imglib.so
+vendor/lib/libmmcamera_imglib.so|aa7a7c6e34ba4887a3229b9f270695f25d6a46af
 vendor/lib/libmmcamera_isp_abf40.so
 vendor/lib/libmmcamera_isp_bcc40.so
 vendor/lib/libmmcamera_isp_be_stats44.so
@@ -132,14 +132,14 @@ vendor/lib/libmmcamera_isp_scaler_viewfinder44.so
 vendor/lib/libmmcamera_isp_sce40.so
 vendor/lib/libmmcamera_isp_sub_module.so
 vendor/lib/libmmcamera_isp_wb40.so
-vendor/lib/libmmcamera_pdafcamif.so
-vendor/lib/libmmcamera_pdaf.so
+vendor/lib/libmmcamera_pdafcamif.so|e067ac465256aaa29f18ea2ebe491c03d7088ebb
+vendor/lib/libmmcamera_pdaf.so|0f9b57a86d8ebc9e34f6465f992bb755cc119e83
 vendor/lib/libmmcamera_ppbase_module.so
 vendor/lib/libmmcamera_thread_services.so
-vendor/lib/libmmcamera_tintless_algo.so
-vendor/lib/libmmcamera_tintless_bg_pca_algo.so
+vendor/lib/libmmcamera_tintless_algo.so|af9db6261ef99b18b5517661ed1fa8c023c482b5
+vendor/lib/libmmcamera_tintless_bg_pca_algo.so|e51c8836bc58f4b96ad6b6bafaa812b1f026a168
 vendor/lib/libmmcamera_tuning_lookup.so
-vendor/lib/libmmcamera_tuning.so
+vendor/lib/libmmcamera_tuning.so|b23a9a8e56b21c6208c1e152ff1e657658369260
 vendor/lib/libmmcamera_vpu_module.so
 
 vendor/lib/libmmjpeg.so
