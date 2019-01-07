@@ -88,6 +88,8 @@ on early-boot
     chmod 0664 /sys/class/graphics/fb0/mode
     chown system graphics /sys/class/graphics/fb0/mdp/bw_mode_bitmap
     chmod 0664 /sys/class/graphics/fb0/mdp/bw_mode_bitmap
+    
+    exec u:r:qti_init_shell:s0 -- /vendor/bin/init.qcom.early_boot.sh
 
 on boot
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
