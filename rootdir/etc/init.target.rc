@@ -222,14 +222,14 @@ on property:init.svc.zygote=running
 on property:init.svc.zygote=restarting
     stop ppd
 
-service imsqmidaemon /system/vendor/bin/imsqmidaemon
+service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
     user system
     socket ims_qmid stream 0660 system radio
     group radio log diag
     seclabel u:r:ims:s0
 
-service imsdatadaemon /system/vendor/bin/imsdatadaemon
+service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
@@ -238,9 +238,9 @@ service imsdatadaemon /system/vendor/bin/imsdatadaemon
     disabled
 
 on property:vendor.ims.QMI_DAEMON_STATUS=1
-    start imsdatadaemon
+    start vendor.imsdatadaemon
 
-service ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
+service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
     class main
     user system
     socket ims_rtpd stream 0660 system radio
@@ -256,7 +256,7 @@ service vendor.imsrcsservice /system/vendor/bin/imsrcsd
     disabled
 
 on property:vendor.ims.DATA_DAEMON_STATUS=1
-    start ims_rtp_daemon
+    restart vendor.ims_rtp_daemon
     start vendor.imsrcsservice
 
 service gx_fpd /vendor/bin/gx_fpd
@@ -285,24 +285,25 @@ service hvdcp_opti /system/vendor/bin/hvdcp_opti
     group system wakelock
     seclabel u:r:hvdcp:s0
 
-service per_mgr /system/vendor/bin/pm-service
+service vendor.per_mgr /system/vendor/bin/pm-service
     class core
     user system
     group system
+    ioprio rt 4
     writepid /dev/cpuset/system-background/tasks
 
-service per_proxy /system/vendor/bin/pm-proxy
+service vendor.per_proxy /system/vendor/bin/pm-proxy
     class core
     user system
     group system
     disabled
     writepid /dev/cpuset/system-background/tasks
 
-on property:init.svc.per_mgr=running
-    start per_proxy
+on property:init.svc.vendor.per_mgr=running
+    start vendor.per_proxy
 
 on property:sys.shutdown.requested=*
-    stop per_proxy
+    stop vendor.per_proxy
 
 on property:persist.sys.le_fast_chrg_enable=1
     write /sys/class/power_supply/battery/le_quick_charge_mode 0
