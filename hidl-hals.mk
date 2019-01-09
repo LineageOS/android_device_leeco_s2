@@ -60,6 +60,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.leeco_s2
 
+# fwk-detect
+PRODUCT_PACKAGES += \
+    libqti_vndfwk_detect
+
 # Gatekeeper
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-impl \
