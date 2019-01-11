@@ -50,7 +50,7 @@ on init
 
     # qseecomd needs /dev/block/bootdevice
     # vold needs keymaster that needs qseecomd
-    start qseecomd
+    start vendor.qseecomd
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
