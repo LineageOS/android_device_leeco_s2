@@ -33,4 +33,7 @@
 /data/goodix(/.*)?                                         u:object_r:goodix_data_file:s0
 /dev/i2c_smartpa                                           u:object_r:smartpa_device:s0
 
+# HALs
+/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2      u:object_r:hal_lineage_touch_default_exec:s0
+
 /sys/remote/enable                                         u:object_r:sysfs_ir_enable:s0
