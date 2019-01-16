@@ -265,10 +265,6 @@ PRODUCT_PACKAGES += \
     libshims_ims \
     libshims_rild_socket
 
-# Lights
-PRODUCT_PACKAGES += \
-    lights.msm8952
-
 # Livedisplay
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay@1.0-service-legacymm
