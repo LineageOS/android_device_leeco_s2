@@ -1,0 +1,5 @@
+type quicksetsdk_app, domain;
+app_domain(quicksetsdk_app)
+allow quicksetsdk_app activity_service:service_manager { find };
+allow quicksetsdk_app app_data_file:file { execute };
+allow quicksetsdk_app consumer_ir_device:chr_file { rw_file_perms };

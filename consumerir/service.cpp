@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The LineageOS Project
+ * Copyright (C) 2017-2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,33 @@
 
 #define LOG_TAG "android.hardware.ir@1.0-service.leeco"
 
+#include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
 
 #include "ConsumerIr.h"
 
+// libhwbinder:
 using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
 
+// Generated HIDL files
 using android::hardware::ir::V1_0::IConsumerIr;
 using android::hardware::ir::V1_0::implementation::ConsumerIr;
-
-using android::OK;
-using android::status_t;
 
 int main() {
     android::sp<IConsumerIr> service = new ConsumerIr();
 
     configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    status_t status = service->registerAsService();
-    if (status != OK) {
-        ALOGE("Cannot register ConsumerIr HAL service.");
+    android::status_t status = service->registerAsService();
+    if (status != android::OK) {
+        LOG(ERROR) << "Cannot register ConsumerIr HAL service";
         return 1;
     }
 
-    ALOGI("ConsumerIr HAL service ready.");
+    LOG(INFO) << "ConsumerIr HAL Ready.";
     joinRpcThreadpool();
-    ALOGI("ConsumerIr HAL service failed to join thread pool.");
+    // Under normal cases, execution will not reach this line.
+    LOG(ERROR) << "ConsumerIr HAL failed to join thread pool.";
     return 1;
 }

@@ -1,0 +1,1 @@
+allow consumer_ir_device sysfs:filesystem { associate };
