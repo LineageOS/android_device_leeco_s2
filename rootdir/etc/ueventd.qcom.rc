@@ -303,3 +303,6 @@
 
 # Kmsg device
 /dev/kmsg                                               0620   root       system
+
+# sys-fs display
+/sys/class/graphics/fb*     dynamic_fps              0664    system  graphics
