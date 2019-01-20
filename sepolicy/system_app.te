@@ -1,0 +1,1 @@
+allow system_app sysfs_ir_enable:file { rw_file_perms };

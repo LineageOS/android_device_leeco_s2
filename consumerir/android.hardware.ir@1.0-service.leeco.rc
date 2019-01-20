@@ -1,4 +1,20 @@
+on boot
+    chown system system /sys/remote/enable
+    chmod 666 /dev/remote/name
+    chmod 666 /sys/remote/enable
+    chmod 666 /dev/ttyHSL1
+
 service ir-hal-1-0 /vendor/bin/hw/android.hardware.ir@1.0-service.leeco
     class hal
     user system
     group system
+
+service vendor.uei-sh /vendor/bin/init.uei.sh
+    class late_start
+    user root
+    group root
+    disabled
+    oneshot
+
+on property:sys.boot_completed=1
+    start vendor.uei-sh
