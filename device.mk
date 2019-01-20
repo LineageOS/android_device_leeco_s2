@@ -159,6 +159,10 @@ PRODUCT_COPY_FILES +=  \
 PRODUCT_PACKAGES += \
     libcnefeatureconfig
 
+# Consumer IR
+PRODUCT_PACKAGES += \
+    ConsumerirTransmitter
+
 # Data Services
 PRODUCT_PACKAGES += \
     librmnetctl

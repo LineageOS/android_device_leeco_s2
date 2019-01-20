@@ -115,14 +115,6 @@ on post-fs-data
     chmod 660 /persist/serialno
     chown system system /persist/serialno
 
-    # ir
-    chmod 666 /sys/remote/enable
-    chown system system /sys/remote/enable
-    chmod 666 /dev/ttyHSL1
-    chmod 666 /dev/ttyHS1
-    chown system system /dev/ttyHSL1
-    chown system system /dev/ttyHS1
-
     # leds
     chown system system /sys/module/leds_aw2013/parameters/aw2013_sleep_led
     chmod 0666 /sys/module/leds_aw2013/parameters/aw2013_sleep_led
