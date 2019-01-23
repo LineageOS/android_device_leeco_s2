@@ -200,11 +200,9 @@ PRODUCT_PACKAGES += \
     libgnsspps \
     libgps.utils \
     libloc_core \
-    libloc_ds_api \
     libloc_stub \
     libloc_pla \
-    liblocation_api \
-    libvehiclenetwork-native
+    liblocation_api
 
 PRODUCT_PACKAGES += \
     flp.conf \
@@ -219,8 +217,7 @@ PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
     android.hidl.manager@1.0 \
-    android.hidl.manager@1.0_system \
-    android.hidl.manager@1.0-java
+    android.hidl.manager@1.0_system
 
 # Input configuration
 PRODUCT_COPY_FILES += \
@@ -255,15 +252,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf \
     $(LOCAL_PATH)/configs/msm_irqbalance_little_big.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance_little_big.conf
 
-# Keystore
-PRODUCT_PACKAGES += \
-    keystore.msm8952
-
 # Libshims
 PRODUCT_PACKAGES += \
     libshims_camera \
-    libshims_ims \
-    libshims_rild_socket
+    libshims_ims
 
 # Livedisplay
 PRODUCT_PACKAGES += \
@@ -288,17 +280,12 @@ PRODUCT_PACKAGES += \
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
-    libextmedia_jni \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
-    libOmxSwVencMpeg4 \
-    libOmxSwVencHevc \
     libOmxVdec \
-    libOmxVdecHevc \
-    libOmxVidcCommon \
     libOmxVenc \
     libstagefrighthw
 
