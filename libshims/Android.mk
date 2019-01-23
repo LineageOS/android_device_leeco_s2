@@ -38,16 +38,6 @@ LOCAL_32_BIT_ONLY := true
 
 include $(BUILD_SHARED_LIBRARY)
 
-# libshims_rild_socket
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := rild_socket/rild_socket.c
-
-LOCAL_MODULE := libshims_rild_socket
-LOCAL_MODULE_TAGS := optional
-
-include $(BUILD_SHARED_LIBRARY)
-
 # fake print lib for hexedited fingerprint libs
 include $(CLEAR_VARS)
 
