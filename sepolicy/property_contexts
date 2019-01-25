@@ -1,3 +1,2 @@
 oem.device.imeicache               u:object_r:qcom_ims_prop:s0
-ro.wcnss.serialno                  u:object_r:wcnss_prop:s0
 serialno                   u:object_r:serialno_prop:s0
