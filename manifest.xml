@@ -412,7 +412,7 @@
         <name>vendor.qti.gnss</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
-        <interface>
+         <interface>
             <name>ILocHidlGnss</name>
             <instance>gnss_vendor</instance>
         </interface>

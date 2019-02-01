@@ -27,6 +27,7 @@
  *
  */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,10 +35,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <cutils/properties.h>
+#include <log_util.h>
 #include "loc_target.h"
 #include "loc_log.h"
-#include <platform_lib_includes.h>
+#include <loc_pla.h>
 
 #define APQ8064_ID_1 "109"
 #define APQ8064_ID_2 "153"
@@ -53,6 +54,7 @@
 #define STR_MTP         "MTP"
 #define STR_APQ         "apq"
 #define STR_SDC         "sdc"  // alternative string for APQ targets
+#define STR_QCS         "qcs"  // string for Gen9 APQ targets
 #define STR_MSM         "msm"
 #define STR_SDM         "sdm"  // alternative string for MSM targets
 #define STR_APQ_NO_WGR  "baseband_apq_nowgr"
@@ -174,7 +176,8 @@ unsigned int loc_get_target(void)
     }
 
     if( !memcmp(baseband, STR_APQ, LENGTH(STR_APQ)) ||
-        !memcmp(baseband, STR_SDC, LENGTH(STR_SDC)) ) {
+        !memcmp(baseband, STR_SDC, LENGTH(STR_SDC)) ||
+        !memcmp(baseband, STR_QCS, LENGTH(STR_QCS)) ) {
 
         if( !memcmp(rd_id, MPQ8064_ID_1, LENGTH(MPQ8064_ID_1))
             && IS_STR_END(rd_id[LENGTH(MPQ8064_ID_1)]) )
@@ -204,18 +207,4 @@ unsigned int loc_get_target(void)
 detected:
     LOC_LOGW("HAL: %s returned %d", __FUNCTION__, gTarget);
     return gTarget;
-}
-
-/*Reads the property ro.lean to identify if this is a lean target
-  Returns:
-  0 if not a lean and mean target
-  1 if this is a lean and mean target
-*/
-int loc_identify_lean_target()
-{
-    int ret = 0;
-    char lean_target[PROPERTY_VALUE_MAX];
-    property_get("ro.lean", lean_target, "");
-    LOC_LOGD("%s:%d]: lean target: %s\n", __func__, __LINE__, lean_target);
-    return !(strncmp(lean_target, "true", PROPERTY_VALUE_MAX));
 }

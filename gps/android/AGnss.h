@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
  * Not a Contribution
  */
 /*
@@ -18,11 +18,12 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_HARDWARE_GNSS_V1_1_AGNSS_H
-#define ANDROID_HARDWARE_GNSS_V1_1_AGNSS_H
+#ifndef ANDROID_HARDWARE_GNSS_V1_0_AGNSS_H
+#define ANDROID_HARDWARE_GNSS_V1_0_AGNSS_H
 
 #include <android/hardware/gnss/1.0/IAGnss.h>
 #include <hidl/Status.h>
+#include <gps_extended_c.h>
 
 namespace android {
 namespace hardware {
@@ -42,7 +43,7 @@ struct Gnss;
 struct AGnss : public IAGnss {
 
     AGnss(Gnss* gnss);
-    ~AGnss() = default;
+    ~AGnss();
     /*
      * Methods from ::android::hardware::gnss::V1_0::IAGnss interface follow.
      * These declarations were generated from IAGnss.hal.
@@ -59,12 +60,14 @@ struct AGnss : public IAGnss {
     Return<bool> setServer(IAGnssCallback::AGnssType type,
                          const hidl_string& hostname, int32_t port) override;
 
+    void statusIpV4Cb(AGnssExtStatusIpV4 status);
+
     /* Data call setup callback passed down to GNSS HAL implementation */
-    static void agnssStatusIpV4Cb(IAGnssCallback::AGnssStatusIpV4 status);
+    static void agnssStatusIpV4Cb(AGnssExtStatusIpV4 status);
 
  private:
     Gnss* mGnss = nullptr;
-    static sp<IAGnssCallback> sAGnssCbIface;
+    sp<IAGnssCallback> mAGnssCbIface = nullptr;
 };
 
 }  // namespace implementation
@@ -73,4 +76,4 @@ struct AGnss : public IAGnss {
 }  // namespace hardware
 }  // namespace android
 
-#endif  // ANDROID_HARDWARE_GNSS_V1_1_AGNSS_H
+#endif  // ANDROID_HARDWARE_GNSS_V1_0_AGNSS_H
