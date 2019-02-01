@@ -201,7 +201,13 @@ PRODUCT_PACKAGES += \
     gps.msm8952 \
     libcurl \
     libgnss \
-    libgnsspps
+    libgnsspps \
+    libgps.utils \
+    libloc_core \
+    libloc_ds_api \
+    libloc_stub \
+    liblocation_api \
+    libvehiclenetwork-native
 
 PRODUCT_PACKAGES += \
     flp.conf \

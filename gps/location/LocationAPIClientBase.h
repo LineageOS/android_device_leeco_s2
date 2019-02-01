@@ -36,6 +36,8 @@
 #include <map>
 
 #include "LocationAPI.h"
+#include <loc_pla.h>
+#include <log_util.h>
 
 enum SESSION_MODE {
     SESSION_MODE_NONE = 0,
@@ -195,7 +197,7 @@ public:
     uint32_t locAPIStopSession(uint32_t id);
     uint32_t locAPIUpdateSessionOptions(uint32_t id, uint32_t sessionMode,
             LocationOptions& options);
-    void locAPIGetBatchedLocations(uint32_t id, size_t count);
+    uint32_t locAPIGetBatchedLocations(uint32_t id, size_t count);
 
     uint32_t locAPIAddGeofences(size_t count, uint32_t* ids,
             GeofenceOption* options, GeofenceInfo* data);
@@ -381,7 +383,10 @@ private:
     class StartTrackingRequest : public LocationAPIRequest {
     public:
         StartTrackingRequest(LocationAPIClientBase& API) : mAPI(API) {}
-        inline void onResponse(LocationError error, uint32_t /*id*/) {
+        inline void onResponse(LocationError error, uint32_t id) {
+            if (error != LOCATION_ERROR_SUCCESS) {
+                mAPI.removeSession(id);
+            }
             mAPI.onStartTrackingCb(error);
         }
         LocationAPIClientBase& mAPI;
@@ -411,7 +416,10 @@ private:
     class StartBatchingRequest : public LocationAPIRequest {
     public:
         StartBatchingRequest(LocationAPIClientBase& API) : mAPI(API) {}
-        inline void onResponse(LocationError error, uint32_t /*id*/) {
+        inline void onResponse(LocationError error, uint32_t id) {
+            if (error != LOCATION_ERROR_SUCCESS) {
+                mAPI.removeSession(id);
+            }
             mAPI.onStartBatchingCb(error);
         }
         LocationAPIClientBase& mAPI;
@@ -463,17 +471,24 @@ private:
 
     class RemoveGeofencesRequest : public LocationAPIRequest {
     public:
-        RemoveGeofencesRequest(LocationAPIClientBase& API) : mAPI(API) {}
+        RemoveGeofencesRequest(LocationAPIClientBase& API,
+                               BiDict<GeofenceBreachTypeMask>* removedGeofenceBiDict) :
+                               mAPI(API), mRemovedGeofenceBiDict(removedGeofenceBiDict) {}
         inline void onCollectiveResponse(size_t count, LocationError* errors, uint32_t* sessions) {
-            uint32_t *ids = (uint32_t*)malloc(sizeof(uint32_t) * count);
-            for (size_t i = 0; i < count; i++) {
-                ids[i] = mAPI.mGeofenceBiDict.getId(sessions[i]);
-                mAPI.mGeofenceBiDict.rmBySession(sessions[i]);
+            if (nullptr != mRemovedGeofenceBiDict) {
+                uint32_t *ids = (uint32_t*)malloc(sizeof(uint32_t) * count);
+                for (size_t i = 0; i < count; i++) {
+                    ids[i] = mRemovedGeofenceBiDict->getId(sessions[i]);
+                }
+                mAPI.onRemoveGeofencesCb(count, errors, ids);
+                free(ids);
+                delete(mRemovedGeofenceBiDict);
+            } else {
+                LOC_LOGE("%s:%d] Unable to access removed geofences data.", __FUNCTION__, __LINE__);
             }
-            mAPI.onRemoveGeofencesCb(count, errors, ids);
-            free(ids);
         }
         LocationAPIClientBase& mAPI;
+        BiDict<GeofenceBreachTypeMask>* mRemovedGeofenceBiDict;
     };
 
     class ModifyGeofencesRequest : public LocationAPIRequest {
