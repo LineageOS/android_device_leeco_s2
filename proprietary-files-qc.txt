@@ -439,6 +439,7 @@ etc/permissions/qcrilhook.xml
 etc/permissions/telephonyservice.xml
 vendor/bin/ATFWD-daemon
 vendor/bin/netmgrd
+vendor/bin/port-bridge
 vendor/bin/qmuxd
 vendor/bin/qti
 vendor/bin/rmt_storage
