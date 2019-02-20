@@ -57,9 +57,8 @@
     </Config1>
 
     <Config2>
-         <!-- For msm8956 target, perfboosts tuning is same as msm8952. So, they share a common target name. -->
          <TargetInfo
-             Target="msm8952"
+             Target="msm8956"
              NumClusters="2"
              TotalNumCores="6"
              SocIds="266,274"
@@ -73,9 +72,8 @@
     </Config2>
 
     <Config3>
-         <!-- For msm8976 target, perfboosts tuning is same as msm8952. So, they share a common target name. -->
          <TargetInfo
-             Target="msm8952"
+             Target="msm8976"
              NumClusters="2"
              TotalNumCores="8"
              SocIds="277,278"
