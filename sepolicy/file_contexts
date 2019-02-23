@@ -22,3 +22,7 @@
 /dev/goodix_fp                                             u:object_r:goodix_device:s0
 /data/goodix(/.*)?                                         u:object_r:goodix_data_file:s0
 /dev/i2c_smartpa                                           u:object_r:smartpa_device:s0
+
+#ir device
+/dev/ttyHSL1                                               u:object_r:consumer_ir_device:s0
+
