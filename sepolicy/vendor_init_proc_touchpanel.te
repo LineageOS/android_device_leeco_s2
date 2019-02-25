@@ -1,0 +1,14 @@
+type vendor_init_proc_touchpanel, domain;
+type vendor_init_proc_touchpanel_exec, file_type, exec_type, vendor_file_type;
+
+# Allow for transition from init domain to vendor_init_proc_touchpanel
+init_daemon_domain(vendor_init_proc_touchpanel)
+
+# Required for chown -LR of /proc/touchpanel
+allow vendor_init_proc_touchpanel proc_touchpanel:dir { r_dir_perms setattr };
+allow vendor_init_proc_touchpanel proc_touchpanel:file { r_file_perms setattr };
+allow vendor_init_proc_touchpanel self:capability { chown };
+
+# Shell script needs to execute /vendor/bin/sh
+allow vendor_init_proc_touchpanel vendor_shell_exec:file { rx_file_perms };
+allow vendor_init_proc_touchpanel vendor_toolbox_exec:file { rx_file_perms };
