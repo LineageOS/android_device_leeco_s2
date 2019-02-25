@@ -7,6 +7,9 @@ genfscon sysfs /devices/soc.0/78b6000.i2c/i2c-2/2-001d/power_supply/usb-parallel
 genfscon sysfs /devices/soc.0/msm-bcl-20/power_supply                                   u:object_r:sysfs_batteryinfo:s0
 genfscon sysfs /devices/soc.0/qcom,bcl.57                                               u:object_r:sysfs_batteryinfo:s0
 
+# Capacitive Keys
+genfscon proc /touchpanel                                                                                   u:object_r:proc_touchpanel:s0
+
 # Leds
 genfscon sysfs /devices/soc.0/leds-qpnp-21/leds/                            u:object_r:sysfs_leds:s0
 genfscon sysfs /devices/soc.0/7af8000.i2c/i2c-8/8-0045/leds/red             u:object_r:sysfs_graphics:s0
