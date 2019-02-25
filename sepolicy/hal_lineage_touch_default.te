@@ -1,2 +1,2 @@
-allow hal_lineage_touch_default sysfs_touchpanel:dir search;
-allow hal_lineage_touch_default sysfs_touchpanel:file { getattr open write };
+allow hal_lineage_touch_default proc_touchpanel:dir { r_dir_perms };
+allow hal_lineage_touch_default proc_touchpanel:file { rw_file_perms };

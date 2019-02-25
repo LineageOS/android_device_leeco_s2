@@ -495,6 +495,12 @@ service vendor.loc_launcher /system/vendor/bin/loc_launcher
     class late_start
     group gps inet diag wifi
 
+ service proc-touchpanel-sh /vendor/bin/init.proc_touchpanel.sh
+    class late_start
+    user root
+    group root system
+    oneshot
+
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
