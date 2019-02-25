@@ -5,6 +5,11 @@
 /data/vendor/qcam(/.*)?                                    u:object_r:vendor_camera_data_file:s0
 /system/bin/mm-qcamera-daemon                              u:object_r:mm-qcamerad_exec:s0
 
+# Capacitive Keys
+/(vendor|system/vendor)/bin/init\.proc_touchpanel\.sh                                          u:object_r:vendor_init_proc_touchpanel_exec:s0
+
+/sys/devices/soc\.0/78b8000\.i2c/i2c-4/4-[0-9a-f]+/input/input[0-9]+/0dbutton                   u:object_r:proc_touchpanel:s0
+
 # Consumer IR
 /(vendor|system/vendor)/bin/hw/android\.hardware\.ir@1\.0-service\.leeco                  u:object_r:hal_ir_default_exec:s0
 
@@ -31,5 +36,3 @@
 
 # HALs
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2      u:object_r:hal_lineage_touch_default_exec:s0
-
-/sys/devices/soc\.0/78b8000\.i2c/i2c-4/4-[0-9a-f]+/input/input[0-9]+/0dbutton                   u:object_r:sysfs_touchpanel:s0

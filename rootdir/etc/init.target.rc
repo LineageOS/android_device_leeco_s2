@@ -182,8 +182,6 @@ service thermal-engine /system/vendor/bin/thermal-engine
 on boot
     start rmt_storage
 
-    chown system system /proc/touchpanel/capacitive_keys_enable
-
 service wcnss-service /system/vendor/bin/wcnss_service
     class late_start
     user system
