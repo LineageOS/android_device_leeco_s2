@@ -79,20 +79,6 @@ vmpres_file_min=$((minfree_5 + (minfree_5 - rem_minfree_4)))
 echo $vmpres_file_min > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
 echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 
-# Enable B service adj transition
-#setprop ro.vendor.qti.sys.fw.bservice_enable true
-#setprop ro.vendor.qti.sys.fw.bservice_limit 5
-#setprop ro.vendor.qti.sys.fw.bservice_age 5000
-
-chown -h system /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
-chown -h system /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
-chown -h system /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
-
-chown -h system /sys/devices/platform/rs300000a7.65536/force_sync
-chown -h system /sys/devices/platform/rs300000a7.65536/sync_sts
-chown -h system /sys/devices/platform/rs300100a7.65536/force_sync
-chown -h system /sys/devices/platform/rs300100a7.65536/sync_sts
-
 setprop sys.post_boot.parsed 1
 setprop vendor.post_boot.parsed 1
 
