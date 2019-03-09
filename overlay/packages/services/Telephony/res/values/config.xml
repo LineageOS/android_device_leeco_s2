@@ -38,4 +38,10 @@
     <!-- Show enabled lte option for lte device -->
     <bool name="config_enabled_lte" translatable="false">true</bool>
 
+    <!-- Flag indicating if network query through TelephonyManager.requestNetworkScan() should be
+         disabled.
+         If set to true, it will send network query through Phone.getAvailableNetworks() directly
+         rather than attempt to query through TelephonyManager.requestNetworkScan() first. -->
+    <bool name="config_requestNetworkScan_disable">true</bool>
+
 </resources>
