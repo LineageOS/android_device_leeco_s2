@@ -79,9 +79,6 @@ vmpres_file_min=$((minfree_5 + (minfree_5 - rem_minfree_4)))
 echo $vmpres_file_min > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
 echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 
-setprop sys.post_boot.parsed 1
-setprop vendor.post_boot.parsed 1
-
 panel=`cat /sys/class/graphics/fb0/modes`
 if [ "${panel:5:1}" == "x" ]; then
     panel=${panel:2:3}
