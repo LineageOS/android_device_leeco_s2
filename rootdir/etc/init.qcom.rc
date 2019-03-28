@@ -546,9 +546,6 @@ service vendor.msm_irqbal_lb /vendor/bin/msm_irqbalance -f /system/vendor/etc/ms
     disabled
     writepid /dev/cpuset/system-background/tasks
 
-on property:init.svc.surfaceflinger=restarting
-    restart vendor.hwcomposer-2-1
-
 service power_off_alarm /vendor/bin/power_off_alarm
     class core
     group system
