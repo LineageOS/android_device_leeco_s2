@@ -264,7 +264,6 @@ service gx_fpd /vendor/bin/gx_fpd
 on charger
     setprop persist.sys.usb.config mass_storage
     start qcom-post-boot
-    start hvdcp_opti
     start thermal-engine
 
 service adsprpcd /system/vendor/bin/adsprpcd
@@ -272,12 +271,6 @@ service adsprpcd /system/vendor/bin/adsprpcd
     user media
     group media
     writepid /dev/cpuset/system-background/tasks
-
-service hvdcp_opti /system/vendor/bin/hvdcp_opti
-    class main
-    user root
-    group system wakelock
-    seclabel u:r:hvdcp:s0
 
 service vendor.per_mgr /system/vendor/bin/pm-service
     class core
