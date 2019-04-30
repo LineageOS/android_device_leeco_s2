@@ -64,9 +64,6 @@ vendor/lib64/libbtnv.so|136dc47f7d16a841e9c6ad909753e96a41392534
 vendor/lib/vendor.qti.hardware.fm@1.0.so|3c725ea0f85bf709bcf77761d707abf7660b1c4d
 vendor/lib64/vendor.qti.hardware.fm@1.0.so|dc576dfcb0bf390a106b5ed8861e7f547110cbf1
 
-# Charger
-vendor/bin/hvdcp_opti
-
 # Consumerir - from le_x10 (x850) - 7.1.1/LEXCNFN6061705181T/letv05181516
 -vendor/app/UEIQuicksetSDKLeTV/UEIQuicksetSDKLeTV.apk|5f277e31c08585ca8e79f7fda0957bd577c99c7d
 vendor/bin/init.uei.sh|67fb65961843e5ba75e366eb33caf9a75ef1de66
