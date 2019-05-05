@@ -184,8 +184,6 @@ on boot
 
     chown system system /proc/touchpanel/capacitive_keys_enable
 
-    write /proc/sys/kernel/sched_boost 1
-
 service wcnss-service /system/vendor/bin/wcnss_service
     class late_start
     user system
