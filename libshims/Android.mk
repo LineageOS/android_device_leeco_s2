@@ -22,6 +22,22 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := media/fence.cpp
 include $(BUILD_SHARED_LIBRARY)
 
+# libshims_camera
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+    bionic/bionic_time_conversions.cpp \
+    bionic/pthread_cond.cpp
+
+LOCAL_SHARED_LIBRARIES := libc
+
+LOCAL_MODULE := libshims_camera
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_32_BIT_ONLY := true
+
+include $(BUILD_SHARED_LIBRARY)
+
 # fake print lib for hexedited fingerprint libs
 include $(CLEAR_VARS)
 
