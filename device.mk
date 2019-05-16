@@ -263,6 +263,7 @@ PRODUCT_COPY_FILES += \
 
 # Libshims
 PRODUCT_PACKAGES += \
+    libshims_camera \
     libshims_ims
 
 # Media
