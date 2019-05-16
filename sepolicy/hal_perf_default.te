@@ -1,1 +1,1 @@
-allow hal_perf_default sysfs:file { open read };
+set_prop(hal_perf_default, vendor_mpctl_prop)
