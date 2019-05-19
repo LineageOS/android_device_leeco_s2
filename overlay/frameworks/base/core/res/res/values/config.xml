@@ -25,19 +25,19 @@
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
-    <integer name="config_screenBrightnessSettingMinimum">15</integer>
+    <integer name="config_screenBrightnessSettingMinimum">10</integer>
 
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
-    <integer name="config_screenBrightnessSettingDefault">128</integer>
+    <integer name="config_screenBrightnessSettingDefault">90</integer>
 
     <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used
          for debouncing the light sensor.  Different constants are used to debounce the light sensor
          when adapting to brighter or darker environments.  This parameter controls how quickly
          brightness changes occur in response to an observed change in light level that exceeds the
          hysteresis threshold. -->
-    <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>
-    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
+    <integer name="config_autoBrightnessBrighteningLightDebounce">1000</integer>
+    <integer name="config_autoBrightnessDarkeningLightDebounce">2500</integer>
 
     <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
          The N entries of this array define N + 1 control points as follows:
@@ -56,20 +56,25 @@
          backlight values for LUX levels between these control points.
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>10</item>
-        <item>30</item>
-        <item>80</item>
-        <item>120</item>
-        <item>225</item>
-        <item>320</item>
-        <item>550</item>
-        <item>880</item>
-        <item>1250</item>
-        <item>2000</item>
-        <item>3000</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>8</item>
+        <item>12</item>
+        <item>20</item>
+        <item>33</item>
+        <item>55</item>
+        <item>90</item>
+        <item>148</item>
+        <item>245</item>
+        <item>403</item>
+        <item>665</item>
+        <item>1097</item>
+        <item>1808</item>
         <item>5000</item>
-        <item>5500</item>
-        <item>7500</item>
+        <item>8000</item>
+        <item>10000</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -78,19 +83,24 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>11</item>
-        <item>18</item>
-        <item>29</item>
-        <item>34</item>
-        <item>46</item>
-        <item>54</item>
-        <item>69</item>
-        <item>81</item>
-        <item>100</item>
-        <item>123</item>
-        <item>148</item>
-        <item>187</item>
-        <item>196</item>
+        <item>20</item>
+        <item>22</item>
+        <item>24</item>
+        <item>26</item>
+        <item>28</item>
+        <item>30</item>
+        <item>33</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>70</item>
+        <item>90</item>
+        <item>110</item>
+        <item>120</item>
+        <item>130</item>
+        <item>160</item>
+        <item>180</item>
         <item>225</item>
         <item>255</item>
     </integer-array>
@@ -100,19 +110,24 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
-    	<item>11</item>
         <item>18</item>
-        <item>29</item>
-        <item>34</item>
-        <item>46</item>
-        <item>54</item>
-        <item>69</item>
-        <item>81</item>
-        <item>100</item>
-        <item>123</item>
-        <item>148</item>
-        <item>187</item>
-        <item>196</item>
+        <item>20</item>
+        <item>22</item>
+        <item>25</item>
+        <item>26</item>
+        <item>28</item>
+        <item>30</item>
+        <item>33</item>
+        <item>35</item>
+        <item>45</item>
+        <item>50</item>
+        <item>70</item>
+        <item>90</item>
+        <item>110</item>
+        <item>120</item>
+        <item>130</item>
+        <item>160</item>
+        <item>180</item>
         <item>225</item>
         <item>255</item>
     </integer-array>
