@@ -810,14 +810,26 @@ int QCamera3HardwareInterface::validateStreamDimensions(
             }
             break;
         } /* End of switch(newStream->format) */
-
-        /* We error out even if a single stream has unsupported size set */
-        if (!sizeFound) {
-            ALOGE("%s: Error: Unsupported size of %d x %d requested for stream type:%d",
-                    __func__, newStream->width, newStream->height, newStream->format);
-            rc = -EINVAL;
-            break;
-        }
+		
+		/*
+		@nullbytepl patch:
+		Allow 2160p streams, even though we aren't advertising it
+		
+		Original patch by @anubioz, improved by @nullbytepl
+		*/
+		if ((int32_t)newStream->width == 3840 && (int32_t)newStream->height == 2160){
+			sizeFound = true;
+		} else {
+			/* We error out even if a single stream has unsupported size set */
+			if (!sizeFound) {
+				ALOGE("%s: Error: Unsupported size of %d x %d requested for stream type:%d",
+						__func__, newStream->width, newStream->height, newStream->format);
+				rc = -EINVAL;
+				break;
+			}
+		}
+		
+        
     } /* End of for each stream */
     return rc;
 }
