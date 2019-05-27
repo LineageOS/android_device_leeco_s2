@@ -61,7 +61,7 @@ echo $set_almk_ppr_adj > /sys/module/process_reclaim/parameters/min_score_adj
 # vmpressure_file_min = last_lmk_bin + (last_lmk_bin - last_but_one_lmk_bin)
 echo "18432,23040,27648,32256,55296,80640" > /sys/module/lowmemorykiller/parameters/minfree
 
-echo 1 > /sys/module/process_reclaim/parameters/enable_process_reclaim
+echo 0 > /sys/module/process_reclaim/parameters/enable_process_reclaim
 echo 70 > /sys/module/process_reclaim/parameters/pressure_max
 echo 10 > /sys/module/process_reclaim/parameters/pressure_min
 echo 30 > /sys/module/process_reclaim/parameters/swap_opt_eff
@@ -77,7 +77,7 @@ minfree_4="${minfree_3#*,}" ; rem_minfree_4="${minfree_4%%,*}"
 minfree_5="${minfree_4#*,}"
 vmpres_file_min=$((minfree_5 + (minfree_5 - rem_minfree_4)))
 echo $vmpres_file_min > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
-echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 
 # Apply Scheduler and Governor settings for 8976
 # SoC IDs are 266, 274, 277, 278
