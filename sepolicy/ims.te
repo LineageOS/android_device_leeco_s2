@@ -1,2 +1,4 @@
 set_prop(ims, debug_prop)
 allow ims self:capability net_raw;
+allow ims hal_rcsservice_exec:file entrypoint;
+allow ims self:capability2 wake_alarm;
