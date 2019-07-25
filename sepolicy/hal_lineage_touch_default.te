@@ -1,0 +1,2 @@
+allow hal_lineage_touch_default sysfs_touchpanel:dir search;
+allow hal_lineage_touch_default sysfs_touchpanel:file { getattr open write };
