@@ -1,38 +1,24 @@
-/dev/ttyHSL1                                                u:object_r:consumer_ir_device:s0
-
-# Goodix fingerprint daemon
-/(vendor|system/vendor|system)/bin/gx_fpd                   u:object_r:goodix_exec:s0
-
-# Fingerprint
-/system/vendor/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.0-service-custom u:object_r:hal_fingerprint_default_exec:s0
+# Amplifier
+/dev/i2c_smartpa                                           u:object_r:smartpa_device:s0
 
 # Camera
-/data/vendor/qcam(/.*)?                                     u:object_r:vendor_camera_data_file:s0
+/data/vendor/qcam(/.*)?                                    u:object_r:vendor_camera_data_file:s0
+/system/bin/mm-qcamera-daemon                              u:object_r:mm-qcamerad_exec:s0
 
 # Consumer IR
 /(vendor|system/vendor)/bin/hw/android\.hardware\.ir@1\.0-service\.leeco                  u:object_r:hal_ir_default_exec:s0
 
-# Radio
-/data/misc/radio/qcril.db                                   u:object_r:nv_data_file:s0
+/dev/ttyHSL1                                               u:object_r:consumer_ir_device:s0
+/sys/remote/enable                                         u:object_r:sysfs_ir_enable:s0
 
-# Shell scripts
-/(vendor|system/vendor)/bin/init\.uei\.sh                   u:object_r:init_uei_exec:s0
-
-# Legacy (TODO: move to vendor)
-/sbin/qfipsverify                                           u:object_r:sectest_exec:s0
-/system/bin/ipacm                                           u:object_r:ipacm_exec:s0
-/system/bin/ipacm-diag                                      u:object_r:ipacm-diag_exec:s0
-/system/bin/mm-qcamera-daemon                               u:object_r:mm-qcamerad_exec:s0
-/data/misc/location/xtra/socket_xtra                        u:object_r:location_socket:s0
-/data/misc/location/xtra/socket_hal_xtra                    u:object_r:location_socket:s0
-
-/data/misc/tloc(/.*)? u:object_r:tlocd_data_file:s0
+# Fingerprint
+/(vendor|system/vendor|system)/bin/gx_fpd                  u:object_r:goodix_exec:s0
+/system/vendor/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.leeco_s2   u:object_r:hal_fingerprint_default_exec:s0
 
 /dev/goodix_fp                                             u:object_r:goodix_device:s0
-/data/goodix(/.*)?                                         u:object_r:goodix_data_file:s0
-/dev/i2c_smartpa                                           u:object_r:smartpa_device:s0
+
+# Shell scripts
+/(vendor|system/vendor)/bin/init\.uei\.sh                  u:object_r:init_uei_exec:s0
 
 # HALs
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2      u:object_r:hal_lineage_touch_default_exec:s0
-
-/sys/remote/enable                                         u:object_r:sysfs_ir_enable:s0
