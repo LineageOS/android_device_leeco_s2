@@ -7,4 +7,6 @@ allow hal_fingerprint_default goodix_service:service_manager { find };
 
 allow hal_fingerprint_default keystore:keystore_key { add_auth };
 
+allow hal_fingerprint_default fingerprintd_data_file:dir write;
+
 add_service(hal_fingerprint_default, fingerprintd_custom_service);
