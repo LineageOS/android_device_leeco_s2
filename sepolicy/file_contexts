@@ -25,3 +25,5 @@
 
 # HALs
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2      u:object_r:hal_lineage_touch_default_exec:s0
+
+/sys/devices/soc\.0/78b8000\.i2c/i2c-4/4-[0-9a-f]+/input/input[0-9]+/0dbutton                   u:object_r:sysfs_touchpanel:s0
