@@ -534,7 +534,8 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
 
 service vendor.charger /vendor/bin/charger
     class charger
-    group system graphics log
+    user system
+    group system graphics input log
     seclabel u:r:vendor_charger:s0
     writepid /dev/cpuset/system-background/tasks
 
