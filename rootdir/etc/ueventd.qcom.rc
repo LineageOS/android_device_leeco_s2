@@ -193,6 +193,9 @@
 /dev/i2c-5                0660   media       media
 /dev/avtimer              0660   system     audio
 
+# Amplifier
+/dev/i2c_smartpa          0660   media      media
+
 # DVB devices
 /dev/dvb/adapter0/demux*  0440   media       media
 /dev/dvb/adapter0/dvr*    0660   media       media

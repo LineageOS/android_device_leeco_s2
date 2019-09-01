@@ -1,3 +1,2 @@
-allow audioserver smartpa_device:chr_file { rw_file_perms };
 allow audioserver sysfs:dir { r_dir_perms };
 allow audioserver hal_perf_default:binder call;
