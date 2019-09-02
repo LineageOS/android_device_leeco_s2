@@ -280,8 +280,9 @@ on post-fs-data
 
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
-    chown system system /persist
+    chown root system /persist
     chmod 0771 /persist
+    chown system system /persist/WCNSS_qcom_wlan_nv.bin
     chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
@@ -324,9 +325,6 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
-    #Create a folder for SRS to be able to create a usercfg file
-    mkdir /data/data/media 0770 media media
-
     #Create folder for mm-qcamera-daemon
     mkdir /data/camera 0770 media camera
 
@@ -336,9 +334,16 @@ on post-fs-data
     rm /data/vendor/perfd/default_values
 
     # Sensor
-    mkdir /persist/sensors 0775 system system
-    chmod 664 /persist/sensors/sensors_settings
-    chown system root /persist/sensors/sensors_settings
+    chown system system /mnt/vendor/persist/sensors
+    chown system system /mnt/vendor/persist/sensors/sns.reg
+    chown system system /mnt/vendor/persist/sensors/sensors_list.txt
+    chown system system /mnt/vendor/persist/sensors/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry
+    chown system system /mnt/vendor/persist/sensors/sensors_settings
+    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
+    chown system system /mnt/vendor/persist/sensors/registry/config
+    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
 
     #Create IOP deamon related dirs
     mkdir /data/vendor/iop 0770 root system
@@ -472,7 +477,7 @@ on property:ro.data.large_tcp_window_size=true
 on property:sys.sysctl.tcp_adv_win_scale=*
     write /proc/sys/net/ipv4/tcp_adv_win_scale ${sys.sysctl.tcp_adv_win_scale}
 
-service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
+service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -O/data/vendor/wifi/wpa/sockets -puse_p2p_group_interface=1 \
     -g@android:wpa_wlan0
     interface android.hardware.wifi.supplicant@1.0::ISupplicant default
