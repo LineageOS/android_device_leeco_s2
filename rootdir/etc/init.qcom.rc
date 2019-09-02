@@ -206,10 +206,6 @@ on boot
     # Create vpp directory
     mkdir /persist/vpp 0770 media media
 
-    # perfd waits until the property is set to 1 and refuses to acquire
-    # locks and process hints until it doesn't exists or it is empty.
-    setprop vendor.post_boot.parsed 1
-
 on post-fs
     # Wait qseecomd started
     wait_for_prop sys.listeners.registered true
@@ -385,6 +381,7 @@ on post-fs-data
     mkdir /data/vendor/vpp 0770 media media
 
 on property:sys.boot_completed=1
+    setprop vendor.post_boot.parsed 1
     write /dev/kmsg "Boot completed "
     #WDSP FW boot sysfs node used by STHAL
     chown media audio /sys/kernel/wdsp0/boot
