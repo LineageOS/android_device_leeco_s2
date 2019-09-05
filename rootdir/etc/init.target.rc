@@ -38,9 +38,6 @@ on fs
     # Bluetooth 
     mkdir /persist/wlan_bt 0700 system system
 
-    restorecon_recursive /persist
-    restorecon_recursive /dsp
-
     # Start HW service manager early
     start hwservicemanager
 
@@ -57,8 +54,6 @@ on late-fs
 on post-fs-data
     mkdir /persist/data/sfs 0700 system system
     mkdir /persist/data/tz 0700 system system
-    mkdir /data/misc/dts 0770 media audio
-    mkdir /data/misc/audio_pp 0771 media audio
 
     chown media media /dev/i2c_smartpa
     chmod 0660 /dev/i2c_smartpa
