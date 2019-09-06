@@ -21,7 +21,7 @@
 #include <hardware/hardware.h>
 #include <hardware/fingerprint.h>
 #include <hardware/hw_auth_token.h>
-#include <android/security/IKeystoreService.h>
+#include <android/security/keystore/IKeystoreService.h>
 #include <utils/Log.h>
 
 #include "FingerprintDaemonProxy.h"
@@ -93,7 +93,7 @@ void FingerprintDaemonProxy::notifyKeystore(const uint8_t *auth_token, const siz
         // TODO: cache service?
         sp < IServiceManager > sm = defaultServiceManager();
         sp < IBinder > binder = sm->getService(String16("android.security.keystore"));
-        sp < security::IKeystoreService > service = interface_cast < security::IKeystoreService > (binder);
+        sp < android::security::keystore::IKeystoreService > service = interface_cast < android::security::keystore::IKeystoreService > (binder);
         if (service != NULL) {
             int result =0;
             std::vector<uint8_t> auth_token_vector(*auth_token, (*auth_token) + auth_token_length);
