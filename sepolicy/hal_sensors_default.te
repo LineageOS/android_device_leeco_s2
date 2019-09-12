@@ -1,0 +1,2 @@
+allow hal_sensors_default mnt_vendor_file:dir rw_dir_perms;
+allow hal_sensors_default mnt_vendor_file:file rw_file_perms;
