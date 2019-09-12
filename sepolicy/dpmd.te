@@ -1,1 +1,3 @@
 allow dpmd self:capability { dac_override };
+
+allow dpmd netutils_wrapper_exec:file { execute execute_no_trans getattr open read };
