@@ -1,0 +1,2 @@
+allow mm-pp-daemon mnt_vendor_file:dir r_dir_perms;
+allow mm-pp-daemon mnt_vendor_file:file r_file_perms;
