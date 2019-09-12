@@ -1,0 +1,10 @@
+allow vendor_init camera_device:file create_file_perms;
+allow vendor_init device:dir create_dir_perms;
+allow vendor_init device:file create_file_perms;
+
+allow vendor_init proc_printk:file rw_file_perms;
+
+allow vendor_init firmware_file:dir r_dir_perms;
+allow vendor_init firmware_file:file r_file_perms;
+
+allow vendor_init media_data_file:dir create_dir_perms;
