@@ -33,4 +33,8 @@ init_daemon_domain(perfservice)
 add_service(perfservice, vendor_perf_service)
 binder_use(perfservice);
 binder_call(perfservice, system_server);
+binder_call(perfservice, hal_perf_default);
+binder_call(perfservice, hwservicemanager);
 binder_service(perfservice);
+
+get_prop(perfservice, hwservicemanager_prop)
