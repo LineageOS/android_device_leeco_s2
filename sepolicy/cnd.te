@@ -1,1 +1,6 @@
-allow cnd self:capability { chown dac_override fsetid net_raw setgid setuid };
+allow cnd self:capability net_raw;
+
+add_hwservice(cnd, hal_datafactory_hwservice)
+
+allow cnd wpa_data_file:dir rw_dir_perms;
+allow cnd wpa_data_file:sock_file create_file_perms;
