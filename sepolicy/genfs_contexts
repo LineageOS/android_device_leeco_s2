@@ -10,6 +10,23 @@ genfscon sysfs /devices/soc.0/qcom,bcl.57                                       
 # Capacitive Keys
 genfscon proc /touchpanel                                                                                   u:object_r:proc_touchpanel:s0
 
+# Perf
+genfscon sysfs /devices/soc.0/b1dc000.qcom,msmcci-ccimon/driver                         u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/b1dc000.qcom,msmcci-ccimon/modalias                       u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/b1dc000.qcom,msmcci-ccimon/power                          u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/b1dc000.qcom,msmcci-ccimon/subsystem                      u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/b1dc000.qcom,msmcci-ccimon/uevent                         u:object_r:sysfs_devfreq:s0
+genfscon sysfs /class/devfreq/qcom,cpubw.50/bw_hwmon/decay_rate                         u:object_r:sysfs_devfreq:s0
+genfscon sysfs /class/devfreq/qcom,cpubw.50/bw_hwmon/io_percent                         u:object_r:sysfs_devfreq:s0
+genfscon sysfs /class/devfreq/qcom,cpubw.50/max_freq                                    u:object_r:sysfs_devfreq:s0
+genfscon sysfs /class/devfreq/qcom,cpubw.50/min_freq                                    u:object_r:sysfs_devfreq:s0
+genfscon sysfs /class/devfreq/qcom,cpubw.50/polling_interval                            u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/qcom,cpubw.50/devfreq/qcom,cpubw.50/bw_hwmon/decay_rate   u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/qcom,cpubw.50/devfreq/qcom,cpubw.50/bw_hwmon/io_percent   u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/qcom,cpubw.50/devfreq/qcom,cpubw.50/min_freq              u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/qcom,cpubw.50/devfreq/qcom,cpubw.50/decay_rate            u:object_r:sysfs_devfreq:s0
+genfscon sysfs /devices/soc.0/qcom,cpubw.50/devfreq/qcom,cpubw.50/io_percent            u:object_r:sysfs_devfreq:s0
+
 # Leds
 genfscon sysfs /devices/soc.0/leds-qpnp-21/leds/                            u:object_r:sysfs_leds:s0
 genfscon sysfs /devices/soc.0/7af8000.i2c/i2c-8/8-0045/leds/red             u:object_r:sysfs_graphics:s0

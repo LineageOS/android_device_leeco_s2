@@ -30,6 +30,9 @@
 
 # Perf
 /system/bin/perfservice                                                                   u:object_r:perfservice_exec:s0
+/sys/devices/soc\.0/[a-z0-9]+\.qcom,msmcci-ccimon(/.*)?                                   u:object_r:sysfs_devfreq:s0
+/sys/devices/soc\.0/qcom,gpubw\.[a-z0-9]+/devfreq/qcom,gpubw\.[a-z0-9]+(/.*)?             u:object_r:sysfs_devfreq:s0
+/sys/devices/soc\.0/qcom,cpubw\.[a-z0-9]+/devfreq/qcom,cpubw\.[a-z0-9]+(/.*)?             u:object_r:sysfs_devfreq:s0
 
 # Persist
 /(mnt/vendor)/persist/bluetooth(/.*)?                                                     u:object_r:persist_bluetooth_file:s0
