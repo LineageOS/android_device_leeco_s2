@@ -62,6 +62,7 @@ vidc.enc.dcvs.extra-buff-count=2
 # CNE/DPM
 persist.vendor.cne.feature=1
 persist.vendor.dpm.feature=1
+persist.vendor.dpm.nsrm.bkg.evt=3955
 
 # Coresight
 persist.debug.coresight.config=stm-events
