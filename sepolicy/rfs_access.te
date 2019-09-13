@@ -1,2 +1,4 @@
 allow rfs_access self:capability { net_raw };
-allow rfs_access persist_file:file { rw_file_perms };
+
+allow rfs_access mnt_vendor_file:dir { create_dir_perms };
+allow rfs_access mnt_vendor_file:file { create_file_perms };
