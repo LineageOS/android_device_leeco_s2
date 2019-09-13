@@ -1,0 +1,2 @@
+allow hal_bluetooth_qti mnt_vendor_file:dir r_dir_perms ;
+allow hal_bluetooth_qti mnt_vendor_file:file r_file_perms;

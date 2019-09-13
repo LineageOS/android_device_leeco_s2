@@ -1,3 +1,5 @@
 oem.device.imeicache               u:object_r:qcom_ims_prop:s0
 serialno                   u:object_r:serialno_prop:s0
 ro.vendor.alarm_boot               u:object_r:vendor_alarm_prop:s0
+
+persist.vendor.service.bdroid.bdaddr       u:object_r:bluetooth_prop:s0
