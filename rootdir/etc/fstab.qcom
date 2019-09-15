@@ -21,8 +21,6 @@
 /dev/block/bootdevice/by-name/modem     /vendor/firmware_mnt     vfat    ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0          wait
 /dev/block/bootdevice/by-name/dsp            /vendor/dsp                       ext4   ro,nosuid,nodev,barrier=1                                                                                                                                      wait
 
-/mnt/vendor/persist                         /persist            none    bind                                                                                    wait
-
 /devices/platform/msm_hsusb*                auto                auto    defaults                                                                                voldmanaged=usb:auto
 
 # Zram
