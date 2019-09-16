@@ -568,3 +568,6 @@ service power_off_alarm /vendor/bin/power_off_alarm
     group system
     disabled
     oneshot
+
+    on property:apexd.status=ready
+    mount none /system/etc/swcodec/ld.config.txt /apex/com.android.media.swcodec/etc/ld.config.txt bind
