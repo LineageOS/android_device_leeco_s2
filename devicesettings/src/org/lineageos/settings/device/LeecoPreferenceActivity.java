@@ -17,15 +17,15 @@
 package org.lineageos.settings.device;
 
 import android.os.Bundle;
-import com.android.settingslib.drawer.SettingsDrawerActivity;
+import android.preference.PreferenceActivity;
 
-public class LeecoPreferenceActivity extends SettingsDrawerActivity {
+public class LeecoPreferenceActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager()
             .beginTransaction()
-            .replace(R.id.content_frame, new LeecoPreferenceFragment())
+            .replace(android.R.id.content, new LeecoPreferenceFragment())
             .commit();
     }
 }
