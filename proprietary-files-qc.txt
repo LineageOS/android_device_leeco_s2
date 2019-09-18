@@ -434,7 +434,7 @@ vendor/lib64/libsmemlog.so
 -framework/QtiTelephonyServicelibrary.jar
 -framework/qcrilhook.jar
 -framework/qti-telephony-common.jar|b1953a3599255f08f1785c677d22810f65e0167b
--priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
+-priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk|956a4017d0ba7f68e6d225e57b40d3b2bcbb4837
 etc/permissions/qcrilhook.xml
 etc/permissions/telephonyservice.xml
 vendor/bin/ATFWD-daemon
@@ -506,7 +506,7 @@ lib64/libimscamera_jni.so
 lib64/libimsmedia_jni.so
 lib64/librcc.so
 lib64/vendor.qti.imsrtpservice@1.0.so
--priv-app/ims/ims.apk|54464ad55ece9aa27bedca09f5af0ca49f17620b
+-priv-app/ims/ims.apk|426be1b83d6f608107d6dcf587080551abeab3e2
 -vendor/app/imssettings/imssettings.apk|34bb4f4e805c938d894cce6b4cee66516f64a130
 vendor/bin/ims_rtp_daemon
 vendor/bin/imsdatadaemon
