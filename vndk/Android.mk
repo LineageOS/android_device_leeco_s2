@@ -1,3 +1,6 @@
+# TODO(b/69526027): DEPRECATE USE OF THIS.
+# USE BOARD_VNDK_VERSION:=current instead.
+
 LOCAL_PATH := $(call my-dir)
 
 # b/69526027: This VNDK-SP install routine must be removed. Instead, we must
@@ -10,7 +13,7 @@ ifndef BOARD_VNDK_VERSION
 # However, some of those libs need FWK-ONLY libs, which must be listed here
 # manually.
 VNDK_SP_LIBRARIES := \
-    libdexfile
+    libdexfile_support
 
 install_in_hw_dir := \
    android.hidl.memory@1.0-impl
@@ -28,6 +31,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_INSTALLED_MODULE_STEM := $1.so
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_RELATIVE_PATH := $(vndk_sp_dir)$(if $(filter $1,$(install_in_hw_dir)),/hw)
+LOCAL_CHECK_ELF_FILES := false
 include $$(BUILD_PREBUILT)
 
 ifneq ($$(TARGET_2ND_ARCH),)
@@ -42,6 +46,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_INSTALLED_MODULE_STEM := $1.so
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_RELATIVE_PATH := $(vndk_sp_dir)$(if $(filter $1,$(install_in_hw_dir)),/hw)
+LOCAL_CHECK_ELF_FILES := false
 include $$(BUILD_PREBUILT)
 endif # TARGET_TRANSLATE_2ND_ARCH is not true
 endif # TARGET_2ND_ARCH is not empty
@@ -58,12 +63,12 @@ VNDK_SP_LIBRARIES := $(filter-out libz,$(VNDK_SP_LIBRARIES))
 $(foreach lib,$(VNDK_SP_LIBRARIES),\
     $(eval $(call define-vndk-sp-lib,$(lib))))
 
+install_in_hw_dir :=
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := vndk-sp
+LOCAL_MODULE_OWNER := google
 LOCAL_MODULE_TAGS := optional
 LOCAL_REQUIRED_MODULES := $(addsuffix .vndk-sp-gen,$(VNDK_SP_LIBRARIES))
 include $(BUILD_PHONY_PACKAGE)
-
-install_in_hw_dir :=
-vndk_sp_dir :=
 endif
