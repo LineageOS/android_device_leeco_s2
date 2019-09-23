@@ -536,6 +536,7 @@ service vendor.charger /vendor/bin/charger
     class charger
     user system
     group system graphics input log
+    capabilities SYS_BOOT
     seclabel u:r:vendor_charger:s0
     writepid /dev/cpuset/system-background/tasks
 
