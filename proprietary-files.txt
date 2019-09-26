@@ -52,7 +52,7 @@ vendor/lib/libmmcamera2_cpp_module.so|a82398efb3f277cf5afbf5bc4a8bbb54c28dcd62
 vendor/lib/libmmcamera2_frame_algorithm.so
 vendor/lib/libmmcamera2_iface_modules.so|d1c7393862986b23cc555250620cad851996ea87
 vendor/lib/libmmcamera2_imglib_modules.so|44be8963099b44ccb4a1698b7dcb38b230018439
-vendor/lib/libmmcamera2_isp_modules.so
+vendor/lib/libmmcamera2_isp_modules.so|aec359c3a2f6d72dfdd3a095e657d109f8447109
 vendor/lib/libmmcamera2_is.so
 vendor/lib/libmmcamera2_mct.so|8eb312033fbeec02752edd78f73803367815421a
 vendor/lib/libmmcamera2_pp_buf_mgr.so
