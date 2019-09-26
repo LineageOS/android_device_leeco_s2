@@ -10,7 +10,7 @@ etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Speaker_cal.acdb
 # Audio libraries
 etc/settings/mono_qcom.cnt
 -lib/libtfa9890.so
--lib64/libtfa9890.so
+-lib64/libtfa9890.so|21e05b0401f206c7d197869679e519d273cac5eb
 
 # Camera
 bin/mm-qcamera-daemon|38080d77baf6f4d20c9a967cf39f23479d843c19
