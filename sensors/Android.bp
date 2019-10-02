@@ -27,8 +27,6 @@ cc_binary {
         "libbase",
         "libutils",
         "libhidlbase",
-        "libhidltransport",
         "android.hardware.sensors@1.0",
-        "libhwbinder",
     ],
 }

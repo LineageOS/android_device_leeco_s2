@@ -12,9 +12,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/inc
 LOCAL_MODULE := liboffloadhal
 
 #LOCAL_CPP_FLAGS := -Wall -Werror
-LOCAL_SHARED_LIBRARIES := libhwbinder \
-                        libhidlbase \
-                        libhidltransport \
+LOCAL_SHARED_LIBRARIES := libhidlbase \
                         liblog \
                         libcutils \
                         libdl \
