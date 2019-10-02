@@ -78,9 +78,7 @@ LOCAL_SHARED_LIBRARIES += libipanat
 LOCAL_SHARED_LIBRARIES += libxml2
 LOCAL_SHARED_LIBRARIES += libnfnetlink
 LOCAL_SHARED_LIBRARIES += libnetfilter_conntrack
-LOCAL_SHARED_LIBRARIES += libhwbinder \
-                libhidlbase \
-                libhidltransport \
+LOCAL_SHARED_LIBRARIES += libhidlbase \
                 liblog \
                 libcutils \
                 libdl \
