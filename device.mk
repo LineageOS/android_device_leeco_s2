@@ -211,24 +211,13 @@ PRODUCT_PACKAGES += \
      fs_config_files
 
 # GPS
-PRODUCT_PACKAGES += \
-    gps.msm8952 \
-    libcurl \
-    libgnss \
-    libgnsspps \
-    libgps.utils \
-    libloc_core \
-    libloc_stub \
-    libloc_pla \
-    liblocation_api
-
-PRODUCT_PACKAGES += \
-    flp.conf \
-    gps.conf \
-    izat.conf \
-    lowi.conf \
-    sap.conf \
-    xtwifi.conf
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/gps/flp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/flp.conf \
+    $(LOCAL_PATH)/configs/gps/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf \
+    $(LOCAL_PATH)/configs/gps/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
+    $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
+    $(LOCAL_PATH)/configs/gps/sap.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sap.conf \
+    $(LOCAL_PATH)/configs/gps/xtwifi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/xtwifi.conf
 
 # HIDL
 PRODUCT_PACKAGES += \
