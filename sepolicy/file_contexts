@@ -31,6 +31,26 @@
 # Perf
 /system/bin/perfservice                                                                   u:object_r:perfservice_exec:s0
 
+# Persist
+/(mnt/vendor)/persist/bluetooth(/.*)?                                                     u:object_r:persist_bluetooth_file:s0
+/(mnt/vendor)/persist/drm(/.*)?                                                           u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/sensors(/.*)?                                                       u:object_r:sensors_persist_file:s0
+/(mnt/vendor)/persist/alarm(/.*)?                                                         u:object_r:persist_alarm_file:s0
+/(mnt/vendor)/persist/time(/.*)?                                                          u:object_r:persist_time_file:s0
+/(mnt/vendor)/persist/data(/.*)?                                                          u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/data/tz(/.*)?                                                       u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/data/sfs(/.*)?                                                      u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/qti_fp(/.*)?                                                        u:object_r:persist_qti_fp_file:s0
+/(mnt/vendor)/persist/usf(/.*)?                                                           u:object_r:persist_usf_file:s0
+/(mnt/vendor)/persist/hlos_rfs(/.*)?                                                      u:object_r:rfs_shared_hlos_file:s0
+/(mnt/vendor)/persist/display(/.*)?                                                       u:object_r:persist_display_file:s0
+/(mnt/vendor)/persist/rfs.*                                                               u:object_r:rfs_file:s0
+/(mnt/vendor)/persist/speccfg(/.*)?                                                       u:object_r:regionalization_file:s0
+/(mnt/vendor)/persist/misc(/.*)?                                                          u:object_r:persist_misc_file:s0
+/(mnt/vendor)/persist/bms(/.*)?                                                           u:object_r:persist_bms_file:s0
+/(mnt/vendor)/persist/vpp(/.*)?                                                           u:object_r:persist_vpp_file:s0
+/(mnt/vendor)/persist/secnvm(/.*)?                                                        u:object_r:persist_secnvm_file:s0
+
 # Sensor
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service\.s2                u:object_r:hal_sensors_default_exec:s0
 
