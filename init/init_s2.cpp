@@ -67,8 +67,9 @@ void property_override(const std::string& name, const std::string& value)
     }
 }
 
-void property_override_dual(const std::string& system_prop, const std::string& vendor_prop, const std::string& value)
+void property_overrride_triple(const std::string& product_prop, const std::string& system_prop, const std::string& vendor_prop, const std::string& value)
 {
+    property_override(product_prop, value);
     property_override(system_prop, value);
     property_override(vendor_prop, value);
 }
@@ -82,23 +83,23 @@ void init_target_properties()
 
         if (!strncmp(device.c_str(), "s2_open", 7)) {
             // This is X520
-            property_override_dual("ro.product.model", "ro.product.vendor.model", "X520");
+            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X520");
         }
         else if (!strncmp(device.c_str(), "s2_oversea", 10)) {
             // This is X522
-            property_override_dual("ro.product.model", "ro.product.vendor.model", "X522");
+            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X522");
         }
         else if (!strncmp(device.c_str(), "s2_india", 8)) {
             // This is X526
-            property_override_dual("ro.product.model", "ro.product.vendor.model", "X526");
+            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X526");
         }
         else if (!strncmp(device.c_str(), "s2_ww", 5)) {
             // This is X527
-            property_override_dual("ro.product.model", "ro.product.vendor.model", "X527");
+            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X527");
         }
         else {
             // Unknown variant
-            property_override_dual("ro.product.model", "ro.product.vendor.model", "X52X");
+            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X52X");
         }
     }
     else {
