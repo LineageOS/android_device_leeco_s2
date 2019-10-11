@@ -540,10 +540,11 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
     group radio cache inet misc audio sdcard_r sdcard_rw diag log
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
-service charger /vendor/bin/charger
+service vendor.charger /vendor/bin/charger
     class charger
-    group system graphics
-    seclabel u:r:healthd:s0
+    group system graphics log
+    seclabel u:r:vendor_charger:s0
+    writepid /dev/cpuset/system-background/tasks
 
 service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     class core
