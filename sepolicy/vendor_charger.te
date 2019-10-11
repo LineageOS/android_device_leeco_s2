@@ -1,0 +1,51 @@
+type vendor_charger, domain;
+type vendor_charger_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(vendor_charger)
+
+allow vendor_charger device:dir { r_dir_perms };
+allow vendor_charger kmsg_device:chr_file { rw_file_perms };
+allow vendor_charger graphics_device:dir { r_dir_perms };
+allow vendor_charger graphics_device:chr_file { rw_file_perms };
+allow vendor_charger input_device:dir { r_dir_perms };
+allow vendor_charger input_device:chr_file { r_file_perms };
+allow vendor_charger proc_stat:file { r_file_perms };
+allow vendor_charger proc_sysrq:dir { search };
+allow vendor_charger proc_sysrq:file { rw_file_perms };
+allow vendor_charger properties_device:dir { r_dir_perms };
+
+# required to read /res/images/charger/
+allow vendor_charger rootfs:file { r_file_perms };
+
+allow vendor_charger self:capability { sys_boot };
+allow vendor_charger self:capability2 { block_suspend };
+
+allow vendor_charger pstorefs:dir { search };
+allow vendor_charger pstorefs:file { r_file_perms };
+
+allow vendor_charger sysfs_leds:dir { search };
+allow vendor_charger sysfs_leds:file { rw_file_perms };
+allow vendor_charger sysfs_leds:lnk_file { r_file_perms };
+
+allow vendor_charger sysfs:dir { r_dir_perms };
+
+allow vendor_charger sysfs_android_usb:dir { search };
+allow vendor_charger sysfs_android_usb:file { r_file_perms };
+
+allow vendor_charger sysfs_battery_supply:dir { search };
+allow vendor_charger sysfs_battery_supply:file { r_file_perms };
+allow vendor_charger sysfs_batteryinfo:dir { search };
+allow vendor_charger sysfs_batteryinfo:file { r_file_perms };
+
+allow vendor_charger sysfs_graphics:dir { search };
+allow vendor_charger sysfs_graphics:file { rw_file_perms };
+
+allow vendor_charger sysfs_power:dir { search };
+allow vendor_charger sysfs_power:file { rw_file_perms };
+
+allow vendor_charger sysfs_usb_supply:dir { search };
+allow vendor_charger sysfs_usb_supply:file { r_file_perms };
+
+# LeEco offline charger doesn't need net...
+dontaudit vendor_charger self:capability { net_admin };
+allow vendor_charger self:netlink_kobject_uevent_socket { bind create read setopt };
