@@ -316,13 +316,6 @@ on post-fs-data
     # Create /data/vendor/time folder for time-services
     mkdir /data/vendor/time/ 0700 system system
 
-    mkdir /data/vendor/audio/ 0770 media audio
-    mkdir /data/audio/ 0770 media audio
-
-    # Create a folder for audio delta files
-    mkdir /data/vendor/audio/acdbdata 0770 media audio
-    mkdir /data/vendor/audio/acdbdata/delta 0770 media audio
-
     setprop vold.post_fs_data_done 1
 
     #Create PERFD deamon related dirs
