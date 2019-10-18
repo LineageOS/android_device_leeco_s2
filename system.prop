@@ -146,6 +146,9 @@ ro.vendor.extension_library=libqti-perfd-client.so
 ro.vendor.qti.core_ctl_min_cpu=2
 ro.vendor.qti.core_ctl_max_cpu=8
 
+# QC framework value-adds
+ro.vendor.qti.va_aosp.support=1
+
 # Radio
 DEVICE_PROVISIONED=1
 ril.subscription.types=RUIM
