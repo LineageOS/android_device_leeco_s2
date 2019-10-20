@@ -71,6 +71,14 @@ function blob_fixup() {
         patchelf --remove-needed "libsoftkeymaster.so" "${2}"
         patchelf --remove-needed "libkeymaster_messages.so" "${2}"
         ;;
+
+    # Add shim for libbase LogMessage functions
+    vendor/bin/imsrcsd | vendor/lib64/lib-uceservice.so)
+        for  LIBBASE_SHIM in $(grep -L "libbase_shim.so" "${2}"); do
+            patchelf --add-needed "libbase_shim.so" "$LIBBASE_SHIM"
+        done
+        ;;
+
     esac
 }
 
