@@ -340,13 +340,6 @@ PRODUCT_PACKAGES += \
     init.s2.usb.rc \
     ueventd.qcom.rc
 
-# RCS
-PRODUCT_PACKAGES += \
-    rcs_service_aidl \
-    rcs_service_aidl.xml \
-    rcs_service_api \
-    rcs_service_api.xml
-
 # Releasetools
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/releasetools/devinfo.sh:install/bin/devinfo.sh
