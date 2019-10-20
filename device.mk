@@ -266,6 +266,7 @@ PRODUCT_COPY_FILES += \
 
 # Libshims
 PRODUCT_PACKAGES += \
+    libbase_shim \
     libshims_camera \
     libshims_ims
 
