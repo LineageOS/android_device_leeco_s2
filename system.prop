@@ -179,6 +179,7 @@ persist.vendor.radio.start_ota_daemon=1
 persist.vendor.radio.sw_mbn_update=0
 persist.data.qmi.adb_logmask=0
 persist.radio.aosp_usr_pref_sel=true
+persist.sys.fflag.override.settings_network_and_internet_v2=true
 
 # SurfaceFlinger
 debug.sf.early_phase_offset_ns=1500000
