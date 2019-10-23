@@ -400,12 +400,6 @@ on property:vold.decrypt=trigger_restart_framework
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
-service cnd /vendor/bin/cnd
-    class main
-    user system
-    group system wifi inet radio wakelock net_admin
-    writepid /dev/cpuset/system-background/tasks
-
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
     user root
@@ -557,12 +551,6 @@ service vendor.msm_irqbal_lb /vendor/bin/msm_irqbalance -f /system/vendor/etc/ms
 
 on property:init.svc.surfaceflinger=restarting
     restart vendor.hwcomposer-2-1
-
-service time_daemon /system/vendor/bin/time_daemon
-    class main
-    user root
-    group root
-    writepid /dev/cpuset/system-background/tasks
 
 service power_off_alarm /vendor/bin/power_off_alarm
     class core
