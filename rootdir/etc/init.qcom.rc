@@ -339,9 +339,6 @@ on post-fs-data
     chown system system /mnt/vendor/persist/sensors/registry/config
     chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
 
-    #Create IOP deamon related dirs
-    mkdir /data/vendor/iop 0770 root system
-
     # Mark the copy complete flag to not completed
     write /data/vendor/radio/copy_complete 0
     chown radio radio /data/vendor/radio/copy_complete
