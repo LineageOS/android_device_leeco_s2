@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -230,7 +230,7 @@ void IPACM_ConntrackListener::HandleNonNatIPAddr(
 	bool NatIface = false;
 	int cnt, ret;
 
-	if (isStaMode)
+	if (backhaul_mode != Q6_WAN)
 	{
 		IPACMDBG("In STA mode, don't add dummy rules for non nat ifaces\n");
 		return;
@@ -345,10 +345,13 @@ void IPACM_ConntrackListener::HandleNeighIpAddrDelEvt(
 void IPACM_ConntrackListener::TriggerWANUp(void *in_param)
 {
 	 ipacm_event_iface_up *wanup_data = (ipacm_event_iface_up *)in_param;
+	 uint8_t mux_id;
 
 	 IPACMDBG_H("Recevied below information during wanup,\n");
-	 IPACMDBG_H("if_name:%s, ipv4_address:0x%x\n",
-						wanup_data->ifname, wanup_data->ipv4_addr);
+	 IPACMDBG_H("if_name:%s, ipv4_address:0x%x mux_id:%d, xlat_mux_id:%d\n",
+						wanup_data->ifname, wanup_data->ipv4_addr,
+						wanup_data->mux_id,
+						wanup_data->xlat_mux_id);
 
 	 if(wanup_data->ipv4_addr == 0)
 	 {
@@ -365,15 +368,19 @@ void IPACM_ConntrackListener::TriggerWANUp(void *in_param)
 	 }
 
 	 WanUp = true;
-	 isStaMode = wanup_data->is_sta;
-	 IPACMDBG("isStaMode: %d\n", isStaMode);
+	 backhaul_mode = wanup_data->backhaul_type;
+	 IPACMDBG("backhaul_mode: %d\n", backhaul_mode);
 
 	 wan_ipaddr = wanup_data->ipv4_addr;
 	 memcpy(wan_ifname, wanup_data->ifname, sizeof(wan_ifname));
 
 	 if(nat_inst != NULL)
 	 {
-		 nat_inst->AddTable(wanup_data->ipv4_addr);
+		 if (wanup_data->mux_id == 0)
+		   mux_id = wanup_data->xlat_mux_id;
+		 else
+		   mux_id = wanup_data->mux_id;
+		 nat_inst->AddTable(wanup_data->ipv4_addr, mux_id);
 	 }
 
 	 IPACMDBG("creating nat threads\n");
@@ -723,7 +730,7 @@ bool IPACM_ConntrackListener::AddIface(
 		}
 	}
 
-	if (!isStaMode)
+	if (backhaul_mode == Q6_WAN)
 	{
 		/* check whether non nat iface or not, on Non Nat iface
 		   add dummy rule by copying public ip to private ip */
@@ -992,7 +999,7 @@ void IPACM_ConntrackListener::CheckSTAClient(
 
 	/* Check whether target is in STA client list or not
       if not ignore the connection */
-	 if(!isStaMode || (StaClntCnt == 0))
+	 if((backhaul_mode == Q6_WAN) || (StaClntCnt == 0))
 	 {
 		return;
 	 }
@@ -1037,9 +1044,9 @@ void IPACM_ConntrackListener::ProcessTCPorUDPMsg(
 	 nat_entry.ct = ct;
 	 nat_entry.type = type;
 
- 	 memset(&rule, 0, sizeof(rule));
-	 IPACMDBG("Received type:%d with proto:%d\n", type, l4proto);
-	 status = nfct_get_attr_u32(ct, ATTR_STATUS);
+	memset(&rule, 0, sizeof(rule));
+	IPACMDBG("Received type:%d with proto:%d\n", type, l4proto);
+	status = nfct_get_attr_u32(ct, ATTR_STATUS);
 
 	 /* Retrieve Protocol */
 	 rule.protocol = nfct_get_attr_u8(ct, ATTR_REPL_L4PROTO);
@@ -1089,47 +1096,40 @@ void IPACM_ConntrackListener::ProcessTCPorUDPMsg(
 #ifdef CT_OPT
 			HandleLan2Lan(ct, type, &rule);
 #endif
-			return;
+		 	IPACMDBG("Neither source Nor destination nat\n");
+		 	goto IGNORE;
 		}
-	 }
+	}
 
-	 if(IPS_DST_NAT == status || IPS_SRC_NAT == status)
-	 {
-		 PopulateTCPorUDPEntry(ct, status, &rule);
-		 rule.public_ip = wan_ipaddr;
-	 }
-	 else
-	 {
-		 IPACMDBG("Neither source Nor destination nat\n");
-		 goto IGNORE;
-	 }
+	PopulateTCPorUDPEntry(ct, status, &rule);
+	rule.public_ip = wan_ipaddr;
 
-	 if (rule.private_ip != wan_ipaddr)
-	 {
-		 isAdd = AddIface(&rule, &nat_entry.isTempEntry);
-		 if (!isAdd)
-		 {
-			 goto IGNORE;
-		 }
-	 }
-	 else
-	 {
-		 if (isStaMode)
-		 {
-			 IPACMDBG("In STA mode, ignore connections destinated to STA interface\n");
-			 goto IGNORE;
-		 }
+	if (rule.private_ip != wan_ipaddr)
+	{
+		isAdd = AddIface(&rule, &nat_entry.isTempEntry);
+		if (!isAdd)
+		{
+			goto IGNORE;
+		}
+	}
+	else
+	{
+		if (backhaul_mode != Q6_WAN)
+		{
+			IPACMDBG("In STA mode, ignore connections destinated to STA interface\n");
+			goto IGNORE;
+		}
 
-		 IPACMDBG("For embedded connections add dummy nat rule\n");
-		 IPACMDBG("Change private port %d to %d\n",
-				  rule.private_port, rule.public_port);
-		 rule.private_port = rule.public_port;
-	 }
+		IPACMDBG("For embedded connections add dummy nat rule\n");
+		IPACMDBG("Change private port %d to %d\n",
+				rule.private_port, rule.public_port);
+		rule.private_port = rule.public_port;
+	}
 
-	 CheckSTAClient(&rule, &nat_entry.isTempEntry);
-	 nat_entry.rule = &rule;
-	 AddORDeleteNatEntry(&nat_entry);
-	 return;
+	CheckSTAClient(&rule, &nat_entry.isTempEntry);
+	nat_entry.rule = &rule;
+	AddORDeleteNatEntry(&nat_entry);
+	return;
 
 IGNORE:
 	IPACMDBG_H("ignoring below Nat Entry\n");

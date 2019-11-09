@@ -245,9 +245,7 @@ PRODUCT_PACKAGES += \
     ims-ext-common
 
 # IPA Manager
-PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml
+$(call inherit-product, $(LOCAL_PATH)/data-ipa-cfg-mgr/ipacm_vendor_product.mk)
 
 # IRSC
 PRODUCT_COPY_FILES += \
