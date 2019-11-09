@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -86,13 +86,17 @@ public:
     virtual RET getStats(const char * /* upstream */, bool /* reset */,
 		OffloadStatistics& /* ret */);
 
-	static IPACM_OffloadManager *pInstance; //sky
+	static IPACM_OffloadManager *pInstance;
 
 	IpaEventListener *elrInstance;
 
 	ConntrackTimeoutUpdater *touInstance;
 
 	bool search_framwork_cache(char * interface_name);
+
+	bool push_framework_event(const char * if_name, _ipacm_offload_prefix prefix);
+
+	static int num_offload_v4_tethered_iface;
 
 private:
 
@@ -109,6 +113,10 @@ private:
 	int ipa_get_if_index(const char *if_name, int *if_index);
 
 	int resetTetherStats(const char *upstream_name);
+
+#ifdef FEATURE_IPACM_RESTART
+	int push_iface_up(const char *if_name, bool upstream);
+#endif
 
 	static const char *DEVICE_NAME;
 
