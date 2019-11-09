@@ -437,12 +437,6 @@ service netmgrd /vendor/bin/netmgrd
     group root wifi wakelock radio inet oem_2901
     writepid /dev/cpuset/system-background/tasks
 
-service ipacm /vendor/bin/ipacm
-    class main
-    user radio
-    group radio inet
-    writepid /dev/cpuset/system-background/tasks
-
 service qti /vendor/bin/qti
     class main
     user radio
