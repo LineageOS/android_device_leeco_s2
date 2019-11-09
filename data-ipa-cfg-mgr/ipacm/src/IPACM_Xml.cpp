@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013, The Linux Foundation. All rights reserved.
+Copyright (c) 2013, 2019, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -75,6 +75,7 @@ static char* IPACM_read_content_element
 )
 {
 	xmlNode* child_ptr;
+	uint32_t str_len;
 
 	for (child_ptr  = element->children;
 			 child_ptr != NULL;
@@ -82,7 +83,15 @@ static char* IPACM_read_content_element
 	{
 		if (child_ptr->type == XML_TEXT_NODE)
 		{
-			return (char*)child_ptr->content;
+			str_len = strlen((char*)child_ptr->content);
+
+			if(str_len < MAX_XML_STR_LEN)
+				return (char*)child_ptr->content;
+			else
+			{
+				IPACMERR("Invalid string size\n");
+				break;
+			}
 		}
 	}
 	return NULL;
@@ -665,6 +674,9 @@ static int IPACM_firewall_xml_parse_tree
 						memcpy(content_buf, (void *)content, str_size);
 						config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.u.v4.tos
 							 = atoi(content_buf);
+						// Here we do not know if it is TOS with mask or not, so we put at both places
+						config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.tos_value
+							= atoi(content_buf);
 						IPACMDBG_H("\n IPV4 TOS val is %d \n",
 										 config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.u.v4.tos);
 					}
@@ -674,13 +686,25 @@ static int IPACM_firewall_xml_parse_tree
 					content = IPACM_read_content_element(xml_node);
 					if (content)
 					{
+						uint8_t mask;
+
 						str_size = strlen(content);
 						memset(content_buf, 0, sizeof(content_buf));
 						memcpy(content_buf, (void *)content, str_size);
-						config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.u.v4.tos
-							 &= atoi(content_buf);
-						IPACMDBG_H("\n IPv4 TOS mask is %d \n",
-								config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.u.v4.tos);
+						mask = atoi(content_buf);
+						IPACMDBG_H("\n IPv4 TOS mask is %u \n", mask);
+						if (mask != 0xFF) {
+							// TOS attribute cannot be used
+							config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.u.v4.tos = 0;
+							config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.tos_mask = mask;
+
+							config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.attrib_mask |=
+								IPA_FLT_TOS_MASKED;
+							config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.attrib_mask &=
+								~IPA_FLT_TOS;
+						} else {
+							config->extd_firewall_entries[config->num_extd_firewall_entries - 1].attrib.tos_value = 0;
+						}
 					}
 				}
 				else if (0 == IPACM_util_icmp_string((char*)xml_node->name, IPV4NextHeaderProtocol_TAG))

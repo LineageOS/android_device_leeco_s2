@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 - 2017, The Linux Foundation. All rights reserved.
+Copyright (c) 2013 - 2019, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -29,22 +29,27 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ipa_nat_drv.h"
 #include "ipa_nat_drvi.h"
+#include <linux/msm_ipa.h>
 
 #ifdef USE_GLIB
 #include <glib.h>
 #define strlcpy g_strlcpy
 #else
 #ifndef FEATURE_IPA_ANDROID
-static size_t strlcpy(char * dst, const char * src, size_t size) {
+static size_t strlcpy(char * dst, const char * src, size_t size)
+{
+	size_t i;
+
 	if (size < 1)
 		return 0;
-	strncpy(dst, src, size - 1);
-	dst[size - 1] = 0;
+	for (i = 0; i < (size - 1) && src[i] != '\0'; i++)
+		dst[i] = src[i];
+	for (; i < size; i++)
+		dst[i] = '\0';
 	return strlen(dst);
 }
 #endif
 #endif
-
 
 struct ipa_nat_cache ipv4_nat_cache;
 pthread_mutex_t nat_mutex    = PTHREAD_MUTEX_INITIALIZER;
@@ -2197,7 +2202,7 @@ void ipa_nati_del_dead_ipv4_head_nodes(uint8_t tbl_indx)
 			 cnt++) {
 
 		if (Read8BitFieldValue(tbl_ptr[cnt].ts_proto,
-					PROTOCOL_FIELD) == IPA_NAT_INVALID_PROTO_FIELD_CMP
+					PROTOCOL_FIELD) == IPAHAL_NAT_INVALID_PROTOCOL
 				&&
 				Read16BitFieldValue(tbl_ptr[cnt].nxt_indx_pub_port,
 					NEXT_INDEX_FIELD) == IPA_NAT_INVALID_NAT_ENTRY) {
