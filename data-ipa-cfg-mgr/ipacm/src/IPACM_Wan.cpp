@@ -1943,7 +1943,6 @@ int IPACM_Wan::handle_route_add_evt(ipa_ip_type iptype)
 				rt_rule_entry->rule.attrib.u.v4.dst_addr      = 0;
 				rt_rule_entry->rule.attrib.u.v4.dst_addr_mask = 0;
 #ifdef FEATURE_IPA_V3
-
 				rt_rule_entry->rule.hashable = true;
 #endif
 				if (false == m_routing.AddRoutingRule(rt_rule))
