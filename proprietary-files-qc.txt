@@ -211,21 +211,6 @@ vendor/lib64/libwvhidl.so|baff35bf3936ccaeaf92621054dbed7fb1287289
 vendor/lib64/hw/gatekeeper.msm8952.so
 
 # GPS - from daisy - daisy_sprout:10/QKQ1.191002.002/V11.0.17.0.QDLMIXM
-product/lib64/vendor.qti.gnss@1.0.so|bf11e2b7a104ed1689623f5a772269d24e00bd14
-product/lib64/vendor.qti.gnss@1.1.so|4b88888fcba1bc3f709889cbf086d9ba2b997b91
-product/lib64/vendor.qti.gnss@1.2.so|8073a3bfcfdc7aaf903852349bbbcd9e5d229d3e
-product/lib64/vendor.qti.gnss@2.0.so|f6f94bf22b8948c163b84cf092d86fdd25b39850
-product/lib64/vendor.qti.gnss@2.1.so|7f69b6098f779f6ed396bbf366b496b0b228c743
-product/lib64/vendor.qti.gnss@3.0.so|c5ed668d324e7c898ca026fc12dad8829cd8a944
-system/etc/permissions/com.qti.location.sdk.xml|cb68a566bd77dcc75bb7547199d528289fac01cb
-system/etc/permissions/com.qualcomm.location.xml|1d36e7cf8e16813aa13ee6b3fca8d8687b543828
-system/etc/permissions/izat.xt.srv.xml|a0f460056f27b5495a4d6e959eecf0e429c42a57
-system/etc/permissions/privapp-permissions-com.qualcomm.location.xml|2dc7fba818bdf582bfea849a74f4b312d90745c9
-system/framework/com.qti.location.sdk.jar|5dcbf27bd7709a111985e9660b5b61b5fb7a22b1
-system/framework/izat.xt.srv.jar|98ffd12c789af16d186a4a04c0703a23dc27e347
-system/lib64/liblocationservice_jni.so|67a0cf23dada00aaef70df443658a2c6041d797d
-system/lib64/libxt_native.so|d023ae9678d7954285ad61903d73cac14a86e3ce
--system/priv-app/com.qualcomm.location/com.qualcomm.location.apk|bb395b0e751fd6c2cc66dde30542ab04997dadfd
 vendor/bin/loc_launcher|06793983f836a9b42b5ff3848f8fe177134c1379
 vendor/bin/lowi-server|1fe78b543c14196169ab411acfd9dabbfb4636dd
 vendor/bin/slim_daemon|925da604895b095d7e39cf84c7031c6825f32ac0

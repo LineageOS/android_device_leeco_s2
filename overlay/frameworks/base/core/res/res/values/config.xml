@@ -447,6 +447,17 @@
     <!-- Should the pinner service pin the Home application? -->
     <bool name="config_pinnerHomeApp">true</bool>
 
+    <!-- Whether to enable network location overlay which allows network
+         location provider to be replaced by an app at run-time. When disabled,
+         only the config_networkLocationProviderPackageName package will be
+         searched for network location provider, otherwise packages whose
+         signature matches the signatures of config_locationProviderPackageNames
+         will be searched, and the service with the highest version number will
+         be picked. Anyone who wants to disable the overlay mechanism can set it
+         to false.
+         -->
+    <bool name="config_enableNetworkLocationOverlay" translatable="false">true</bool>
+
     <!-- If this is true, device supports Sustained Performance Mode. -->
     <bool name="config_sustainedPerformanceModeSupported">true</bool>
 
