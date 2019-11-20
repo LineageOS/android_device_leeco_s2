@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29e2232c_1c2d7239",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2019-11-20T10:09:53Z",
+      "side": 1,
+      "message": "Newline missing between title and body.",
+      "revId": "4d8a290cf7bb2d6b8fd2be45719214f9eb43ba27",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
