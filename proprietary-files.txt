@@ -249,11 +249,11 @@ etc/firmware/cpp_firmware_v1_8_0.fw
 etc/firmware/cpp_firmware_v1_10_0.fw
 
 # Camera sensors
-vendor/lib/libmmcamera_ov16880_primax_bahy_6c.so
+vendor/lib/libmmcamera_ov16880_primax_bahy_6c.so|3F712D060466A7B887E91894D75C3362F0CBD2E3
 vendor/lib/libmmcamera_ov16880_sunny_a16v05g_eeprom.so
-vendor/lib/libmmcamera_ov16880_sunny_bahy_6c.so
-vendor/lib/libmmcamera_ov8865_ofilm_ffhy_20.so
-vendor/lib/libmmcamera_ov8865_sunny_ffhy_20.so
+vendor/lib/libmmcamera_ov16880_sunny_bahy_6c.so|51671EA80DE5C815B29C96CF62DC6DCAF592A36F
+vendor/lib/libmmcamera_ov8865_ofilm_ffhy_20.so|F4C1B088EA1CD72DB120AE6BEDE8A6137B84B454
+vendor/lib/libmmcamera_ov8865_sunny_ffhy_20.so|202A62371C653756B695AEFFCB6FD43F4EEA8329
 vendor/lib/libmmcamera_eeprom_util.so
 vendor/lib/libmmcamera_ofilm_ov8865_ols8f03_eeprom.so
 vendor/lib/libmmcamera_primax_ov16880_og05l_eeprom.so
