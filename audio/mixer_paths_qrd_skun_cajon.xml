@@ -85,24 +85,14 @@
     <!-- <ctl name="SpkrMono WSA_RDAC" value="ZERO" /> -->
     <!-- <ctl name="SpkrMono BOOST Switch" value="1" /> -->
     <ctl name="EAR PA Gain" value="POS_6_DB" />
-    <!-- < LAFITE-9187 chaofubang 20160426 begin -->
     <ctl name="Speaker Boost" value="DISABLE" />
-    <!-- LAFITE-9187 chaofubang 20160426 end >-->
     <ctl name="LOOPBACK Mode" value="DISABLE" />
     <ctl name="Loopback MCLK" value="DISABLE" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="VOC_EXT_EC MUX" value="NONE" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
-    <!-- < LAFITE-609 lichuangchuang 20160116 begin -->
     <ctl name="Smart PA I2S" value="DISABLE" />
-    <!-- LAFITE-609 lichuangchuang 20160116 end > -->
-    <!-- Added by lichuangchuang to fix audio loopback test fail (QL1530) LAFITE-750 2016-01-21 begin -->
     <ctl name="IIR1 INP1 MUX" value="ZERO" />
-    <!-- Added by lichuangchuang to fix audio loopback test fail (QL1530) LAFITE-750 2016-01-21 end -->
     <ctl name="EAR PA Gain" value="POS_1P5_DB" />
-    <!-- < LAFITE-9187 chaofubang 20160426 begin -->
     <ctl name="EAR PA Boost" value="DISABLE" />
-    <!-- LAFITE-9187 chaofubang 20160426 end >-->
     <ctl name="MI2S_RX Channels" value="One" />
     <ctl name="MI2S_TX Channels" value="One" />
     <ctl name="PRI_MI2S_RX_DL_HL Switch" value="0" />
@@ -112,27 +102,19 @@
     <!-- <ctl name="SpkrMono VISENSE Switch" value="0" /> -->
 
     <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia1" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia1" value="0" />
     <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia3" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia3" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia3" value="0" />
     <ctl name="AFE_PCM_RX Audio Mixer MultiMedia3" value="0" />
     <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia4" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia4" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia4" value="0" />
     <ctl name="AFE_PCM_RX Audio Mixer MultiMedia4" value="0" />
     <ctl name="INTERNAL_FM_RX Audio Mixer MultiMedia4" value="0" />
     <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia5" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia5" value="0" />
     <ctl name="MultiMedia1 Mixer TERT_MI2S_TX" value="0" />
     <ctl name="MultiMedia5 Mixer TERT_MI2S_TX" value="0" />
@@ -146,12 +128,11 @@
     <ctl name="Voice_Tx Mixer INTERNAL_BT_SCO_TX_Voice" value="0" />
     <!-- <ctl name="INTERNAL_BT_SCO_RX Audio Mixer Multimedia6" value="0" /> -->
     <ctl name="MultiMedia6 Mixer TERT_MI2S_TX" value="0" />
+    <!-- BTSCO end -->
 
     <!-- Voice2 -->
     <ctl name="PRI_MI2S_RX_Voice Mixer Voice2" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX_Voice Mixer Voice2" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="Voice2_Tx Mixer TERT_MI2S_TX_Voice2" value="0" />
     <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer Voice2" value="0" />
     <ctl name="Voice2_Tx Mixer INTERNAL_BT_SCO_TX_Voice2" value="0" />
@@ -172,16 +153,14 @@
 
     <!-- VoWLAN -->
     <ctl name="PRI_MI2S_RX_Voice Mixer VoWLAN" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX_Voice Mixer VoWLAN" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="0" />
     <ctl name="HDMI_RX_Voice Mixer VoWLAN" value="0" />
     <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer VoWLAN" value="0" />
     <ctl name="VoWLAN_Tx Mixer INTERNAL_BT_SCO_TX_VoWLAN" value="0" />
     <ctl name="AFE_PCM_RX_Voice Mixer VoWLAN" value="0" />
     <ctl name="VoWLAN_Tx Mixer AFE_PCM_TX_VoWLAN" value="0" />
-    <!-- VoWLAN -->
+    <!-- VoWLAN end -->
 
     <!-- Multimode Voice1 -->
     <ctl name="PRI_MI2S_RX_Voice Mixer VoiceMMode1" value="0" />
@@ -203,9 +182,7 @@
 
     <!-- Voip -->
     <ctl name="PRI_MI2S_RX_Voice Mixer Voip" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX_Voice Mixer Voip" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="Voip_Tx Mixer TERT_MI2S_TX_Voip" value="0" />
     <ctl name="Internal BTSCO SampleRate" value="BTSCO_RATE_8KHZ" />
     <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer Voip" value="0" />
@@ -215,10 +192,8 @@
     <!-- fm -->
     <ctl name="Internal FM RX Volume" value="0" />
     <ctl name="PRI_MI2S_RX Port Mixer INTERNAL_FM_TX" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX Port Mixer INTERNAL_FM_TX" value="0" />
     <ctl name="QUIN_MI2S_RX_DL_HL Switch" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <!-- <ctl name="MI2S_DL_HL Switch" value="1" /> -->
     <ctl name="MultiMedia1 Mixer INTERNAL_FM_TX" value="0" />
     <ctl name="MultiMedia2 Mixer INTERNAL_FM_TX" value="0" />
@@ -239,20 +214,19 @@
     <!-- Incall Music -->
     <ctl name="Incall_Music Audio Mixer MultiMedia2" value="0" />
     <ctl name="Incall_Music_2 Audio Mixer MultiMedia9" value="0" />
-    <!-- Incall Music End -->
+    <!-- Incall Music end -->
 
     <!-- QCHAT -->
     <ctl name="PRI_MI2S_RX_Voice Mixer QCHAT" value="0" />
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <ctl name="QUIN_MI2S_RX_Voice Mixer QCHAT" value="0" />
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <ctl name="QCHAT_Tx Mixer TERT_MI2S_TX_QCHAT" value="0" />
     <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer QCHAT" value="0" />
     <ctl name="QCHAT_Tx Mixer INTERNAL_BT_SCO_TX_QCHAT" value="0" />
-    <!-- QCHAT End -->
+    <!-- QCHAT end -->
 
     <!-- EC_REF -->
     <ctl name="AUDIO_REF_EC_UL1 MUX" value="None" />
+    <!-- EC_REF end -->
 
     <!-- IIR -->
     <ctl name="IIR1 Band1" id ="0" value="268435456" />
@@ -285,11 +259,11 @@
     <ctl name="IIR1 Enable Band3" value="0" />
     <ctl name="IIR1 Enable Band4" value="0" />
     <ctl name="IIR1 Enable Band5" value="0" />
-    <!-- IIR -->
+    <!-- IIR end -->
 
     <!-- ADSP testfwk -->
     <!-- <ctl name="MI2S_DL_HL Switch" value="0" /> -->
-    <!-- ADSP testfwk end-->
+    <!-- ADSP testfwk end -->
 
     <path name="bt-sco-wb-samplerate">
         <ctl name="Internal BTSCO SampleRate" value="BTSCO_RATE_16KHZ" />
@@ -913,7 +887,6 @@
        <path name="voicemmode1-call usb-headphones" />
     </path>
 
-    <!-- < LAFITE-598 lichuangchuang 20160121 begin -->
     <path name="voicemmode1-call-speaker bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer VoiceMMode1" value="1" />
         <ctl name="VoiceMMode1_Tx Mixer INT_BT_SCO_TX_MMode1" value="1" />
@@ -932,7 +905,6 @@
     <path name="voicemmode1-call-speaker afe-proxy">
        <path name="voicemmode1-call usb-headphones" />
     </path>
-    <!-- LAFITE-598 lichuangchuang 20160121 end > -->
 
     <path name="voicemmode2-call">
         <ctl name="PRI_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
@@ -950,19 +922,16 @@
         <path name="voicemmode2-call smartpa" />
     </path>
 
-    <!-- < LAFITE-609 lichuangchuang 20160116 begin -->
     <path name="voicemmode2-call-speaker bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer INT_BT_SCO_TX_MMode2" value="1" />
     </path>
-    <!-- LAFITE-609 lichuangchuang 20160116 end > -->
 
     <path name="voicemmode2-call bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer INT_BT_SCO_TX_MMode2" value="1" />
     </path>
 
-    <!-- < LAFITE-598 lichuangchuang 20160118 begin -->
     <path name="voicemmode2-call-speaker bt-sco-wb">
         <ctl name="Internal BTSCO SampleRate" value="BTSCO_RATE_16KHZ" />
         <path name="voicemmode2-call-speaker bt-sco" />
@@ -976,7 +945,6 @@
     <path name="voicemmode2-call-speaker afe-proxy">
        <path name="voicemmode2-call-speaker usb-headphones" />
     </path>
-    <!-- LAFITE-598 lichuangchuang 20160118 end > -->
 
     <path name="voicemmode2-call bt-sco-wb">
         <ctl name="Internal BTSCO SampleRate" value="BTSCO_RATE_16KHZ" />
@@ -1259,7 +1227,6 @@
         <path name="qchat-call smartpa" />
     </path>
 
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <path name="qchat-call bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer QCHAT" value="1" />
         <ctl name="QCHAT_Tx Mixer INTERNAL_BT_SCO_TX_QCHAT" value="1" />
@@ -1300,11 +1267,9 @@
         <ctl name="Smart PA I2S" value="ENABLE" />
     </path>
 
-    <!-- < LAFITE-1551 chaofubang 20160219 begin-->
     <path name="voip-speaker">
         <path name="speaker" />
     </path>
-    <!--LAFITE-1551 chaofubang 20160219 end-->
 
     <path name="wsa-speaker">
         <ctl name="RX1 MIX1 INP1" value="RX1" />
@@ -1332,13 +1297,11 @@
         <ctl name="PRI_MI2S_RX_VI_FB_MUX" value="SENARY_TX" />
     </path>
 
-    <!-- < LAFITE-984 chaofubang 20160126 begin -->
     <path name="speaker-mic">
         <ctl name="ADC2 Volume" value="6" />
         <ctl name="DEC1 MUX" value="ADC2" />
         <ctl name="ADC2 MUX" value="INP3" />
     </path>
-    <!-- LAFITE-984 chaofubang 20160126 end > -->
 
     <path name="handset">
         <ctl name="RX1 MIX1 INP1" value="RX1" />
@@ -1348,11 +1311,9 @@
         <ctl name="EAR_S" value="Switch" />
     </path>
 
-    <!-- < LAFITE-1551 chaofubang 20160219 begin-->
     <path name="voip-handset">
         <path name="handset" />
     </path>
-    <!--LAFITE-1551 chaofubang 20160219 end-->
 
     <path name="handset-mic">
         <path name="adc1" />
@@ -1360,8 +1321,6 @@
         <ctl name="IIR1 INP1 MUX" value="DEC1" />
     </path>
 
-    <!-- Modified by lichuangchuang to fix audio loopback test fail (QL1530) LAFITE-750 2016-01-21 begin -->
-    <!-- < LAFITE-4720 lichuangchuang 20160315 begin -->
     <path name="headphones-loopback">
         <ctl name="ADC1 Volume" value="6" />
         <ctl name="ADC2 Volume" value="6" />
@@ -1392,8 +1351,6 @@
         <path name="headphones-loopback" />
         <ctl name="IIR1 INP1 Volume" value="84" />
     </path>
-    <!-- LAFITE-4720 lichuangchuang 20160315 end > -->
-    <!-- Modified by lichuangchuang to fix audio loopback test fail (QL1530) LAFITE-750 2016-01-21 end -->
 
     <path name="headphones">
         <ctl name="MI2S_RX Channels" value="Two" />
@@ -1404,11 +1361,9 @@
         <ctl name="HPHR" value="Switch" />
     </path>
 
-    <!-- < LAFITE-1551 chaofubang 20160219 begin-->
     <path name="voip-headphones">
         <path name="headphones" />
     </path>
-    <!--LAFITE-1551 chaofubang 20160219 end-->
 
     <path name="headset-mic">
         <path name="adc2" />
@@ -1449,13 +1404,11 @@
         <path name="wsa-speaker" />
     </path>
 
-    <!-- < LAFITE-3574 chaofubang 20160311 begin-->
     <path name="voice-speaker-mic">
         <ctl name="ADC3 Volume" value="8" />
         <ctl name="DEC1 MUX" value="ADC2" />
         <ctl name="ADC2 MUX" value="INP3" />
     </path>
-    <!-- < LAFITE-3574 chaofubang 20160311 end-->
 
     <path name="voice-headphones">
         <path name="headphones" />
@@ -1581,13 +1534,11 @@
         <ctl name="AUDIO_REF_EC_UL1 MUX" value="I2S_RX" />
     </path>
 
-    <!-- < LAFITE-1551 chaofubang 20160219 begin-->
     <path name="echo-reference-voip">
         <ctl name="AUDIO_REF_EC_UL5 MUX" value="QUIN_MI2S_TX" />
     </path>
-    <!--LAFITE-1551 chaofubang 20160219 end-->
-    <!-- TTY devices -->
 
+    <!-- TTY devices -->
     <path name="tty-headphones">
         <ctl name="RX1 MIX1 INP1" value="RX1" />
         <ctl name="HPHL" value="Switch" />
