@@ -773,8 +773,8 @@
     </path>
 
     <path name="voice-call speaker">
-        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer CSVoice" value="1" />
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
 
@@ -803,8 +803,8 @@
     </path>
 
     <path name="voice2-call speaker">
-        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer CSVoice" value="1" />
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
 
@@ -884,8 +884,8 @@
     </path>
 
     <path name="voicemmode1-call smartpa">
-        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode1" value="1" />
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="VoiceMMode1_Tx Mixer TERT_MI2S_TX_MMode1" value="1" />
     </path>
 
@@ -941,6 +941,7 @@
 
     <path name="voicemmode2-call smartpa">
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="VoiceMMode2_Tx Mixer TERT_MI2S_TX_MMode2" value="1" />
     </path>
 
@@ -1207,6 +1208,7 @@
 
     <path name="compress-voip-call smartpa">
         <ctl name="QUIN_MI2S_RX_Voice Mixer Voip" value="1" />
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="Voip_Tx Mixer TERT_MI2S_TX_Voip" value="1" />
     </path>
 
