@@ -913,6 +913,7 @@
     </path>
 
     <path name="voicemmode2-call smartpa">
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer TERT_MI2S_TX_MMode2" value="1" />
     </path>
@@ -1176,6 +1177,7 @@
     </path>
 
     <path name="compress-voip-call smartpa">
+        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer Voip" value="1" />
         <ctl name="Voip_Tx Mixer TERT_MI2S_TX_Voip" value="1" />
     </path>
