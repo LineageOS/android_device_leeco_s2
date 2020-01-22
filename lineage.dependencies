@@ -2,9 +2,5 @@
   {
     "repository": "android_kernel_leeco_msm8976",
     "target_path": "kernel/leeco/msm8976"
-  },
-  {
-    "repository": "android_packages_resources_devicesettings",
-    "target_path": "packages/resources/devicesettings"
   }
 ]
