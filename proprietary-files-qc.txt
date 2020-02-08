@@ -1,7 +1,7 @@
 # s2 device proprietary files - from Smartron/srtphone/rimo02a:8.0.0/T5524INDURC-475/475, unless pinned
 
 # ADSP
-lib/libqvr_adsp_driver_stub.so
+system/lib/libqvr_adsp_driver_stub.so
 vendor/bin/adsprpcd
 vendor/lib/libadsprpc.so
 vendor/lib/libadsp_default_listener.so
@@ -11,7 +11,7 @@ vendor/lib64/libadsp_default_listener.so
 vendor/lib64/libadsprpc.so
 
 # ADSP modules
-lib/rfsa/adsp/libqvr_adsp_driver_skel.so
+system/lib/rfsa/adsp/libqvr_adsp_driver_skel.so
 vendor/lib/rfsa/adsp/libFastRPC_AUE_Forward_skel.so
 vendor/lib/rfsa/adsp/libFastRPC_UTF_Forward_skel.so
 vendor/lib/rfsa/adsp/libadsp_fd_skel.so
@@ -92,17 +92,17 @@ vendor/firmware/cpp_firmware_v1_10_0.fw|cf9458601aa4bbe9c57acfc1c7d0f158386ace9f
 vendor/firmware/cpp_firmware_v1_12_0.fw|de18ccdf371824059acfdf3c7754c6e1bc1c2f8c
 
 # Consumerir - from le_x10 (x850) - 7.1.1/LEXCNFN6061705181T/letv05181516
--app/UEIQuicksetSDKLeTV/UEIQuicksetSDKLeTV.apk|7695ecb344390d2cb78088eed67d3de782790d04
+-system/app/UEIQuicksetSDKLeTV/UEIQuicksetSDKLeTV.apk|7695ecb344390d2cb78088eed67d3de782790d04
 
 # CNE - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
-etc/cne/Nexus/ATT/ATT_profiles.xml|33e568627fd3f94dc45bca1c01ad10e6d8fb5b52
-etc/cne/Nexus/ROW/ROW_profiles.xml|238e785e9674b27c4b2365958d127533d7293132
-etc/cne/Nexus/VZW/VZW_profiles.xml|0f63b632e3a3f114def7aeadaabd13851c8ceec5
 product/lib64/com.quicinc.cne.api@1.0.so|06764410022518f75a8e7fa1de35b7577cdbe8f9
 product/lib64/com.quicinc.cne.api@1.1.so|8940ad6defe4ffba387a259a698c2def51f1d5fa
 product/lib64/com.quicinc.cne.constants@1.0.so|e2f9123a013c2c116b02a1e057870f885808f654
 product/lib64/com.quicinc.cne.constants@2.0.so|b58e07086d9992d0911391ad185f277e1cfd4fe5
 product/lib64/com.quicinc.cne.constants@2.1.so|92fc6a953b061fea1895e58fa298ce8de8a6d03c
+system/etc/cne/Nexus/ATT/ATT_profiles.xml|33e568627fd3f94dc45bca1c01ad10e6d8fb5b52
+system/etc/cne/Nexus/ROW/ROW_profiles.xml|238e785e9674b27c4b2365958d127533d7293132
+system/etc/cne/Nexus/VZW/VZW_profiles.xml|0f63b632e3a3f114def7aeadaabd13851c8ceec5
 -vendor/app/CneApp/CneApp.apk|2356a0335ab8e0106832a9325f972467654fd1f0
 -vendor/app/IWlanService/IWlanService.apk|12da3d82b6cc062d2af29a0b5f43fc8acf9adbb2
 vendor/bin/cnd|edba24c950546f80478916bb1ffe02ed58f4c96d
@@ -193,8 +193,8 @@ vendor/lib64/libsecureui_svcsock.so
 vendor/lib64/libssd.so
 
 # DRM - Qualcomm Trusted Execution Enviornment
-lib/vendor.qti.hardware.qteeconnector@1.0.so
-lib64/vendor.qti.hardware.qteeconnector@1.0.so
+system/lib/vendor.qti.hardware.qteeconnector@1.0.so
+system/lib64/vendor.qti.hardware.qteeconnector@1.0.so
 vendor/bin/hw/vendor.qti.hardware.qteeconnector@1.0-service
 vendor/etc/init/vendor.qti.hardware.qteeconnector@1.0-service.rc
 vendor/lib/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so
@@ -211,21 +211,21 @@ vendor/lib64/libwvhidl.so|baff35bf3936ccaeaf92621054dbed7fb1287289
 vendor/lib64/hw/gatekeeper.msm8952.so
 
 # GPS - from daisy - daisy_sprout:10/QKQ1.191002.002/V11.0.17.0.QDLMIXM
-etc/permissions/com.qti.location.sdk.xml|cb68a566bd77dcc75bb7547199d528289fac01cb
-etc/permissions/com.qualcomm.location.xml|1d36e7cf8e16813aa13ee6b3fca8d8687b543828
-etc/permissions/izat.xt.srv.xml|a0f460056f27b5495a4d6e959eecf0e429c42a57
-etc/permissions/privapp-permissions-com.qualcomm.location.xml|2dc7fba818bdf582bfea849a74f4b312d90745c9
-framework/com.qti.location.sdk.jar|5dcbf27bd7709a111985e9660b5b61b5fb7a22b1
-framework/izat.xt.srv.jar|98ffd12c789af16d186a4a04c0703a23dc27e347
-lib64/liblocationservice_jni.so|67a0cf23dada00aaef70df443658a2c6041d797d
-lib64/libxt_native.so|d023ae9678d7954285ad61903d73cac14a86e3ce
--priv-app/com.qualcomm.location/com.qualcomm.location.apk|bb395b0e751fd6c2cc66dde30542ab04997dadfd
 product/lib64/vendor.qti.gnss@1.0.so|bf11e2b7a104ed1689623f5a772269d24e00bd14
 product/lib64/vendor.qti.gnss@1.1.so|4b88888fcba1bc3f709889cbf086d9ba2b997b91
 product/lib64/vendor.qti.gnss@1.2.so|8073a3bfcfdc7aaf903852349bbbcd9e5d229d3e
 product/lib64/vendor.qti.gnss@2.0.so|f6f94bf22b8948c163b84cf092d86fdd25b39850
 product/lib64/vendor.qti.gnss@2.1.so|7f69b6098f779f6ed396bbf366b496b0b228c743
 product/lib64/vendor.qti.gnss@3.0.so|c5ed668d324e7c898ca026fc12dad8829cd8a944
+system/etc/permissions/com.qti.location.sdk.xml|cb68a566bd77dcc75bb7547199d528289fac01cb
+system/etc/permissions/com.qualcomm.location.xml|1d36e7cf8e16813aa13ee6b3fca8d8687b543828
+system/etc/permissions/izat.xt.srv.xml|a0f460056f27b5495a4d6e959eecf0e429c42a57
+system/etc/permissions/privapp-permissions-com.qualcomm.location.xml|2dc7fba818bdf582bfea849a74f4b312d90745c9
+system/framework/com.qti.location.sdk.jar|5dcbf27bd7709a111985e9660b5b61b5fb7a22b1
+system/framework/izat.xt.srv.jar|98ffd12c789af16d186a4a04c0703a23dc27e347
+system/lib64/liblocationservice_jni.so|67a0cf23dada00aaef70df443658a2c6041d797d
+system/lib64/libxt_native.so|d023ae9678d7954285ad61903d73cac14a86e3ce
+-system/priv-app/com.qualcomm.location/com.qualcomm.location.apk|bb395b0e751fd6c2cc66dde30542ab04997dadfd
 vendor/bin/loc_launcher|06793983f836a9b42b5ff3848f8fe177134c1379
 vendor/bin/lowi-server|1fe78b543c14196169ab411acfd9dabbfb4636dd
 vendor/bin/slim_daemon|925da604895b095d7e39cf84c7031c6825f32ac0
@@ -410,14 +410,14 @@ vendor/lib/libperipheral_client.so|b75a6adac094ddcd6ded9415cae83e18d1e7e5d0
 vendor/lib64/libperipheral_client.so|20c8ab21fe28e41f60b59af0ba72de9f6b1996d2
 
 # Postprocessing - from SRT Phone 8.0.0
-etc/permissions/com.qti.snapdragon.sdk.display.xml|bd2a3394bdd6ec4e94fa6a59e816a97e89940ab6
-framework/com.qti.snapdragon.sdk.display.jar|c7f5835922ab0388efd21d2ec818580f5676b191
--lib/vendor.display.color@1.0.so|c5b6d3a2db15d191048c493d033b94949c40ccc0
-lib/vendor.display.postproc@1.0.so|1630c2d20e2374532317ab81ad8cd7e6ff235cb7
-lib/vendor.qti.hardware.qdutils_disp@1.0.so|50cf82a0bd8278ac8dea0b48f0c70c6554be6243
--lib64/vendor.display.color@1.0.so|690ea9ef2c3cd3cbccb0be30dd081a94d902f88b
-lib64/vendor.display.postproc@1.0.so|404b08b00a4880631564c194b84c491b76e6a304
-lib64/vendor.qti.hardware.qdutils_disp@1.0.so|b8c23e01172cecdb260c0407ccaddd8f1a6b44fd
+system/etc/permissions/com.qti.snapdragon.sdk.display.xml|bd2a3394bdd6ec4e94fa6a59e816a97e89940ab6
+system/framework/com.qti.snapdragon.sdk.display.jar|c7f5835922ab0388efd21d2ec818580f5676b191
+-system/lib/vendor.display.color@1.0.so|c5b6d3a2db15d191048c493d033b94949c40ccc0
+system/lib/vendor.display.postproc@1.0.so|1630c2d20e2374532317ab81ad8cd7e6ff235cb7
+system/lib/vendor.qti.hardware.qdutils_disp@1.0.so|50cf82a0bd8278ac8dea0b48f0c70c6554be6243
+-system/lib64/vendor.display.color@1.0.so|690ea9ef2c3cd3cbccb0be30dd081a94d902f88b
+system/lib64/vendor.display.postproc@1.0.so|404b08b00a4880631564c194b84c491b76e6a304
+system/lib64/vendor.qti.hardware.qdutils_disp@1.0.so|b8c23e01172cecdb260c0407ccaddd8f1a6b44fd
 vendor/lib/libdisp-aba.so|f1161c8343578ff46e061be30a2d941dd475b833
 vendor/lib/libsd_sdk_display.so|dc4e7574e5196ded3a5d71a8a34f05107b862a20
 vendor/lib/vendor.display.color@1.0_vendor.so|9c0c4714d7a7f085b70360cd8d08768e2a2354b1
@@ -483,9 +483,9 @@ vendor/lib/libqmi_cci.so|a921e84ec500f7cfb7fe88a4ffba149581410a44
 vendor/lib64/libqmi_cci.so|411a074dc765fb263bec50531ce5c408dd72388f
 
 # RIL - from Gemini - Xiaomi/gemini/gemini:8.0.0/OPR1.170623.032/V10.2.2.0.OAAMIXM
--app/QtiTelephonyService/QtiTelephonyService.apk:product/app/QtiTelephonyService/QtiTelephonyService.apk|7d7104c26c7c1e9487d9c41d48f0e0348135cb61
-framework/QtiTelephonyServicelibrary.jar:product/framework/QtiTelephonyServicelibrary.jar|7e6810bf7747778dc8b88da8e4357531ba9ed815
-framework/qcrilhook.jar:product/framework/qcrilhook.jar|8a1d0edd6fb61b84d5f26140498e5d9a685e99c8
+-system/app/QtiTelephonyService/QtiTelephonyService.apk:product/app/QtiTelephonyService/QtiTelephonyService.apk|7d7104c26c7c1e9487d9c41d48f0e0348135cb61
+system/framework/QtiTelephonyServicelibrary.jar:product/framework/QtiTelephonyServicelibrary.jar|7e6810bf7747778dc8b88da8e4357531ba9ed815
+system/framework/qcrilhook.jar:product/framework/qcrilhook.jar|8a1d0edd6fb61b84d5f26140498e5d9a685e99c8
 vendor/bin/ATFWD-daemon|f8a855d8d6c4f191551d06c4833cd75745eca37f
 vendor/bin/netmgrd|73017e3099f3550f72a68c7aa0012c62e500f324
 vendor/bin/port-bridge|a50b3351a59e0413e5537294550ddfca1b026d48
@@ -517,7 +517,7 @@ vendor/lib64/vendor.qti.hardware.radio.uim_remote_server@1.0_vendor.so|f0f525767
 vendor/radio/qcril_database/qcril.db|4df6c832d5c99d2760b7602d100dd2d3ac9954e6
 
 # RIL - from mata - essential/mata/mata:10/QP1A.190711.122/420
--priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk:product/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk|956a4017d0ba7f68e6d225e57b40d3b2bcbb4837
+-system/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk:product/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk|956a4017d0ba7f68e6d225e57b40d3b2bcbb4837
 
 # RIL - from daisy - xiaomi/daisy/daisy_sprout:9/PKQ1.180917.001/V10.0.1.0.PDLMIFJ
 vendor/bin/rmt_storage|346ef281e829109ba11af912509309e520351ef9

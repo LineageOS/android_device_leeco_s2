@@ -1,36 +1,36 @@
 # ACDB Data
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Bluetooth_cal.acdb
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_General_cal.acdb
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Global_cal.acdb
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Handset_cal.acdb
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Hdmi_cal.acdb
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Headset_cal.acdb
-etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Speaker_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Bluetooth_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_General_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Global_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Handset_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Hdmi_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Headset_cal.acdb
+system/etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Speaker_cal.acdb
 
 # Audio libraries
-etc/settings/mono_qcom.cnt
--lib/libtfa9890.so
--lib64/libtfa9890.so|21e05b0401f206c7d197869679e519d273cac5eb
+system/etc/settings/mono_qcom.cnt
+-system/lib/libtfa9890.so
+-system/lib64/libtfa9890.so|21e05b0401f206c7d197869679e519d273cac5eb
 
 # Camera
-bin/mm-qcamera-daemon:vendor/bin/mm-qcamera-daemon|38080d77baf6f4d20c9a967cf39f23479d843c19
-lib/libcamera_letv_algo.so
-lib/libLetvCameraImageSDK.so
-lib/libamipengine.so
-lib/libarcimgutilsbase.so
-lib/libarcimgutils.so
-lib/libarcsoft_beautyshot.so
-lib/libarcsoft_face_detection.so
-lib/libarcsoft_face_tracking.so
-lib/libarcsoft_hdr.so
-lib/libarcsoft_night_shot.so
-lib/libarcsoft_panorama_burstcapture.so
-lib/libarcsoft_smart_denoise.so
-lib/libmpbase.so
-lib/libmpkernel.so
-lib/libmpstream.so
-lib/libmputility.so
-lib/libstlport.so
+system/bin/mm-qcamera-daemon:vendor/bin/mm-qcamera-daemon|38080d77baf6f4d20c9a967cf39f23479d843c19
+system/lib/libcamera_letv_algo.so
+system/lib/libLetvCameraImageSDK.so
+system/lib/libamipengine.so
+system/lib/libarcimgutilsbase.so
+system/lib/libarcimgutils.so
+system/lib/libarcsoft_beautyshot.so
+system/lib/libarcsoft_face_detection.so
+system/lib/libarcsoft_face_tracking.so
+system/lib/libarcsoft_hdr.so
+system/lib/libarcsoft_night_shot.so
+system/lib/libarcsoft_panorama_burstcapture.so
+system/lib/libarcsoft_smart_denoise.so
+system/lib/libmpbase.so
+system/lib/libmpkernel.so
+system/lib/libmpstream.so
+system/lib/libmputility.so
+system/lib/libstlport.so
 vendor/lib/libflash_pmic.so
 vendor/lib/libjpegdhw.so
 vendor/lib/libjpegdmahw.so
@@ -250,86 +250,86 @@ vendor/lib/libmmcamera_primax_ov16880_og05l_eeprom.so
 vendor/lib/libmmcamera_sunny_ov8865_d8v05f_eeprom.so
 
 # Dolby
-etc/dts/dts-m6m8-lic.key
+system/etc/dts/dts-m6m8-lic.key
 
 # Display Calibration data
-etc/pp_calib_data_boe_nt35596s_fhd_vdo_dsi_panel.xml
-etc/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml
-etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml
-etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel_ap2.xml
-etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel_ghost.xml
+system/etc/pp_calib_data_boe_nt35596s_fhd_vdo_dsi_panel.xml
+system/etc/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml
+system/etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml
+system/etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel_ap2.xml
+system/etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel_ghost.xml
 
 # Fingerprint sensor
-lib64/hw/fingerprint.default.so|6372fc60b4052ccc14852377b0c17cbe9b6b85a5
-lib64/hw/gxfingerprint.default.so
-lib64/libfp_client.so|c45b1cf56a4f0a0547d0f83b98415f5dffa0b38d
-lib64/libfpnav.so
-lib64/libfpservice.so|ff0227a0236eda984a7f15eba15ad8ba6ef37322
-lib64/libfp_gf_intejni.so
+system/lib64/hw/fingerprint.default.so|6372fc60b4052ccc14852377b0c17cbe9b6b85a5
+system/lib64/hw/gxfingerprint.default.so
+system/lib64/libfp_client.so|c45b1cf56a4f0a0547d0f83b98415f5dffa0b38d
+system/lib64/libfpnav.so
+system/lib64/libfpservice.so|ff0227a0236eda984a7f15eba15ad8ba6ef37322
+system/lib64/libfp_gf_intejni.so
 vendor/bin/gx_fpd
 vendor/bin/gx_fpcmd
 
 # Fingerprint firmware
-etc/firmware/goodixfp.b00
-etc/firmware/goodixfp.b01
-etc/firmware/goodixfp.b02
-etc/firmware/goodixfp.b03
-etc/firmware/goodixfp.mdt
+system/etc/firmware/goodixfp.b00
+system/etc/firmware/goodixfp.b01
+system/etc/firmware/goodixfp.b02
+system/etc/firmware/goodixfp.b03
+system/etc/firmware/goodixfp.mdt
 
 # Firmware
-etc/firmware/alipay.b00
-etc/firmware/alipay.b01
-etc/firmware/alipay.b02
-etc/firmware/alipay.b03
-etc/firmware/alipay.mdt
-etc/firmware/DE.o.msm8952
-etc/firmware/DE.o.msm8976
-etc/firmware/dxhdcp2.b00
-etc/firmware/dxhdcp2.b01
-etc/firmware/dxhdcp2.b02
-etc/firmware/dxhdcp2.b03
-etc/firmware/dxhdcp2.mdt
-etc/firmware/fidotap.b00
-etc/firmware/fidotap.b01
-etc/firmware/fidotap.b02
-etc/firmware/fidotap.b03
-etc/firmware/fidotap.mbn
-etc/firmware/fidotap.mdt
-etc/firmware/ice40.bin
-etc/firmware/leia_pfp_470.fw
-etc/firmware/leia_pm4_470.fw
+system/etc/firmware/alipay.b00
+system/etc/firmware/alipay.b01
+system/etc/firmware/alipay.b02
+system/etc/firmware/alipay.b03
+system/etc/firmware/alipay.mdt
+system/etc/firmware/DE.o.msm8952
+system/etc/firmware/DE.o.msm8976
+system/etc/firmware/dxhdcp2.b00
+system/etc/firmware/dxhdcp2.b01
+system/etc/firmware/dxhdcp2.b02
+system/etc/firmware/dxhdcp2.b03
+system/etc/firmware/dxhdcp2.mdt
+system/etc/firmware/fidotap.b00
+system/etc/firmware/fidotap.b01
+system/etc/firmware/fidotap.b02
+system/etc/firmware/fidotap.b03
+system/etc/firmware/fidotap.mbn
+system/etc/firmware/fidotap.mdt
+system/etc/firmware/ice40.bin
+system/etc/firmware/leia_pfp_470.fw
+system/etc/firmware/leia_pm4_470.fw
 
 # Media firmware
-etc/firmware/venus.b00
-etc/firmware/venus.b01
-etc/firmware/venus.b02
-etc/firmware/venus.b03
-etc/firmware/venus.b04
-etc/firmware/venus.mbn
-etc/firmware/venus.mdt
-etc/firmware/venus-v1.b00
-etc/firmware/venus-v1.b01
-etc/firmware/venus-v1.b02
-etc/firmware/venus-v1.b03
-etc/firmware/venus-v1.b04
-etc/firmware/venus-v1.mbn
-etc/firmware/venus-v1.mdt
+system/etc/firmware/venus.b00
+system/etc/firmware/venus.b01
+system/etc/firmware/venus.b02
+system/etc/firmware/venus.b03
+system/etc/firmware/venus.b04
+system/etc/firmware/venus.mbn
+system/etc/firmware/venus.mdt
+system/etc/firmware/venus-v1.b00
+system/etc/firmware/venus-v1.b01
+system/etc/firmware/venus-v1.b02
+system/etc/firmware/venus-v1.b03
+system/etc/firmware/venus-v1.b04
+system/etc/firmware/venus-v1.mbn
+system/etc/firmware/venus-v1.mdt
 
 # Widevine firmware
-etc/firmware/widevine.b00
-etc/firmware/widevine.b01
-etc/firmware/widevine.b02
-etc/firmware/widevine.b03
-etc/firmware/widevine.mdt
+system/etc/firmware/widevine.b00
+system/etc/firmware/widevine.b01
+system/etc/firmware/widevine.b02
+system/etc/firmware/widevine.b03
+system/etc/firmware/widevine.mdt
 
 # Wlan
-etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
-etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv_nofem.bin
+system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
+system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv_nofem.bin
 
 # Haxx
 vendor/lib/libstlport_sta.so
 vendor/lib64/libstlport_sta.so
 
 # Sensor configuration
-etc/sensors/hals.conf:vendor/etc/sensors/hals.conf
-etc/sensors/sensor_def_qcomdev.conf:vendor/etc/sensors/sensor_def_qcomdev.conf
+system/etc/sensors/hals.conf:vendor/etc/sensors/hals.conf
+system/etc/sensors/sensor_def_qcomdev.conf:vendor/etc/sensors/sensor_def_qcomdev.conf
