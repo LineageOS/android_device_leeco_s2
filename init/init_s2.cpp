@@ -1,6 +1,6 @@
 /*
    Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
-   Copyright (c) 2017-2018, The LineageOS Project
+   Copyright (c) 2017-2020, The LineageOS Project
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -28,88 +28,85 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <cstdlib>
-#include <unistd.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#include <android-base/file.h>
 #include <android-base/logging.h>
 #include <android-base/properties.h>
-
-#include "property_service.h"
-#include "vendor_init.h"
+#include <android-base/strings.h>
 
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
+#include "vendor_init.h"
+#include "property_service.h"
+
 #define DEVINFO_FILE "/dev/block/bootdevice/by-name/devinfo"
 
+using android::base::GetProperty;
+using android::base::ReadFileToString;
 using android::init::property_set;
 
-static int read_file2(const char *fname, char *data, int max_size)
+void property_override(const std::string& name, const std::string& value)
 {
-    int fd, rc;
-    if (max_size < 1)
-        return 0;
-    fd = open(fname, O_RDONLY);
-    if (fd < 0) {
-        return 0;
+    size_t valuelen = value.size();
+
+    prop_info* pi = (prop_info*) __system_property_find(name.c_str());
+    if (pi != nullptr) {
+        __system_property_update(pi, value.c_str(), valuelen);
     }
-    rc = read(fd, data, max_size - 1);
-    if ((rc > 0) && (rc < max_size))
-        data[rc] = '\0';
-    else
-        data[0] = '\0';
-    close(fd);
-    return 1;
+    else {
+        int rc = __system_property_add(name.c_str(), name.size(), value.c_str(), valuelen);
+        if (rc < 0) {
+            LOG(ERROR) << "property_set(\"" << name << "\", \"" << value << "\") failed: "
+                       << "__system_property_add failed";
+        }
+    }
+}
+
+void property_override_dual(const std::string& system_prop, const std::string& vendor_prop, const std::string& value)
+{
+    property_override(system_prop, value);
+    property_override(vendor_prop, value);
+}
+
+void init_target_properties()
+{
+    std::string device;
+
+    if (ReadFileToString(DEVINFO_FILE, &device)) {
+        LOG(INFO) << "DEVINFO: " << device;
+
+        if (!strncmp(device.c_str(), "s2_open", 7)) {
+            // This is X520
+            property_override_dual("ro.product.model", "ro.product.vendor.model", "X520");
+        }
+        else if (!strncmp(device.c_str(), "s2_oversea", 10)) {
+            // This is X522
+            property_override_dual("ro.product.model", "ro.product.vendor.model", "X522");
+        }
+        else if (!strncmp(device.c_str(), "s2_india", 8)) {
+            // This is X526
+            property_override_dual("ro.product.model", "ro.product.vendor.model", "X526");
+        }
+        else if (!strncmp(device.c_str(), "s2_ww", 5)) {
+            // This is X527
+            property_override_dual("ro.product.model", "ro.product.vendor.model", "X527");
+        }
+        else {
+            // Unknown variant
+            property_override("ro.product.model", "X52X");
+        }
+    }
+    else {
+        LOG(ERROR) << "Unable to read DEVINFO from " << DEVINFO_FILE;
+    }
 }
 
 void vendor_load_properties() {
-    char device[PROP_VALUE_MAX];
-    int isX520 = 0, isX522 = 0, isX526 = 0, isX527 = 0;
-
-    // Default props
-    if (read_file2(DEVINFO_FILE, device, sizeof(device)))
-    {
-        if (!strncmp(device, "s2_open", 7))
-        {
-            isX520 = 1;
-        }
-        else if (!strncmp(device, "s2_oversea", 10))
-        {
-            isX522 = 1;
-        }
-        else if (!strncmp(device, "s2_india", 8))
-        {
-            isX526 = 1;
-        }
-        else if (!strncmp(device, "s2_ww", 5))
-        {
-            isX527 = 1;
-        }
-    }
-
-    if (isX520)
-    {
-        // This is X520
-        property_set("ro.product.model", "X520");
-    }
-    else if (isX522)
-    {
-        // This is X522
-        property_set("ro.product.model", "X522");
-    }
-    else if (isX526)
-    {
-        // This is X526
-        property_set("ro.product.model", "X526");
-    }
-    else if (isX527)
-    {
-        // This is X527
-        property_set("ro.product.model", "X527");
-    }
-    else
-    {
-        // Unknown variant
-        property_set("ro.product.model", "X52X");
-    }
+    LOG(INFO) << "Loading vendor specific properties";
+    init_target_properties();
 }
