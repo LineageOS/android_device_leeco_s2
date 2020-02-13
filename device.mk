@@ -31,8 +31,6 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
     $(LOCAL_PATH)/overlay-lineage/lineage-sdk \
     $(LOCAL_PATH)/overlay/packages/apps/Snap
 
-PRODUCT_DEXPREOPT_SPEED_APPS += SystemUI
-
 # Screen density
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 PRODUCT_AAPT_CONFIG := normal
