@@ -266,6 +266,8 @@ etc/dts/dts-m6m8-lic.key
 etc/pp_calib_data_boe_nt35596s_fhd_vdo_dsi_panel.xml
 etc/pp_calib_data_boe_nt36760_fhd_cmd_dsi_panel.xml
 etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel.xml
+etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel_ap2.xml
+etc/pp_calib_data_truly_r69006_fhd_cmd_dsi_panel_ghost.xml
 
 # Fingerprint sensor
 lib64/hw/fingerprint.vendor.msm8952.so|6372fc60b4052ccc14852377b0c17cbe9b6b85a5
