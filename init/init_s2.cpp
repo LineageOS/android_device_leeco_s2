@@ -44,7 +44,7 @@
 #include "vendor_init.h"
 #include "property_service.h"
 
-#define DEVINFO_FILE "/dev/block/bootdevice/by-name/devinfo"
+#define DEVINFO_FILE "/dev/block/mmcblk0p25"
 
 using android::base::GetProperty;
 using android::base::ReadFileToString;

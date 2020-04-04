@@ -1,6 +1,10 @@
 # Amplifier
 /dev/i2c_smartpa                                           u:object_r:audio_device:s0
 
+# Block devices
+/dev/block/mmcblk0p25                                      u:object_r:devinfo_block_device:s0
+/dev/block/platform/soc.0/7824900\.sdhci/by-name/devinfo   u:object_r:devinfo_block_device:s0
+
 # Camera
 /data/vendor/qcam(/.*)?                                    u:object_r:vendor_camera_data_file:s0
 /system/bin/mm-qcamera-daemon                              u:object_r:mm-qcamerad_exec:s0
