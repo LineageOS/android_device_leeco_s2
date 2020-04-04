@@ -1,3 +1,4 @@
+type devinfo_block_device, dev_type;
 type nv_data_file, file_type, data_file_type;
 type goodix_data_file, file_type, data_file_type;
 type proc_touchpanel, fs_type, sysfs_type, proc_type;

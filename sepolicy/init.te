@@ -1,3 +1,5 @@
+allow init devinfo_block_device:blk_file r_file_perms;
+
 allow init proc:lnk_file { setattr };
 allow init socket_device:sock_file { create setattr };
 allow init camera_device:file { create_file_perms };
