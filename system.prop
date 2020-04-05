@@ -209,7 +209,6 @@ persist.debug.8976.config=true
 sched.colocate.enable=1
 
 # for alipay auth
-ro.internal.model=Le X520
 ro.vendor.wechatpay.support=true
 
 #low audio flinger standby delay to reduce power consumption
