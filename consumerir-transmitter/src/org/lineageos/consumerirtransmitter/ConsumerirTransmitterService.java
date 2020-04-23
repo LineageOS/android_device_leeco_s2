@@ -58,6 +58,23 @@ public class ConsumerirTransmitterService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG)
             Log.d(TAG, "Starting service");
+        String action = "unknown";
+        if (null != intent && null != intent.getAction()) {
+            action = intent.getAction();
+        }
+        if (ACTION_TRANSMIT_IR.equals(action)) {
+            if (intent.getStringExtra("carrier_freq") != null
+                && intent.getStringExtra("pattern") != null) {
+                int carrierFrequency = Integer.parseInt(intent.getStringExtra("carrier_freq"));
+                String patternStr = intent.getStringExtra("pattern");
+                int[] pattern = Arrays.stream(patternStr.split(","))
+                                    .map(String::trim)
+                                    .mapToInt(Integer::parseInt)
+                                    .toArray();
+                transmitIrPattern(carrierFrequency, pattern);
+            }
+        }
+
         return START_STICKY;
     }
 

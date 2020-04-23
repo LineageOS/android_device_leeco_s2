@@ -45,7 +45,8 @@ Return<bool> ConsumerIr::transmit(int32_t carrierFreq, const hidl_vec<int32_t>& 
         std::copy(pattern.begin(), pattern.end() - 1, std::ostream_iterator<int32_t>(vts, ","));
         vts << pattern[pattern.size() - 1];
         std::stringstream ss;
-        ss << "/system/bin/am broadcast -a "
+        ss << "/system/bin/am startservice -n "
+              "org.lineageos.consumerirtransmitter/.ConsumerirTransmitterService -a "
               "org.lineageos.consumerirtransmitter.TRANSMIT_IR --es carrier_freq "
            << carrierFreq << " --es pattern " << vts.str();
         int child = fork();
