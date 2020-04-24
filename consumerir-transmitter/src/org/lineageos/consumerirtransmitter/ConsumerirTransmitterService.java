@@ -23,34 +23,49 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.RemoteException;
+import android.os.Looper;
+import android.os.Message;
+import android.os.UserHandle;
+import android.text.TextUtils;
 import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import org.lineageos.consumerirtransmitter.IControl;
+import org.lineageos.consumerirtransmitter.beans.IRCMDBean;
+import org.lineageos.consumerirtransmitter.utils.IRCMDCacheManager;
+import org.lineageos.consumerirtransmitter.utils.ReflectionUtils;
 
 public class ConsumerirTransmitterService extends Service {
     private static final String TAG = "ConsumerirTransmitter";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String ACTION_TRANSMIT_IR =
         "org.lineageos.consumerirtransmitter.TRANSMIT_IR";
     private static final String SYS_FILE_ENABLE_IR_BLASTER = "/sys/remote/enable";
 
+    private Object mLock = new Object(); // lock to rw mBound & mControl
     private boolean mBound = false;
     private IControl mControl;
+    private TransmitHandler mHandler = null;
+    private HandlerThread mHandlerThread = null;
+    private static final int MSG_TRANSMIT_IR_CMD = 1000;
+    private static final int MSG_BIND_QUICKSET_RETRY = 1001;
+    private static final long BIND_QUICKSET_SDK_RETRY_TIME = 5000;
 
     @Override
     public void onCreate() {
         if (DEBUG)
             Log.d(TAG, "Creating service");
         switchIr("1");
+        mHandlerThread = new HandlerThread("transmit_handler");
+        mHandlerThread.start();
+        mHandler = new TransmitHandler(mHandlerThread.getLooper());
         bindQuickSetService();
+        IRCMDCacheManager.getInstance().clear();
         registerReceiver(mIrReceiver, new IntentFilter(ACTION_TRANSMIT_IR));
     }
 
@@ -58,23 +73,7 @@ public class ConsumerirTransmitterService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG)
             Log.d(TAG, "Starting service");
-        String action = "unknown";
-        if (null != intent && null != intent.getAction()) {
-            action = intent.getAction();
-        }
-        if (ACTION_TRANSMIT_IR.equals(action)) {
-            if (intent.getStringExtra("carrier_freq") != null
-                && intent.getStringExtra("pattern") != null) {
-                int carrierFrequency = Integer.parseInt(intent.getStringExtra("carrier_freq"));
-                String patternStr = intent.getStringExtra("pattern");
-                int[] pattern = Arrays.stream(patternStr.split(","))
-                                    .map(String::trim)
-                                    .mapToInt(Integer::parseInt)
-                                    .toArray();
-                transmitIrPattern(carrierFrequency, pattern);
-            }
-        }
-
+        parseIRCMDIntent(intent);
         return START_STICKY;
     }
 
@@ -85,7 +84,18 @@ public class ConsumerirTransmitterService extends Service {
         super.onDestroy();
         this.unregisterReceiver(mIrReceiver);
         this.unbindService(mControlServiceConnection);
+        IRCMDCacheManager.getInstance().clear();
         switchIr("0");
+        if (null != mHandlerThread && null != mHandler) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+            mHandlerThread.quitSafely();
+            mHandlerThread.interrupt();
+            mHandlerThread = null;
+        } else {
+            mHandler = null;
+            mHandlerThread = null;
+        }
     }
 
     @Override
@@ -99,8 +109,22 @@ public class ConsumerirTransmitterService extends Service {
     private final ServiceConnection mControlServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mBound = true;
-            mControl = new IControl(service);
+            synchronized (mLock) {
+                mBound = true;
+                mControl = new IControl(service);
+            }
+            while (!IRCMDCacheManager.getInstance().isEmpty()) {
+                IRCMDBean ircmdBean = IRCMDCacheManager.getInstance().consume();
+                if (null == ircmdBean) {
+                    break;
+                }
+                if (DEBUG) {
+                    Log.i(TAG, "sending cached cmd to QuickSet SDK: " + ircmdBean);
+                }
+                if (null != mHandler) {
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_TRANSMIT_IR_CMD, ircmdBean));
+                }
+            }
 
             if (DEBUG)
                 Log.i(TAG, "QuickSet SDK Service SUCCESSFULLY CONNECTED!");
@@ -108,9 +132,10 @@ public class ConsumerirTransmitterService extends Service {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mBound = false;
-            mControl = null;
-
+            synchronized (mLock) {
+                mBound = false;
+                mControl = null;
+            }
             if (DEBUG)
                 Log.i(TAG, "QuickSet SDK Service DISCONNECTED!");
         }
@@ -128,10 +153,18 @@ public class ConsumerirTransmitterService extends Service {
             Intent controlIntent = new Intent(IControl.ACTION);
             controlIntent.setClassName(
                 IControl.QUICKSET_UEI_PACKAGE_NAME, IControl.QUICKSET_UEI_SERVICE_CLASS);
-            boolean bindResult =
-                bindService(controlIntent, mControlServiceConnection, Context.BIND_AUTO_CREATE);
+            boolean bindResult = (Boolean) ReflectionUtils.invokeMethod(this, "bindServiceAsUser",
+                new Class[] {Intent.class, ServiceConnection.class, int.class, UserHandle.class
+
+                },
+                new Object[] {controlIntent, mControlServiceConnection, Context.BIND_AUTO_CREATE,
+                    ReflectionUtils.getStaticAttribute("android.os.UserHandle", "CURRENT")});
             if (!bindResult && DEBUG) {
-                Log.e(TAG, "Binding QuickSet Control service failed!");
+                Log.e(TAG, "Binding QuickSet Control service failed!, retry later");
+                if (null != mHandler) {
+                    mHandler.sendEmptyMessageDelayed(
+                        MSG_BIND_QUICKSET_RETRY, BIND_QUICKSET_SDK_RETRY_TIME);
+                }
             }
         } catch (Throwable t) {
             Log.e(TAG, "Binding QuickSet Control service failed!", t);
@@ -155,7 +188,7 @@ public class ConsumerirTransmitterService extends Service {
         if (mControl == null || !mBound) {
             if (DEBUG)
                 Log.w(TAG, "QuickSet Service seems not to be bound. Trying to bind again and exit!");
-
+            IRCMDCacheManager.getInstance().produce(new IRCMDBean(carrierFrequency, pattern));
             bindQuickSetService();
             return -1;
         }
@@ -193,18 +226,57 @@ public class ConsumerirTransmitterService extends Service {
     private BroadcastReceiver mIrReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (ACTION_TRANSMIT_IR.equals(action)) {
-                if (intent.getStringExtra("carrier_freq") != null
-                    && intent.getStringExtra("pattern") != null) {
-                    int carrierFrequency = Integer.parseInt(intent.getStringExtra("carrier_freq"));
-                    String patternStr = intent.getStringExtra("pattern");
-                    int[] pattern = Arrays.stream(patternStr.split(","))
-                                        .map(String::trim)
-                                        .mapToInt(Integer::parseInt)
-                                        .toArray();
-                    transmitIrPattern(carrierFrequency, pattern);
+            parseIRCMDIntent(intent);
+        }
+    };
+
+    private void parseIRCMDIntent(Intent intent) {
+        if (null == intent) {
+            if (DEBUG) {
+                Log.e(TAG, "parseIRCMDIntent: null intent");
+            }
+            return;
+        }
+        if (TextUtils.equals(ACTION_TRANSMIT_IR, intent.getAction())) {
+            if (intent.getStringExtra("carrier_freq") != null
+                && intent.getStringExtra("pattern") != null) {
+                int carrierFrequency = Integer.parseInt(intent.getStringExtra("carrier_freq"));
+                String patternStr = intent.getStringExtra("pattern");
+                int[] pattern = Arrays.stream(patternStr.split(","))
+                                    .map(String::trim)
+                                    .mapToInt(Integer::parseInt)
+                                    .toArray();
+                if (null != mHandler) {
+                    mHandler.sendMessage(mHandler.obtainMessage(
+                        MSG_TRANSMIT_IR_CMD, new IRCMDBean(carrierFrequency, pattern)));
                 }
+            }
+        }
+    }
+
+    private class TransmitHandler extends Handler {
+        // doing transmit in Work Thread, no to block UI Thread
+
+        public TransmitHandler(Looper looper) { super(looper); }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_TRANSMIT_IR_CMD:
+                    IRCMDBean cmd = (IRCMDBean) msg.obj;
+                    synchronized (mLock) { transmitIrPattern(cmd.carrierFrequency, cmd.pattern); }
+                    break;
+                case MSG_BIND_QUICKSET_RETRY:
+                    synchronized (mLock) {
+                        if (mControl == null || !mBound) {
+                            if (DEBUG) {
+                                Log.d(TAG, "retry to binding quick sdk");
+                            }
+                            bindQuickSetService();
+                        }
+                    }
+                    break;
             }
         }
     }

@@ -16,28 +16,26 @@
 
 package org.lineageos.consumerirtransmitter;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Application;
 import android.content.Intent;
 import android.os.UserHandle;
 import android.util.Log;
 import org.lineageos.consumerirtransmitter.utils.ReflectionUtils;
 
-public class Startup extends BroadcastReceiver {
+public class MainApplication extends Application {
     private static final String TAG = "ConsumerirTransmitter";
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        final String action = intent.getAction();
-        if (action.equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
-            Log.d(TAG, "ACTION_BOOT_COMPLETED Starting");
+    public void onCreate() {
+        super.onCreate();
+        Log.d(TAG, "MainApplication starting....");
 
-            ReflectionUtils.invokeMethod(context, "startServiceAsUser",
-                new Class[] {Intent.class, UserHandle.class
+        Log.d(TAG, "startServiceAsUser");
+        ReflectionUtils.invokeMethod(this, "startServiceAsUser",
+            new Class[] {Intent.class, UserHandle.class
 
-                },
-                new Object[] {new Intent(context, ConsumerirTransmitterService.class),
-                    ReflectionUtils.getStaticAttribute("android.os.UserHandle", "CURRENT")});
-        }
+            },
+            new Object[] {new Intent(this, ConsumerirTransmitterService.class),
+                ReflectionUtils.getStaticAttribute("android.os.UserHandle", "CURRENT")});
     }
 }
