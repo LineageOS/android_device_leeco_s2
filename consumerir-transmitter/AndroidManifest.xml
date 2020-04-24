@@ -16,9 +16,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.lineageos.consumerirtransmitter" android:versionCode="1" android:versionName="1.2" android:sharedUserId="android.uid.system">
 
-    <uses-sdk android:minSdkVersion="27" />
-
     <application android:label="ConsumerirTransmitter"
+        android:name=".MainApplication"
         android:persistent="true"
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">

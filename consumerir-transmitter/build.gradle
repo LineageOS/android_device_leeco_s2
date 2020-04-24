@@ -1,0 +1,107 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'com.android.application'
+
+allprojects {
+    repositories {
+        jcenter()
+        flatDir {
+            dirs 'libs'
+        }
+        google()
+    }
+
+}
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "org.lineageos.consumerirtransmitter"
+        minSdkVersion 27
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.6"
+    }
+
+    externalNativeBuild {
+
+    }
+
+	lintOptions {
+//			checkReleaseBuilds false
+			// Or, if you prefer, you can continue to check for errors in release builds,
+			// but continue the build even when errors are found:
+        abortOnError false
+	}
+    signingConfigs {
+
+        aosp {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('keystore.jks')
+            storePassword 'android'
+        }
+    }
+    buildTypes {
+        debug {
+            // print LOG
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.aosp
+
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.aosp
+        }// release
+    }// buildType end
+
+    sourceSets {
+        main {
+            res.srcDirs = ['res']
+            java.srcDirs 'src'
+            manifest.srcFile 'AndroidManifest.xml'
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    applicationVariants.all {
+        def fileName
+        fileName = "ConsumerirTransmitter.apk"
+        it.outputs.each {
+            it.outputFileName = fileName
+        }
+    }
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+    }
+}
+
