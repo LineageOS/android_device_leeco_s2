@@ -197,7 +197,6 @@ TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Qualcomm support
 BOARD_USES_QCOM_HARDWARE := true
-TARGET_USE_SDCLANG := true
 
 # Render
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
