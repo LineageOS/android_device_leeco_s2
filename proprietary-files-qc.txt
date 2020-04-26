@@ -58,9 +58,7 @@ vendor/lib64/com.qualcomm.qti.ant@1.0.so|3a19c81d66ef1190d0b2f361420d5cbf707cc60
 vendor/lib64/vendor.qti.hardware.fm@1.0.so|dc576dfcb0bf390a106b5ed8861e7f547110cbf1
 
 # Consumerir - from le_x10 (x850) - 7.1.1/LEXCNFN6061705181T/letv05181516
--vendor/app/UEIQuicksetSDKLeTV/UEIQuicksetSDKLeTV.apk|5f277e31c08585ca8e79f7fda0957bd577c99c7d
-vendor/bin/init.uei.sh|67fb65961843e5ba75e366eb33caf9a75ef1de66
-vendor/etc/UEISettings|8c08000238281ea08ea108f4d0935b1e83336f4c
+-vendor/app/UEIQuicksetSDKLeTV/UEIQuicksetSDKLeTV.apk|7695ecb344390d2cb78088eed67d3de782790d04
 
 # CNE - from tissot - PKQ1.180917.001.V10.0.4.0.PDHMIXM
 etc/permissions/cneapiclient.xml|15831adf0e80243042b90c734eea0a68eb8ae9c9

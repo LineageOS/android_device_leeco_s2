@@ -64,8 +64,5 @@
 # Sensor
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service\.s2                u:object_r:hal_sensors_default_exec:s0
 
-# Shell scripts
-/(vendor|system/vendor)/bin/init\.uei\.sh                  u:object_r:init_uei_exec:s0
-
 # HALs
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2      u:object_r:hal_lineage_touch_default_exec:s0
