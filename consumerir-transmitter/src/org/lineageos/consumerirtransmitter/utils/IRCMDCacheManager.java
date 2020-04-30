@@ -16,7 +16,6 @@
 
 package org.lineageos.consumerirtransmitter.utils;
 
-import android.util.Log;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import org.lineageos.consumerirtransmitter.beans.IRCMDBean;

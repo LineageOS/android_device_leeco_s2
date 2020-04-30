@@ -19,7 +19,7 @@ package org.lineageos.consumerirtransmitter;
 import android.app.Application;
 import android.content.Intent;
 import android.os.UserHandle;
-import android.util.Log;
+import org.lineageos.consumerirtransmitter.utils.Log;
 import org.lineageos.consumerirtransmitter.utils.ReflectionUtils;
 
 public class MainApplication extends Application {
@@ -29,7 +29,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "MainApplication starting....");
-
         Log.d(TAG, "startServiceAsUser");
         ReflectionUtils.invokeMethod(this, "startServiceAsUser",
             new Class[] {Intent.class, UserHandle.class

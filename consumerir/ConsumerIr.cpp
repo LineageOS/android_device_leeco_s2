@@ -20,8 +20,6 @@
 
 #include <android-base/logging.h>
 #include <fcntl.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 #include <iostream>
 #include <vector>
@@ -37,23 +35,49 @@ static hidl_vec<ConsumerIrFreqRange> rangeVec{
     {.min = 38000, .max = 38000}, {.min = 40000, .max = 40000}, {.min = 56000, .max = 56000},
 };
 
+int ConsumerIr::sendMsg(const char* msg) {
+    int localsocket = -1, len;
+    struct sockaddr_un remote;
+    if ((localsocket = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
+        LOG(ERROR) << "could not create socket";
+        return -1;
+    }
+    char const* name = "org.lineageos.consumerirtransmitter.localsocket";
+    remote.sun_path[0] = '\0'; /* abstract namespace */
+    strcpy(remote.sun_path + 1, name);
+    remote.sun_family = AF_UNIX;
+    int nameLen = strlen(name);
+    len = 1 + nameLen + offsetof(struct sockaddr_un, sun_path);
+    if (connect(localsocket, (struct sockaddr*)&remote, len) == -1) {
+        LOG(ERROR) << "connect to local socket server failed, is the server running?";
+        return -1;
+    } else {
+        LOG(DEBUG) << "connect to local socket server success";
+    }
+    if (send(localsocket, msg, strlen(msg), 0) == -1) {
+        LOG(ERROR) << "send msg to local socket server failed";
+        return -1;
+    } else {
+        LOG(DEBUG) << "send msg to local socket server success";
+    }
+    close(localsocket);
+    return 0;
+}
+
 // Methods from ::android::hardware::ir::V1_0::IConsumerIr follow.
 Return<bool> ConsumerIr::transmit(int32_t carrierFreq, const hidl_vec<int32_t>& pattern) {
     if (pattern.size() > 0) {
         std::ostringstream vts;
-        // Convert all but the last element to avoid a trailing ","
-        std::copy(pattern.begin(), pattern.end() - 1, std::ostream_iterator<int32_t>(vts, ","));
-        vts << pattern[pattern.size() - 1];
-        std::stringstream ss;
-        ss << "/system/bin/am startservice -n "
-              "org.lineageos.consumerirtransmitter/.ConsumerirTransmitterService -a "
-              "org.lineageos.consumerirtransmitter.TRANSMIT_IR --es carrier_freq "
-           << carrierFreq << " --es pattern " << vts.str();
-        int child = fork();
-        if (child == 0) {
-            execl("/system/bin/sh", "sh", "-c", ss.str().c_str(), (char*)0);
+        std::copy(pattern.begin(), pattern.end(), std::ostream_iterator<int32_t>(vts, ","));
+        vts << carrierFreq;
+        std::string msg = vts.str();
+        if (sendMsg(msg.c_str()) < 0) {
+            LOG(ERROR) << "send msg failed";
+            return false;
+        } else {
+            LOG(DEBUG) << "send msg success";
+            return true;
         }
-        return true;
     }
     return false;
 }

@@ -18,7 +18,6 @@ package org.lineageos.consumerirtransmitter.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

@@ -16,6 +16,8 @@
 
 package org.lineageos.consumerirtransmitter;
 
+import static org.lineageos.consumerirtransmitter.Constants.USE_SOCKET;
+
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -23,6 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -30,23 +34,23 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.UserHandle;
 import android.text.TextUtils;
-import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import org.lineageos.consumerirtransmitter.beans.IRCMDBean;
 import org.lineageos.consumerirtransmitter.utils.IRCMDCacheManager;
+import org.lineageos.consumerirtransmitter.utils.Log;
 import org.lineageos.consumerirtransmitter.utils.ReflectionUtils;
 
 public class ConsumerirTransmitterService extends Service {
     private static final String TAG = "ConsumerirTransmitter";
-    private static final boolean DEBUG = true;
 
     private static final String ACTION_TRANSMIT_IR =
         "org.lineageos.consumerirtransmitter.TRANSMIT_IR";
+    private static final String SOCKET_NAME = "org.lineageos.consumerirtransmitter.localsocket";
     private static final String SYS_FILE_ENABLE_IR_BLASTER = "/sys/remote/enable";
-
     private Object mLock = new Object(); // lock to rw mBound & mControl
     private boolean mBound = false;
     private IControl mControl;
@@ -56,10 +60,16 @@ public class ConsumerirTransmitterService extends Service {
     private static final int MSG_BIND_QUICKSET_RETRY = 1001;
     private static final long BIND_QUICKSET_SDK_RETRY_TIME = 5000;
 
+    private Thread mSocketServerThread = new Thread() {
+        @Override
+        public void run() {
+            startSocketServer();
+        }
+    };
+
     @Override
     public void onCreate() {
-        if (DEBUG)
-            Log.d(TAG, "Creating service");
+        Log.d(TAG, "Creating service");
         switchIr("1");
         mHandlerThread = new HandlerThread("transmit_handler");
         mHandlerThread.start();
@@ -67,20 +77,21 @@ public class ConsumerirTransmitterService extends Service {
         bindQuickSetService();
         IRCMDCacheManager.getInstance().clear();
         registerReceiver(mIrReceiver, new IntentFilter(ACTION_TRANSMIT_IR));
+        if (USE_SOCKET) {
+            mSocketServerThread.start();
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (DEBUG)
-            Log.d(TAG, "Starting service");
+        Log.d(TAG, "Starting service");
         parseIRCMDIntent(intent);
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        if (DEBUG)
-            Log.d(TAG, "Destroying service");
+        Log.d(TAG, "Destroying service");
         super.onDestroy();
         this.unregisterReceiver(mIrReceiver);
         this.unbindService(mControlServiceConnection);
@@ -95,6 +106,10 @@ public class ConsumerirTransmitterService extends Service {
         } else {
             mHandler = null;
             mHandlerThread = null;
+        }
+        if (USE_SOCKET && null != mSocketServerThread && mSocketServerThread.isAlive()) {
+            mSocketServerThread.interrupt();
+            mSocketServerThread = null;
         }
     }
 
@@ -118,16 +133,12 @@ public class ConsumerirTransmitterService extends Service {
                 if (null == ircmdBean) {
                     break;
                 }
-                if (DEBUG) {
-                    Log.i(TAG, "sending cached cmd to QuickSet SDK: " + ircmdBean);
-                }
+                Log.i(TAG, "sending cached cmd to QuickSet SDK: " + ircmdBean);
                 if (null != mHandler) {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_TRANSMIT_IR_CMD, ircmdBean));
                 }
             }
-
-            if (DEBUG)
-                Log.i(TAG, "QuickSet SDK Service SUCCESSFULLY CONNECTED!");
+            Log.i(TAG, "QuickSet SDK Service SUCCESSFULLY CONNECTED!");
         }
 
         @Override
@@ -136,8 +147,7 @@ public class ConsumerirTransmitterService extends Service {
                 mBound = false;
                 mControl = null;
             }
-            if (DEBUG)
-                Log.i(TAG, "QuickSet SDK Service DISCONNECTED!");
+            Log.i(TAG, "QuickSet SDK Service DISCONNECTED!");
         }
     };
 
@@ -145,10 +155,9 @@ public class ConsumerirTransmitterService extends Service {
      * Try to bind QuickSet SDK Service
      */
     public void bindQuickSetService() {
-        if (DEBUG)
-            Log.d(TAG,
-                "Trying to bind QuickSet service: " + IControl.QUICKSET_UEI_PACKAGE_NAME + " - "
-                    + IControl.QUICKSET_UEI_SERVICE_CLASS);
+        Log.d(TAG,
+            "Trying to bind QuickSet service: " + IControl.QUICKSET_UEI_PACKAGE_NAME + " - "
+                + IControl.QUICKSET_UEI_SERVICE_CLASS);
         try {
             Intent controlIntent = new Intent(IControl.ACTION);
             controlIntent.setClassName(
@@ -159,7 +168,7 @@ public class ConsumerirTransmitterService extends Service {
                 },
                 new Object[] {controlIntent, mControlServiceConnection, Context.BIND_AUTO_CREATE,
                     ReflectionUtils.getStaticAttribute("android.os.UserHandle", "CURRENT")});
-            if (!bindResult && DEBUG) {
+            if (!bindResult) {
                 Log.e(TAG, "Binding QuickSet Control service failed!, retry later");
                 if (null != mHandler) {
                     mHandler.sendEmptyMessageDelayed(
@@ -180,14 +189,12 @@ public class ConsumerirTransmitterService extends Service {
      *     API
      */
     public int transmitIrPattern(int carrierFrequency, int[] pattern) {
-        if (DEBUG)
-            Log.d(TAG,
-                "transmitIrPattern called: freq: " + carrierFrequency
-                    + ", pattern-len: " + pattern.length);
+        Log.d(TAG,
+            "transmitIrPattern called: freq: " + carrierFrequency
+                + ", pattern-len: " + pattern.length);
 
         if (mControl == null || !mBound) {
-            if (DEBUG)
-                Log.w(TAG, "QuickSet Service seems not to be bound. Trying to bind again and exit!");
+            Log.w(TAG, "QuickSet Service seems not to be bound. Trying to bind again and exit!");
             IRCMDCacheManager.getInstance().produce(new IRCMDBean(carrierFrequency, pattern));
             bindQuickSetService();
             return -1;
@@ -232,9 +239,7 @@ public class ConsumerirTransmitterService extends Service {
 
     private void parseIRCMDIntent(Intent intent) {
         if (null == intent) {
-            if (DEBUG) {
-                Log.e(TAG, "parseIRCMDIntent: null intent");
-            }
+            Log.e(TAG, "parseIRCMDIntent: null intent");
             return;
         }
         if (TextUtils.equals(ACTION_TRANSMIT_IR, intent.getAction())) {
@@ -265,18 +270,72 @@ public class ConsumerirTransmitterService extends Service {
             switch (msg.what) {
                 case MSG_TRANSMIT_IR_CMD:
                     IRCMDBean cmd = (IRCMDBean) msg.obj;
-                    synchronized (mLock) { transmitIrPattern(cmd.carrierFrequency, cmd.pattern); }
+                    synchronized (mLock) {
+                        Log.d(TAG, "translate cmd = " + cmd);
+                        transmitIrPattern(cmd.carrierFrequency, cmd.pattern);
+                    }
                     break;
                 case MSG_BIND_QUICKSET_RETRY:
                     synchronized (mLock) {
                         if (mControl == null || !mBound) {
-                            if (DEBUG) {
-                                Log.d(TAG, "retry to binding quick sdk");
-                            }
+                            Log.d(TAG, "retry to binding quick sdk");
                             bindQuickSetService();
                         }
                     }
                     break;
+            }
+        }
+    }
+
+    private void startSocketServer() {
+        Log.d(TAG, "startSocketServer");
+        LocalServerSocket server = null;
+        try {
+            server = new LocalServerSocket(SOCKET_NAME);
+            while (true) {
+                Log.d(TAG, "socket listen while loop...");
+                Log.d(TAG, "server.accept+++");
+                LocalSocket receiver = server.accept();
+                Log.d(TAG, "server.accept---");
+                if (null != receiver) {
+                    try {
+                        Log.d(TAG, "receive a msg from native");
+                        InputStream input = receiver.getInputStream();
+                        byte buffer[] = new byte[1024];
+                        int len = 0;
+                        int temp;
+                        while ((temp = input.read()) != -1) {
+                            buffer[len] = (byte) temp;
+                            len++;
+                        }
+                        String msg = new String(buffer, 0, len);
+                        int[] pattern = Arrays.stream(msg.split(","))
+                                            .map(String::trim)
+                                            .mapToInt(Integer::parseInt)
+                                            .toArray();
+                        int carrierFrequency = pattern[pattern.length - 1];
+                        pattern = Arrays.copyOf(pattern, pattern.length - 1);
+                        if (null != mHandler) {
+                            mHandler.sendMessage(mHandler.obtainMessage(
+                                MSG_TRANSMIT_IR_CMD, new IRCMDBean(carrierFrequency, pattern)));
+                        }
+                        input.close();
+                        Log.d(TAG, "received msg = " + msg);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Exception while read msg", e);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Exception while trying to start socket server", e);
+        } finally {
+            try {
+                if (null != server) {
+                    server.close();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Exception while close socket", e);
             }
         }
     }

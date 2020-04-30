@@ -1,0 +1,9 @@
+type hal_ir_leeco_s2, domain, coredomain;
+type hal_ir_leeco_s2_exec, exec_type, file_type;
+
+hal_server_domain(hal_ir_leeco_s2, hal_ir)
+
+init_daemon_domain(hal_ir_leeco_s2)
+
+# Connect unix_stream_socket
+allow hal_ir_leeco_s2 system_app:unix_stream_socket connectto;

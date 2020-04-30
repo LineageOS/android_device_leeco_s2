@@ -20,6 +20,16 @@
 #include <android/hardware/ir/1.0/IConsumerIr.h>
 #include <hardware/consumerir.h>
 #include <hidl/Status.h>
+#include <netdb.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/un.h>
+#include <unistd.h>
+
+#include <sstream>
+#include <stdexcept>
+#include <string>
 
 namespace android {
 namespace hardware {
@@ -37,6 +47,7 @@ class ConsumerIr : public IConsumerIr {
     // Methods from ::android::hardware::ir::V1_0::IConsumerIr follow.
     Return<bool> transmit(int32_t carrierFreq, const hidl_vec<int32_t>& pattern) override;
     Return<void> getCarrierFreqs(getCarrierFreqs_cb _hidl_cb) override;
+    int sendMsg(const char* msg);
 };
 
 }  // namespace implementation
