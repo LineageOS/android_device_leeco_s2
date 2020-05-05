@@ -30,7 +30,8 @@ public class Startup extends BroadcastReceiver {
         final String action = intent.getAction();
         if (action.equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
             Log.d(TAG, "Starting");
-            context.startServiceAsUser(new Intent(context, ConsumerirTransmitterService.class), UserHandle.CURRENT);
+            context.startServiceAsUser(
+                new Intent(context, ConsumerirTransmitterService.class), UserHandle.CURRENT);
         }
     }
 }

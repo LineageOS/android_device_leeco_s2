@@ -23,9 +23,7 @@ public class IControl {
 
     private IBinder _controlService = null;
 
-    public IControl(IBinder service) {
-        this._controlService = service;
-    }
+    public IControl(IBinder service) { this._controlService = service; }
 
     /**
      * Get result code for last action from the QuickSet service.

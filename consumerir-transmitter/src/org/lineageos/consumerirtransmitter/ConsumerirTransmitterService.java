@@ -18,31 +18,28 @@ package org.lineageos.consumerirtransmitter;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.IBinder;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.ComponentName;
 import android.content.ServiceConnection;
-
-import org.lineageos.consumerirtransmitter.IControl;
-
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import android.os.RemoteException;
+import java.util.List;
+import org.lineageos.consumerirtransmitter.IControl;
 
 public class ConsumerirTransmitterService extends Service {
     private static final String TAG = "ConsumerirTransmitter";
     private static final boolean DEBUG = false;
 
-    private static final String ACTION_TRANSMIT_IR = "org.lineageos.consumerirtransmitter.TRANSMIT_IR";
+    private static final String ACTION_TRANSMIT_IR =
+        "org.lineageos.consumerirtransmitter.TRANSMIT_IR";
     private static final String SYS_FILE_ENABLE_IR_BLASTER = "/sys/remote/enable";
 
     private boolean mBound = false;
@@ -52,11 +49,8 @@ public class ConsumerirTransmitterService extends Service {
     public void onCreate() {
         if (DEBUG)
             Log.d(TAG, "Creating service");
-
         switchIr("1");
-
         bindQuickSetService();
-
         registerReceiver(mIrReceiver, new IntentFilter(ACTION_TRANSMIT_IR));
     }
 
@@ -64,7 +58,6 @@ public class ConsumerirTransmitterService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG)
             Log.d(TAG, "Starting service");
-
         return START_STICKY;
     }
 
@@ -72,12 +65,9 @@ public class ConsumerirTransmitterService extends Service {
     public void onDestroy() {
         if (DEBUG)
             Log.d(TAG, "Destroying service");
-
         super.onDestroy();
-
         this.unregisterReceiver(mIrReceiver);
         this.unbindService(mControlServiceConnection);
-
         switchIr("0");
     }
 
@@ -90,7 +80,6 @@ public class ConsumerirTransmitterService extends Service {
      * Service Connection used to control the bound QuickSet SDK Service
      */
     private final ServiceConnection mControlServiceConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBound = true;
@@ -115,12 +104,15 @@ public class ConsumerirTransmitterService extends Service {
      */
     public void bindQuickSetService() {
         if (DEBUG)
-            Log.d(TAG, "Trying to bind QuickSet service: " + IControl.QUICKSET_UEI_PACKAGE_NAME + " - "
+            Log.d(TAG,
+                "Trying to bind QuickSet service: " + IControl.QUICKSET_UEI_PACKAGE_NAME + " - "
                     + IControl.QUICKSET_UEI_SERVICE_CLASS);
         try {
             Intent controlIntent = new Intent(IControl.ACTION);
-            controlIntent.setClassName(IControl.QUICKSET_UEI_PACKAGE_NAME, IControl.QUICKSET_UEI_SERVICE_CLASS);
-            boolean bindResult = bindService(controlIntent, mControlServiceConnection, Context.BIND_AUTO_CREATE);
+            controlIntent.setClassName(
+                IControl.QUICKSET_UEI_PACKAGE_NAME, IControl.QUICKSET_UEI_SERVICE_CLASS);
+            boolean bindResult =
+                bindService(controlIntent, mControlServiceConnection, Context.BIND_AUTO_CREATE);
             if (!bindResult && DEBUG) {
                 Log.e(TAG, "Binding QuickSet Control service failed!");
             }
@@ -132,12 +124,16 @@ public class ConsumerirTransmitterService extends Service {
     /**
      * Try to send Infrared pattern, catch and log exceptions.
      *
-     * @param carrierFrequency carrier frequency, see ConsumerIrManager Android API
-     * @param pattern          IR pattern to send, see ConsumerIrManager Android API
+     * @param carrierFrequency carrier frequency, see ConsumerIrManager Android
+     *     API
+     * @param pattern          IR pattern to send, see ConsumerIrManager Android
+     *     API
      */
     public int transmitIrPattern(int carrierFrequency, int[] pattern) {
         if (DEBUG)
-            Log.d(TAG, "transmitIrPattern called: freq: " + carrierFrequency + ", pattern-len: " + pattern.length);
+            Log.d(TAG,
+                "transmitIrPattern called: freq: " + carrierFrequency
+                    + ", pattern-len: " + pattern.length);
 
         if (mControl == null || !mBound) {
             if (DEBUG)
@@ -182,14 +178,17 @@ public class ConsumerirTransmitterService extends Service {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (ACTION_TRANSMIT_IR.equals(action)) {
-                if (intent.getStringExtra("carrier_freq") != null && intent.getStringExtra("pattern") != null) {
+                if (intent.getStringExtra("carrier_freq") != null
+                    && intent.getStringExtra("pattern") != null) {
                     int carrierFrequency = Integer.parseInt(intent.getStringExtra("carrier_freq"));
                     String patternStr = intent.getStringExtra("pattern");
-                    int[] pattern = Arrays.stream(patternStr.split(",")).map(String::trim).mapToInt(Integer::parseInt)
-                            .toArray();
+                    int[] pattern = Arrays.stream(patternStr.split(","))
+                                        .map(String::trim)
+                                        .mapToInt(Integer::parseInt)
+                                        .toArray();
                     transmitIrPattern(carrierFrequency, pattern);
                 }
             }
         }
-    };
+    }
 }

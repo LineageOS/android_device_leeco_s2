@@ -27,9 +27,9 @@ namespace ir {
 namespace V1_0 {
 namespace implementation {
 
+using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-using ::android::hardware::hidl_vec;
 using ::android::hardware::ir::V1_0::ConsumerIrFreqRange;
 using ::android::hardware::ir::V1_0::IConsumerIr;
 
