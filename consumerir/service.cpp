@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.ir@1.0-service.leeco"
+#define LOG_TAG "android.hardware.ir@1.0-service.leeco_s2"
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
