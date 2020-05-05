@@ -18,7 +18,10 @@
 
     <uses-sdk android:minSdkVersion="27" />
 
-    <application android:label="ConsumerirTransmitter" android:persistent="true" android:defaultToDeviceProtectedStorage="true" android:directBootAware="true">
+    <application android:label="ConsumerirTransmitter"
+        android:persistent="true"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true">
 
         <receiver android:name=".Startup">
             <intent-filter android:priority="99">
@@ -26,7 +29,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".ConsumerirTransmitterService" android:permission="ConsumeriTransmitterService">
+        <service android:name=".ConsumerirTransmitterService"
+            android:permission="ConsumeriTransmitterService"
+            >
         </service>
 
         <activity android:name="ConsumerirTransmitter" android:label="ConsumeriTransmitter" android:excludeFromRecents="true" android:launchMode="singleInstance" android:screenOrientation="portrait" android:windowAnimationStyle="@null">
