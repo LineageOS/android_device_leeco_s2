@@ -34,7 +34,7 @@ PRODUCT_PACKAGES += \
 
 # Consumer IR
 PRODUCT_PACKAGES += \
-    android.hardware.ir@1.0-service.leeco
+    android.hardware.ir@1.0-service.leeco_s2
 
 # CryptfsHW
 PRODUCT_PACKAGES += \
