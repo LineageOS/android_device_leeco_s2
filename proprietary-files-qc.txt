@@ -289,8 +289,6 @@ vendor/bin/charger|a6ca35eff5ecc01b437e8cec2a53d7d5013d4f6e
 bin/perfservice|03d6368017d4c41f7fea647c669b69d6567238af
 etc/init/perfservice.rc|67144c3f1800f976cb58463c4370882d2d820947
 etc/perf/whitelistedapps.xml|a489e65df170543a2817a690fbae36c34e29613b
--framework/QPerformance.jar|70a5463b9ff26d51715ce31523efcaa7d4840f10
--framework/UxPerformance.jar|0e3babfa37e2368aee16de3d6f8cdea06e081dea
 lib/libqti-at.so|1101ee354735905f39337bc032c6b547dbce846c
 lib/libqti-iopd-client_system.so|d1602341242d949bee431d8856df9aacc38c4b6b
 lib/libqti-perfd-client_system.so|74f4d9657cf492cf1de2e9b93983f4e7b5431c45
