@@ -50,12 +50,14 @@ int ConsumerIr::sendMsg(const char* msg) {
     len = 1 + nameLen + offsetof(struct sockaddr_un, sun_path);
     if (connect(localsocket, (struct sockaddr*)&remote, len) == -1) {
         LOG(ERROR) << "connect to local socket server failed, is the server running?";
+        close(localsocket);
         return -1;
     } else {
         LOG(DEBUG) << "connect to local socket server success";
     }
     if (send(localsocket, msg, strlen(msg), 0) == -1) {
         LOG(ERROR) << "send msg to local socket server failed";
+        close(localsocket);
         return -1;
     } else {
         LOG(DEBUG) << "send msg to local socket server success";
