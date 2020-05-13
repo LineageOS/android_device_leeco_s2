@@ -278,11 +278,6 @@
         <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
     </path>
 
-    <!-- for use with leeco audio hal -->
-    <path name="deep-buffer-playback-speaker smartpa">
-        <path name="deep-buffer-playback smartpa" />
-    </path>
-
     <path name="deep-buffer-playback bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia1" value="1" />
     </path>
@@ -325,11 +320,6 @@
 
     <path name="low-latency-playback smartpa">
         <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="low-latency-playback-speaker smartpa">
-        <path name="low-latency-playback smartpa" />
     </path>
 
     <path name="low-latency-playback speaker-protected">
@@ -380,11 +370,6 @@
         <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia3" value="1" />
     </path>
 
-    <!-- for use with leeco audio hal -->
-    <path name="audio-ull-playback-speaker smartpa">
-        <path name="audio-ull-playback smartpa" />
-    </path>
-
     <path name="audio-ull-playback headphones">
         <path name="audio-ull-playback" />
     </path>
@@ -431,11 +416,6 @@
 
     <path name="compress-offload-playback smartpa">
         <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia4" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="compress-offload-playback-speaker smartpa">
-        <path name="compress-offload-playback smartpa" />
     </path>
 
     <path name="compress-offload-playback speaker-protected">
@@ -489,12 +469,6 @@
     <path name="compress-offload-playback2 bt-sco-wb">
         <ctl name="Internal BTSCO SampleRate" value="BTSCO_RATE_16KHZ" />
         <path name="compress-offload-playback2 bt-sco" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="compress-offload-playback2 speaker-and-bt-sco">
-        <path name="compress-offload-playback2 bt-sco" />
-        <path name="compress-offload-playback2" />
     </path>
 
     <path name="compress-offload-playback2 speaker-and-bt-sco-wb">
@@ -813,11 +787,6 @@
         <ctl name="QUIN_MI2S_RX_DL_HL Switch" value="1" />
     </path>
 
-    <!-- for use with leeco audio hal -->
-    <path name="play-fm-speaker">
-        <path name="play-fm smartpa" />
-    </path>
-
     <path name="vowlan-call">
         <ctl name="PRI_MI2S_RX_Voice Mixer VoWLAN" value="1" />
         <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="1" />
@@ -826,11 +795,6 @@
     <path name="vowlan-call smartpa">
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoWLAN" value="1" />
         <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="vowlan-call-speaker">
-        <path name="vowlan-call smartpa" />
     </path>
 
     <path name="vowlan-call hdmi">
@@ -862,11 +826,6 @@
         <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode1" value="1" />
         <ctl name="VoiceMMode1_Tx Mixer TERT_MI2S_TX_MMode1" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="voicemmode1-call-speaker">
-        <path name="voicemmode1-call smartpa" />
     </path>
 
     <path name="voicemmode1-call bt-sco">
@@ -917,11 +876,6 @@
         <ctl name="VoiceMMode2_Tx Mixer TERT_MI2S_TX_MMode2" value="1" />
     </path>
 
-    <!-- for use with leeco audio hal -->
-    <path name="voicemmode2-call-speaker">
-        <path name="voicemmode2-call smartpa" />
-    </path>
-
     <path name="voicemmode2-call-speaker bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer INT_BT_SCO_TX_MMode2" value="1" />
@@ -969,11 +923,6 @@
     <path name="hfp-sco smartpa">
         <ctl name="MultiMedia6 Mixer TERT_MI2S_TX" value="1" />
         <ctl name="HFP_INT_UL_HL Switch" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="hfp-sco-speaker">
-        <path name="hfp-sco smartpa" />       
     </path>
 
     <path name="hfp-sco-wb">
@@ -1141,11 +1090,6 @@
         <ctl name="VoLTE_Tx Mixer TERT_MI2S_TX_VoLTE" value="1" />
     </path>
 
-    <!-- for use with leeco audio hal -->
-    <path name="volte-call-speaker">
-        <path name="volte-call smartpa" />
-    </path>
-
     <path name="volte-call hdmi">
         <ctl name="HDMI_RX_Voice Mixer VoLTE" value="1" />
         <ctl name="VoLTE_Tx Mixer SLIM_0_TX_VoLTE" value="1" />
@@ -1178,11 +1122,6 @@
     <path name="compress-voip-call smartpa">
         <ctl name="QUIN_MI2S_RX_Voice Mixer Voip" value="1" />
         <ctl name="Voip_Tx Mixer TERT_MI2S_TX_Voip" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="compress-voip-call-speaker">
-        <path name="compress-voip-call smartpa" />
     </path>
 
     <path name="compress-voip-call bt-sco">
@@ -1220,11 +1159,6 @@
     <path name="qchat-call smartpa">
         <ctl name="QUIN_MI2S_RX_Voice Mixer QCHAT" value="1" />
         <ctl name="QCHAT_Tx Mixer TERT_MI2S_TX_QCHAT" value="1" />
-    </path>
-
-    <!-- for use with leeco audio hal -->
-    <path name="qchat-call-speaker">
-        <path name="qchat-call smartpa" />
     </path>
 
     <path name="qchat-call bt-sco">
