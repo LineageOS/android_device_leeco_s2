@@ -40,6 +40,9 @@ TARGET_CPU_CORTEX_A53 := true
 
 TARGET_USES_64_BIT_BINDER := true
 
+# Assert
+TARGET_OTA_ASSERT_DEVICE := s2,le_s2,le_s2_ww
+
 # Bootloader
 TARGET_NO_BOOTLOADER := true
 TARGET_BOOTLOADER_BOARD_NAME := MSM8952
@@ -152,6 +155,9 @@ TARGET_LEGACY_HW_DISK_ENCRYPTION := true
 # Exclude serif fonts for saving system.img size.
 EXCLUDE_SERIF_FONTS := true
 
+# DRM
+TARGET_ENABLE_MEDIADRM_64 := true
+
 # Filesystem
 BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
@@ -244,12 +250,6 @@ WPA_SUPPLICANT_VERSION			:= VER_0_8_X
 PRODUCT_VENDOR_MOVE_ENABLED		:= true
 TARGET_DISABLE_WCNSS_CONFIG_COPY	:= true
 TARGET_USES_WCNSS_MAC_ADDR_REV		:= true
-
-# OTA Assert
-TARGET_OTA_ASSERT_DEVICE := s2,le_s2,le_s2_ww
-
-#Enable DRM plugins 64 bit compilation
-TARGET_ENABLE_MEDIADRM_64 := true
 
 # inherit from the proprietary version
 -include vendor/leeco/s2/BoardConfigVendor.mk
