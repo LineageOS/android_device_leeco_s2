@@ -722,7 +722,6 @@
     </path>
 
     <path name="voice-call speaker">
-        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer CSVoice" value="1" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
@@ -752,7 +751,6 @@
     </path>
 
     <path name="voice2-call speaker">
-        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer CSVoice" value="1" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
@@ -823,7 +821,6 @@
     </path>
 
     <path name="voicemmode1-call smartpa">
-        <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode1" value="1" />
         <ctl name="VoiceMMode1_Tx Mixer TERT_MI2S_TX_MMode1" value="1" />
     </path>
@@ -1465,11 +1462,11 @@
     </path>
 
     <path name="echo-reference">
-        <ctl name="AUDIO_REF_EC_UL1 MUX" value="I2S_RX" />
+        <ctl name="AUDIO_REF_EC_UL1 MUX" value="QUIN_MI2S_RX" />
     </path>
 
     <path name="echo-reference-voip">
-        <ctl name="AUDIO_REF_EC_UL5 MUX" value="QUIN_MI2S_TX" />
+        <ctl name="AUDIO_REF_EC_UL5 MUX" value="QUIN_MI2S_RX" />
     </path>
 
     <!-- TTY devices -->
