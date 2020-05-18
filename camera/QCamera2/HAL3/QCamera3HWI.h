@@ -172,7 +172,8 @@ public:
                             nsecs_t timestamp, int32_t request_id,
                             const CameraMetadata& jpegMetadata, uint8_t pipeline_depth,
                             uint8_t capture_intent, uint8_t fwk_cacMode);
-    static void patchCaps();
+    static void patchPreviewSizes(uint32_t cameraId);
+    static void patchCaps(uint32_t cameraId);
     int initParameters();
     void deinitParameters();
     QCamera3ReprocessChannel *addOfflineReprocChannel(const reprocess_config_t &config,
