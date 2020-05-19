@@ -5174,7 +5174,6 @@ void QCamera3HardwareInterface::patchPreviewSizes(uint32_t cameraId) {
         }
         gCamCapability[cameraId]->picture_sizes_tbl[gCamCapability[cameraId]->picture_sizes_tbl_cnt].width = width;
         gCamCapability[cameraId]->picture_sizes_tbl[gCamCapability[cameraId]->picture_sizes_tbl_cnt].height = height;
-        gCamCapability[cameraId]->picture_min_duration[gCamCapability[cameraId]->picture_sizes_tbl_cnt] = 33333000;
         gCamCapability[cameraId]->picture_sizes_tbl_cnt++;
         if (!hasPatched) {
             hasPatched = true;
@@ -5184,11 +5183,13 @@ void QCamera3HardwareInterface::patchPreviewSizes(uint32_t cameraId) {
     if (!hasPatched) {
         return;
     }
-	//sort the array from big -> small using [Bubble Sort Algorithm]
+    //sort the array from big -> small using [Bubble Sort Algorithm]
     for (size_t i = 0; i < gCamCapability[cameraId]->picture_sizes_tbl_cnt; i++) {
         for (size_t j = 0; j <  gCamCapability[cameraId]->picture_sizes_tbl_cnt - i - 1; j++) {
-            if (gCamCapability[cameraId]->picture_sizes_tbl[j].width * gCamCapability[cameraId]->picture_sizes_tbl[j].height
-                < gCamCapability[cameraId]->picture_sizes_tbl[j + 1].width * gCamCapability[cameraId]->picture_sizes_tbl[j + 1].height) {
+            if (gCamCapability[cameraId]->picture_sizes_tbl[j].width < gCamCapability[cameraId]->picture_sizes_tbl[j + 1].width
+                    || (gCamCapability[cameraId]->picture_sizes_tbl[j].width == gCamCapability[cameraId]->picture_sizes_tbl[j + 1].width
+                    && gCamCapability[cameraId]->picture_sizes_tbl[j].height < gCamCapability[cameraId]->picture_sizes_tbl[j + 1].height)) {
+
                 cam_dimension_t tmpSize = gCamCapability[cameraId]->picture_sizes_tbl[j];
                 int64_t tmpFps = gCamCapability[cameraId]->picture_min_duration[j];
                 gCamCapability[cameraId]->picture_sizes_tbl[j] = gCamCapability[cameraId]->picture_sizes_tbl[j + 1];
@@ -5213,43 +5214,65 @@ void QCamera3HardwareInterface::patchCaps(uint32_t cameraId)
     //be seen from app level both through camera api1 and api2
     patchPreviewSizes(cameraId);
     //patch preview-sizes END
+    ALOGI("patchCaps(): ->picture_min_duration: ");
+    for (int i = gCamCapability[cameraId]->picture_sizes_tbl_cnt - 1; i >= 0; i--)
+    {
+        if (gCamCapability[cameraId]->picture_min_duration[i] != DEFAULT_PIC_MIN_DUR) {
+            ALOGD("patchCaps(): %dx%d --> picture_min_duration[%d] patched",
+                    gCamCapability[cameraId]->picture_sizes_tbl[i].width,
+                    gCamCapability[cameraId]->picture_sizes_tbl[i].height, i);
+            gCamCapability[cameraId]->picture_min_duration[i] = DEFAULT_PIC_MIN_DUR;
+        }
+    }
     ALOGI("patchCaps(): ->picture_sizes_tbl: ");
     for (int i = gCamCapability[cameraId]->picture_sizes_tbl_cnt - 1; i >= 0; i--)
     {
-        ALOGI("patchCaps(): %d: %dx%d %d", i, gCamCapability[cameraId]->picture_sizes_tbl[i].width, gCamCapability[cameraId]->picture_sizes_tbl[i].height, (int)(gCamCapability[cameraId]->picture_min_duration[i]/1000000));
+        ALOGI("patchCaps(): %d: %dx%d %lld", i,
+                gCamCapability[cameraId]->picture_sizes_tbl[i].width,
+                gCamCapability[cameraId]->picture_sizes_tbl[i].height,
+                gCamCapability[cameraId]->picture_min_duration[i]);
     }
 
     ALOGI("patchCaps(): ->fps_ranges_tbl: ");
     for (int i = gCamCapability[cameraId]->fps_ranges_tbl_cnt - 1; i >= 0; i--)
     {
-        ALOGI("patchCaps(): %d: min %f | max %f", i, gCamCapability[cameraId]->fps_ranges_tbl[i].min_fps, gCamCapability[cameraId]->fps_ranges_tbl[i].max_fps);
-	}
+        ALOGI("patchCaps(): %d: min %f | max %f", i,
+                gCamCapability[cameraId]->fps_ranges_tbl[i].min_fps,
+                gCamCapability[cameraId]->fps_ranges_tbl[i].max_fps);
+    }
 
     ALOGI("patchCaps(): ->preview_sizes_tbl: ");
     for (int i = gCamCapability[cameraId]->preview_sizes_tbl_cnt - 1; i >= 0; i--)
     {
-        ALOGI("patchCaps(): %d: %dx%d", i, gCamCapability[cameraId]->preview_sizes_tbl[i].width, gCamCapability[cameraId]->preview_sizes_tbl[i].height);
-	}
+        ALOGI("patchCaps(): %d: %dx%d", i,
+                gCamCapability[cameraId]->preview_sizes_tbl[i].width,
+                gCamCapability[cameraId]->preview_sizes_tbl[i].height);
+    }
 
     ALOGI("patchCaps(): ->video_sizes_tbl: ");
     for (int i = gCamCapability[cameraId]->video_sizes_tbl_cnt - 1; i >= 0; i--)
     {
-        ALOGI("patchCaps(): %d: %dx%d", i, gCamCapability[cameraId]->video_sizes_tbl[i].width, gCamCapability[cameraId]->video_sizes_tbl[i].height);
+        ALOGI("patchCaps(): %d: %dx%d", i,
+                gCamCapability[cameraId]->video_sizes_tbl[i].width,
+                gCamCapability[cameraId]->video_sizes_tbl[i].height);
     }
 
     ALOGI("patchCaps(): ->hfr_tbl: ");
     for (int i = gCamCapability[cameraId]->hfr_tbl_cnt - 1; i >= 0; i--)
     {
-        ALOGI("patchCaps(): %d: %dx%d mode %d", i, gCamCapability[cameraId]->hfr_tbl[i].dim.width, gCamCapability[cameraId]->hfr_tbl[i].dim.height, gCamCapability[cameraId]->hfr_tbl[i].mode);
+        ALOGI("patchCaps(): %d: %dx%d mode %d", i,
+                gCamCapability[cameraId]->hfr_tbl[i].dim.width,
+                gCamCapability[cameraId]->hfr_tbl[i].dim.height,
+                gCamCapability[cameraId]->hfr_tbl[i].mode);
     }
 
-    ALOGI("patchCaps(): ->sensitivity_range: min %d max %d", gCamCapability[cameraId]->sensitivity_range.min_sensitivity, gCamCapability[cameraId]->sensitivity_range.max_sensitivity);
+    ALOGI("patchCaps(): ->sensitivity_range: min %d max %d",
+            gCamCapability[cameraId]->sensitivity_range.min_sensitivity,
+            gCamCapability[cameraId]->sensitivity_range.max_sensitivity);
 
-    ALOGI("patchCaps(): ->exposure_time_range: min %d max %d", (int)(gCamCapability[cameraId]->exposure_time_range[0]/1000000), (int)(gCamCapability[cameraId]->exposure_time_range[1]/1000000));
-    if (cameraId == 0) {//only back facing camera need do it
-        gCamCapability[cameraId]->picture_min_duration[0] = 33333000; // Set 4608x3456 fps (33.333 ms, ~30 fps)
-        gCamCapability[cameraId]->picture_min_duration[2] = 33333000; // Set 3456x3456 fps (33.333 ms, ~30 fps)
-    }
+    ALOGI("patchCaps(): ->exposure_time_range: min %lld max %lld",
+            gCamCapability[cameraId]->exposure_time_range[0],
+            gCamCapability[cameraId]->exposure_time_range[1]);
 
 }
 
