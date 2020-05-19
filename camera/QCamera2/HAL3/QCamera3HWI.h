@@ -73,6 +73,7 @@ typedef int64_t nsecs_t;
 #define NSEC_PER_SEC 1000000000LLU
 #define NSEC_PER_USEC 1000LLU
 #define NSEC_PER_33MSEC 33000000LLU
+#define DEFAULT_PIC_MIN_DUR 33333333LLU
 
 typedef enum {
     SET_ENABLE,
