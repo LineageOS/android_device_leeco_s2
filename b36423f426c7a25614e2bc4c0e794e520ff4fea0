@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b477f53b_70f8fe7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-05-20T05:46:30Z",
+      "side": 1,
+      "message": "this line should start with...\n\ns2:\n\nas this commit is for the s2 device tree",
+      "revId": "b36423f426c7a25614e2bc4c0e794e520ff4fea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
