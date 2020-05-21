@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.settings.device"
+    android:versionCode="3"
+    android:versionName="3.0"
+    android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="26" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/device_settings_app_name"
+        android:persistent="true">
+
+        <activity
+            android:name=".LeecoPreferenceActivity"
+            android:label="@string/leeco_settings_title"
+            android:theme="@style/DeviceSettings">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/leeco_settings_summary" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_lepref" />
+        </activity>
+
+        <activity
+            android:name=".CameraResetActivity"
+            android:label="@string/camera_reset_launcher_name"
+            android:icon="@mipmap/ic_camera_alt_black_48dp"
+            android:theme="@style/TranslucentTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity>
+
+    </application>
+</manifest>
