@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2020 The LineageOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="leeco_settings_title">LeEco Settings</string>
+    <string name="leeco_settings_summary">Device specific settings</string>
+
+    <string name="camera_reset_title">Camera Reset</string>
+    <string name="camera_reset_summary">This resets the camera server if your camera blackscreens</string>
+    <string name="camera_reset_hint">restarting camera server...</string>
+    <string name="camera_reset_launcher_name">CamReset</string>
+    <string name="camera_hal3_enable">Camera HAL3</string>
+    <string name="camera_hal3_summary">Disabling HAL3 will force the usage of HAL1 instead if you are annoyed by camera blackscreens. Please note that Gcam mods require HAL3.</string>
+
+</resources>
