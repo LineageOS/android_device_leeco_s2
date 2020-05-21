@@ -2,3 +2,7 @@ allow system_app proc_touchpanel:dir { search };
 allow system_app proc_touchpanel:file { rw_file_perms };
 
 allow system_app sysfs_ir_enable:file { rw_file_perms };
+
+#DeviceSettings.apk need to get and set camera_prop
+get_prop(system_app, camera_prop)
+set_prop(system_app, camera_prop)
