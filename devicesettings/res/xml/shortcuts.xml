@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="leeco_settings"
+        android:enabled="true"
+        android:icon="@mipmap/ic_settings_black_48dp"
+        android:shortcutShortLabel="@string/leeco_settings_title"
+        android:shortcutLongLabel="@string/leeco_settings_summary"
+        >
+
+        <intent
+            android:action="om.android.settings.action.IA_SETTINGS"
+            android:targetPackage="org.lineageos.settings.device"
+            android:targetClass="org.lineageos.settings.device.LeecoPreferenceActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+
+</shortcuts>
