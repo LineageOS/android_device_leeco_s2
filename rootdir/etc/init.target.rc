@@ -148,6 +148,16 @@ on property:init.svc.media=restarting
 on property:init.svc.servicemanager=restarting
     restart qcamerasvr
 
+#Restart by DeviceSettings.apk
+on property:persist.camera.s2.restart=1
+    restart qcamerasvr
+    setprop persist.camera.s2.restart 0
+
+#Switch Camera HAL Level by DeviceSettings.apk
+on property:persist.camera.HAL3.enabled=*
+    restart qcamerasvr
+    restart vendor.camera-provider-2-4
+
 on init
    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:api24="http://schemas.android.com/apk/res/android" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:width="24dp"
+    android:height="24dp"
+	android:tint="?android:attr/colorControlNormal">
+
+    <group
+        android:scaleX="0.09250984"
+        android:scaleY="0.08908332"
+        android:translateX="2.812036"
+        android:translateY="-0.5881016">
+        <path
+            android:pathData="M91.01667 269.15262l81.02864 0 0 2.71198 -81.02864 0z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M112.77724 104.16504A21.237419 22.678572 0 0 1 91.539818 126.84361 21.237419 22.678572 0 0 1 70.302399 104.16504 21.237419 22.678572 0 0 1 91.539818 81.486467 21.237419 22.678572 0 0 1 112.77724 104.16504Z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M193.35899 104.16503a21.237419 22.678572 0 0 1 -21.23742 22.67857 21.237419 22.678572 0 0 1 -21.23742 -22.67857 21.237419 22.678572 0 0 1 21.23742 -22.67857 21.237419 22.678572 0 0 1 21.23742 22.67857z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M91.005272 81.447128l80.047218 0 0 45.302172 -80.047218 0z"
+            android:fillColor="#FFFFFFFF" />
+        <group
+            android:translateX="0.2004547"
+            android:translateY="145.0134">
+            <path
+                android:pathData="M112.77724 104.16504A21.237419 22.678572 0 0 1 91.539818 126.84361 21.237419 22.678572 0 0 1 70.302399 104.16504 21.237419 22.678572 0 0 1 91.539818 81.486467 21.237419 22.678572 0 0 1 112.77724 104.16504Z"
+                android:fillColor="#FFFFFFFF" />
+            <path
+                android:pathData="M193.35899 104.16503a21.237419 22.678572 0 0 1 -21.23742 22.67857 21.237419 22.678572 0 0 1 -21.23742 -22.67857 21.237419 22.678572 0 0 1 21.23742 -22.67857 21.237419 22.678572 0 0 1 21.23742 22.67857z"
+                android:fillColor="#FFFFFFFF" />
+            <path
+                android:pathData="M91.005272 81.447128l80.047218 0 0 45.302172 -80.047218 0z"
+                android:fillColor="#FFFFFFFF" />
+        </group>
+        <path
+            android:pathData="M47.587013 33.428085A21.237419 22.678572 0 0 1 26.349594 56.106657 21.237419 22.678572 0 0 1 5.112175 33.428085 21.237419 22.678572 0 0 1 26.349594 10.749514 21.237419 22.678572 0 0 1 47.587013 33.428085Z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M154.73855 178.59961a21.237419 22.678572 0 0 1 -21.23742 22.67857 21.237419 22.678572 0 0 1 -21.23742 -22.67857 21.237419 22.678572 0 0 1 21.23742 -22.67857 21.237419 22.678572 0 0 1 21.23742 22.67857z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M47.563471 178.59959A21.237419 22.678572 0 0 1 26.326052 201.27817 21.237419 22.678572 0 0 1 5.0886326 178.59959 21.237419 22.678572 0 0 1 26.326052 155.92102 21.237419 22.678572 0 0 1 47.563471 178.59959Z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M5.0781212 33.739513l42.4958538 0 0 145.528277 -42.4958538 0z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M26.459684 155.88168l107.175076 0 0 45.43582 -107.175076 0z"
+            android:fillColor="#FFFFFFFF" />
+        <group
+            android:rotation="-134.9545"
+            android:scaleX="1.000792"
+            android:scaleY="-0.9992073">
+            <group
+                android:rotation="-134.9999"
+                android:scaleY="-1">
+                <path
+                    android:pathData="M90.355324 111.11929l82.417826 0 0 15.41365 -82.417826 0z"
+                    android:fillColor="#FFFFFFFF" />
+            </group>
+        </group>
+        <path
+            android:pathData="M90.355209 123.96417l81.028641 0 0 2.71198 -81.028641 0z"
+            android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>
