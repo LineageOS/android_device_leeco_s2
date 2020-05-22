@@ -1949,6 +1949,10 @@ int QCameraGrallocMemory::displayBuffer(uint32_t index)
                     (size_t)mPrivateHandle[dequeuedIdx]->size,
                     1,
                     (void *)this);
+            if (NULL == mCameraMemory[dequeuedIdx]) {
+                ALOGE("%s: allocate memory failed", __func__);
+                return BAD_INDEX;
+            }
             CDBG_HIGH("%s: idx = %d, fd = %d, size = %d, offset = %d",
                     __func__, dequeuedIdx, mPrivateHandle[dequeuedIdx]->fd,
                     mPrivateHandle[dequeuedIdx]->size,
@@ -2066,6 +2070,10 @@ int32_t QCameraGrallocMemory::dequeueBuffer()
                     (size_t)mPrivateHandle[dequeuedIdx]->size,
                     1,
                     (void *)this);
+            if (NULL == mCameraMemory[dequeuedIdx]) {
+                ALOGE("%s: allocate memory failed", __func__);
+                return BAD_INDEX;
+            }
             CDBG_HIGH("%s: idx = %d, fd = %d, size = %d, offset = %d",
                     __func__, dequeuedIdx, mPrivateHandle[dequeuedIdx]->fd,
                     mPrivateHandle[dequeuedIdx]->size,
