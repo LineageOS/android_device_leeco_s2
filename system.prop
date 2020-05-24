@@ -169,6 +169,7 @@ persist.radio.schd.cache=3500
 persist.sys.fflag.override.settings_network_and_internet_v2=true
 persist.vendor.radio.adb_log_on=1
 persist.vendor.radio.add_power_save=1
+persist.vendor.radio.aosp_usr_pref_sel=true
 persist.vendor.radio.cs_srv_type=1
 persist.vendor.radio.custom_ecc=1
 persist.vendor.radio.data_ltd_sys_ind=1
