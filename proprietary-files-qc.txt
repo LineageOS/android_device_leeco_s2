@@ -410,7 +410,7 @@ etc/permissions/qti_libpermissions.xml|ef3c88495f2f61a2d16e1445113a9d80f8db0e0a
 etc/permissions/qti_permissions.xml
 lib/libdiag_system.so
 lib/libqmi_cci_system.so
-lib64/libdiag_system.so
+lib64/libdiag_system.so:product/lib64/libdiag_system.so
 lib64/libqmi_cci_system.so
 vendor/bin/irsc_util
 vendor/lib/libdiag.so
@@ -502,10 +502,10 @@ vendor/lib64/vendor.qti.hardware.radio.uim_remote_server@1.0_vendor.so
 vendor/radio/qcril_database/qcril.db
 
 # Radio - IMS
--app/uceShimService/uceShimService.apk
+-app/uceShimService/uceShimService.apk:product/app/uceShimService/uceShimService.apk
 etc/permissions/qti-vzw-ims-internal.xml
-etc/permissions/com.qualcomm.qti.imscmservice.xml
-framework/com.qualcomm.qti.imscmservice@1.0-java.jar
+etc/permissions/com.qualcomm.qti.imscmservice.xml:product/etc/permissions/com.qualcomm.qti.imscmservice.xml
+framework/com.qualcomm.qti.imscmservice@1.0-java.jar:product/framework/com.qualcomm.qti.imscmservice@1.0-java.jar
 lib/com.qualcomm.qti.imscmservice@1.0.so
 lib/lib-imscamera.so
 lib/lib-imsvideocodec.so
@@ -515,16 +515,16 @@ lib/libimscamera_jni.so
 lib/libimsmedia_jni.so
 lib/librcc.so
 lib/vendor.qti.imsrtpservice@1.0.so
-lib64/com.qualcomm.qti.imscmservice@1.0.so
-lib64/lib-imscamera.so
-lib64/lib-imsvideocodec.so
-lib64/lib-imsvt.so
-lib64/lib-imsvtextutils.so
-lib64/lib-imsvtutils.so
-lib64/libimscamera_jni.so
-lib64/libimsmedia_jni.so
-lib64/librcc.so
-lib64/vendor.qti.imsrtpservice@1.0.so
+lib64/com.qualcomm.qti.imscmservice@1.0.so:product/lib64/com.qualcomm.qti.imscmservice@1.0.so
+lib64/lib-imscamera.so:product/lib64/lib-imscamera.so
+lib64/lib-imsvideocodec.so:product/lib64/lib-imsvideocodec.so
+lib64/lib-imsvt.so:product/lib64/lib-imsvt.so
+lib64/lib-imsvtextutils.so:product/lib64/lib-imsvtextutils.so
+lib64/lib-imsvtutils.so:product/lib64/lib-imsvtutils.so
+lib64/libimscamera_jni.so:product/lib64/libimscamera_jni.so
+lib64/libimsmedia_jni.so:product/lib64/libimsmedia_jni.so
+lib64/librcc.so:product/lib64/librcc.so
+lib64/vendor.qti.imsrtpservice@1.0.so:product/lib64/vendor.qti.imsrtpservice@1.0.so
 -priv-app/ims/ims.apk|426be1b83d6f608107d6dcf587080551abeab3e2
 vendor/bin/ims_rtp_daemon
 vendor/bin/imsdatadaemon
