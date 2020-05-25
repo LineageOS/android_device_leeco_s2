@@ -79,6 +79,11 @@ function blob_fixup() {
         done
         ;;
 
+    # Move ims libs to product
+    product/etc/permissions/com.qualcomm.qti.imscmservice.xml)
+        sed -i -e 's|file="/system/framework/|file="/product/framework/|g' "${2}"
+        ;;
+
     esac
 }
 
