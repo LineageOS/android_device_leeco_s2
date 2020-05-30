@@ -28,12 +28,6 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-
-#include <android-base/file.h>
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #include <android-base/strings.h>
@@ -44,10 +38,6 @@
 #include "vendor_init.h"
 #include "property_service.h"
 
-#define DEVINFO_FILE "/dev/block/mmcblk0p25"
-
-using android::base::GetProperty;
-using android::base::ReadFileToString;
 using android::init::property_set;
 
 void property_override(const std::string& name, const std::string& value)
@@ -74,40 +64,31 @@ void property_overrride_triple(const std::string& product_prop, const std::strin
     property_override(vendor_prop, value);
 }
 
-void init_target_properties()
+void vendor_load_properties()
 {
-    std::string device;
+    LOG(INFO) << "Loading vendor specific properties";
+    std::string device = android::base::GetProperty("ro.leeco.devinfo", "");
+    LOG(INFO) << "DEVINFO: " << device;
 
-    if (ReadFileToString(DEVINFO_FILE, &device)) {
-        LOG(INFO) << "DEVINFO: " << device;
-
-        if (!strncmp(device.c_str(), "s2_open", 7)) {
-            // This is X520
-            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X520");
-        }
-        else if (!strncmp(device.c_str(), "s2_oversea", 10)) {
-            // This is X522
-            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X522");
-        }
-        else if (!strncmp(device.c_str(), "s2_india", 8)) {
-            // This is X526
-            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X526");
-        }
-        else if (!strncmp(device.c_str(), "s2_ww", 5)) {
-            // This is X527
-            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X527");
-        }
-        else {
-            // Unknown variant
-            property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X52X");
-        }
+    if (device == "s2_open") {
+        // This is X520
+        property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X520");
+    }
+    else if (device == "s2_oversea") {
+        // This is X522
+        property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X522");
+    }
+    else if (device == "s2_india") {
+        // This is X526
+        property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X526");
+    }
+    else if (device == "s2_ww") {
+        // This is X527
+        property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X527");
     }
     else {
-        LOG(ERROR) << "Unable to read DEVINFO from " << DEVINFO_FILE;
+        // Unknown variant
+        property_overrride_triple("ro.product.model", "ro.product.system.model", "ro.product.vendor.model", "X52X");
+        LOG(ERROR) << "Unable to set DEVINFO from ro.leeco.devinfo prop";
     }
-}
-
-void vendor_load_properties() {
-    LOG(INFO) << "Loading vendor specific properties";
-    init_target_properties();
 }

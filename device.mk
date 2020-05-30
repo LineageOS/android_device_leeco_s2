@@ -339,6 +339,10 @@ PRODUCT_PACKAGES += \
     rcs_service_api \
     rcs_service_api.xml
 
+# Releasetools
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/releasetools/devinfo.sh:install/bin/devinfo.sh
+
 # Seccomp policy
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy
