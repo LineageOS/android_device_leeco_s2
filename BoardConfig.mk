@@ -198,6 +198,9 @@ TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 # Qualcomm support
 BOARD_USES_QCOM_HARDWARE := true
 
+# Releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)/releasetools
+
 # Render
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
