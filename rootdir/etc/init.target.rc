@@ -184,9 +184,6 @@ service thermal-engine /system/vendor/bin/thermal-engine
    group root
    writepid /dev/cpuset/system-background/tasks
 
-on boot
-    start rmt_storage
-
 service wcnss-service /system/vendor/bin/wcnss_service
     class late_start
     user system
@@ -217,43 +214,6 @@ on property:init.svc.zygote=running
 
 on property:init.svc.zygote=restarting
     stop ppd
-
-service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
-    class main
-    user system
-    socket ims_qmid stream 0660 system radio
-    group radio log diag
-    seclabel u:r:ims:s0
-
-service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
-    class main
-    user system
-    socket ims_datad stream 0660 system radio
-    group system wifi radio inet log diag
-    seclabel u:r:ims:s0
-    disabled
-
-on property:vendor.ims.QMI_DAEMON_STATUS=1
-    start vendor.imsdatadaemon
-
-service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
-    class main
-    user system
-    socket ims_rtpd stream 0660 system radio
-    group radio diag inet log
-    seclabel u:r:hal_imsrtp:s0
-    disabled
-
-service vendor.imsrcsservice /system/vendor/bin/imsrcsd
-    class main
-    user system
-    group radio diag inet log
-    seclabel u:r:ims:s0
-    disabled
-
-on property:vendor.ims.DATA_DAEMON_STATUS=1
-    restart vendor.ims_rtp_daemon
-    start vendor.imsrcsservice
 
 service gx_fpd /vendor/bin/gx_fpd
     class late_start
@@ -291,6 +251,7 @@ on property:init.svc.vendor.per_mgr=running
 
 on property:sys.shutdown.requested=*
     stop vendor.per_proxy
+    stop vendor.ims_rtp_daemon
 
 # CPU energy defaults per frequency
 service vendor.energy-awareness /system/vendor/bin/energy-awareness
