@@ -562,6 +562,14 @@ vendor/lib64/vendor.qti.ims.rcsconfig@1.0.so|cbc75b554051298020506d85427a1aa7034
 
 # RIL - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 product/framework/qti-telephony-common.jar|11d6b89b31a9bf65218b3676c2bbd296275b1932
+vendor/etc/init/ims_rtp_daemon.rc|b3c3a380204d7b1b3a58937db8c8e76c00ac8825
+vendor/etc/init/imsdatadaemon.rc|29face37c174aebcd1358f7d7ad0bd4baf83063b
+vendor/etc/init/imsqmidaemon.rc|dda16d842b7c65296e97bc9921b723a43b152ba3
+vendor/etc/init/imsrcsd.rc|2dc42ff6e4b6dd389bd3bc9a7af30dec2f1a45df
+
+# RIL - from river - motorola/river_retail/river:10/QPU30.52-16-2/be43c
+vendor/etc/init/vendor.qti.rmt_storage.rc|bc212c6353c2ded44ae4d759605fbbe55aa4fa3f
+vendor/etc/init/vendor.qti.tftp.rc|091915c28a3bc574d39189688748cc922d9e65e4
 
 # Sensors - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 vendor/bin/sensors.qti|a0701f889c2af8dd964a8f0300761e91a3748815
