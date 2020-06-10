@@ -521,11 +521,8 @@ lib64/lib-imsvideocodec.so:product/lib64/lib-imsvideocodec.so
 lib64/lib-imsvt.so:product/lib64/lib-imsvt.so
 lib64/lib-imsvtextutils.so:product/lib64/lib-imsvtextutils.so
 lib64/lib-imsvtutils.so:product/lib64/lib-imsvtutils.so
-lib64/libimscamera_jni.so:product/lib64/libimscamera_jni.so
-lib64/libimsmedia_jni.so:product/lib64/libimsmedia_jni.so
 lib64/librcc.so:product/lib64/librcc.so
 lib64/vendor.qti.imsrtpservice@1.0.so:product/lib64/vendor.qti.imsrtpservice@1.0.so
--priv-app/ims/ims.apk|426be1b83d6f608107d6dcf587080551abeab3e2
 vendor/bin/ims_rtp_daemon
 vendor/bin/imsdatadaemon
 vendor/bin/imsqmidaemon
@@ -576,6 +573,11 @@ vendor/etc/init/port-bridge.rc|e52d61a0de5e8a3b21bfbfca929e862422645377
 # RIL - from river - motorola/river_retail/river:10/QPU30.52-16-2/be43c
 vendor/etc/init/vendor.qti.rmt_storage.rc|bc212c6353c2ded44ae4d759605fbbe55aa4fa3f
 vendor/etc/init/vendor.qti.tftp.rc|091915c28a3bc574d39189688748cc922d9e65e4
+
+# RIL (IMS) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+-product/priv-app/ims/ims.apk|9c4ca91e0ec7a567d22251d7ca0640abf13fdd7b
+product/lib64/libimscamera_jni.so|7cb89110cca94d37d68c705f12a7a5a4ee106139
+product/lib64/libimsmedia_jni.so|3540752cc3658261ea3c909f03018eea4398f84e
 
 # Sensors - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 vendor/bin/sensors.qti|a0701f889c2af8dd964a8f0300761e91a3748815
