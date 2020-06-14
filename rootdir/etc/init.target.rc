@@ -154,9 +154,9 @@ on property:persist.camera.s2.restart=1
     setprop persist.camera.s2.restart 0
 
 #Switch Camera HAL Level by DeviceSettings.apk
-on property:persist.camera.HAL3.enabled=*
-    restart qcamerasvr
+on property:persist.camera.hal_migrating=1
     restart vendor.camera-provider-2-4
+    setprop persist.camera.hal_migrating 0
 
 on init
    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
