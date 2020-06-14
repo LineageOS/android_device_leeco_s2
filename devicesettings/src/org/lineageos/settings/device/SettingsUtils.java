@@ -38,7 +38,7 @@ public class SettingsUtils {
     private static final String CAMERA_RESTART_PROPERTY = "persist.camera.s2.restart";
 
     private static final String CAMERA_HAL3_ENABLE_PROPERTY = "persist.camera.HAL3.enabled";
-    private static final String CAMERA_HAL3_ENABLE = "CAMERA_HAL3_ENABLED";
+    private static final String CAMERA_HAL_MIGRATE_PROPERTY = "persist.camera.hal_migrating";
     public static final String PREFERENCES = "SettingsUtilsPreferences";
 
     public static void writeCameraRestartProp(Context context) {
@@ -49,6 +49,7 @@ public class SettingsUtils {
 
     public static void writeCameraHAL3Prop(boolean enable) {
         SystemProperties.set(CAMERA_HAL3_ENABLE_PROPERTY, enable ? "1" : "0");
+        SystemProperties.set(CAMERA_HAL_MIGRATE_PROPERTY, "1");
     }
 
     public static boolean cameraHAL3Enable() {
