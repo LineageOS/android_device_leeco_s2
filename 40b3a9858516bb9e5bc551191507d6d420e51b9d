@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "797768e6_e8934708",
+        "filename": "system.prop",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-06-16T02:51:44Z",
+      "side": 1,
+      "message": "Please make this alphabetical and move this one line up",
+      "revId": "40b3a9858516bb9e5bc551191507d6d420e51b9d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
