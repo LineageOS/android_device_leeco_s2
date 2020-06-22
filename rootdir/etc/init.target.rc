@@ -137,7 +137,7 @@ mkdir /data/vendor/camera 0770 camera camera
 
 # start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
-    class main
+    class late_start
     user camera
     group camera system inet input graphics
     writepid /dev/cpuset/camera-daemon/tasks
@@ -194,10 +194,29 @@ service wcnss-service /system/vendor/bin/wcnss_service
     oneshot
 
 service ppd /system/vendor/bin/mm-pp-daemon
-    class hal
+    class late_start
     user system
-    socket pps stream 0660 system system
     group system graphics
+    socket pps stream 0660 system system
+    disabled
+
+on property:init.svc.surfaceflinger=stopped
+    stop ppd
+
+on property:init.svc.surfaceflinger=running
+    start ppd
+
+on property:init.svc.surfaceflinger=restarting
+    stop ppd
+
+on property:init.svc.zygote=stopped
+    stop ppd
+
+on property:init.svc.zygote=running
+    start ppd
+
+on property:init.svc.zygote=restarting
+    stop ppd
 
 service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
