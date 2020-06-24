@@ -104,6 +104,7 @@ void init_target_properties()
     else {
         LOG(ERROR) << "Unable to read DEVINFO from " << DEVINFO_FILE;
     }
+    property_overrride_triple("ro.product.device", "ro.product.system.device", "ro.product.vendor.device", "le_s2_ww");
 }
 
 void vendor_load_properties() {
