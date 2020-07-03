@@ -132,8 +132,8 @@ on post-fs-data
     chown system system /sys/class/power_supply/battery/le_quick_charge_mode
     chmod 666 /sys/class/power_supply/battery/le_quick_charge_mode
 
-#Create folder for mm-qcamera-daemon
-mkdir /data/vendor/camera 0770 camera camera
+    # Create folder for our hex edited mm-qcamera-daemon and camera blobs
+    mkdir /data/vendor/qcam 0770 camera camera
 
 # start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
