@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Copyright (C) 2016 The CyanogenMod Project
-# Copyright (C) 2017-2019 The LineageOS Project
+# Copyright (C) 2017-2020 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -59,29 +59,26 @@ if [ -z "${SRC}" ]; then
     SRC=adb
 fi
 
+function blob_fixup() {
+    case "${1}" in
+
+    # Remove all unused dependencies from FP blobs
+    vendor/bin/gx_fpcmd | vendor/bin/gx_fpd)
+        patchelf --remove-needed "libbacktrace.so" "${2}"
+        patchelf --remove-needed "libunwind.so" "${2}"
+        patchelf --remove-needed "libkeystore_binder.so" "${2}"
+        patchelf --remove-needed "libsoftkeymasterdevice.so" "${2}"
+        patchelf --remove-needed "libsoftkeymaster.so" "${2}"
+        patchelf --remove-needed "libkeymaster_messages.so" "${2}"
+        ;;
+    esac
+}
+
 # Initialize the helper
 setup_vendor "${DEVICE}" "${VENDOR}" "${LINEAGE_ROOT}" false "${CLEAN_VENDOR}"
 
 extract "${MY_DIR}/proprietary-files.txt" "${SRC}" ${KANG} --section "${SECTION}"
 
 extract "${MY_DIR}/proprietary-files-qc.txt" "${SRC}" ${KANG} --section "${SECTION}"
-
-
-DEVICE_BLOB_ROOT="$LINEAGE_ROOT"/vendor/"$VENDOR"/"$DEVICE"/proprietary
-
-patchelf --remove-needed libbacktrace.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpcmd
-patchelf --remove-needed libunwind.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpcmd
-patchelf --remove-needed libkeystore_binder.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpcmd
-patchelf --remove-needed libsoftkeymasterdevice.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpcmd
-patchelf --remove-needed libsoftkeymaster.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpcmd
-patchelf --remove-needed libkeymaster_messages.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpcmd
-
-patchelf --remove-needed libbacktrace.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpd
-patchelf --remove-needed libunwind.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpd
-patchelf --remove-needed libkeystore_binder.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpd
-patchelf --remove-needed libsoftkeymasterdevice.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpd
-patchelf --remove-needed libsoftkeymaster.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpd
-patchelf --remove-needed libkeymaster_messages.so "$DEVICE_BLOB_ROOT"/vendor/bin/gx_fpd
-
 
 "${MY_DIR}/setup-makefiles.sh"
