@@ -340,11 +340,11 @@ vendor/lib/libqti-util.so|293284848723e0065f1097d363cd76772a795b8c
 vendor/lib/vendor.qti.hardware.perf@1.0.so|13eb868906a7f9fa328d272488201141c64a79bd
 vendor/lib/vendor.qti.hardware.perf@2.0.so|592ca48b30ac1b8c42b21710bd6a41ebaa99e15f
 
-# Peripheral manager
-vendor/bin/pm-proxy
-vendor/bin/pm-service
-vendor/lib/libperipheral_client.so
-vendor/lib64/libperipheral_client.so
+# Peripheral manager - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/bin/pm-proxy|1f216a6f54e9b97c026f3f3bc4d7d441d58d90a7
+vendor/bin/pm-service|8a521f14576d0d2edf03b4500a54379d37e15d4e
+vendor/lib/libperipheral_client.so|b75a6adac094ddcd6ded9415cae83e18d1e7e5d0
+vendor/lib64/libperipheral_client.so|20c8ab21fe28e41f60b59af0ba72de9f6b1996d2
 
 # Postprocessing - from SRT Phone 8.0.0
 etc/permissions/com.qti.snapdragon.sdk.display.xml|bd2a3394bdd6ec4e94fa6a59e816a97e89940ab6
