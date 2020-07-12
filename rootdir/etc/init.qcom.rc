@@ -436,10 +436,10 @@ service qti /vendor/bin/qti
     group radio oem_2901 diag usb net_admin
     writepid /dev/cpuset/system-background/tasks
 
-service sensors /vendor/bin/sensors.qcom
+service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
-    user root
-    group root system input
+    user system
+    group system
     writepid /dev/cpuset/system-background/tasks
 
 on property:ro.use_data_netmgrd=false
