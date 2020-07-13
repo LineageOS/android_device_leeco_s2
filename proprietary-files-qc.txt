@@ -46,37 +46,37 @@ vendor/lib64/soundfx/libqcbassboost.so
 vendor/lib64/soundfx/libqcreverb.so
 vendor/lib64/soundfx/libqcvirt.so
 
-# Bluetooth - from LA.UM.8.6.2.r1-03700-89xx.0
-vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|535491e4a8036125259bab4579a53cadcb08dcc3
+# Bluetooth - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|378ad8ce95651b4bf81ad73aaffbdf0666c55432
 vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc|a979981c55f3dcaf6cf2212e71b901ca4d58b959
-vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|e5d7b4328cb2d7f2272ab3616b307b32cffcca1a
-vendor/lib64/libbtnv.so|1d5950be9a0324e3ec17da3a9a884d99a7720f69
-vendor/lib64/libbt-hidlclient.so|1ab2068ff7c71355e6cf7055f1d28a76da303742
+vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|a244ce3acd958c31865e048e0ead9bc54d1c0465
+vendor/lib64/libbtnv.so|ce4e129e4b7ed7a25a663c26139e5efc0ef88215
+vendor/lib64/libbt-hidlclient.so|8941f5c8f9e1422117685b2e76f35ced85b167c0
 
 # Bluetooth (aptX) - from crosshatch - QP1A.190711.020
 product/lib64/libaptX_encoder.so|df1c89d7af1bb35808d5fe3496b04ba066c10cbc
 product/lib64/libaptXHD_encoder.so|e13fa70c97caaa24d061678bdee608eb8850a69e
 
-# Bluetooth (shared dependencies) - from LA.UM.8.6.2.r1-03700-89xx.0
-vendor/lib64/com.qualcomm.qti.ant@1.0.so|29ecc1a9134dd2146f358e65c830059d3fa6c6d9
+# Bluetooth (shared dependencies) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/lib64/vendor.qti.hardware.fm@1.0.so|fc7ad886f82089edf36509865fadac17a7340f32
 
-# Bluetooth Audio - from LA.UM.8.6.2.r1-03700-89xx.0
-vendor/lib64/hw/audio.bluetooth_qti.default.so|abe373d6cb2b56988991b52347e93343707ffbe1
-vendor/lib64/hw/vendor.qti.hardware.bluetooth_audio@2.0-impl.so|b9ca697c1b9b7d066e5c1b45f71deb3539f7afee
-vendor/lib64/hw/vendor.qti.hardware.bluetooth_sar@1.0-impl.so|d4de3f73589623428d37f7779d06d017c5243b99
-vendor/lib64/hw/vendor.qti.hardware.btconfigstore@1.0-impl.so|85bcec0783c335ac04898428e6d001c24e16013b
-vendor/lib64/libbluetooth_audio_session_qti.so|db6bbe81f2f5173418f54eff125221d099b5547f
-vendor/lib64/vendor.qti.hardware.bluetooth_audio@2.0.so|7ecd3413d5add9918583f56a085122b180016e25
-vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.0.so|1694fe4999945f2807b5b7b9ced39842005c8e39
-vendor/lib64/vendor.qti.hardware.btconfigstore@1.0.so|d2f89ec6ab946f62048fb18f2635cde710cff37d
-vendor/lib/hw/audio.bluetooth_qti.default.so|44f13bed29e03b44bee24772a77c854ae7a43406
-vendor/lib/hw/vendor.qti.hardware.bluetooth_audio@2.0-impl.so|9049ad1bd9530edebc8474389c20f81a1de9588e
-vendor/lib/hw/vendor.qti.hardware.bluetooth_sar@1.0-impl.so|30ecc89822100437371fbcebb10ff0db81844f91
-vendor/lib/hw/vendor.qti.hardware.btconfigstore@1.0-impl.so|4ce10533c589ef97d5377c464c8e9664f423829c
-vendor/lib/libbluetooth_audio_session_qti.so|1b12b17d7c2d6d3137d98c5dd2c774f18cf145be
-vendor/lib/vendor.qti.hardware.bluetooth_audio@2.0.so|94c983b85ba5bcb0902e18f33419ac81b5165e39
-vendor/lib/vendor.qti.hardware.bluetooth_sar@1.0.so|0d3d5de154e6d40d99a9bbca4cb170dc02bc3902
-vendor/lib/vendor.qti.hardware.btconfigstore@1.0.so|81ac65e4317355abe11ee1ccc7d55f73d16ea69a
+# Bluetooth Audio - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/lib64/hw/audio.bluetooth_qti.default.so|41fc011c61a572abc8f83d3a23dace98a7d04080
+vendor/lib64/hw/vendor.qti.hardware.bluetooth_audio@2.0-impl.so|5728506d9ca992ceef93cec7473034a7eeee98f4
+vendor/lib64/hw/vendor.qti.hardware.bluetooth_sar@1.0-impl.so|76134fb75ff99948e0d00728db058aed8f519c3f
+vendor/lib64/hw/vendor.qti.hardware.btconfigstore@1.0-impl.so|51b017a7d35d71522319d2a3d5922b53e0f18230
+vendor/lib64/libbluetooth_audio_session_qti.so|ba33d6868daf56ddce6065f2a03be651b16f98df
+vendor/lib64/vendor.qti.hardware.bluetooth_audio@2.0.so|995a8127aea3b2de9efe68a5e5a6a61c80f438e7
+vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.0.so|7cdd376b08b8571e51674e0e61607c6a52a5a24a
+vendor/lib64/vendor.qti.hardware.btconfigstore@1.0.so|42aa6258f3bf4e8ef72b7664f2277db49837e4da
+vendor/lib/hw/audio.bluetooth_qti.default.so|f0f31aee0b22334bc0752486b6c039f2f93f120c
+vendor/lib/hw/vendor.qti.hardware.bluetooth_audio@2.0-impl.so|8a7105c0559b6a255642a336779b105c6dc76623
+vendor/lib/hw/vendor.qti.hardware.bluetooth_sar@1.0-impl.so|5fa61b2a1c8ebc2b1381662cdf13c328ad4d24b4
+vendor/lib/hw/vendor.qti.hardware.btconfigstore@1.0-impl.so|95a8de0ea39853d1378a7cf3c8471e7d284257ad
+vendor/lib/libbluetooth_audio_session_qti.so|1b4a17c396d61a52ad374ba22f51739426fec04f
+vendor/lib/vendor.qti.hardware.bluetooth_audio@2.0.so|235d8dc80e335a9c323f2ce395cb09b297493025
+vendor/lib/vendor.qti.hardware.bluetooth_sar@1.0.so|0976fd28359b218cd041aca3fb03acde045aa760
+vendor/lib/vendor.qti.hardware.btconfigstore@1.0.so|b849985a2fc292120a26ba7649addd3bb6e0de1e
 
 # Consumerir - from le_x10 (x850) - 7.1.1/LEXCNFN6061705181T/letv05181516
 -app/UEIQuicksetSDKLeTV/UEIQuicksetSDKLeTV.apk|7695ecb344390d2cb78088eed67d3de782790d04
