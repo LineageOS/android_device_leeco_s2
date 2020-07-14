@@ -415,9 +415,9 @@ vendor/lib64/libqmi_encdec.so
 vendor/lib64/libqmiservices.so
 vendor/lib64/libsmemlog.so
 
-# QMI - from LA.UM.8.6.r1-01900-89xx.0
-vendor/lib/libqmi_cci.so|5a48201e565516a2fdff11c228162d2eda733fe5
-vendor/lib64/libqmi_cci.so|d5c4f4ad1a484fd00066b8f054877fc7dae77f8b
+# QMI - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/lib/libqmi_cci.so|a921e84ec500f7cfb7fe88a4ffba149581410a44
+vendor/lib64/libqmi_cci.so|411a074dc765fb263bec50531ce5c408dd72388f
 
 # Radio
 -app/QtiTelephonyService/QtiTelephonyService.apk
