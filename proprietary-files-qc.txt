@@ -305,8 +305,8 @@ etc/firmware/a530_pm4.fw|5741a28752355b478d455635bab008028ff7e1c6
 vendor/lib/hw/vulkan.msm8952.so|45a826c86321a3acb3556fed7988f595354ccb6c
 vendor/lib64/hw/vulkan.msm8952.so|a442c83cc25798de78fa0336358a85c8a7daccc3
 
-# IPA
-vendor/bin/ipacm-diag
+# IPA - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/bin/ipacm-diag|f08be0dfb0cedecfdf8fae261a3b06f416b56dc2
 
 # Keystore
 vendor/lib64/hw/keystore.msm8952.so
