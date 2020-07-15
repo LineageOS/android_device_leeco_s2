@@ -318,22 +318,36 @@ vendor/lib/libsmwrapper.so
 vendor/lib/vendor.qti.voiceprint@1.0.so
 vendor/lib64/vendor.qti.voiceprint@1.0.so
 
-# Media
-lib/libOmxVpp.so
-lib/libvpplibrary.so
-vendor/lib/libI420colorconvert.so
-vendor/lib/libmm-color-convertor.so
-vendor/lib/libmmsw_detail_enhancement.so
-vendor/lib/libmmsw_math.so
-vendor/lib/libmmsw_opencl.so
-vendor/lib/libmmsw_platform.so
-vendor/lib/libOmxAacDec.so
-vendor/lib/libOmxAlacDec.so
-vendor/lib/libOmxAmrwbplusDec.so
-vendor/lib/libOmxApeDec.so
-vendor/lib/libOmxEvrcDec.so
-vendor/lib/libOmxQcelp13Dec.so
-vendor/lib/libOmxWmaDec.so
+# Media - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/lib/libI420colorconvert.so|0dfd4d0e49f4250e98e781483048a296a679e05e
+vendor/lib/libmmosal_proprietary.so|4b0788590e1ecfccd3b20b3181a4add528acb2b6
+vendor/lib/libOmxAacDec.so|55772a6d0cf3e6a5a2c32348fd7096b8737d490b
+vendor/lib/libOmxAlacDec.so|adca064b15a7d545075af6f5222db45dec8202b5
+vendor/lib/libOmxAlacDecSw.so|8700268f92a953549e5936af9d5ccd08f99ed50f
+vendor/lib/libOmxAmrDec.so|61ca4a96027a610b74621bd3f9caff3f34e4eab5
+vendor/lib/libOmxAmrwbplusDec.so|f0ebf6b19f569862fa8da05653148e867ba38878
+vendor/lib/libOmxApeDec.so|49b4090d2f82963e596dd2fabb30b7fe8551a21b
+vendor/lib/libOmxApeDecSw.so|d1276d42ad37fbd263ab96f9f353d4e782bb0fe9
+vendor/lib/libOmxEvrcDec.so|20a6be418df26f48751b4178f5642e3fc6902690
+vendor/lib/libOmxQcelp13Dec.so|27a75185e62e88ea84ac2448a3842c998899ae90
+vendor/lib/libOmxVideoDSMode.so|84a6b99f5ad0c7dbe827eb01258cca4c790c0fe7
+vendor/lib/libOmxWmaDec.so|c3da756ae14234ae8e56cbc0b32249fbd4c8746a
+-vendor/lib/libgpustats.so|75fc8f58b071f3c27d708010e1b40eafba091a14
+vendor/lib/libmm-color-convertor.so|7c74d36d42dc79fc58afe0f4323b76cc1297d36e
+vendor/lib/libvqzip.so|24e5eb30e5a2cdb544c8688d81d7cc75a1d85eaf
+vendor/lib64/libI420colorconvert.so|296987a0fc833ead9db3640ef2de42d7126782fb
+vendor/lib64/libOmxAacDec.so|0f0f3c9d8f285318a1d229c8ebc290810782d21c
+vendor/lib64/libOmxAlacDec.so|a3783f6cce2da0a3a2043407fa7c12c8c78e442e
+vendor/lib64/libOmxAlacDecSw.so|971b09afca162ed63cd6447cdc4ab66e1b58391b
+vendor/lib64/libOmxAmrDec.so|c330f9573718b48874cb7124a2227a3d74e7a7e8
+vendor/lib64/libOmxAmrwbplusDec.so|88d832647ed41b159c602acff711229de8c62044
+vendor/lib64/libOmxApeDec.so|6dd801d0a0c58e92ab3679e937854ee2d96e18aa
+vendor/lib64/libOmxApeDecSw.so|03885e69606e7e868fe9d1245dac5651c301a567
+vendor/lib64/libOmxEvrcDec.so|dfbf3ad5e84218c16cdd5f0ea5b60bc87906e9ee
+vendor/lib64/libOmxQcelp13Dec.so|01786938265bd0de9adef15f695102333fca60a5
+vendor/lib64/libOmxWmaDec.so|32e1b9c72d0b0a8b74978e1687b701e18030d68a
+-vendor/lib64/libgpustats.so|a899ae72983277442cdacf8f43271986c91ce710
+vendor/lib64/libmm-color-convertor.so|d3539eb5a6a986f8ba81bac9cbf7b34872b12f1a
 
 # Offline charger - from s2 - EUi 5.9.028s
 vendor/bin/charger|a6ca35eff5ecc01b437e8cec2a53d7d5013d4f6e
