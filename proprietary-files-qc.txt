@@ -194,9 +194,6 @@ vendor/bin/hw/android.hardware.drm@1.2-service.widevine|e130b8f1c8d46d8a185b00cb
 vendor/etc/init/android.hardware.drm@1.2-service.widevine.rc|f206aecdd6843795f6448bb6d44d2244b3e48815
 vendor/lib64/libwvhidl.so|baff35bf3936ccaeaf92621054dbed7fb1287289
 
-# Energy awareness - from smartron (smartron-rimo02a-8.0.0-T5524INDURC-475)
-vendor/bin/energy-awareness|8ec3f96a118c37a2dda0d70122ff075861641ccc
-
 # Gatekeeper
 vendor/lib64/hw/gatekeeper.msm8952.so
 
@@ -338,57 +335,28 @@ vendor/lib/libOmxEvrcDec.so
 vendor/lib/libOmxQcelp13Dec.so
 vendor/lib/libOmxWmaDec.so
 
-# msm_irqbalance - from sailfish - PPR2.181005.003
-vendor/bin/msm_irqbalance|3f7a923d9d01dbfda40ebdfdd27a62167df69c13
-
 # Offline charger - from s2 - EUi 5.9.028s
 vendor/bin/charger|a6ca35eff5ecc01b437e8cec2a53d7d5013d4f6e
 
-# Perf - from daisy - PKQ1.180917.001
-bin/perfservice|03d6368017d4c41f7fea647c669b69d6567238af
-etc/init/perfservice.rc|67144c3f1800f976cb58463c4370882d2d820947
-etc/perf/whitelistedapps.xml|a489e65df170543a2817a690fbae36c34e29613b
-lib/libqti-at.so|1101ee354735905f39337bc032c6b547dbce846c
-lib/libqti-iopd-client_system.so|d1602341242d949bee431d8856df9aacc38c4b6b
-lib/libqti-perfd-client_system.so|74f4d9657cf492cf1de2e9b93983f4e7b5431c45
-lib/libqti-util_system.so|66fcc57fee4f978f9b52429539b980ac3550f8e3
-lib/libqti_performance.so|dc0995fa3217b6c44029b55b5151adaae515392a
-lib/vendor.qti.hardware.iop@1.0.so|f2b5c17ce9690569d2a74f5b01a345e383f0c20d
-lib/vendor.qti.hardware.iop@2.0.so|767246e2fc7fafe9c61c86a939f2fa99504c359e
-lib/vendor.qti.hardware.perf@1.0.so|39a81e7cc35f542e5e2eeed6f38152b44063928f
-lib64/libqti-at.so|d4bd59dc50cb466ce3c2efb96cb2f2bb232a1baa
-lib64/libqti-iopd-client_system.so|e8bb1863c7f864987c9070077e41a43cf79dcc97
-lib64/libqti-perfd-client_system.so|de5b61f07d7981bb208167b357f46a9ad083c9e7
-lib64/libqti-util_system.so|0e62bd1422f40154c22e858df268009bb66d4f2f
-lib64/libqti_performance.so|9c88af412e0276c578f06e1069b6c3aeae7e3f8d
-lib64/vendor.qti.hardware.iop@1.0.so|9c7ae329d073ee5bc2d9743ca6ad6da0b7200537
-lib64/vendor.qti.hardware.iop@2.0.so|858e8bec809f800eb7ad1df8b743cdbde8c4296b
-lib64/vendor.qti.hardware.perf@1.0.so|978a16bc6f27967f6345c5b51386d50768553ab5
-vendor/bin/hw/vendor.qti.hardware.iop@2.0-service|6cd75cd82413481eca0d0071c9984e0869a6babc
-vendor/bin/hw/vendor.qti.hardware.perf@1.0-service|3f4cf13499019e7e3747679220b280f4f204b8de
-vendor/bin/msm_irqbalance|11a3dbb2cf1b35ec98fa195d03c822d4423f7118
-vendor/etc/init/vendor.qti.hardware.iop@2.0-service.rc|fd11367b2585702190ef2577ce2ce6fc68f3a2f8
-vendor/etc/init/vendor.qti.hardware.perf@1.0-service.rc|b50182aadab2e31409df61c523d0fb914a394e43
-vendor/lib/hw/vendor.qti.hardware.iop@2.0-impl.so|f0818a4a193e54f87355999ae653a71d8ae6d36f
-vendor/lib/libperfgluelayer.so|0cda8dd77f3c00b70ad50b7764adfb7869d3537e
-vendor/lib/libqti-iopd-client.so|b178702d307029d95439bf55a1894855fc009c18
-vendor/lib/libqti-iopd.so|124672742bb36f610fa0da328162459f30d7fd80
-vendor/lib/libqti-perfd-client.so|a4a6da47ee26fcd5116c514f7fed15b91306aea3
-vendor/lib/libqti-perfd.so|2c8af66cbcb941b9da2edb68f428776cbbabdff6
-vendor/lib/libqti-util.so|459a7375feb57c2e11d012c5fb65befd94e91d06
-vendor/lib/vendor.qti.hardware.iop@1.0.so|f2b5c17ce9690569d2a74f5b01a345e383f0c20d
-vendor/lib/vendor.qti.hardware.iop@2.0.so|767246e2fc7fafe9c61c86a939f2fa99504c359e
-vendor/lib/vendor.qti.hardware.perf@1.0.so|39a81e7cc35f542e5e2eeed6f38152b44063928f
-vendor/lib64/hw/vendor.qti.hardware.iop@2.0-impl.so|ace871969f0773da8edb1bc8367e7cdfd447a478
-vendor/lib64/libperfgluelayer.so|e8bc850cbb8d2c2b9ed8c6b9c48eb4b1fd197622
-vendor/lib64/libqti-iopd-client.so|5bbe30f8ecba5457669397cb9486f29f98c3a8ca
-vendor/lib64/libqti-iopd.so|66359e2e0d6ec5cf31927ba4bfdbecce52b0fa3a
-vendor/lib64/libqti-perfd-client.so|d9fb126fb7aff2db61978f46f78e0284e95183be
-vendor/lib64/libqti-perfd.so|96806732f4e5f8c25ba2e12a3a939fc2889c7341
-vendor/lib64/libqti-util.so|30dc90c1636fd100a8e101dfa659e0b7299ff813
-vendor/lib64/vendor.qti.hardware.iop@1.0.so|9c7ae329d073ee5bc2d9743ca6ad6da0b7200537
-vendor/lib64/vendor.qti.hardware.iop@2.0.so|858e8bec809f800eb7ad1df8b743cdbde8c4296b
-vendor/lib64/vendor.qti.hardware.perf@1.0.so|978a16bc6f27967f6345c5b51386d50768553ab5
+# Perf - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+vendor/bin/energy-awareness|def07e366347c7f0a7778b748acb49557ab21d2a
+vendor/bin/msm_irqbalance|b5e55b4b0934b65b7dd5d2201f9a70f6f77a4e7c
+vendor/bin/hw/vendor.qti.hardware.perf@2.0-service|5c2593e17b8dac6e4e660478b419bf367d6c5c40
+vendor/etc/init/vendor.qti.hardware.perf@2.0-service.rc|cc8658db5e19f8e5e575fb986e7d38147e675f8d
+vendor/lib64/libperfconfig.so|d590b6ce31c8b2158a3653c9248f5c12139d27cd
+vendor/lib64/libperfgluelayer.so|269245742c7628539e9d86a1fa4b9ba2551774e3
+vendor/lib64/libqti-perfd.so|f252bc957f45dd389463abe97be3f0f129da8b67
+vendor/lib64/libqti-perfd-client.so|94ab278009a42e75c1d62f6dfc41d85b0cc1f412
+vendor/lib64/libqti-util.so|e790b62bb198442145fcba20c2dc61d182c45a47
+vendor/lib64/vendor.qti.hardware.perf@1.0.so|9b411738cf2ca8319bacf1f859cc3679f576215a
+vendor/lib64/vendor.qti.hardware.perf@2.0.so|3131f461ecb897f68d02df0bf1027ca0a7d07c1d
+vendor/lib/libperfconfig.so|11f6ec2d7da51872dad2f016a6638df209adca14
+vendor/lib/libperfgluelayer.so|5c9db256d92ddf5bce65941f2cad5eaeb4f028fd
+vendor/lib/libqti-perfd.so|855dd68c8a277c8b4787579a935a23bead62dd59
+vendor/lib/libqti-perfd-client.so|a6ddd909d581fbb5d8caa2f1f489ec5c2c5789c1
+vendor/lib/libqti-util.so|f1a4d655ee827d791447f303e59197e7271fafb5
+vendor/lib/vendor.qti.hardware.perf@1.0.so|d04786a723d766b9d22c88e8aec5f8036d1ac53e
+vendor/lib/vendor.qti.hardware.perf@2.0.so|0a08551185ac8626b832068ecb77997800050233
 
 # Peripheral manager - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 vendor/bin/pm-proxy|1f216a6f54e9b97c026f3f3bc4d7d441d58d90a7
