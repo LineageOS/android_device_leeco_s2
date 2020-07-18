@@ -1,0 +1,1 @@
+allow storaged device:file { open write };
