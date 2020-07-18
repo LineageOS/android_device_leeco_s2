@@ -1,0 +1,2 @@
+binder_call(system_app, storaged)
+binder_call(system_app, system_suspend)
