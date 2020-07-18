@@ -1,0 +1,2 @@
+allow radio dpmd_socket:sock_file write;
+allow radio dpmservice:service_manager add;
