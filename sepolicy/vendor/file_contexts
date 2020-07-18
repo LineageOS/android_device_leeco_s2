@@ -1,68 +1,75 @@
 # Amplifier
-/dev/i2c_smartpa                                           u:object_r:audio_device:s0
+/dev/i2c_smartpa										u:object_r:audio_device:s0
 
 # Block devices
-/dev/block/mmcblk0p25                                      u:object_r:devinfo_block_device:s0
-/dev/block/platform/soc.0/7824900\.sdhci/by-name/devinfo   u:object_r:devinfo_block_device:s0
+/dev/block/mmcblk0p25									u:object_r:devinfo_block_device:s0
+/dev/block/platform/soc.0/7824900\.sdhci/by-name/devinfo					u:object_r:devinfo_block_device:s0
 
 # Camera
-/data/vendor/qcam(/.*)?                                    u:object_r:vendor_camera_data_file:s0
-/system/bin/mm-qcamera-daemon                              u:object_r:mm-qcamerad_exec:s0
+/data/vendor/qcam(/.*)?									u:object_r:vendor_camera_data_file:s0
+/system/bin/mm-qcamera-daemon								u:object_r:mm-qcamerad_exec:s0
 
 # Capacitive Keys
-/(vendor|system/vendor)/bin/init\.proc_touchpanel\.sh                                          u:object_r:vendor_init_proc_touchpanel_exec:s0
+/(vendor|system/vendor)/bin/init\.proc_touchpanel\.sh					u:object_r:vendor_init_proc_touchpanel_exec:s0
 
-/sys/devices/soc\.0/78b8000\.i2c/i2c-4/4-[0-9a-f]+/input/input[0-9]+/0dbutton                   u:object_r:proc_touchpanel:s0
+/sys/devices/soc\.0/78b8000\.i2c/i2c-4/4-[0-9a-f]+/input/input[0-9]+/0dbutton		u:object_r:proc_touchpanel:s0
 
 # Charger
-/(vendor|system/vendor)/bin/charger                                                       u:object_r:vendor_charger_exec:s0
+/(vendor|system/vendor)/bin/charger							u:object_r:vendor_charger_exec:s0
 
 # Consumer IR
-/system/bin/hw/android\.hardware\.ir@1\.0-service\.leeco_s2                               u:object_r:hal_ir_leeco_s2_exec:s0
+/system/bin/hw/android\.hardware\.ir@1\.0-service\.leeco_s2				u:object_r:hal_ir_leeco_s2_exec:s0
 
-/dev/ttyHSL1                                               u:object_r:consumer_ir_device:s0
-/sys/remote/enable                                         u:object_r:sysfs_ir_enable:s0
+/dev/ttyHSL1										u:object_r:consumer_ir_device:s0
+/sys/remote/enable									u:object_r:sysfs_ir_enable:s0
 
 # DRM
-/(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.1-service.clearkey               u:object_r:hal_drm_clearkey_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.1-service.widevine               u:object_r:hal_drm_widevine_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.2-service.clearkey			u:object_r:hal_drm_clearkey_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.2-service.widevine			u:object_r:hal_drm_widevine_exec:s0
 
-/data/vendor/mediadrm(/.*)?                                                               u:object_r:mediadrm_vendor_data_file:s0
+/data/vendor/mediadrm(/.*)?								u:object_r:mediadrm_vendor_data_file:s0
+
+# DPMD
+/(product|system/product)/bin/dpmd							u:object_r:dpmd_exec:s0
 
 # Fingerprint
-/(vendor|system/vendor|system)/bin/gx_fpd                  u:object_r:goodix_exec:s0
-/system/vendor/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.leeco_s2   u:object_r:hal_fingerprint_default_exec:s0
+/(vendor|system/vendor|system)/bin/gx_fpd							u:object_r:goodix_exec:s0
+/system/vendor/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.leeco_s2	u:object_r:hal_fingerprint_default_exec:s0
 
-/dev/goodix_fp                                             u:object_r:goodix_device:s0
+/dev/goodix_fp										u:object_r:goodix_device:s0
+
+# GNSS
+/(vendor|system/vendor)/bin/hw/android\.hardware\.gnss@2\.0-service-qti			u:object_r:hal_gnss_qti_exec:s0
 
 # Perf
-/system/bin/perfservice                                                                   u:object_r:perfservice_exec:s0
-/sys/devices/soc\.0/[a-z0-9]+\.qcom,msmcci-ccimon(/.*)?                                   u:object_r:sysfs_devfreq:s0
-/sys/devices/soc\.0/qcom,gpubw\.[a-z0-9]+/devfreq/qcom,gpubw\.[a-z0-9]+(/.*)?             u:object_r:sysfs_devfreq:s0
-/sys/devices/soc\.0/qcom,cpubw\.[a-z0-9]+/devfreq/qcom,cpubw\.[a-z0-9]+(/.*)?             u:object_r:sysfs_devfreq:s0
+/system/bin/perfservice									u:object_r:perfservice_exec:s0
+/sys/devices/soc\.0/[a-z0-9]+\.qcom,msmcci-ccimon(/.*)?					u:object_r:sysfs_devfreq:s0
+/sys/devices/soc\.0/qcom,gpubw\.[a-z0-9]+/devfreq/qcom,gpubw\.[a-z0-9]+(/.*)?		u:object_r:sysfs_devfreq:s0
+/sys/devices/soc\.0/qcom,cpubw\.[a-z0-9]+/devfreq/qcom,cpubw\.[a-z0-9]+(/.*)?		u:object_r:sysfs_devfreq:s0
+/(vendor|system/vendor)/bin/hw/vendor\.qti\.hardware\.perf@2\.0-service			u:object_r:hal_perf_default_exec:s0
 
 # Persist
-/(mnt/vendor)/persist/bluetooth(/.*)?                                                     u:object_r:persist_bluetooth_file:s0
-/(mnt/vendor)/persist/drm(/.*)?                                                           u:object_r:persist_drm_file:s0
-/(mnt/vendor)/persist/sensors(/.*)?                                                       u:object_r:sensors_persist_file:s0
-/(mnt/vendor)/persist/alarm(/.*)?                                                         u:object_r:persist_alarm_file:s0
-/(mnt/vendor)/persist/time(/.*)?                                                          u:object_r:persist_time_file:s0
-/(mnt/vendor)/persist/data(/.*)?                                                          u:object_r:persist_drm_file:s0
-/(mnt/vendor)/persist/data/tz(/.*)?                                                       u:object_r:persist_drm_file:s0
-/(mnt/vendor)/persist/data/sfs(/.*)?                                                      u:object_r:persist_drm_file:s0
-/(mnt/vendor)/persist/qti_fp(/.*)?                                                        u:object_r:persist_qti_fp_file:s0
-/(mnt/vendor)/persist/usf(/.*)?                                                           u:object_r:persist_usf_file:s0
-/(mnt/vendor)/persist/hlos_rfs(/.*)?                                                      u:object_r:rfs_shared_hlos_file:s0
-/(mnt/vendor)/persist/display(/.*)?                                                       u:object_r:persist_display_file:s0
-/(mnt/vendor)/persist/rfs.*                                                               u:object_r:rfs_file:s0
-/(mnt/vendor)/persist/speccfg(/.*)?                                                       u:object_r:regionalization_file:s0
-/(mnt/vendor)/persist/misc(/.*)?                                                          u:object_r:persist_misc_file:s0
-/(mnt/vendor)/persist/bms(/.*)?                                                           u:object_r:persist_bms_file:s0
-/(mnt/vendor)/persist/vpp(/.*)?                                                           u:object_r:persist_vpp_file:s0
-/(mnt/vendor)/persist/secnvm(/.*)?                                                        u:object_r:persist_secnvm_file:s0
+/(mnt/vendor)/persist/bluetooth(/.*)?							u:object_r:persist_bluetooth_file:s0
+/(mnt/vendor)/persist/drm(/.*)?								u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/sensors(/.*)?							u:object_r:sensors_persist_file:s0
+/(mnt/vendor)/persist/alarm(/.*)?								u:object_r:persist_alarm_file:s0
+/(mnt/vendor)/persist/time(/.*)?								u:object_r:persist_time_file:s0
+/(mnt/vendor)/persist/data(/.*)?								u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/data/tz(/.*)?							u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/data/sfs(/.*)?							u:object_r:persist_drm_file:s0
+/(mnt/vendor)/persist/qti_fp(/.*)?							u:object_r:persist_qti_fp_file:s0
+/(mnt/vendor)/persist/usf(/.*)?								u:object_r:persist_usf_file:s0
+/(mnt/vendor)/persist/hlos_rfs(/.*)?							u:object_r:rfs_shared_hlos_file:s0
+/(mnt/vendor)/persist/display(/.*)?							u:object_r:persist_display_file:s0
+/(mnt/vendor)/persist/rfs.*								u:object_r:rfs_file:s0
+/(mnt/vendor)/persist/speccfg(/.*)?							u:object_r:regionalization_file:s0
+/(mnt/vendor)/persist/misc(/.*)?								u:object_r:persist_misc_file:s0
+/(mnt/vendor)/persist/bms(/.*)?								u:object_r:persist_bms_file:s0
+/(mnt/vendor)/persist/vpp(/.*)?								u:object_r:persist_vpp_file:s0
+/(mnt/vendor)/persist/secnvm(/.*)?							u:object_r:persist_secnvm_file:s0
 
 # Sensor
-/(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service\.s2                u:object_r:hal_sensors_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service\.s2			u:object_r:hal_sensors_default_exec:s0
 
 # HALs
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2      u:object_r:hal_lineage_touch_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.s2			u:object_r:hal_lineage_touch_default_exec:s0
