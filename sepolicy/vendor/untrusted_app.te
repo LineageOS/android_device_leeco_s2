@@ -1,0 +1,2 @@
+allow untrusted_app time_daemon:unix_stream_socket connectto;
+allow untrusted_app proc:file r_file_perms;

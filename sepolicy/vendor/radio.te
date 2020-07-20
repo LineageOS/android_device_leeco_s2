@@ -1,0 +1,5 @@
+allow radio dpmd:unix_stream_socket connectto;
+
+allow radio hal_datafactory_hwservice:hwservice_manager find;
+
+binder_call(radio, cnd)
