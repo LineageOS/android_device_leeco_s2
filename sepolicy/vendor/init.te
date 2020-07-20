@@ -1,10 +1,14 @@
 allow init devinfo_block_device:blk_file r_file_perms;
 
 allow init proc:lnk_file { setattr };
-allow init socket_device:sock_file { create setattr };
+allow init socket_device:sock_file { create setattr unlink };
 allow init camera_device:file { create_file_perms };
 
 allow init sysfs_ir_enable:file setattr;
 
 allow init vendor_perf_service:service_manager find;
 allow init mnt_vendor_file:dir mounton;
+
+allow init vendor_file:file execute_no_trans;
+
+allow init diag_device:chr_file rw_file_perms;

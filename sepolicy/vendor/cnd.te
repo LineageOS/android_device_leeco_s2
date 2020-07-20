@@ -4,3 +4,5 @@ add_hwservice(cnd, hal_datafactory_hwservice)
 
 allow cnd wpa_data_file:dir rw_dir_perms;
 allow cnd wpa_data_file:sock_file create_file_perms;
+
+binder_call(cnd, radio)
