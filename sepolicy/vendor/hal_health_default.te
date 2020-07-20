@@ -1,0 +1,1 @@
+binder_call(hal_health_default, hal_gnss_qti)

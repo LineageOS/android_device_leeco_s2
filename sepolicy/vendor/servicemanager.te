@@ -1,6 +1,6 @@
-allow servicemanager hal_fingerprint_default:process { getattr };
-allow servicemanager hal_fingerprint_default:dir { search };
-allow servicemanager hal_fingerprint_default:file { r_file_perms };
+allow servicemanager hal_fingerprint_default:dir search;
+allow servicemanager hal_fingerprint_default:file { open read };
+allow servicemanager hal_fingerprint_default:process getattr;
 
 allow servicemanager goodix:dir search;
 allow servicemanager goodix:file { open read };
@@ -9,3 +9,7 @@ allow servicemanager goodix:process getattr;
 allow servicemanager init:dir search;
 allow servicemanager init:file { open read };
 allow servicemanager init:process getattr;
+
+allow servicemanager mediaswcodec:dir search;
+allow servicemanager mediaswcodec:file { open read };
+allow servicemanager mediaswcodec:process getattr;

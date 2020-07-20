@@ -1,3 +1,4 @@
 allow time_daemon sysfs:file { r_file_perms };
 
 allow time_daemon mnt_vendor_file:dir r_dir_perms;
+allow time_daemon persist_file:file rw_file_perms;

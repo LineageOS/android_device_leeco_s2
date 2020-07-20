@@ -1,0 +1,19 @@
+allow priv_app mnt_vendor_file:dir search;
+
+allow priv_app sysfs_android_usb:file open;
+allow priv_app device:dir open;
+allow priv_app proc_interrupts:file open;
+allow priv_app proc:file open;
+allow priv_app sysfs:file open;
+
+allow priv_app alarm_boot_prop:file { open getattr };
+allow priv_app alarm_handled_prop:file { open getattr };
+allow priv_app alarm_instance_prop:file { open getattr };
+allow priv_app apexd_prop:file { open getattr };
+allow priv_app bg_boot_complete_prop:file { open getattr };
+allow priv_app bg_daemon_prop:file { open getattr };
+allow priv_app bluetooth_prop:file { open getattr };
+allow priv_app boot_animation_prop:file { open getattr };
+allow priv_app boot_mode_prop:file { open getattr };
+allow priv_app bootloader_boot_reason_prop:file { open getattr };
+allow priv_app boottime_prop:file { open getattr };
