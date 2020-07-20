@@ -1,1 +1,4 @@
 allow mediacodec mpctl_socket:dir search;
+
+binder_call(mediacodec, servicemanager)
+binder_call(mediaswcodec, servicemanager)

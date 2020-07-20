@@ -1,0 +1,1 @@
+allow installd device:file w_file_perms;

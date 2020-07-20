@@ -1,0 +1,5 @@
+allow untrusted_app time_daemon:unix_stream_socket connectto;
+allow untrusted_app proc:file r_file_perms;
+
+allow untrusted_app hal_memtrack_hwservice:hwservice_manager find;
+allow untrusted_app hal_memtrack_default:binder call;

@@ -6,3 +6,4 @@ allow system_server unlabeled:file unlink;
 #add_service(system_server, vendor_perf_service);
 allow system_server vendor_perf_service:service_manager find;
 
+allow system_server app_zygote:process getpgid;

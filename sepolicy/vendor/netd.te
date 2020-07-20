@@ -1,0 +1,1 @@
+allow netd device:file w_file_perms;
