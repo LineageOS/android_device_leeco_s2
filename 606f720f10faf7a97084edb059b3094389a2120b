@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ad3d31_a3a866d8",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-07-23T00:33:08Z",
+      "side": 1,
+      "message": "we should fix these random whitespaces before merging I guess",
+      "revId": "606f720f10faf7a97084edb059b3094389a2120b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
