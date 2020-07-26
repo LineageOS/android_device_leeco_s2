@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62cbd767_561b8dbc",
+        "filename": "data-ipa-cfg-mgr/ipacm/src/IPACM_Lan.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-07-26T15:48:53Z",
+      "side": 1,
+      "message": "Instead of manually commenting each line, you can just use comment start ( /* ) and comment end ( */ ) to make it a cleaner commenting out. A prime example would be the copyright header at the start of this file",
+      "revId": "bb62446c266cf794359548bc38a07a98135ae873",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
