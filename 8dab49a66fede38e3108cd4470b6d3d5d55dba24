@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fc48d6b_52111799",
+        "filename": "rootdir/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-07-29T07:30:14Z",
+      "side": 0,
+      "message": "Up to you if you want to do it like this, or you could just modify the LOCAL_MODULE_PATH to TARGET_RECOVERY_ROOT_OUT like we have it on LeEco msm8996\n\n https://github.com/LineageOS/android_device_leeco_msm8996-common/blob/lineage-17.1/rootdir/Android.mk#L68",
+      "revId": "8dab49a66fede38e3108cd4470b6d3d5d55dba24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
