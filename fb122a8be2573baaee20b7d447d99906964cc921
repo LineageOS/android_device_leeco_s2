@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d2c3e80_b6306b2a",
+        "filename": "lineage_s2.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-07-29T07:20:57Z",
+      "side": 0,
+      "message": "I would recommend leaving this one as the full path, as it is to ensure the repo is synced to the expected directory. As an example, even new devices like the Asus Zenfone 6 (I01WD) define the full path:\nhttps://github.com/LineageOS/android_device_asus_I01WD/blob/lineage-17.1/lineage_I01WD.mk#L7",
+      "revId": "fb122a8be2573baaee20b7d447d99906964cc921",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
