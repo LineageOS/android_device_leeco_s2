@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc513ffd_4bfe1e0f",
+        "filename": "proprietary-files-qc.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-07-29T08:54:31Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be pinned since this blob is from the same version as defined in the blob source header of this file",
+      "revId": "52b7139b57b338db917b0d2132e1eddb837a97ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
