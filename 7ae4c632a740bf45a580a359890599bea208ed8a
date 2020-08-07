@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98132cca_b056be81",
+        "filename": "device.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-08-07T14:29:27Z",
+      "side": 1,
+      "message": "This isn\u0027t alphabetical, this should be above VR",
+      "revId": "7ae4c632a740bf45a580a359890599bea208ed8a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
