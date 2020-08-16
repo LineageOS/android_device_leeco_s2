@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179cbbaf_12902b5b",
+        "filename": "configs/qti_whitelist.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-08-16T14:31:02Z",
+      "side": 1,
+      "message": "CAF made a typo here, please keep this line as qualcomm",
+      "revId": "1dabaed66738f4a22a910fe987bc876d73cde80e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
