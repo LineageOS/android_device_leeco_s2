@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4fde001_9b8d5605",
+        "filename": "rootdir/etc/init.qcom.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-08-16T15:02:17Z",
+      "side": 1,
+      "message": "If you\u0027re going to update sensors I\u0027d recommend fully updating it from CAF like we have on msm8996\n\nhttps://github.com/LineageOS/android_device_leeco_msm8996-common/blame/lineage-17.1/rootdir/etc/init.qcom.rc#L575",
+      "revId": "548de75b36330c6587f27a8b6d2538db713bb5de",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
