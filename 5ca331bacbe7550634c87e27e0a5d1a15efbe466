@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cc6d6ba_6bdc3465",
+        "filename": "proprietary-files-qc.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-08-19T19:17:28Z",
+      "side": 1,
+      "message": "This should be sorted alphabetically below etc folder",
+      "revId": "5ca331bacbe7550634c87e27e0a5d1a15efbe466",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
