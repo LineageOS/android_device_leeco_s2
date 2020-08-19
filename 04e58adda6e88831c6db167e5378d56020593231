@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6d3d09_2a0547ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-08-19T20:19:59Z",
+      "side": 1,
+      "message": "my email is themard85@gmail.com as seen in any commits by me (on GitHub you can view a commit and in the URL add .patch at the end of it to see the commit patch view which shows email address for author and comitter) but this is just a minor thing, that GitHub address is ok as well I guess",
+      "revId": "04e58adda6e88831c6db167e5378d56020593231",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
