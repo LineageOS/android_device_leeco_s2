@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c023d3cf_88fdb04a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 18586
+      },
+      "writtenOn": "2020-08-28T15:54:34Z",
+      "side": 1,
+      "message": "spelling (carriers)",
+      "revId": "55064a0b2839d498138c2937ccb59ec3d8ebd809",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad810328_c5481469",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 18586
+      },
+      "writtenOn": "2020-08-28T15:54:34Z",
+      "side": 1,
+      "message": "spelling (Pretty)",
+      "revId": "55064a0b2839d498138c2937ccb59ec3d8ebd809",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
