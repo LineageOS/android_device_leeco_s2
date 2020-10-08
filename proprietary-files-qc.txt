@@ -297,11 +297,35 @@ vendor/lib64/librs_adreno.so|445f317c7bc18873452f3deca05a7c982ad582b3
 vendor/lib64/librs_adreno_sha1.so|3aff4d201264dc5e1166272591909bc1fe9116c1
 vendor/lib64/libscale.so|1191588a22e91cea6eb3ee023c70cb3844767a6a
 
-# Graphics firmware - from SRT Phone
-etc/firmware/a530_pfp.fw|448f9db8271fefb08348cbc50409e8e95bd93f78
-etc/firmware/a530_pm4.fw|5741a28752355b478d455635bab008028ff7e1c6
+# Graphics (Firmware) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.11.0.QDLMIXM
+vendor/firmware/a530_gpmu.fw2|706da8d5ee565dcf456341f805ee75a40773f65a
+vendor/firmware/a530_pfp.fw|d027c70fde64241ec13160d09ee1b6c272974a4b
+vendor/firmware/a530_pm4.fw|b1cf625b5552b99839687f479c124ac5daca2ca2
+vendor/firmware/a530v1_pfp.fw|0864291b99bed712edfcffa94be7b4595d3af306
+vendor/firmware/a530v1_pm4.fw|6a82a4fb4035fa2a933c1a26b5535d7ec7c0ac4c
+vendor/firmware/a530v2_seq.fw2|63b6d25594a5c1f4217d996a2b636e17a29fc840
+vendor/firmware/a530v3_gpmu.fw2|0a2f6f450231673d75ba39e5d28776db3becf810
+vendor/firmware/a530v3_seq.fw2|8963a53acc689725dee4b22881a4dd4b80e5def8
 
-# Graphics vulkan - from SRT Phone
+# Graphics (HDR) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.11.0.QDLMIXM
+vendor/lib/libhdr_tm.so|4c371d0931245a65d0b4df768de8837bbdf4832e
+vendor/lib64/libhdr_tm.so|c388a9b14966583cde2c682c129fcf5cfa298239
+
+# Graphics (SDM) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.11.0.QDLMIXM
+vendor/lib/libscalar.so|7ac579768ffd2caee903d69d8fd3f7918b04ffbe
+vendor/lib/libsdm-color.so|fa3f8c0062d474fdf6960fcbcc3bf21a5c3fd594
+vendor/lib/libsdm-diag.so|46b5c2d6fab1e655efde1657b2e51dc00c00b763
+-vendor/lib/libsdm-disp-vndapis.so|9bd99e0024f5abcc285f64aadea8725556f16789
+vendor/lib/libsdmextension.so|b6a2100c733b7a5c4688bb9bcae581461ada70f3
+vendor/lib/libtinyxml2_1.so|ef2167416f7a5a503256c5e818fcfa660d5146f4
+vendor/lib64/libscalar.so|b7feb3266d5bccab8b26c49eea6ac8e295192f9a
+vendor/lib64/libsdm-color.so|993dc946c4aa439280527c13798938c51dd9dee7
+vendor/lib64/libsdm-diag.so|87373a043267b9b3bb923931a910119a9deb425f
+-vendor/lib64/libsdm-disp-vndapis.so|b1dede9efa81e8d0374343612ad7ad0d967e8e29
+vendor/lib64/libsdmextension.so|47b7fcfb790df4417654c566af1a8a74d4bf3e2f
+vendor/lib64/libtinyxml2_1.so|56d4d5d0ea010f951de219c7b9fd2c9695a5b9d2
+
+# Graphics (Vulkan) - from SRT Phone
 vendor/lib/hw/vulkan.msm8952.so|45a826c86321a3acb3556fed7988f595354ccb6c
 vendor/lib64/hw/vulkan.msm8952.so|a442c83cc25798de78fa0336358a85c8a7daccc3
 
