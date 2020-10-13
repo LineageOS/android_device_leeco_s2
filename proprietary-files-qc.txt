@@ -547,7 +547,6 @@ lib64/vendor.qti.imsrtpservice@1.0.so:product/lib64/vendor.qti.imsrtpservice@1.0
 vendor/bin/ims_rtp_daemon
 vendor/bin/imsdatadaemon
 vendor/bin/imsqmidaemon
-vendor/bin/imsrcsd
 vendor/framework/qti-vzw-ims-internal.jar
 vendor/lib/com.qualcomm.qti.imscmservice@1.0_vendor.so
 vendor/lib/lib-imsSDP.so
@@ -559,7 +558,6 @@ vendor/lib/lib-rtpcommon.so
 vendor/lib/lib-rtpcore.so
 vendor/lib/lib-rtpdaemoninterface.so
 vendor/lib/lib-rtpsl.so
-vendor/lib/lib-uceservice.so
 vendor/lib/vendor.qti.imsrtpservice@1.0-service-Impl.so
 vendor/lib/vendor.qti.imsrtpservice@1.0_vendor.so
 vendor/lib64/com.qualcomm.qti.imscmservice@1.0_vendor.so
@@ -573,7 +571,6 @@ vendor/lib64/lib-rtpcommon.so
 vendor/lib64/lib-rtpcore.so
 vendor/lib64/lib-rtpdaemoninterface.so
 vendor/lib64/lib-rtpsl.so
-vendor/lib64/lib-uceservice.so
 vendor/lib64/vendor.qti.imsrtpservice@1.0-service-Impl.so
 vendor/lib64/vendor.qti.imsrtpservice@1.0_vendor.so
 vendor/lib64/vendor.qti.ims.rcsconfig@1.0.so|cbc75b554051298020506d85427a1aa70346fbd5
@@ -600,10 +597,20 @@ vendor/etc/init/port-bridge.rc|e52d61a0de5e8a3b21bfbfca929e862422645377
 vendor/etc/init/vendor.qti.rmt_storage.rc|bc212c6353c2ded44ae4d759605fbbe55aa4fa3f
 vendor/etc/init/vendor.qti.tftp.rc|091915c28a3bc574d39189688748cc922d9e65e4
 
-# RIL (IMS) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
+# RIL (IMS) - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.11.0.QDLMIXM
 -product/priv-app/ims/ims.apk|9c4ca91e0ec7a567d22251d7ca0640abf13fdd7b
 product/lib64/libimscamera_jni.so|7cb89110cca94d37d68c705f12a7a5a4ee106139
 product/lib64/libimsmedia_jni.so|3540752cc3658261ea3c909f03018eea4398f84e
+vendor/bin/imsrcsd|3a2ab8c9388832ebde08d377335ef5f227801c7b
+vendor/lib64/com.qualcomm.qti.imscmservice@2.0.so|4c51f1d5bcc893f8869bacf45a8e80b7e269ebe1
+vendor/lib64/com.qualcomm.qti.imscmservice@2.1.so|c736e0100d4eecd904aaec5ed6c08c4b3bc85949
+vendor/lib64/com.qualcomm.qti.imscmservice@2.2.so|495df27fe7782bfe711da8d49a63668a8b2b7af2
+vendor/lib64/com.qualcomm.qti.uceservice@2.0.so|425def95b5f4b3fb3c1e16e0164c8471d5a7bb0e
+vendor/lib64/com.qualcomm.qti.uceservice@2.1.so|a4539626beec26036a45a573e1da7f25b4666b02
+vendor/lib64/lib-imsrcsbaseimpl.so|91d7d52d083de952e30ef747e8af9e02d899c8e9
+vendor/lib64/lib-siputility.so|1bda76c4ad6321348d910048e5004871ba7916d5
+vendor/lib64/lib-uceservice.so|1e66bf03e7a8d5469f147201d55701a0f36f3477
+vendor/lib64/vendor.qti.ims.callinfo@1.0.so|a752c392c4f2dc03180f41bbe286a9daad915d21
 
 # Sensors - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 vendor/bin/sensors.qti|a0701f889c2af8dd964a8f0300761e91a3748815
