@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a47e95_efaeba6d",
+        "filename": "sepolicy/vendor/adsprpcd.te",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2020-11-08T18:51:59Z",
+      "side": 1,
+      "message": "Unlabeled? By chance can you please provide the denial?",
+      "revId": "82eee93484caf3795e0c9fa0597b3d1684723208",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
