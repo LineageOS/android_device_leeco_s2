@@ -38,7 +38,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.lineageos.consumerirtransmitter.beans.IRCMDBean;
 import org.lineageos.consumerirtransmitter.utils.IRCMDCacheManager;
 import org.lineageos.consumerirtransmitter.utils.Log;
@@ -301,14 +303,17 @@ public class ConsumerirTransmitterService extends Service {
                     try {
                         Log.d(TAG, "receive a msg from native");
                         InputStream input = receiver.getInputStream();
-                        byte buffer[] = new byte[1024];
-                        int len = 0;
+                        List<Byte> dataList = new ArrayList();
                         int temp;
                         while ((temp = input.read()) != -1) {
-                            buffer[len] = (byte) temp;
-                            len++;
+                            dataList.add((byte) temp);
                         }
-                        String msg = new String(buffer, 0, len);
+                        byte[] buffer = new byte[dataList.size()];
+                        for (int i = 0; i < dataList.size(); i++) {
+                            buffer[i] = dataList.get(i);
+                        }
+                        Log.d(TAG, "buffer size = " + buffer.length);
+                        String msg = new String(buffer, 0, buffer.length);
                         int[] pattern = Arrays.stream(msg.split(","))
                                             .map(String::trim)
                                             .mapToInt(Integer::parseInt)
