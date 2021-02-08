@@ -13,7 +13,7 @@ etc/settings/mono_qcom.cnt
 -lib64/libtfa9890.so|21e05b0401f206c7d197869679e519d273cac5eb
 
 # Camera
-bin/mm-qcamera-daemon|38080d77baf6f4d20c9a967cf39f23479d843c19
+bin/mm-qcamera-daemon:vendor/bin/mm-qcamera-daemon|38080d77baf6f4d20c9a967cf39f23479d843c19
 lib/libcamera_letv_algo.so
 lib/libLetvCameraImageSDK.so
 lib/libamipengine.so
@@ -239,14 +239,14 @@ vendor/lib/libchromatix_ov8865_sunny_ffhy_20_zsl_preview.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_zsl_video.so
 
 # Camera firmware
-etc/firmware/cpp_firmware_v1_1_1.fw
-etc/firmware/cpp_firmware_v1_1_6.fw
-etc/firmware/cpp_firmware_v1_2_0.fw
-etc/firmware/cpp_firmware_v1_4_0.fw
-etc/firmware/cpp_firmware_v1_5_0.fw
-etc/firmware/cpp_firmware_v1_6_0.fw
-etc/firmware/cpp_firmware_v1_8_0.fw
-etc/firmware/cpp_firmware_v1_10_0.fw
+etc/firmware/cpp_firmware_v1_1_1.fw:vendor/firmware/cpp_firmware_v1_1_1.fw
+etc/firmware/cpp_firmware_v1_1_6.fw:vendor/firmware/cpp_firmware_v1_1_6.fw
+etc/firmware/cpp_firmware_v1_2_0.fw:vendor/firmware/cpp_firmware_v1_2_0.fw
+etc/firmware/cpp_firmware_v1_4_0.fw:vendor/firmware/cpp_firmware_v1_4_0.fw
+etc/firmware/cpp_firmware_v1_5_0.fw:vendor/firmware/cpp_firmware_v1_5_0.fw
+etc/firmware/cpp_firmware_v1_6_0.fw:vendor/firmware/cpp_firmware_v1_6_0.fw
+etc/firmware/cpp_firmware_v1_8_0.fw:vendor/firmware/cpp_firmware_v1_8_0.fw
+etc/firmware/cpp_firmware_v1_10_0.fw:vendor/firmware/cpp_firmware_v1_10_0.fw
 
 # Camera sensors
 vendor/lib/libmmcamera_ov16880_primax_bahy_6c.so|3F712D060466A7B887E91894D75C3362F0CBD2E3

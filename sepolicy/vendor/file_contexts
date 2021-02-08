@@ -7,7 +7,6 @@
 
 # Camera
 /data/vendor/qcam(/.*)?                                                                     u:object_r:vendor_camera_data_file:s0
-/system/bin/mm-qcamera-daemon                                                               u:object_r:mm-qcamerad_exec:s0
 
 # Capacitive Keys
 /(vendor|system/vendor)/bin/init\.proc_touchpanel\.sh                                       u:object_r:vendor_init_proc_touchpanel_exec:s0
