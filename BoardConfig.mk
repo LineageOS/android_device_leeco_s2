@@ -212,7 +212,6 @@ BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 
 # Shims
 TARGET_LD_SHIM_LIBS := \
-   /system/lib64/lib-imsvt.so|libshims_ims.so \
    /vendor/bin/mm-qcamera-daemon|libshims_camera.so \
    /system/lib64/hw/gxfingerprint.default.so|fakelogprint.so \
    /system/lib64/hw/fingerprint.vendor.msm8952.so|fakelogprint.so \

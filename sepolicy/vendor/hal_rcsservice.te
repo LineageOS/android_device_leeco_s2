@@ -1,3 +1,2 @@
 allow hal_rcsservice self:socket { create read };
-allow hal_rcsservice qmuxd_socket:dir search;
 allow hal_rcsservice default_android_hwservice:hwservice_manager add;

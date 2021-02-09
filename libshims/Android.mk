@@ -13,14 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# libshims_ims
 LOCAL_PATH := $(call my-dir)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libshims_ims
-LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := media/fence.cpp
-include $(BUILD_SHARED_LIBRARY)
 
 # libshims_camera
 include $(CLEAR_VARS)
