@@ -431,6 +431,16 @@
         </interface>
     </hal>
     <hal format="hidl">
+        <name>vendor.qti.hardware.data.connection</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IDataConnection</name>
+            <instance>slot1</instance>
+            <instance>slot2</instance>
+        </interface>
+    </hal>
+    <hal format="hidl">
         <name>vendor.qti.data.factory</name>
         <transport>hwbinder</transport>
         <version>2.0</version>
@@ -524,6 +534,7 @@
         <interface>
             <name>IUimLpa</name>
             <instance>UimLpa0</instance>
+            <instance>UimLpa1</instance>
         </interface>
     </hal>
     <hal format="hidl">

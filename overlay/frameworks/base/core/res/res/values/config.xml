@@ -277,7 +277,12 @@
 
     <!-- Flag specifying whether or not IMS will use the ImsResolver dynamically -->
     <bool name="config_dynamic_bind_ims">true</bool>
-    
+
+    <!-- Config determines whether to update phone object when voice registration
+         state changes. Voice radio tech change will always trigger an update of
+         phone object irrespective of this config -->
+    <bool name="config_switch_phone_on_voice_reg_state_change">false</bool>
+
     <!-- Wifi driver supports batched scan -->
     <bool translatable="false" name="config_wifi_batched_scan_supported">false</bool>
 
@@ -295,10 +300,20 @@
     <bool name="config_device_volte_available">true</bool>
 
     <!-- Flag specifying whether VT is available on device -->
-    <bool name="config_device_vt_available">false</bool>
+    <bool name="config_device_vt_available">true</bool>
+
+    <!-- Flag specifying whether VoLTE should be available for carrier: independent of
+         carrier provisioning. If false: hard disabled. If true: then depends on carrier
+         provisioning, availability etc -->
+    <bool name="config_carrier_volte_available">true</bool>
 
     <!-- Flag specifying whether WFC over IMS is available on device -->
     <bool name="config_device_wfc_ims_available">true</bool>
+
+    <!-- Flag specifying whether WFC over IMS should be available for carrier: independent of
+         carrier provisioning. If false: hard disabled. If true: then depends on carrier
+         provisioning, availability etc -->
+    <bool name="config_carrier_wfc_ims_available">true</bool>
 
     <!-- ComponentName of a dream to show whenever the system would otherwise have
          gone to sleep.  When the PowerManager is asked to go to sleep, it will instead
