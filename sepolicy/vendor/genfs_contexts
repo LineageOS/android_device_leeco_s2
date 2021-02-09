@@ -1,6 +1,3 @@
-# RMT Storage
-genfscon debugfs /rmt_storage/rmts u:object_r:qti_debugfs:s0
-
 # Battery
 genfscon sysfs /devices/soc.0/78db000.usb/power_supply/usb                              u:object_r:sysfs_usb_supply:s0
 genfscon sysfs /devices/soc.0/78b6000.i2c/i2c-2/2-001d/power_supply/usb-parallel/type   u:object_r:sysfs_usb_supply:s0
