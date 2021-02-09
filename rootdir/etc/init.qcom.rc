@@ -382,13 +382,6 @@ service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     user root
     oneshot
 
-# QMUX must be in multiple groups to support external process connections
-service qmuxd /vendor/bin/qmuxd
-    class main
-    user root
-    group radio audio bluetooth gps nfc diag
-    writepid /dev/cpuset/system-background/tasks
-
 service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
     user root
