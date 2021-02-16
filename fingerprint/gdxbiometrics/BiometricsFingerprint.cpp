@@ -20,7 +20,6 @@
 #include <hardware/hardware.h>
 #include <hardware/fingerprint.h>
 #include "BiometricsFingerprint.h"
-#include <cutils/properties.h>
 
 #include <inttypes.h>
 #include <unistd.h>
@@ -36,7 +35,6 @@ namespace implementation {
 
 // Supported fingerprint HAL version
 static const uint16_t kVersion = HARDWARE_MODULE_API_VERSION(2, 0);
-static bool is_goodix = false;
 
 using RequestStatus =
         android::hardware::biometrics::fingerprint::V2_1::RequestStatus;
@@ -45,16 +43,9 @@ BiometricsFingerprint *BiometricsFingerprint::sInstance = nullptr;
 
 BiometricsFingerprint::BiometricsFingerprint() : mClientCallback(nullptr), mDevice(nullptr) {
     sInstance = this; // keep track of the most recent instance
-    char vend [PROPERTY_VALUE_MAX];
-    property_get("ro.boot.fpsensor", vend, NULL);
 
-    if (!strcmp(vend, "fpc")) {
-        is_goodix = false;
-        mDevice = openHal();
-    } else {
-        is_goodix = true;
-        mDevice = getWrapperService(BiometricsFingerprint::notify);
-    }
+    // s2 has only Goodix fingerprint scanner
+    mDevice = getWrapperService(BiometricsFingerprint::notify);
 
     if (!mDevice) {
         ALOGE("Can't open HAL module");
@@ -232,7 +223,7 @@ Return<RequestStatus> BiometricsFingerprint::setActiveGroup(uint32_t gid,
         return RequestStatus::SYS_EINVAL;
     }
     int ret = mDevice->set_active_group(mDevice, gid, storePath.c_str());
-    if ((ret > 0) && is_goodix)
+    if (ret > 0)
         ret = 0;
     return ErrorFilter(ret);
 }
