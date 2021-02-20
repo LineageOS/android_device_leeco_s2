@@ -7,3 +7,7 @@ allow qti_init_shell mnt_vendor_file:dir { rw_dir_perms };
 allow qti_init_shell mnt_vendor_file:dir { rw_file_perms };
 
 allow qti_init_shell ctl_start_prop:property_service set;
+
+allow qti_init_shell vendor_data_file:dir create_dir_perms;
+allow qti_init_shell vendor_data_file:file { create setattr unlink rwx_file_perms };
+allow qti_init_shell system_data_file:file { rwx_file_perms };
