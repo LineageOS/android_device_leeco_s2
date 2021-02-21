@@ -474,6 +474,12 @@ if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_versio
     # the group must be root, otherwise this script could not add "W" for group recursively
     chown -hR radio.root /data/vendor/modem_config/*
 fi
+baseband_version=$(strings /vendor/firmware_mnt/image/modem.b12 2> /dev/null | grep -m 1 "^MPSS.TA")
+baseband_version_prop=$(getprop gsm.version.baseband)
+if [ -n "$baseband_version" ] && [ "$baseband_version" != "$baseband_version_prop" ];then
+    setprop gsm.version.baseband "$baseband_version"
+fi
+
 chmod g-w /data/vendor/modem_config
 setprop ro.vendor.ril.mbn_copy_completed 1
 
