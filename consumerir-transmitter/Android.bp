@@ -1,0 +1,14 @@
+android_app {
+    name: "ConsumerirTransmitter",
+
+    srcs: ["src/**/*.java"],
+
+    certificate: "platform",
+    platform_apis: true,
+    privileged: true,
+
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
+
+}
