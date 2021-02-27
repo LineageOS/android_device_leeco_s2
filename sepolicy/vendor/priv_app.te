@@ -17,3 +17,6 @@ allow priv_app boot_animation_prop:file { open getattr };
 allow priv_app boot_mode_prop:file { open getattr };
 allow priv_app bootloader_boot_reason_prop:file { open getattr };
 allow priv_app boottime_prop:file { open getattr };
+
+allow priv_app hal_memtrack_hwservice:hwservice_manager find;
+binder_call(priv_app, hal_memtrack_default)
