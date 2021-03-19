@@ -213,7 +213,7 @@ BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 TARGET_LD_SHIM_LIBS := \
    /vendor/bin/mm-qcamera-daemon|libshims_camera.so \
    /system/lib64/hw/gxfingerprint.default.so|fakelogprint.so \
-   /system/lib64/hw/fingerprint.vendor.msm8952.so|fakelogprint.so \
+   /system/lib64/hw/fingerprint.default.so|fakelogprint.so \
    /system/bin/gx_fpd|fakelogprint.so
 
 # Wifi
