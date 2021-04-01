@@ -339,3 +339,7 @@ etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv_nofem.bin
 # Haxx
 vendor/lib/libstlport_sta.so
 vendor/lib64/libstlport_sta.so
+
+# Sensor configuration
+etc/sensors/hals.conf:vendor/etc/sensors/hals.conf
+etc/sensors/sensor_def_qcomdev.conf:vendor/etc/sensors/sensor_def_qcomdev.conf
