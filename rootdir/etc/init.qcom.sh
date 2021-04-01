@@ -34,22 +34,6 @@ if [ -f /sys/devices/soc0/soc_id ]; then
 else
     platformid=`cat /sys/devices/system/soc/soc0/id`
 fi
-#
-# Function to start sensors for DSPS enabled platforms
-#
-start_sensors()
-{
-    if [ -c /dev/msm_dsps -o -c /dev/sensors ]; then
-        chmod -h 775 /persist/sensors
-        chmod -h 664 /persist/sensors/sensors_settings
-        chown -h system.root /persist/sensors/sensors_settings
-
-        mkdir -p /data/misc/sensors
-        chmod -h 775 /data/misc/sensors
-
-        start sensors
-    fi
-}
 
 start_battery_monitor()
 {
@@ -147,20 +131,6 @@ case "$baseband" in
         start bridgemgrd
         ;;
 esac
-
-cp -f /etc/sensors/sensors_dbg_config.txt /persist/sensors/sensors_dbg_config.txt
-chmod 664 /persist/sensors/sensors_dbg_config.txt
-
-start_sensors
-
-if [ -f /sys/class/graphics/fb0/modes ]; then
-	panel_res=`cat /sys/class/graphics/fb0/modes`
-	if [ "${panel_res:5:1}" == "x" ]; then
-		panel_xres=${panel_res:2:3}
-	else
-		panel_xres=${panel_res:2:4}
-	fi
-fi
 
 case "$target" in
     "msm7630_surf" | "msm7630_1x" | "msm7630_fusion")
