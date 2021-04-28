@@ -405,7 +405,6 @@ lib/vendor.qti.hardware.qdutils_disp@1.0.so|50cf82a0bd8278ac8dea0b48f0c70c6554be
 -lib64/vendor.display.color@1.0.so|690ea9ef2c3cd3cbccb0be30dd081a94d902f88b
 lib64/vendor.display.postproc@1.0.so|404b08b00a4880631564c194b84c491b76e6a304
 lib64/vendor.qti.hardware.qdutils_disp@1.0.so|b8c23e01172cecdb260c0407ccaddd8f1a6b44fd
-vendor/bin/mm-pp-daemon|5995351da60c0749e73a75c384dd24c92e1527ac
 vendor/lib/libdisp-aba.so|f1161c8343578ff46e061be30a2d941dd475b833
 vendor/lib/libsd_sdk_display.so|dc4e7574e5196ded3a5d71a8a34f05107b862a20
 vendor/lib/vendor.display.color@1.0_vendor.so|9c0c4714d7a7f085b70360cd8d08768e2a2354b1
@@ -416,6 +415,9 @@ vendor/lib64/libsd_sdk_display.so|3d5cfc865b22a0d591614f6e79afd79991b1b3ad
 vendor/lib64/vendor.display.color@1.0_vendor.so|2794608a8d418ae0fa31378f90abd94f1ed8cd80
 vendor/lib64/vendor.display.postproc@1.0_vendor.so|cd7a66aebd140ae1c5369ee9d903a45257b47b0f
 vendor/lib64/vendor.qti.hardware.qdutils_disp@1.0_vendor.so|2943c3a72992ef81c00a367400f350948cf5559b
+
+# Postprocessing - from LeEco Le Max2 (x2)
+vendor/bin/mm-pp-daemon|9cdb2648c704532df2a02e7109c2800dc884653d
 
 # Power-off alarm - from daisy - xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 -product/app/PowerOffAlarm/PowerOffAlarm.apk|46387fe02067df3c4c09ec49fff7737473ea1145
