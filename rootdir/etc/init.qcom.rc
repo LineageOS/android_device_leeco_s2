@@ -414,9 +414,11 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service vendor.loc_launcher /system/vendor/bin/loc_launcher
+service loc_launcher /vendor/bin/loc_launcher
     class late_start
-    group gps inet diag wifi
+    user gps
+    group gps
+    writepid /dev/cpuset/system-background/tasks
 
  service proc-touchpanel-sh /vendor/bin/init.proc_touchpanel.sh
     class late_start
