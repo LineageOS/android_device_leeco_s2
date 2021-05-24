@@ -238,16 +238,6 @@ vendor/lib/libchromatix_ov8865_sunny_ffhy_20_video_full.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_zsl_preview.so
 vendor/lib/libchromatix_ov8865_sunny_ffhy_20_zsl_video.so
 
-# Camera firmware
-etc/firmware/cpp_firmware_v1_1_1.fw:vendor/firmware/cpp_firmware_v1_1_1.fw
-etc/firmware/cpp_firmware_v1_1_6.fw:vendor/firmware/cpp_firmware_v1_1_6.fw
-etc/firmware/cpp_firmware_v1_2_0.fw:vendor/firmware/cpp_firmware_v1_2_0.fw
-etc/firmware/cpp_firmware_v1_4_0.fw:vendor/firmware/cpp_firmware_v1_4_0.fw
-etc/firmware/cpp_firmware_v1_5_0.fw:vendor/firmware/cpp_firmware_v1_5_0.fw
-etc/firmware/cpp_firmware_v1_6_0.fw:vendor/firmware/cpp_firmware_v1_6_0.fw
-etc/firmware/cpp_firmware_v1_8_0.fw:vendor/firmware/cpp_firmware_v1_8_0.fw
-etc/firmware/cpp_firmware_v1_10_0.fw:vendor/firmware/cpp_firmware_v1_10_0.fw
-
 # Camera sensors
 vendor/lib/libmmcamera_ov16880_primax_bahy_6c.so|3F712D060466A7B887E91894D75C3362F0CBD2E3
 vendor/lib/libmmcamera_ov16880_sunny_a16v05g_eeprom.so
